@@ -1,26 +1,29 @@
 package visao;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.EventQueue;
-import java.awt.GridLayout;
-
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
-import net.miginfocom.swing.MigLayout;
-import javax.swing.JLabel;
 import java.awt.Font;
-import javax.swing.JTextField;
-import java.awt.Color;
-import javax.swing.JButton;
-import javax.swing.GroupLayout;
-import javax.swing.GroupLayout.Alignment;
-import javax.swing.SwingConstants;
+import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
+
+import javax.swing.GroupLayout;
+import javax.swing.GroupLayout.Alignment;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+import javax.swing.SwingConstants;
+import javax.swing.border.EmptyBorder;
+
+import controle.UsuarioDAO;
+import modelo.Usuario;
+import net.miginfocom.swing.MigLayout;
 
 public class TelaLogin extends JFrame {
 
@@ -28,6 +31,7 @@ public class TelaLogin extends JFrame {
 	private JPanel contentPane;
 	private JTextField txtemail;
 	private JTextField txtSenha;
+	private static UsuarioDAO uDAO = UsuarioDAO.getInstancia();
 
 	/**
 	 * Launch the application.
@@ -156,8 +160,20 @@ public class TelaLogin extends JFrame {
 		JButton bntEntrar = new JButton("Entrar");
 		bntEntrar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				Usuario u = new Usuario();
 				
-				//tela dps de logar
+				String email = txtemail.getText();
+				String senha = txtSenha.getText();
+				
+				uDAO.consultarUsuarioLoginSenha(email, senha);
+				
+				u = uDAO.consultarUsuarioLoginSenha(email, senha);
+				
+				if(u!=null) {
+					System.out.println("Usuario encontrado");
+				}else {
+					System.out.println("Nao achou");
+				}
 			}
 		});
 		panel_7.add(bntEntrar);
