@@ -18,6 +18,12 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import java.awt.Color;
+import java.awt.Cursor;
+
+import javax.swing.JButton;
+import javax.swing.GroupLayout;
+import javax.swing.GroupLayout.Alignment;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
@@ -118,6 +124,7 @@ public class TelaLogin extends JFrame {
 		panel_4.add(lblEmail);
 		panel_4.add(txtemail);
 		
+		
 		JPanel panel_5 = new JPanel();
 		panel_5.setBorder(new EmptyBorder(0, 115, 0, 115));
 		panel_1.add(panel_5, "cell 3 11,grow");
@@ -139,6 +146,7 @@ public class TelaLogin extends JFrame {
 		panel_6.setOpaque(false);
 		
 		JLabel lblSenhaEsquecida = new JLabel("Esqueceu a senha?");
+		lblSenhaEsquecida.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		lblSenhaEsquecida.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -157,7 +165,7 @@ public class TelaLogin extends JFrame {
 		panel_1.add(panel_7, "cell 3 16,grow");
 		panel_7.setOpaque(false);
 		
-		JButton bntEntrar = new JButton("Entrar");
+		JButton bntEntrar = new RoundButton("Entrar");
 		bntEntrar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Usuario u = new Usuario();
@@ -185,6 +193,7 @@ public class TelaLogin extends JFrame {
 		panel_8.setOpaque(false);
 		
 		JLabel lblCadastrese = new JLabel("Não possui uma conta?  Cadastre-se.");
+		lblCadastrese.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		lblCadastrese.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
