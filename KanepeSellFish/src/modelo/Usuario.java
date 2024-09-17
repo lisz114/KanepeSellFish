@@ -5,6 +5,60 @@ public class Usuario {
 	private String senha;
 	private String email;
 	private String cpf;
+	private String cidade;
+	private String tel;
+	private String rua;
+	private String bairro;
+	private String nempresa;
+	
+
+	public String getCidade() {
+		return cidade;
+	}
+
+	public void setCidade(String cidade) {
+		this.cidade = cidade;
+	}
+
+	public String getTel() {
+		return tel;
+	}
+
+	public void setTel(String tel) {
+		this.tel = tel;
+	}
+
+	public String getRua() {
+		return rua;
+	}
+
+	public void setRua(String rua) {
+		this.rua = rua;
+	}
+
+	public String getBairro() {
+		return bairro;
+	}
+
+	public void setBairro(String bairro) {
+		this.bairro = bairro;
+	}
+
+	public String getNempresa() {
+		return nempresa;
+	}
+
+	public void setNempresa(String nempresa) {
+		this.nempresa = nempresa;
+	}
+
+	public String getCpf() {
+		return cpf;
+	}
+
+	public void setCpf(String cpf) {
+		this.cpf = cpf;
+	}
 
 	public Usuario() {}
 	

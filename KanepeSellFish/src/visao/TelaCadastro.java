@@ -28,12 +28,15 @@ import com.jgoodies.forms.layout.RowSpec;
 
 import controle.UsuarioDAO;
 import modelo.Usuario;
+import modelo.IUsuarioDAO;
 
 import javax.swing.SwingConstants;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
+
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.LayoutStyle.ComponentPlacement;
@@ -51,6 +54,7 @@ public class TelaCadastro extends JFrame {
 	private JTextField txtEmail;
 	private JTextField txtSenha;
 	private static UsuarioDAO uDAO = UsuarioDAO.getInstancia();
+	private ArrayList<Usuario> listaUsuario;
 
 	/**
 	 * Launch the application.
@@ -217,7 +221,7 @@ public class TelaCadastro extends JFrame {
 
 		JComboBox cboxOpcUser = new JComboBox();
 		cboxOpcUser.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		cboxOpcUser.setModel(new DefaultComboBoxModel(new String[] {"Vendedor", "Cliente"}));
+		cboxOpcUser.setModel(new DefaultComboBoxModel(new String[] { "Vendedor", "Cliente" }));
 		cboxOpcUser.setSelectedIndex(1);
 		cboxOpcUser.setBorder(new LineBorder(new Color(0, 0, 0), 1, true));
 		panelOpcUser.add(cboxOpcUser, "cell 0 1");
@@ -267,10 +271,9 @@ public class TelaCadastro extends JFrame {
 					user.setSenha(Senha);
 					uDAO.inserirUsuario(user);
 					System.out.println("User inserido!");
-					TelaPerfil perfil = new TelaPerfil();
-					perfil.setLocationRelativeTo(null);
-					perfil.setVisible(true);
-					dispose();
+					// TelaPerfil perfil = new TelaPerfil();
+					// perfil.setLocationRelativeTo(null);
+					// perfil.setVisible(true);
 
 				} else {
 					TelaError erro = new TelaError();
@@ -278,6 +281,19 @@ public class TelaCadastro extends JFrame {
 					System.out.println("Campo vazio");
 					erro.setLocationRelativeTo(null);
 					erro.setVisible(true);
+				}
+
+				if (cboxOpcUser.getSelectedItem().equals("Vendedor")) {
+
+					TelaExtra extra = new TelaExtra();
+					extra.setVisible(true);
+					dispose();
+				}
+				if (cboxOpcUser.getSelectedItem().equals("Cliente")) {
+
+					TelaCliente cliente = new TelaCliente();
+					cliente.setVisible(true);
+					dispose();
 				}
 
 			}
@@ -297,7 +313,7 @@ public class TelaCadastro extends JFrame {
 				frame.setVisible(true);
 
 			}
-			
+
 		});
 		SpringLayout sl_PainelBTN = new SpringLayout();
 		sl_PainelBTN.putConstraint(SpringLayout.NORTH, lblJaTemConta, 3, SpringLayout.SOUTH, btnCadastrar);
