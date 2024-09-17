@@ -6,6 +6,14 @@ public class Usuario {
 	private String email;
 	private String cpf;
 
+	public String getCpf() {
+		return cpf;
+	}
+
+	public void setCpf(String cpf) {
+		this.cpf = cpf;
+	}
+
 	public Usuario() {}
 	
 	public Usuario(String nome, String senha, String email) {

@@ -8,5 +8,7 @@ public interface IUsuarioDAO {
 	public boolean alterarUsuario(Usuario usuario);
 
 	public boolean removerUsuario(String cpf);
+	
+	public Usuario consultarUsuarioLoginSenha(String email, String senha);
 
 }
