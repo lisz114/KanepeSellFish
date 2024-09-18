@@ -19,6 +19,7 @@ import java.util.ArrayList;
 import javax.swing.JButton;
 import javax.swing.border.LineBorder;
 
+import controle.UsuarioDAO;
 import modelo.Usuario;
 import modelo.RoundButton;
 
@@ -27,7 +28,8 @@ import java.awt.Color;
 public class TelaPerfil extends JFrame {
 
 	private JPanel contentPane;
-	private ArrayList<Usuario> listaUsuario;
+	private ArrayList<Usuario> listaUsuarios;
+
 	/**
 	 * Launch the application.
 	 */
@@ -46,6 +48,8 @@ public class TelaPerfil extends JFrame {
 
 	/**
 	 * Create the frame.
+	 * 
+	 * @param tela
 	 */
 	public TelaPerfil() {
 
@@ -211,12 +215,6 @@ public class TelaPerfil extends JFrame {
 		btnNewButton_1.setBounds(67, 169, 143, 34);
 		panel_2.add(btnNewButton_1);
 
-		Usuario user = new Usuario();
-
-		lblNome.setText(user.getNome());
-		lblEmail.setText(user.getEmail());
-		lblBairro.setText(user.getBairro());
-		lblCidade.setText(user.getCidade());
-		lblNomeEmpresa.setText(user.getNempresa());
+		
 	}
 }

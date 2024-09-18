@@ -5,6 +5,9 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import controle.UsuarioDAO;
+
 import java.awt.Color;
 import java.awt.BorderLayout;
 import net.miginfocom.swing.MigLayout;
@@ -25,6 +28,7 @@ public class TelaCliente extends JFrame {
 	private JTextField txtCity;
 	private JTextField txtBar;
 	private JTextField txtRua;
+	private static UsuarioDAO uDAO = UsuarioDAO.getInstancia();
 
 	/**
 	 * Launch the application.
@@ -79,6 +83,7 @@ public class TelaCliente extends JFrame {
 		JLabel lblNewLabel_2 = new JLabel("Bairro:");
 		panel.add(lblNewLabel_2, "cell 3 4");
 		
+		
 		JButton btnNewButton = new RoundButton("Confirmar");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -93,6 +98,7 @@ public class TelaCliente extends JFrame {
 				user.setCidade(city);
 				user.setBairro(bar);
 				user.setRua(rua);
+				uDAO.inserirUsuario(user);
 				
 				
 				TelaPerfil perfil = new TelaPerfil();
