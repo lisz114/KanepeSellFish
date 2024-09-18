@@ -88,7 +88,7 @@ public class TelaCadastro extends JFrame {
 		getContentPane().setLayout(new BorderLayout(0, 0));
 		getContentPane().setLayout(new BorderLayout(0, 0));
 
-		PicPanel panel = new PicPanel("src//IMG/BackgroundCompleto.png");
+		PicPanel panel = new PicPanel("src//IMG/Background2.png");
 		getContentPane().add(panel, BorderLayout.CENTER);
 		panel.setLayout(new GridLayout(1, 0, 0, 0));
 
@@ -256,38 +256,38 @@ public class TelaCadastro extends JFrame {
 		btnCadastrar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String email = txtEmail.getText();
-			    String senha = txtSenha.getText();
-			    String cpf = txtCPF.getText();
-			    String nome = txtNome.getText();
+				String senha = txtSenha.getText();
+				String cpf = txtCPF.getText();
+				String nome = txtNome.getText();
 
-			    // Consulta o usuário
-			    Usuario u = uDAO.consultarUsuarioLoginSenha(email, senha);
+				// Consulta o usuário
+				Usuario u = uDAO.consultarUsuarioLoginSenha(email, senha);
 
 				if (u != null) {
 					if (u.getCpf().equals(cpf)) {
 						System.out.println("Nao du bom");
-						//chamar tela de usuario ja cadastrao
+						// chamar tela de usuario ja cadastrao
 					}
 
 				} else {
 					Usuario novoUsuario = new Usuario();
-					if (!email.isEmpty() || !senha.isEmpty() || !cpf.isEmpty() || !nome.isEmpty()) {
+					if (email.equals(null) || senha.equals(null) || cpf.equals(null) || nome.equals(null)) {
+
+						TelaError erro = new TelaError();
+						erro.setLocationRelativeTo(null);
+						erro.setVisible(true);
+					} else {
 						novoUsuario.setNome(nome);
 						novoUsuario.setCpf(cpf);
 						novoUsuario.setEmail(email);
 						novoUsuario.setSenha(senha);
 
 						uDAO.inserirUsuario(novoUsuario);
-						TelaPerfil tela = new TelaPerfil();
+						TelaLogin tela = new TelaLogin();
 						tela.setLocationRelativeTo(null);
 						tela.setVisible(true);
 
 						dispose();
-					}
-					else {
-						TelaError erro = new TelaError();
-						erro.setLocationRelativeTo(null);
-						erro.setVisible(true);
 					}
 				}
 			}
