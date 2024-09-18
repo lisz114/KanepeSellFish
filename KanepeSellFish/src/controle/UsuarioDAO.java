@@ -31,11 +31,24 @@ public class UsuarioDAO implements IUsuarioDAO {
 
 	@Override
 	public boolean inserirUsuario(Usuario usuario) {
-		
-		listaUsuarios.add(usuario);
-		
-		return false;
+	    String sql = "INSERT INTO usuarios (email_Usuario, senha_Usuario, idusuarios, nome_Usuario) VALUES (?, ?, ?, ?)";
+	    try (Connection conn = ConexaoBD.getConexaoMySQL();
+	         PreparedStatement pstmt = conn.prepareStatement(sql)) {
+	        
+	        pstmt.setString(1, usuario.getEmail());
+	        pstmt.setString(2, usuario.getSenha());
+	        pstmt.setString(3, usuario.getCpf());
+	        pstmt.setString(4, usuario.getNome());
+
+	        pstmt.executeUpdate();
+	        
+	        return true;
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	        return false;
+	    }
 	}
+
 
 	@Override
 	public boolean alterarUsuario(Usuario usuario) {

@@ -255,47 +255,41 @@ public class TelaCadastro extends JFrame {
 		btnCadastrar.setBorder(new LineBorder(new Color(0, 0, 0), 1, true));
 		btnCadastrar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				String email = txtEmail.getText();
+			    String senha = txtSenha.getText();
+			    String cpf = txtCPF.getText();
+			    String nome = txtNome.getText();
 
-				Usuario user = new Usuario();
+			    // Consulta o usuário
+			    Usuario u = uDAO.consultarUsuarioLoginSenha(email, senha);
 
-				String Nome = txtNome.getText();
-				String CPF = txtCPF.getText();
-				String Email = txtEmail.getText();
-				String Senha = txtSenha.getText();
-
-				if (!Nome.isEmpty() || !CPF.isEmpty() || !Email.isEmpty() || !Senha.isEmpty()) {
-
-					user.setNome(Nome);
-					user.setCpf(CPF);
-					user.setEmail(Email);
-					user.setSenha(Senha);
-					uDAO.inserirUsuario(user);
-					System.out.println("User inserido!");
-					// TelaPerfil perfil = new TelaPerfil();
-					// perfil.setLocationRelativeTo(null);
-					// perfil.setVisible(true);
+				if (u != null) {
+					if (u.getCpf().equals(cpf)) {
+						System.out.println("Nao du bom");
+						//chamar tela de usuario ja cadastrao
+					}
 
 				} else {
-					TelaError erro = new TelaError();
+					Usuario novoUsuario = new Usuario();
+					if (!email.isEmpty() || !senha.isEmpty() || !cpf.isEmpty() || !nome.isEmpty()) {
+						novoUsuario.setNome(nome);
+						novoUsuario.setCpf(cpf);
+						novoUsuario.setEmail(email);
+						novoUsuario.setSenha(senha);
 
-					System.out.println("Campo vazio");
-					erro.setLocationRelativeTo(null);
-					erro.setVisible(true);
+						uDAO.inserirUsuario(novoUsuario);
+						TelaPerfil tela = new TelaPerfil();
+						tela.setLocationRelativeTo(null);
+						tela.setVisible(true);
+
+						dispose();
+					}
+					else {
+						TelaError erro = new TelaError();
+						erro.setLocationRelativeTo(null);
+						erro.setVisible(true);
+					}
 				}
-
-				if (cboxOpcUser.getSelectedItem().equals("Vendedor")) {
-
-					TelaExtra extra = new TelaExtra();
-					extra.setVisible(true);
-					dispose();
-				}
-				if (cboxOpcUser.getSelectedItem().equals("Cliente")) {
-
-					TelaCliente cliente = new TelaCliente();
-					cliente.setVisible(true);
-					dispose();
-				}
-
 			}
 		});
 

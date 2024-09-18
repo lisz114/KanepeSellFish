@@ -215,8 +215,8 @@ public class TelaPerfil extends JFrame {
 
 		lblNome.setText(user.getNome());
 		lblEmail.setText(user.getEmail());
-		lblBairro.setText(user.getBairro());
-		lblCidade.setText(user.getCidade());
-		lblNomeEmpresa.setText(user.getNempresa());
+//		lblBairro.setText(user.getBairro());
+//		lblCidade.setText(user.getCidade());
+//		lblNomeEmpresa.setText(user.getNempresa());
 	}
 }

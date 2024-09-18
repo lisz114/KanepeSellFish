@@ -5,77 +5,21 @@ public class Usuario {
 	private String senha;
 	private String email;
 	private String cpf;
-	private String cidade;
 	private String tel;
-	private String rua;
-	private String bairro;
-	private String nempresa;
-	
+//	private String nempresa;
+//	private String cidade;
+//	private String rua;
+//	private String bairro;
 
-	public String getCidade() {
-		return cidade;
+	public Usuario() {
 	}
 
-	public void setCidade(String cidade) {
-		this.cidade = cidade;
-	}
-
-	public String getTel() {
-		return tel;
-	}
-
-	public void setTel(String tel) {
-		this.tel = tel;
-	}
-
-	public String getRua() {
-		return rua;
-	}
-
-	public void setRua(String rua) {
-		this.rua = rua;
-	}
-
-	public String getBairro() {
-		return bairro;
-	}
-
-	public void setBairro(String bairro) {
-		this.bairro = bairro;
-	}
-
-	public String getNempresa() {
-		return nempresa;
-	}
-
-	public void setNempresa(String nempresa) {
-		this.nempresa = nempresa;
-	}
-
-	public String getCpf() {
-		return cpf;
-	}
-
-	public void setCpf(String cpf) {
+	public Usuario(String cpf, String nome, String senha, String email) {
+		this.nome = nome;
+		this.senha = senha;
+		this.email = email;
 		this.cpf = cpf;
 	}
-
-	public String getCpf() {
-		return cpf;
-	}
-
-	public void setCpf(String cpf) {
-		this.cpf = cpf;
-	}
-
-	public Usuario() {}
-	
-	public Usuario(String nome, String senha, String email) {
-	this.nome = nome;
-	this.senha = senha;
-	this.email = email;
-	}
-	
 
 	public String getNome() {
 		return nome;
@@ -101,4 +45,19 @@ public class Usuario {
 		this.email = email;
 	}
 
+	public String getCpf() {
+		return cpf;
+	}
+
+	public void setCpf(String cpf) {
+		this.cpf = cpf;
+	}
+
+	public String getTel() {
+		return tel;
+	}
+
+	public void setTel(String tel) {
+		this.tel = tel;
+	}
 }
