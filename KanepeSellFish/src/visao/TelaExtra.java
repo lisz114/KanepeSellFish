@@ -5,6 +5,9 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import controle.UsuarioDAO;
+
 import java.awt.Color;
 import java.awt.BorderLayout;
 import net.miginfocom.swing.MigLayout;
@@ -26,6 +29,7 @@ public class TelaExtra extends JFrame {
 	private JTextField txtBar;
 	private JTextField txtRua;
 	private JTextField txtNE;
+	private static UsuarioDAO uDAO = UsuarioDAO.getInstancia();
 
 	/**
 	 * Launch the application.
@@ -109,7 +113,7 @@ public class TelaExtra extends JFrame {
 				user.setCidade(city);
 				user.setBairro(bar);
 				user.setRua(rua);
-				
+				uDAO.inserirUsuario(user);
 				
 				TelaPerfil perfil = new TelaPerfil();
 				perfil.setVisible(true);

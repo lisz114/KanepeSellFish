@@ -10,7 +10,6 @@ public class Usuario {
 	private String rua;
 	private String bairro;
 	private String nempresa;
-	
 
 	public String getCidade() {
 		return cidade;
@@ -60,22 +59,14 @@ public class Usuario {
 		this.cpf = cpf;
 	}
 
-	public String getCpf() {
-		return cpf;
+	public Usuario() {
 	}
 
-	public void setCpf(String cpf) {
-		this.cpf = cpf;
-	}
-
-	public Usuario() {}
-	
 	public Usuario(String nome, String senha, String email) {
-	this.nome = nome;
-	this.senha = senha;
-	this.email = email;
+		this.nome = nome;
+		this.senha = senha;
+		this.email = email;
 	}
-	
 
 	public String getNome() {
 		return nome;
