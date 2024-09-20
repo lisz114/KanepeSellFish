@@ -208,11 +208,11 @@ public class TelaCadastro2 extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				String email = txtEmail.getText();
 				String senha = txtSenha.getText();
-				String cpf = txtCPF.getText();
+				Double cpf = Double.parseDouble(txtCPF.getText());
 				String nome = txtNome.getText();
 
 				// Consulta o usuário
-				Usuario u = uDAO.consultarUsuarioLoginSenha(email, senha);
+				Usuario u = uDAO.consultaUsuarioCPF(cpf);
 
 				if (u != null) {
 					if (u.getCpf().equals(cpf)) {

@@ -257,7 +257,7 @@ public class TelaCadastro extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				String email = txtEmail.getText();
 				String senha = txtSenha.getText();
-				String cpf = txtCPF.getText();
+				Double cpf = Double.parseDouble(txtCPF.getText());
 				String nome = txtNome.getText();
 
 				// Consulta o usuário
