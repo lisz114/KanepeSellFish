@@ -234,7 +234,7 @@ public class TelaCadastro2 extends JFrame {
 						novoUsuario.setSenha(senha);
 
 						uDAO.inserirUsuario(novoUsuario);
-						TelaLogin tela = new TelaLogin();
+						TelaLogin2 tela = new TelaLogin2();
 						tela.setLocationRelativeTo(null);
 						tela.setVisible(true);
 
@@ -252,11 +252,11 @@ public class TelaCadastro2 extends JFrame {
 		lblClique.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				TelaLogin frame = new TelaLogin();
+				TelaLogin2 frame = new TelaLogin2();
 
-				setVisible(false);
 				frame.setLocationRelativeTo(null);
 				frame.setVisible(true);
+				dispose();
 
 			}
 
