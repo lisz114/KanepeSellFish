@@ -31,13 +31,13 @@ public class UsuarioDAO implements IUsuarioDAO {
 
 	@Override
 	public boolean inserirUsuario(Usuario usuario) {
-	    String sql = "INSERT INTO usuarios (email_Usuario, senha_Usuario, idusuarios, nome_Usuario) VALUES (?, ?, ?, ?)";
+	    String sql = "INSERT INTO usuarios (email_Usuario, senha_Usuario, cpf_Usuario, nome_Usuario) VALUES (?, ?, ?, ?)";
 	    try (Connection conn = ConexaoBD.getConexaoMySQL();
 	         PreparedStatement pstmt = conn.prepareStatement(sql)) {
 	        
 	        pstmt.setString(1, usuario.getEmail());
 	        pstmt.setString(2, usuario.getSenha());
-	        pstmt.setDouble(3, usuario.getCpf());
+	        pstmt.setString(3, usuario.getCpf());
 	        pstmt.setString(4, usuario.getNome());
 
 	        pstmt.executeUpdate();
@@ -58,7 +58,7 @@ public class UsuarioDAO implements IUsuarioDAO {
 	}
 
 	@Override
-	public boolean removerUsuario(Double cpf) {
+	public boolean removerUsuario(String cpf) {
 		for (Usuario usuario : listaUsuarios) {
 			if(usuario.getCpf()==cpf) {
 				listaUsuarios.remove(usuario);
@@ -88,7 +88,7 @@ public class UsuarioDAO implements IUsuarioDAO {
 				Usuario u= new Usuario();
 				
 				u.setNome(res1.getString("nome_Usuario"));
-				u.setCpf(res1.getDouble("idUsuarios"));
+				u.setCpf(res1.getString("cpf_Usuario"));
 				u.setEmail(res1.getString("email_Usuario"));
 				u.setSenha(res1.getString("senha_Usuario"));
 				
@@ -107,15 +107,15 @@ public class UsuarioDAO implements IUsuarioDAO {
 	}
 	
 	@Override
-	public Usuario consultaUsuarioCPF(Double cpf) {
+	public Usuario consultaUsuarioCPF(String cpf) {
 		PreparedStatement stmt1 = null;
 
 		Connection conn = ConexaoBD.getConexaoMySQL();
 
 		try {
-			stmt1 = conn.prepareStatement("SELECT * FROM kanepe.usuarios where idUsuarios = ?;");
+			stmt1 = conn.prepareStatement("SELECT * FROM kanepe.usuarios where cpf_Usuario = ?;");
 			ResultSet res1 = null;
-			stmt1.setDouble(1, cpf);
+			stmt1.setString(1, cpf);
 			
 			res1 = stmt1.executeQuery();
 
@@ -125,7 +125,7 @@ public class UsuarioDAO implements IUsuarioDAO {
 				Usuario u= new Usuario();
 				
 				u.setNome(res1.getString("nome_Usuario"));
-				u.setCpf(res1.getDouble("idUsuarios"));
+				u.setCpf(res1.getString("cpf_Usuario"));
 				u.setEmail(res1.getString("email_Usuario"));
 				u.setSenha(res1.getString("senha_Usuario"));
 				

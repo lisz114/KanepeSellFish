@@ -5,10 +5,10 @@ public interface IUsuarioDAO {
 
 	public boolean alterarUsuario(Usuario usuario);
 
-	public boolean removerUsuario(Double cpf);
+	public boolean removerUsuario(String cpf);
 	
 	public Usuario consultarUsuarioLoginSenha(String email, String senha);
 	
-	public Usuario consultaUsuarioCPF(Double cpf);
+	public Usuario consultaUsuarioCPF(String cpf);
 
 }

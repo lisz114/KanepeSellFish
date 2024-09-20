@@ -4,7 +4,7 @@ public class Usuario {
 	private String nome;
 	private String senha;
 	private String email;
-	private Double cpf;
+	private String cpf;
 	private String tel;
 //	private String nempresa;
 //	private String cidade;
@@ -14,7 +14,7 @@ public class Usuario {
 	public Usuario() {
 	}
 
-	public Usuario(Double cpf, String nome, String senha, String email) {
+	public Usuario(String cpf, String nome, String senha, String email) {
 		this.nome = nome;
 		this.senha = senha;
 		this.email = email;
@@ -45,11 +45,11 @@ public class Usuario {
 		this.email = email;
 	}
 
-	public Double getCpf() {
+	public String getCpf() {
 		return cpf;
 	}
 
-	public void setCpf(Double cpf) {
+	public void setCpf(String cpf) {
 		this.cpf = cpf;
 	}
 

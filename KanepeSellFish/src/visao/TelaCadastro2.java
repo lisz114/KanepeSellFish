@@ -206,25 +206,27 @@ public class TelaCadastro2 extends JFrame {
 		btnCadastrar.setBorder(new LineBorder(new Color(0, 0, 0), 1, true));
 		btnCadastrar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				String cpf = txtCPF.getText();
 				String email = txtEmail.getText();
 				String senha = txtSenha.getText();
-				Double cpf = Double.parseDouble(txtCPF.getText());
 				String nome = txtNome.getText();
 
 				// Consulta o usuário
 				Usuario u = uDAO.consultaUsuarioCPF(cpf);
 
 				if (u != null) {
-					if (u.getCpf().equals(cpf)) {
 						System.out.println("Nao du bom");
-						// chamar tela de usuario ja cadastrao
-					}
-
+						TelaError erro = new TelaError();
+						erro.setLabelText("CPF já cadastrado");
+						erro.setLocationRelativeTo(null);
+						erro.setVisible(true);
+					
 				} else {
 					Usuario novoUsuario = new Usuario();
-					if (email.equals(null) || senha.equals(null) || cpf.equals(null) || nome.equals(null)) {
+					if (email.isEmpty() || senha.isEmpty() || cpf.isEmpty() || nome.isEmpty()) {
 
 						TelaError erro = new TelaError();
+						erro.setLabelText("Informações inválidas");
 						erro.setLocationRelativeTo(null);
 						erro.setVisible(true);
 					} else {

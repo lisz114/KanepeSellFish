@@ -187,7 +187,8 @@ public class TelaLogin extends JFrame {
 					
 					System.out.println("Usuario encontrado");
 				}else {
-					TelaUsuarioNaoEncontrado tela = new TelaUsuarioNaoEncontrado();
+					TelaError tela = new TelaError();
+					tela.setLabelText("Usuario não encontrado");
 					tela.setLocationRelativeTo(null);
 					tela.setVisible(true);
 					

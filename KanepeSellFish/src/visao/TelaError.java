@@ -24,6 +24,7 @@ public class TelaError extends JFrame {
 	/**
 	 * Launch the application.
 	 */
+	
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -40,6 +41,9 @@ public class TelaError extends JFrame {
 	/**
 	 * Create the frame.
 	 */
+	
+	private JLabel lblNewLabel;
+	
 	public TelaError() {
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -56,7 +60,7 @@ public class TelaError extends JFrame {
 		contentPane.add(panel_1);
 		panel_1.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 		
-		JLabel lblNewLabel = new JLabel("Informações inválidas");
+		lblNewLabel = new JLabel("Informações inválidas");
 		lblNewLabel.setForeground(new Color(0, 0, 0));
 		lblNewLabel.setFont(new Font("/Fontes/Roboto-Bold.ttf", Font.BOLD, 15));
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
@@ -81,5 +85,8 @@ public class TelaError extends JFrame {
 		});
 		panel.add(btnNewButton, "cell 1 0");
 	}
+	public void setLabelText(String text) {
+		lblNewLabel.setText(text);
+    }
 
 }

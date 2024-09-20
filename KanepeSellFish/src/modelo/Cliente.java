@@ -5,11 +5,11 @@ public class Cliente extends Usuario{
 	private String idCliente;
 	private Endereco endereco;
 	private CarrinhoCompras carrinho;
-	private Double cpf;
+	private String cpf;
 	
 	public Cliente(){}
 	
-	public Cliente(String idCliente, Double cpf, Endereco endereco, CarrinhoCompras carrinho) {
+	public Cliente(String idCliente, String cpf, Endereco endereco, CarrinhoCompras carrinho) {
 		this.idCliente = idCliente;
 		this.cpf = cpf;
 		this.endereco = endereco;
@@ -34,10 +34,10 @@ public class Cliente extends Usuario{
 	public void setCarrinho(CarrinhoCompras carrinho) {
 		this.carrinho = carrinho;
 	}
-	public Double getCpf() {
+	public String getCpf() {
 		return cpf;
 	}
-	public void setCpf(Double cpf) {
+	public void setCpf(String cpf) {
 		this.cpf = cpf;
 	}
 		
