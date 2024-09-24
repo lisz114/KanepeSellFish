@@ -5,7 +5,6 @@ import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.EventQueue;
-import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
@@ -14,7 +13,6 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 import javax.swing.JButton;
-import javax.swing.JCheckBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -24,18 +22,24 @@ import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 
+import controle.EnderecoDAO;
 import controle.UsuarioDAO;
+import modelo.Endereco;
 import modelo.Usuario;
 import net.miginfocom.swing.MigLayout;
 
-public class TelaCadastro extends JFrame {
+public class TelaCadastroComercio extends JFrame {
 
 	private JPanel contentPane;
-	private JTextField txtNome;
-	private JTextField txtCPF;
-	private JTextField txtEmail;
-	private JTextField txtSenha;
+	private JTextField txtNomeComercio;
+	private JTextField txtCNPJ;
+	private JTextField txtCEP;
+	private JTextField txtBairro;
 	private static UsuarioDAO uDAO = UsuarioDAO.getInstancia();
+	private static EnderecoDAO eDAO = EnderecoDAO.getInstancia();
+	private JTextField txtLogradouro;
+	private JTextField txtCidade;
+	private JTextField txtNumero;
 
 	/**
 	 * Launch the application.
@@ -44,7 +48,7 @@ public class TelaCadastro extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					TelaCadastro frame = new TelaCadastro();
+					TelaCadastroComercio frame = new TelaCadastroComercio(null);
 					frame.setLocationRelativeTo(null);
 					frame.setVisible(true);
 				} catch (Exception e) {
@@ -56,8 +60,10 @@ public class TelaCadastro extends JFrame {
 
 	/**
 	 * Create the frame.
+	 * 
+	 * @param novoUsuario
 	 */
-	public TelaCadastro() {
+	public TelaCadastroComercio(Usuario novoUsuario) {
 		setResizable(false);
 		setLocationByPlatform(true);
 		setMinimumSize(new Dimension(1176, 664));
@@ -80,7 +86,7 @@ public class TelaCadastro extends JFrame {
 		JPanel panelPrincipal = new JPanel();
 		panelPrincipal.setOpaque(false);
 		panel.add(panelPrincipal);
-		panelPrincipal.setLayout(new MigLayout("", "[grow]", "[100px][90px][65px][65px][65px][65px][20px][grow]"));
+		panelPrincipal.setLayout(new MigLayout("", "[grow]", "[100px][60px][65px][65px][65px][65px][65px][grow]"));
 
 		JPanel panel_2 = new JPanel();
 		panel_2.setOpaque(false);
@@ -91,10 +97,11 @@ public class TelaCadastro extends JFrame {
 		panelPrincipal.add(panel_4, "cell 0 1,grow");
 		panel_4.setLayout(new GridLayout(1, 0, 0, 0));
 
-		JLabel lblTitulo = new JLabel("Crie uma conta");
+		JLabel lblTitulo = new JLabel("Quase lá...");
+		lblTitulo.setVerticalAlignment(SwingConstants.BOTTOM);
+		lblTitulo.setHorizontalAlignment(SwingConstants.CENTER);
 		lblTitulo.setForeground(new Color(0, 0, 0));
 		lblTitulo.setFont(new Font("Dialog", Font.BOLD, 27));
-		lblTitulo.setHorizontalAlignment(SwingConstants.CENTER);
 		panel_4.add(lblTitulo);
 
 		JPanel panelNome = new JPanel();
@@ -103,16 +110,16 @@ public class TelaCadastro extends JFrame {
 		panelPrincipal.add(panelNome, "cell 0 2,grow");
 		panelNome.setLayout(new MigLayout("", "[grow]", "[10px][30px]"));
 
-		JLabel lblNome = new JLabel("<html>Nome<span style='color: red;'>*</span></html>");
-		lblNome.setForeground(Color.BLACK); // Define a cor do texto principal
-		lblNome.setFont(new Font("Tahoma", Font.BOLD, 12)); // Define a fonte
-		panelNome.add(lblNome, "cell 0 0");
+		JLabel lblNomeComercio = new JLabel("<html>Nome do Comercio<span style='color: red;'>*</span></html>");
+		lblNomeComercio.setForeground(Color.BLACK); // Define a cor do texto principal
+		lblNomeComercio.setFont(new Font("Tahoma", Font.BOLD, 12)); // Define a fonte
+		panelNome.add(lblNomeComercio, "cell 0 0");
 
-		txtNome = new JTextField();
-		txtNome.setBorder(new LineBorder(new Color(0, 0, 0), 2));
-		txtNome.setOpaque(false);
-		panelNome.add(txtNome, "cell 0 1,grow");
-		txtNome.setColumns(10);
+		txtNomeComercio = new JTextField();
+		txtNomeComercio.setBorder(new LineBorder(new Color(0, 0, 0), 2));
+		txtNomeComercio.setOpaque(false);
+		panelNome.add(txtNomeComercio, "cell 0 1,grow");
+		txtNomeComercio.setColumns(10);
 
 		JPanel panelCpf = new JPanel();
 		panelCpf.setBorder(new EmptyBorder(0, 40, 0, 40));
@@ -120,68 +127,89 @@ public class TelaCadastro extends JFrame {
 		panelPrincipal.add(panelCpf, "cell 0 3,grow");
 		panelCpf.setLayout(new MigLayout("", "[grow]", "[10px][30px]"));
 
-		JLabel lblCPF = new JLabel("<html>CPF<span style='color: red;'>*</span></html>");
-		lblCPF.setForeground(Color.BLACK);
-		lblCPF.setFont(new Font("Tahoma", Font.BOLD, 12));
-		panelCpf.add(lblCPF, "cell 0 0");
+		JLabel lblCNPJ = new JLabel("<html>CNPJ<span style='color: red;'>*</span></html>");
+		lblCNPJ.setForeground(Color.BLACK);
+		lblCNPJ.setFont(new Font("Tahoma", Font.BOLD, 12));
+		panelCpf.add(lblCNPJ, "cell 0 0");
 
-		txtCPF = new JTextField();
-		txtCPF.setBorder(new LineBorder(new Color(0, 0, 0), 2));
-		txtCPF.setOpaque(false);
-		txtCPF.setColumns(10);
-		panelCpf.add(txtCPF, "cell 0 1,grow");
+		txtCNPJ = new JTextField();
+		txtCNPJ.setBorder(new LineBorder(new Color(0, 0, 0), 2));
+		txtCNPJ.setOpaque(false);
+		txtCNPJ.setColumns(10);
+		panelCpf.add(txtCNPJ, "cell 0 1,grow");
 
 		JPanel panelEmail = new JPanel();
 		panelEmail.setBorder(new EmptyBorder(0, 40, 0, 40));
 		panelEmail.setOpaque(false);
 		panelPrincipal.add(panelEmail, "cell 0 4,grow");
-		panelEmail.setLayout(new MigLayout("", "[grow]", "[10px][30px]"));
+		panelEmail.setLayout(new MigLayout("", "[grow][190px]", "[10px][30px]"));
 
-		JLabel lblEmail = new JLabel("<html>Email<span style='color: red;'>*</span></html>");
-		lblEmail.setForeground(new Color(0, 0, 0));
-		lblEmail.setFont(new Font("Tahoma", Font.BOLD, 12));
-		panelEmail.add(lblEmail, "cell 0 0");
+		JLabel lblCEP = new JLabel("<html>CEP<span style='color: red;'>*</span></html>");
+		lblCEP.setForeground(new Color(0, 0, 0));
+		lblCEP.setFont(new Font("Tahoma", Font.BOLD, 12));
+		panelEmail.add(lblCEP, "cell 0 0");
 
-		txtEmail = new JTextField();
-		txtEmail.setBorder(new LineBorder(new Color(0, 0, 0), 2));
-		txtEmail.setOpaque(false);
-		txtEmail.setColumns(10);
-		panelEmail.add(txtEmail, "cell 0 1,grow");
+		JLabel lblCidade = new JLabel("<html>Cidade<span style='color: red;'>*</span></html>");
+		lblCidade.setForeground(Color.BLACK);
+		lblCidade.setFont(new Font("Tahoma", Font.BOLD, 12));
+		panelEmail.add(lblCidade, "cell 1 0");
+
+		txtCEP = new JTextField();
+		txtCEP.setBorder(new LineBorder(new Color(0, 0, 0), 2));
+		txtCEP.setOpaque(false);
+		txtCEP.setColumns(10);
+		panelEmail.add(txtCEP, "cell 0 1,grow");
+
+		txtCidade = new JTextField();
+		txtCidade.setOpaque(false);
+		txtCidade.setColumns(10);
+		txtCidade.setBorder(new LineBorder(new Color(0, 0, 0), 2));
+		panelEmail.add(txtCidade, "cell 1 1,grow");
 
 		JPanel panelSenha = new JPanel();
 		panelSenha.setBorder(new EmptyBorder(0, 40, 0, 40));
 		panelSenha.setOpaque(false);
 		panelPrincipal.add(panelSenha, "cell 0 5,grow");
-		panelSenha.setLayout(new MigLayout("", "[grow]", "[10px][30px]"));
+		panelSenha.setLayout(new MigLayout("", "[grow][80px]", "[10px][30px]"));
 
-		JLabel lblSenha = new JLabel("<html>Senha<span style='color: red;'>*</span></html>");
-		lblSenha.setForeground(new Color(0, 0, 0));
-		lblSenha.setFont(new Font("Tahoma", Font.BOLD, 12));
-		panelSenha.add(lblSenha, "cell 0 0");
+		JLabel lblBairro = new JLabel("<html>Bairro<span style='color: red;'>*</span></html>");
+		lblBairro.setForeground(new Color(0, 0, 0));
+		lblBairro.setFont(new Font("Tahoma", Font.BOLD, 12));
+		panelSenha.add(lblBairro, "cell 0 0");
 
-		txtSenha = new JTextField();
-		txtSenha.setBorder(new LineBorder(new Color(0, 0, 0), 2));
-		txtSenha.setOpaque(false);
-		txtSenha.setColumns(10);
-		panelSenha.add(txtSenha, "cell 0 1,grow");
+		JLabel lblNumero = new JLabel("<html>Numero<span style='color: red;'>*</span></html>");
+		lblNumero.setForeground(Color.BLACK);
+		lblNumero.setFont(new Font("Tahoma", Font.BOLD, 12));
+		panelSenha.add(lblNumero, "cell 1 0");
+
+		txtBairro = new JTextField();
+		txtBairro.setBorder(new LineBorder(new Color(0, 0, 0), 2));
+		txtBairro.setOpaque(false);
+		txtBairro.setColumns(10);
+		panelSenha.add(txtBairro, "cell 0 1,grow");
+
+		txtNumero = new JTextField();
+		txtNumero.setOpaque(false);
+		txtNumero.setColumns(10);
+		txtNumero.setBorder(new LineBorder(new Color(0, 0, 0), 2));
+		panelSenha.add(txtNumero, "cell 1 1,grow");
 
 		JPanel panelCheck = new JPanel();
 		panelCheck.setOpaque(false);
-		FlowLayout flowLayout = (FlowLayout) panelCheck.getLayout();
-		flowLayout.setVgap(-5);
-		flowLayout.setAlignment(FlowLayout.LEFT);
 		panelCheck.setBorder(new EmptyBorder(0, 40, 0, 40));
 		panelPrincipal.add(panelCheck, "cell 0 6,grow");
+		panelCheck.setLayout(new MigLayout("", "[grow]", "[10px][30px]"));
 
-		JCheckBox chckboxVendedor = new JCheckBox("Criar conta como vendedor");
-		chckboxVendedor.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		chckboxVendedor.setForeground(new Color(0, 0, 0));
-		chckboxVendedor.setFont(new Font("Tahoma", Font.BOLD, 11));
-		chckboxVendedor.setOpaque(false);
-		chckboxVendedor.setHorizontalAlignment(SwingConstants.LEFT);
-		panelCheck.add(chckboxVendedor);
-		chckboxVendedor.setIcon(new CustomCheckBoxIcon(16)); // Definir o ícone personalizado
-		chckboxVendedor.setSelectedIcon(new CustomCheckBoxIcon(16));
+		JLabel lblLogradouro = new JLabel("<html>Logradouro<span style='color: red;'>*</span></html>");
+		lblLogradouro.setForeground(new Color(0, 0, 0));
+		lblLogradouro.setFont(new Font("Tahoma", Font.BOLD, 12));
+		panelCheck.add(lblLogradouro, "cell 0 0");
+
+		txtLogradouro = new JTextField();
+		txtLogradouro.setBorder(new LineBorder(new Color(0, 0, 0), 2));
+		txtLogradouro.setOpaque(false);
+		panelCheck.add(txtLogradouro, "cell 0 1,grow");
+		txtLogradouro.setColumns(10);
 
 		JPanel panelConfirmacao = new JPanel();
 		panelConfirmacao.setOpaque(false);
@@ -206,58 +234,34 @@ public class TelaCadastro extends JFrame {
 		btnCadastrar.setBorder(new LineBorder(new Color(0, 0, 0), 1, true));
 		btnCadastrar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				String cpf = txtCPF.getText();
-				String email = txtEmail.getText();
-				String senha = txtSenha.getText();
-				String nome = txtNome.getText();
-
-				// Consulta o usuário
-				Usuario u = uDAO.consultaUsuarioCPF(cpf);
-
-				if (u != null) {
-						System.out.println("Nao du bom");
-						TelaError erro = new TelaError();
-						erro.setLabelText("CPF já cadastrado");
-						erro.setLocationRelativeTo(null);
-						erro.setVisible(true);
-					
-				} else {
-					Usuario novoUsuario = new Usuario();
-					if (email.isEmpty() || senha.isEmpty() || cpf.isEmpty() || nome.isEmpty()) {
-
-						TelaError erro = new TelaError();
-						erro.setLabelText("Informações inválidas");
-						erro.setLocationRelativeTo(null);
-						erro.setVisible(true);
-					} else {
-						novoUsuario.setNome(nome);
-						novoUsuario.setCpf(cpf);
-						novoUsuario.setEmail(email);
-						novoUsuario.setSenha(senha);
-						if(!chckboxVendedor.isSelected()) {
-							uDAO.inserirUsuario(novoUsuario);
-							TelaLogin tela = new TelaLogin();
-							tela.setLocationRelativeTo(null);
-							tela.setVisible(true);
-							
-							dispose();
-						}else {
-//							TelaCadastroComercio tela = new TelaCadastroComercio(novoUsuario);
-//							tela.setLocationRelativeTo(null);
-//							tela.setVisible(true);
-//	
-//							dispose();
-							
-							uDAO.inserirUsuario(novoUsuario);
-							TelaLogin tela = new TelaLogin();
-							tela.setLocationRelativeTo(null);
-							tela.setVisible(true);
-							
-							dispose();
-							
-						}
-					}
-				}
+				Endereco endereco = new Endereco();
+				
+				String nomeComercio =  txtNomeComercio.getText();
+				String cnpj = txtCNPJ.getText();
+				String cep = txtCEP.getText();
+				String cidade = txtCidade.getText();
+				String bairro = txtBairro.getText();
+				int numero = Integer.parseInt(txtNumero.getText());
+				String logradouro = txtLogradouro.getText();
+				
+				endereco.setNomeComercio(nomeComercio);
+				endereco.setCnpj(cnpj);
+				endereco.setCep(cep);
+				endereco.setCidade(cidade);
+				endereco.setBairro(bairro);
+				endereco.setNumero(numero);
+				endereco.setLogradouro(logradouro);
+				
+				uDAO.inserirUsuario(novoUsuario);
+				eDAO.inserirEnderecoDoComercio(endereco);
+				
+				eDAO.inserirEnderecoDoComercio(endereco);
+				
+				TelaLogin tela = new TelaLogin();
+				tela.setLocationRelativeTo(null);
+				tela.setVisible(true);
+				
+				dispose();
 			}
 		});
 		JLabel lblClique = new JLabel("Acesse Aqui.");
