@@ -37,7 +37,7 @@ public class TelaPerfil extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					TelaPerfil frame = new TelaPerfil();
+					TelaPerfil frame = new TelaPerfil(null);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -48,10 +48,11 @@ public class TelaPerfil extends JFrame {
 
 	/**
 	 * Create the frame.
+	 * @param user 
 	 * 
 	 * @param tela
 	 */
-	public TelaPerfil() {
+	public TelaPerfil(Usuario user) {
 
 		setResizable(false);
 		setLocationByPlatform(true);

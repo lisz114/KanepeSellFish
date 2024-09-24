@@ -285,13 +285,13 @@ public class TelaCadastro extends JFrame {
 
 				if (cboxOpcUser.getSelectedItem().equals("Vendedor")) {
 
-					TelaExtra extra = new TelaExtra();
+					TelaExtra extra = new TelaExtra(user);
 					extra.setVisible(true);
 					dispose();
 				}
 				if (cboxOpcUser.getSelectedItem().equals("Cliente")) {
 
-					TelaCliente cliente = new TelaCliente();
+					TelaCliente cliente = new TelaCliente(user);
 					cliente.setVisible(true);
 					dispose();
 				}
@@ -328,5 +328,8 @@ public class TelaCadastro extends JFrame {
 		PainelKSF.setOpaque(false);
 		PainelKSF.setLayout(null);
 
+	/* public static formatarCpf(StringCpf){}
+		cpf = cpf.replaceAll("[^0-9]", ""); // Remover caracteres não numéricos
+		cpf = cpf.replaceAll("(\\d{3})(\\d{3})(\\d{3})(\\d{2})", "$1.$2.$3-$4");//formatar como cpf*/
 	}
 }

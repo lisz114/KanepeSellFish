@@ -37,7 +37,7 @@ public class TelaCliente extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					TelaCliente frame = new TelaCliente();
+					TelaCliente frame = new TelaCliente(null);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -48,8 +48,9 @@ public class TelaCliente extends JFrame {
 
 	/**
 	 * Create the frame.
+	 * @param user 
 	 */
-	public TelaCliente() {
+	public TelaCliente(Usuario user) {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
@@ -87,7 +88,6 @@ public class TelaCliente extends JFrame {
 		JButton btnNewButton = new RoundButton("Confirmar");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Usuario user = new Usuario();
 				
 				String tel = txtTel.getText();
 				String city = txtCity.getText();
@@ -98,10 +98,10 @@ public class TelaCliente extends JFrame {
 				user.setCidade(city);
 				user.setBairro(bar);
 				user.setRua(rua);
-				uDAO.inserirUsuario(user);
+				uDAO.atualizarUsuario(user);
 				
 				
-				TelaPerfil perfil = new TelaPerfil();
+				TelaPerfil perfil = new TelaPerfil(user);
 				perfil.setVisible(true);
 				dispose();
 			}

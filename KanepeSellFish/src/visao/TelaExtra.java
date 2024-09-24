@@ -38,7 +38,7 @@ public class TelaExtra extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					TelaExtra frame = new TelaExtra();
+					TelaExtra frame = new TelaExtra(null);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -49,8 +49,9 @@ public class TelaExtra extends JFrame {
 
 	/**
 	 * Create the frame.
+	 * @param user 
 	 */
-	public TelaExtra() {
+	public TelaExtra(Usuario user) {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
@@ -100,7 +101,6 @@ public class TelaExtra extends JFrame {
 		JButton btnNewButton = new RoundButton("Confirmar");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Usuario user = new Usuario();
 				
 				String tel = txtTel.getText();
 				String nomeEmp = txtNE.getText();
@@ -113,9 +113,9 @@ public class TelaExtra extends JFrame {
 				user.setCidade(city);
 				user.setBairro(bar);
 				user.setRua(rua);
-				uDAO.inserirUsuario(user);
+				uDAO.atualizarUsuario(user);
 				
-				TelaPerfil perfil = new TelaPerfil();
+				TelaPerfil perfil = new TelaPerfil(user);
 				perfil.setVisible(true);
 				dispose();
 			}

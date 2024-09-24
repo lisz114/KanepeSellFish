@@ -7,6 +7,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
+import javax.swing.JLabel;
+
 import modelo.IUsuarioDAO;
 import modelo.Usuario;
 
@@ -34,6 +36,37 @@ public class UsuarioDAO implements IUsuarioDAO {
 		
 		listaUsuarios.add(usuario);
 		
+		return false;
+	}
+	public boolean atualizarUsuario(Usuario usuario) {
+		/* Statement stmt1 = null;
+
+		Connection conn = ConexaoBD.getConexaoMySQL();
+
+		try {
+			stmt1 = (Statement) conn.createStatement();
+			ResultSet res1 = null;
+			res1 = stmt1.executeQuery("Select * from kanepe.usuarios where email_Usuario like '" + usuario.getEmail() + "';");
+
+			
+			//Conta o numero de registros do ResultSet no BD
+			int count = 0;
+			while (res1.next()) {
+				System.out.println(
+						res1.getInt("id") + "   " + res1.getString("nome") + "    " + res1.getString("email"));
+				count++;
+			}
+			System.out.println("Número de registros: " + count);
+			
+
+			res1.close();
+			stmt1.close();
+			conn.close();
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}*/
+
 		return false;
 	}
 
