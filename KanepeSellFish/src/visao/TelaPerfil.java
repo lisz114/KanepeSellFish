@@ -215,6 +215,12 @@ public class TelaPerfil extends JFrame {
 		btnNewButton_1.setBounds(67, 169, 143, 34);
 		panel_2.add(btnNewButton_1);
 
-		
+		Usuario user = new Usuario();
+
+		lblNome.setText(user.getNome());
+		lblEmail.setText(user.getEmail());
+//		lblBairro.setText(user.getBairro());
+//		lblCidade.setText(user.getCidade());
+//		lblNomeEmpresa.setText(user.getNempresa());
 	}
 }

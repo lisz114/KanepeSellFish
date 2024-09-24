@@ -94,11 +94,10 @@ public class TelaCliente extends JFrame {
 				String bar = txtBar.getText();
 				String rua = txtRua.getText();
 				
-				user.setTel(tel);
-				user.setCidade(city);
-				user.setBairro(bar);
-				user.setRua(rua);
-				uDAO.inserirUsuario(user);
+//				user.setTel(tel);
+//				user.setCidade(city);
+//				user.setBairro(bar);
+//				user.setRua(rua);
 				
 				
 				TelaPerfil perfil = new TelaPerfil();

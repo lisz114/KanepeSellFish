@@ -108,12 +108,11 @@ public class TelaExtra extends JFrame {
 				String bar = txtBar.getText();
 				String rua = txtRua.getText();
 				
-				user.setTel(tel);
-				user.setNempresa(nomeEmp);
-				user.setCidade(city);
-				user.setBairro(bar);
-				user.setRua(rua);
-				uDAO.inserirUsuario(user);
+//				user.setTel(tel);
+//				user.setNempresa(nomeEmp);
+//				user.setCidade(city);
+//				user.setBairro(bar);
+//				user.setRua(rua);
 				
 				TelaPerfil perfil = new TelaPerfil();
 				perfil.setVisible(true);

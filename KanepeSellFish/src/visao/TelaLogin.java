@@ -178,8 +178,20 @@ public class TelaLogin extends JFrame {
 				u = uDAO.consultarUsuarioLoginSenha(email, senha);
 				
 				if(u!=null) {
+					
+					TelaPerfil tela = new TelaPerfil();
+					tela.setLocationRelativeTo(null);
+					tela.setVisible(true);
+
+					dispose();
+					
 					System.out.println("Usuario encontrado");
 				}else {
+					TelaError tela = new TelaError();
+					tela.setLabelText("Usuario não encontrado");
+					tela.setLocationRelativeTo(null);
+					tela.setVisible(true);
+					
 					System.out.println("Nao achou");
 				}
 			}
