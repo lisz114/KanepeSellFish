@@ -7,11 +7,14 @@ import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.GridLayout;
+import java.awt.SystemColor;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -22,9 +25,11 @@ import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 
+import Atxy2k.CustomTextField.RestrictedTextField;
 import controle.EnderecoDAO;
 import controle.UsuarioDAO;
 import modelo.Endereco;
+import modelo.Produtor;
 import modelo.Usuario;
 import net.miginfocom.swing.MigLayout;
 
@@ -64,6 +69,8 @@ public class TelaCadastroComercio extends JFrame {
 	 * @param novoUsuario
 	 */
 	public TelaCadastroComercio(Usuario novoUsuario) {
+		setTitle("Cadastro do comercio");
+		setIconImage(Toolkit.getDefaultToolkit().getImage(TelaCadastroComercio.class.getResource("/img/logo.png")));
 		setResizable(false);
 		setLocationByPlatform(true);
 		setMinimumSize(new Dimension(1176, 664));
@@ -142,7 +149,7 @@ public class TelaCadastroComercio extends JFrame {
 		panelEmail.setBorder(new EmptyBorder(0, 40, 0, 40));
 		panelEmail.setOpaque(false);
 		panelPrincipal.add(panelEmail, "cell 0 4,grow");
-		panelEmail.setLayout(new MigLayout("", "[grow][190px]", "[10px][30px]"));
+		panelEmail.setLayout(new MigLayout("", "[grow][][190px]", "[10px][30px]"));
 
 		JLabel lblCEP = new JLabel("<html>CEP<span style='color: red;'>*</span></html>");
 		lblCEP.setForeground(new Color(0, 0, 0));
@@ -152,7 +159,7 @@ public class TelaCadastroComercio extends JFrame {
 		JLabel lblCidade = new JLabel("<html>Cidade<span style='color: red;'>*</span></html>");
 		lblCidade.setForeground(Color.BLACK);
 		lblCidade.setFont(new Font("Tahoma", Font.BOLD, 12));
-		panelEmail.add(lblCidade, "cell 1 0");
+		panelEmail.add(lblCidade, "cell 2 0");
 
 		txtCEP = new JTextField();
 		txtCEP.setBorder(new LineBorder(new Color(0, 0, 0), 2));
@@ -160,11 +167,26 @@ public class TelaCadastroComercio extends JFrame {
 		txtCEP.setColumns(10);
 		panelEmail.add(txtCEP, "cell 0 1,grow");
 
+		JButton btnProcurarCep = new JButton("");
+		btnProcurarCep.setBackground(SystemColor.control);
+		btnProcurarCep.setBorder(null);
+		btnProcurarCep.setOpaque(false);
+		btnProcurarCep.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Endereco endereco = eDAO.buscaCEP(txtCEP.getText());
+				txtLogradouro.setText(endereco.getLogradouro());
+				txtBairro.setText(endereco.getBairro());
+				txtCidade.setText(endereco.getCidade());
+			}
+		});
+		btnProcurarCep.setIcon(new ImageIcon(TelaCadastroComercio.class.getResource("/img/verifica.png")));
+		panelEmail.add(btnProcurarCep, "cell 1 1,grow");
+
 		txtCidade = new JTextField();
 		txtCidade.setOpaque(false);
 		txtCidade.setColumns(10);
 		txtCidade.setBorder(new LineBorder(new Color(0, 0, 0), 2));
-		panelEmail.add(txtCidade, "cell 1 1,grow");
+		panelEmail.add(txtCidade, "cell 2 1,grow");
 
 		JPanel panelSenha = new JPanel();
 		panelSenha.setBorder(new EmptyBorder(0, 40, 0, 40));
@@ -235,32 +257,38 @@ public class TelaCadastroComercio extends JFrame {
 		btnCadastrar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Endereco endereco = new Endereco();
-				
-				String nomeComercio =  txtNomeComercio.getText();
+				Produtor produtor = new Produtor();
+
+				String nomeComercio = txtNomeComercio.getText();
 				String cnpj = txtCNPJ.getText();
 				String cep = txtCEP.getText();
 				String cidade = txtCidade.getText();
 				String bairro = txtBairro.getText();
 				int numero = Integer.parseInt(txtNumero.getText());
 				String logradouro = txtLogradouro.getText();
-				
-				endereco.setNomeComercio(nomeComercio);
-				endereco.setCnpj(cnpj);
+
 				endereco.setCep(cep);
 				endereco.setCidade(cidade);
 				endereco.setBairro(bairro);
 				endereco.setNumero(numero);
 				endereco.setLogradouro(logradouro);
 				
+				eDAO.inserirEnderecoDoComercio(endereco);
+				
+				produtor.setNomeComercio(nomeComercio);
+				produtor.setCnpj(cnpj);
+//				produtor.setIdUsuario(/*id retornado*/);
+//				produtor.setEndereco(/*id retornado ao add endereco*/);
+
 				uDAO.inserirUsuario(novoUsuario);
-				eDAO.inserirEnderecoDoComercio(endereco);
 				
+
 				eDAO.inserirEnderecoDoComercio(endereco);
-				
+
 				TelaLogin tela = new TelaLogin();
 				tela.setLocationRelativeTo(null);
 				tela.setVisible(true);
-				
+
 				dispose();
 			}
 		});
@@ -301,5 +329,9 @@ public class TelaCadastroComercio extends JFrame {
 		JPanel panel_3 = new JPanel();
 		panel_3.setOpaque(false);
 		panel.add(panel_3);
+
+		RestrictedTextField validar = new RestrictedTextField(txtCEP);
+		validar.setOnlyNums(true);
+		validar.setLimit(8);
 	}
 }

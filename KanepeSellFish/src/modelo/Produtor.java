@@ -5,20 +5,20 @@ import java.util.ArrayList;
 public class Produtor extends Usuario {
 	private String idProdutor;
 	private String nomeComercio;
-	private Endereco endereco;
+	private int IdEndereco;
 	private ArrayList<Pedido> pedido;
 	private String cnpj;
 
-	
-	public Produtor(){}
-	
-	public Produtor(String idProdutor,String nomeComercio, Endereco endereco, ArrayList<Pedido> pedido, String cnpj) {
+	public Produtor() {
+	}
+
+	public Produtor(String idProdutor, String nomeComercio, int IdEndereco, ArrayList<Pedido> pedido, String cnpj) {
 		this.idProdutor = idProdutor;
 		this.nomeComercio = nomeComercio;
-		this.endereco = endereco;
-		this.pedido = pedido ;
+		this.IdEndereco = IdEndereco;
+		this.pedido = pedido;
 		this.cnpj = cnpj;
-		}
+	}
 
 	public String getIdProdutor() {
 		return idProdutor;
@@ -36,12 +36,12 @@ public class Produtor extends Usuario {
 		this.nomeComercio = nomeComercio;
 	}
 
-	public Endereco getEndereco() {
-		return endereco;
+	public int getEndereco() {
+		return IdEndereco;
 	}
 
-	public void setEndereco(Endereco endereco) {
-		this.endereco = endereco;
+	public void setEndereco(int IdEndereco) {
+		this.IdEndereco = IdEndereco;
 	}
 
 	public ArrayList<Pedido> getPedido() {
@@ -59,6 +59,5 @@ public class Produtor extends Usuario {
 	public void setCnpj(String cnpj) {
 		this.cnpj = cnpj;
 	}
-	
-	
-}		
+
+}

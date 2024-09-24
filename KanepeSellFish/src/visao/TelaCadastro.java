@@ -215,12 +215,12 @@ public class TelaCadastro extends JFrame {
 				Usuario u = uDAO.consultaUsuarioCPF(cpf);
 
 				if (u != null) {
-						System.out.println("Nao du bom");
-						TelaError erro = new TelaError();
-						erro.setLabelText("CPF já cadastrado");
-						erro.setLocationRelativeTo(null);
-						erro.setVisible(true);
-					
+					System.out.println("Nao du bom");
+					TelaError erro = new TelaError();
+					erro.setLabelText("CPF já cadastrado");
+					erro.setLocationRelativeTo(null);
+					erro.setVisible(true);
+
 				} else {
 					Usuario novoUsuario = new Usuario();
 					if (email.isEmpty() || senha.isEmpty() || cpf.isEmpty() || nome.isEmpty()) {
@@ -234,27 +234,27 @@ public class TelaCadastro extends JFrame {
 						novoUsuario.setCpf(cpf);
 						novoUsuario.setEmail(email);
 						novoUsuario.setSenha(senha);
-						if(!chckboxVendedor.isSelected()) {
+						if (!chckboxVendedor.isSelected()) {
 							uDAO.inserirUsuario(novoUsuario);
 							TelaLogin tela = new TelaLogin();
 							tela.setLocationRelativeTo(null);
 							tela.setVisible(true);
-							
+
 							dispose();
-						}else {
+						} else {
 //							TelaCadastroComercio tela = new TelaCadastroComercio(novoUsuario);
 //							tela.setLocationRelativeTo(null);
 //							tela.setVisible(true);
 //	
 //							dispose();
-							
+
 							uDAO.inserirUsuario(novoUsuario);
 							TelaLogin tela = new TelaLogin();
 							tela.setLocationRelativeTo(null);
 							tela.setVisible(true);
-							
+
 							dispose();
-							
+
 						}
 					}
 				}
