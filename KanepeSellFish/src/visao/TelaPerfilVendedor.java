@@ -25,7 +25,7 @@ import modelo.RoundButton;
 
 import java.awt.Color;
 
-public class TelaPerfil extends JFrame {
+public class TelaPerfilVendedor extends JFrame {
 
 	private JPanel contentPane;
 	private ArrayList<Usuario> listaUsuarios;
@@ -37,7 +37,7 @@ public class TelaPerfil extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					TelaPerfil frame = new TelaPerfil();
+					TelaPerfilVendedor frame = new TelaPerfilVendedor();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -51,7 +51,7 @@ public class TelaPerfil extends JFrame {
 	 * 
 	 * @param tela
 	 */
-	public TelaPerfil() {
+	public TelaPerfilVendedor() {
 
 		setResizable(false);
 		setLocationByPlatform(true);
