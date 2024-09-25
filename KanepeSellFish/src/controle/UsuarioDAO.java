@@ -114,15 +114,16 @@ public class UsuarioDAO implements IUsuarioDAO {
 	}
 
 	@Override
-	public Usuario consultaUsuarioCPF(String cpf) {
+	public Usuario consultaUsuarioCadastrado(String cpf, String email) {
 		PreparedStatement stmt1 = null;
 
 		Connection conn = ConexaoBD.getConexaoMySQL();
 
 		try {
-			stmt1 = conn.prepareStatement("SELECT * FROM kanepe.usuarios where cpf_Usuario = ?;");
+			stmt1 = conn.prepareStatement("SELECT * FROM kanepe.usuarios where cpf_Usuario = ? OR email_Usuario=?;");
 			ResultSet res1 = null;
 			stmt1.setString(1, cpf);
+			stmt1.setString(2, email);
 
 			res1 = stmt1.executeQuery();
 

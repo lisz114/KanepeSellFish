@@ -24,18 +24,22 @@ import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 
+import Atxy2k.CustomTextField.RestrictedTextField;
 import controle.UsuarioDAO;
 import modelo.Usuario;
 import net.miginfocom.swing.MigLayout;
+import javax.swing.JPasswordField;
 
+@SuppressWarnings("serial")
 public class TelaCadastro extends JFrame {
 
+	@SuppressWarnings("unused")
 	private JPanel contentPane;
 	private JTextField txtNome;
 	private JTextField txtCPF;
 	private JTextField txtEmail;
-	private JTextField txtSenha;
 	private static UsuarioDAO uDAO = UsuarioDAO.getInstancia();
+	private JPasswordField txtSenha;
 
 	/**
 	 * Launch the application.
@@ -158,11 +162,10 @@ public class TelaCadastro extends JFrame {
 		lblSenha.setForeground(new Color(0, 0, 0));
 		lblSenha.setFont(new Font("Tahoma", Font.BOLD, 12));
 		panelSenha.add(lblSenha, "cell 0 0");
-
-		txtSenha = new JTextField();
+		
+		txtSenha = new JPasswordField();
 		txtSenha.setBorder(new LineBorder(new Color(0, 0, 0), 2));
 		txtSenha.setOpaque(false);
-		txtSenha.setColumns(10);
 		panelSenha.add(txtSenha, "cell 0 1,grow");
 
 		JPanel panelCheck = new JPanel();
@@ -208,16 +211,16 @@ public class TelaCadastro extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				String cpf = txtCPF.getText();
 				String email = txtEmail.getText();
-				String senha = txtSenha.getText();
+				String senha = new String(txtSenha.getPassword());
 				String nome = txtNome.getText();
 
 				// Consulta o usuário
-				Usuario u = uDAO.consultaUsuarioCPF(cpf);
+				Usuario u = uDAO.consultaUsuarioCadastrado(cpf, email);
 
 				if (u != null) {
-					System.out.println("Nao du bom");
+					System.out.println("Nao deu bom");
 					TelaError erro = new TelaError();
-					erro.setLabelText("CPF já cadastrado");
+					erro.setLabelText("CPF ou Email já cadastrado");
 					erro.setLocationRelativeTo(null);
 					erro.setVisible(true);
 
@@ -297,5 +300,9 @@ public class TelaCadastro extends JFrame {
 		JPanel panel_3 = new JPanel();
 		panel_3.setOpaque(false);
 		panel.add(panel_3);
+
+		RestrictedTextField validar = new RestrictedTextField(txtCPF);
+		validar.setOnlyNums(true);
+		validar.setLimit(11);
 	}
 }

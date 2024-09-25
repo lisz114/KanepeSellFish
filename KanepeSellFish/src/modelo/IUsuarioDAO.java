@@ -9,6 +9,6 @@ public interface IUsuarioDAO {
 	
 	public Usuario consultarUsuarioLoginSenha(String email, String senha);
 	
-	public Usuario consultaUsuarioCPF(String cpf);
+	public Usuario consultaUsuarioCadastrado(String cpf, String email);
 
 }

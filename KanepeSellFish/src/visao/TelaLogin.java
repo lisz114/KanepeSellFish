@@ -25,13 +25,14 @@ import javax.swing.border.LineBorder;
 import controle.UsuarioDAO;
 import modelo.Usuario;
 import net.miginfocom.swing.MigLayout;
+import javax.swing.JPasswordField;
 
 public class TelaLogin extends JFrame {
 
 	private JPanel contentPane;
 	private JTextField txtEmail;
-	private JTextField txtSenha;
 	private static UsuarioDAO uDAO = UsuarioDAO.getInstancia();
+	private JPasswordField txtSenha;
 
 	/**
 	 * Launch the application.
@@ -122,25 +123,23 @@ public class TelaLogin extends JFrame {
 		lblSenha.setFont(new Font("Tahoma", Font.BOLD, 12));
 		panelCpf.add(lblSenha, "cell 0 0");
 
-		txtSenha = new JTextField();
-		txtSenha.setBorder(new LineBorder(new Color(0, 0, 0), 2));
-		txtSenha.setOpaque(false);
-		txtSenha.setColumns(10);
-		panelCpf.add(txtSenha, "cell 0 1,grow");
-		
 		JLabel lblEsqueceu = new JLabel("Esqueceu a senha? ");
 		lblEsqueceu.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		lblEsqueceu.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				TelaEsqueceuSenha esqueceu = new TelaEsqueceuSenha();
-				
+
 				esqueceu.setLocationRelativeTo(null);
 				esqueceu.setVisible(true);
-				
-				
+
 			}
 		});
+
+		txtSenha = new JPasswordField();
+		txtSenha.setOpaque(false);
+		txtSenha.setBorder(new LineBorder(new Color(0, 0, 0), 2));
+		panelCpf.add(txtSenha, "cell 0 1,grow");
 		lblEsqueceu.setForeground(new Color(0, 92, 214));
 		lblEsqueceu.setFont(new Font("Tahoma", Font.ITALIC, 12));
 		lblEsqueceu.setHorizontalTextPosition(SwingConstants.RIGHT);
@@ -173,31 +172,29 @@ public class TelaLogin extends JFrame {
 		btnEntrar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Usuario u = new Usuario();
-				
+
 				String email = txtEmail.getText();
-				String senha = txtSenha.getText();
-				
+				String senha = new String(txtSenha.getPassword());
+
 				uDAO.consultarUsuarioLoginSenha(email, senha);
-				
+
 				u = uDAO.consultarUsuarioLoginSenha(email, senha);
-				
-				if(u!=null) {
-					
+
+				if (u != null) {
+
 					TelaPerfilVendedor tela = new TelaPerfilVendedor();
 					tela.setLocationRelativeTo(null);
 					tela.setVisible(true);
-					
 
 					dispose();
-					
+
 					System.out.println("Usuario encontrado");
-				}else {
+				} else {
 					TelaError tela = new TelaError();
 					tela.setLabelText("Usuario não encontrado");
 					tela.setLocationRelativeTo(null);
 					tela.setVisible(true);
-				
-					
+
 					System.out.println("Nao achou");
 				}
 			}
@@ -212,7 +209,7 @@ public class TelaLogin extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				TelaCadastro frame = new TelaCadastro();
-				
+
 				frame.setLocationRelativeTo(null);
 				frame.setVisible(true);
 				dispose();
