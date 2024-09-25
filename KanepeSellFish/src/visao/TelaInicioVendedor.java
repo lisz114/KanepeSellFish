@@ -8,7 +8,6 @@ import java.awt.Font;
 import java.awt.Image;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-
 import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
@@ -16,17 +15,9 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.border.EmptyBorder;
-
-import com.jgoodies.forms.layout.ColumnSpec;
-import com.jgoodies.forms.layout.FormLayout;
-import com.jgoodies.forms.layout.FormSpecs;
-import com.jgoodies.forms.layout.RowSpec;
-
 import net.miginfocom.swing.MigLayout;
-import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
 import java.awt.Component;
-import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -75,17 +66,17 @@ public class TelaInicioVendedor extends JFrame {
 		JPanel panel_1 = new JPanel();
 		contentPane.add(panel_1, BorderLayout.CENTER);
 		panel_1.setLayout(new MigLayout("", "[10px][300px][grow][grow]", "[160px,grow][150px,grow]"));
-		
+
 		JPanel panel_7 = new JPanel();
 		panel_1.add(panel_7, "cell 2 0,grow");
 		panel_7.setLayout(new MigLayout("", "[300px,grow]", "[][80px][]"));
-		
+
 		textField = new JTextField();
 		textField.setHorizontalAlignment(SwingConstants.RIGHT);
 		textField.setBackground(new Color(192, 192, 192));
 		panel_7.add(textField, "cell 0 0,grow");
 		textField.setColumns(50);
-		
+
 		JLabel lblPeixes = new JLabel("PEIXES DISPONÍVEIS");
 		lblPeixes.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		panel_7.add(lblPeixes, "cell 0 2,alignx left");
@@ -97,7 +88,7 @@ public class TelaInicioVendedor extends JFrame {
 		JLabel lblOrdenar = new JLabel("ORDENAR");
 		panel_2.add(lblOrdenar, "cell 4 0,alignx center");
 		lblOrdenar.setFont(new Font("/Fontes/Roboto-Black.ttf", Font.PLAIN, 14));
-		
+
 		JLabel imgUp = new JLabel("");
 		imgUp.setIcon(new ImageIcon(TelaInicioVendedor.class.getResource("/IMG/imgUp.png")));
 		panel_2.add(imgUp, "cell 3 1,alignx center");
@@ -135,14 +126,14 @@ public class TelaInicioVendedor extends JFrame {
 		rbAguaDoce.setFont(new Font("/Fontes/Roboto-Black.ttf", Font.PLAIN, 12));
 		ImageIcon iconMore = new ImageIcon(TelaInicioVendedor.class.getResource("/IMG/iconMore.png"));
 		Image more = iconMore.getImage().getScaledInstance(40, 40, Image.SCALE_SMOOTH);
-		
+
 		JLabel imgMenu = new JLabel("");
 		imgMenu.setIcon(new ImageIcon(TelaInicioVendedor.class.getResource("/IMG/menu-hamburguer.png")));
 		panel.add(imgMenu, "cell 0 0");
 		ImageIcon menu = new ImageIcon(TelaInicioVendedor.class.getResource("/IMG/menu-hamburguer.png"));
 		Image iconMenu = menu.getImage().getScaledInstance(30, 30, Image.SCALE_SMOOTH);
 		imgMenu.setIcon(new ImageIcon(iconMenu));
-		
+
 		JLabel imgCarrinho = new JLabel("");
 		imgCarrinho.setIcon(new ImageIcon(TelaInicioVendedor.class.getResource("/IMG/carrinho-de-compras.png")));
 		panel.add(imgCarrinho, "cell 2 0");
@@ -187,7 +178,7 @@ public class TelaInicioVendedor extends JFrame {
 		JLabel lblZaA = new JLabel("De Z a A");
 		panel_2.add(lblZaA, "cell 5 5,alignx center");
 		lblZaA.setFont(new Font("/Fontes/Roboto-Black.ttf", Font.PLAIN, 12));
-		
+
 		JLabel imgMore = new JLabel("");
 		imgMore.setIcon(new ImageIcon(TelaInicioVendedor.class.getResource("/IMG/iconMore.png")));
 		panel_2.add(imgMore, "cell 1 10,alignx center");
@@ -198,31 +189,32 @@ public class TelaInicioVendedor extends JFrame {
 		lblAdicionarProduto.setFont(new Font("/Fontes/Roboto-Black.ttf", Font.PLAIN, 12));
 
 		ButtonGroup grupo = new ButtonGroup();
-		
+
 		grupo.add(rbAguaDoce);
 		grupo.add(rbAguaSalgada);
-		
+
 		JPanel panel_3 = new JPanel();
 		panel_1.add(panel_3, "cell 3 1,grow");
-		panel_3.setLayout(new MigLayout("", "[200px,grow][20px][200px,grow][20px][200px,grow][20px][200px,grow][20px]", "[][200px][]"));
-		
+		panel_3.setLayout(new MigLayout("", "[200px,grow][20px][200px,grow][20px][200px,grow][20px][200px,grow][20px]",
+				"[][200px][]"));
+
 		JPanel panel_8 = new JPanel();
 		panel_8.setBackground(new Color(154, 205, 217));
 		panel_3.add(panel_8, "cell 0 1,grow");
 		panel_8.setLayout(new MigLayout("", "[][][][][][][][][][][]", "[][100px][][][][]"));
-		
+
 		JLabel lblNomeProduto = new JLabel("Nome");
 		lblNomeProduto.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		panel_8.add(lblNomeProduto, "cell 0 3");
-		
+
 		JLabel lblQuantidadeEstoque = new JLabel("Contém X unidades");
 		lblQuantidadeEstoque.setFont(new Font("Tahoma", Font.PLAIN, 10));
 		panel_8.add(lblQuantidadeEstoque, "cell 10 3");
-		
+
 		JLabel lblPreco = new JLabel("R$");
 		lblPreco.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		panel_8.add(lblPreco, "cell 0 4");
-		
+
 		JButton btnNewButton = new JButton("Adicionar");
 		btnNewButton.setForeground(new Color(255, 255, 255));
 		btnNewButton.setBackground(new Color(2, 73, 89));
@@ -232,18 +224,31 @@ public class TelaInicioVendedor extends JFrame {
 			}
 		});
 		panel_8.add(btnNewButton, "cell 10 5");
-		
+
 		JPanel panel_4 = new JPanel();
 		panel_4.setBackground(new Color(154, 205, 217));
 		panel_3.add(panel_4, "cell 2 1,grow");
+		panel_4.setLayout(new MigLayout("", "[]", "[][][][][]"));
 		
+		JLabel lblNewLabel_1 = new JLabel("New label");
+		lblNewLabel_1.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		panel_4.add(lblNewLabel_1, "cell 0 4");
+
 		JPanel panel_5 = new JPanel();
 		panel_5.setBackground(new Color(154, 205, 217));
 		panel_3.add(panel_5, "cell 4 1,grow");
+		panel_5.setLayout(new MigLayout("", "[]", "[][][][][]"));
 		
+		JLabel lblNewLabel = new JLabel("New label");
+		panel_5.add(lblNewLabel, "cell 0 4");
+
 		JPanel panel_6 = new JPanel();
 		panel_6.setBackground(new Color(154, 205, 217));
 		panel_3.add(panel_6, "cell 6 1,grow");
+		panel_6.setLayout(new MigLayout("", "[]", "[][][][][]"));
+		
+		JLabel lblNewLabel_2 = new JLabel("New label");
+		panel_6.add(lblNewLabel_2, "cell 0 4");
 
 	}
 
@@ -254,11 +259,13 @@ public class TelaInicioVendedor extends JFrame {
 					showMenu(e);
 				}
 			}
+
 			public void mouseReleased(MouseEvent e) {
 				if (e.isPopupTrigger()) {
 					showMenu(e);
 				}
 			}
+
 			private void showMenu(MouseEvent e) {
 				popup.show(e.getComponent(), e.getX(), e.getY());
 			}
