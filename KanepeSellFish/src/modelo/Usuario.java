@@ -5,15 +5,21 @@ public class Usuario {
 	private String senha;
 	private String email;
 	private String cpf;
+	private String tel;
+//	private String nempresa;
+//	private String cidade;
+//	private String rua;
+//	private String bairro;
 
-	public Usuario() {}
-	
-	public Usuario(String nome, String senha, String email) {
-	this.nome = nome;
-	this.senha = senha;
-	this.email = email;
+	public Usuario() {
 	}
-	
+
+	public Usuario(String cpf, String nome, String senha, String email) {
+		this.nome = nome;
+		this.senha = senha;
+		this.email = email;
+		this.cpf = cpf;
+	}
 
 	public String getNome() {
 		return nome;
@@ -39,4 +45,19 @@ public class Usuario {
 		this.email = email;
 	}
 
+	public String getCpf() {
+		return cpf;
+	}
+
+	public void setCpf(String cpf) {
+		this.cpf = cpf;
+	}
+
+	public String getTel() {
+		return tel;
+	}
+
+	public void setTel(String tel) {
+		this.tel = tel;
+	}
 }

@@ -44,7 +44,7 @@ public class RoundButton extends JButton {
 
 		g.setColor(getBackground());
 
-		g.fillRoundRect(0, 0, getWidth() - 1, getHeight() - 1, 60, 60);
+		g.fillRoundRect(0, 0, getWidth() - 1, getHeight() - 1, 50, 50);
 
 		super.paintComponent(g);
 

@@ -1,56 +1,45 @@
 package visao;
 
-import java.awt.EventQueue;
-
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
 import java.awt.BorderLayout;
-import java.awt.FlowLayout;
-import net.miginfocom.swing.MigLayout;
-import javax.swing.JLabel;
-import java.awt.GridLayout;
-import javax.swing.BoxLayout;
-import java.awt.SystemColor;
-import java.awt.Toolkit;
-
-import javax.swing.JTextField;
-import java.awt.Font;
-import javax.swing.JComboBox;
-import javax.swing.JButton;
-import java.awt.CardLayout;
+import java.awt.Color;
+import java.awt.Cursor;
 import java.awt.Dimension;
-
-import javax.swing.SpringLayout;
-import com.jgoodies.forms.layout.FormLayout;
-import com.jgoodies.forms.layout.ColumnSpec;
-import com.jgoodies.forms.layout.RowSpec;
-
-import controle.UsuarioDAO;
-import modelo.Usuario;
-
-import javax.swing.SwingConstants;
-import java.awt.event.ActionListener;
+import java.awt.EventQueue;
+import java.awt.FlowLayout;
+import java.awt.Font;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import javax.swing.GroupLayout;
-import javax.swing.GroupLayout.Alignment;
-import javax.swing.LayoutStyle.ComponentPlacement;
-import java.awt.Color;
-import javax.swing.border.LineBorder;
-import javax.swing.DefaultComboBoxModel;
-import java.awt.Cursor;
-import com.jgoodies.forms.layout.FormSpecs;
 
+import javax.swing.JButton;
+import javax.swing.JCheckBox;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+import javax.swing.SpringLayout;
+import javax.swing.SwingConstants;
+import javax.swing.border.EmptyBorder;
+import javax.swing.border.LineBorder;
+
+import Atxy2k.CustomTextField.RestrictedTextField;
+import controle.UsuarioDAO;
+import modelo.Usuario;
+import net.miginfocom.swing.MigLayout;
+import javax.swing.JPasswordField;
+
+@SuppressWarnings("serial")
 public class TelaCadastro extends JFrame {
 
-	private static final long serialVersionUID = 1L;
+	@SuppressWarnings("unused")
+	private JPanel contentPane;
 	private JTextField txtNome;
 	private JTextField txtCPF;
 	private JTextField txtEmail;
-	private JTextField txtSenha;
 	private static UsuarioDAO uDAO = UsuarioDAO.getInstancia();
+	private JPasswordField txtSenha;
 
 	/**
 	 * Launch the application.
@@ -73,7 +62,6 @@ public class TelaCadastro extends JFrame {
 	 * Create the frame.
 	 */
 	public TelaCadastro() {
-
 		setResizable(false);
 		setLocationByPlatform(true);
 		setMinimumSize(new Dimension(1176, 664));
@@ -84,233 +72,237 @@ public class TelaCadastro extends JFrame {
 		getContentPane().setLayout(new BorderLayout(0, 0));
 		getContentPane().setLayout(new BorderLayout(0, 0));
 
-		PicPanel panel = new PicPanel("src//IMG/BackgroundCompleto.png");
+		PicPanel panel = new PicPanel("src//IMG/TelaCadastro.png");
+		panel.setOpaque(false);
 		getContentPane().add(panel, BorderLayout.CENTER);
 		panel.setLayout(new GridLayout(1, 0, 0, 0));
 
-		JPanel PainelKSF = new JPanel();
-		panel.add(PainelKSF);
+		JPanel panel_1 = new JPanel();
+		panel_1.setOpaque(false);
+		panel.add(panel_1);
 
-		JPanel PainelCadastro = new JPanel();
-		PainelCadastro.setBorder(null);
-		panel.add(PainelCadastro);
+		JPanel panelPrincipal = new JPanel();
+		panelPrincipal.setOpaque(false);
+		panel.add(panelPrincipal);
+		panelPrincipal.setLayout(new MigLayout("", "[grow]", "[100px][90px][65px][65px][65px][65px][20px][grow]"));
 
-		PainelCadastro.setOpaque(false);
-		PainelCadastro
-				.setLayout(new MigLayout("", "[grow][533px][grow]", "[50px][136px][300px][80px][100px][20px][50px]"));
+		JPanel panel_2 = new JPanel();
+		panel_2.setOpaque(false);
+		panelPrincipal.add(panel_2, "cell 0 0,grow");
 
-		JPanel painelTitulo = new JPanel();
-		painelTitulo.setOpaque(false);
-		PainelCadastro.add(painelTitulo, "cell 1 1,grow");
-		painelTitulo.setLayout(null);
+		JPanel panel_4 = new JPanel();
+		panel_4.setOpaque(false);
+		panelPrincipal.add(panel_4, "cell 0 1,grow");
+		panel_4.setLayout(new GridLayout(1, 0, 0, 0));
 
 		JLabel lblTitulo = new JLabel("Crie uma conta");
-		lblTitulo.setHorizontalAlignment(SwingConstants.CENTER);
-		lblTitulo.setFont(new Font("/Fontes/Roboto-Black.ttf", Font.PLAIN, 50));
-		lblTitulo.setBounds(10, 11, 513, 114);
 		lblTitulo.setForeground(new Color(0, 0, 0));
-		painelTitulo.add(lblTitulo);
-
-		JPanel PainelInfo = new JPanel();
-		PainelInfo.setBorder(new EmptyBorder(0, 60, 0, 50));
-		PainelCadastro.add(PainelInfo, "cell 1 2,grow");
-		PainelInfo.setLayout(new GridLayout(0, 1, 0, 0));
+		lblTitulo.setFont(new Font("Dialog", Font.BOLD, 27));
+		lblTitulo.setHorizontalAlignment(SwingConstants.CENTER);
+		panel_4.add(lblTitulo);
 
 		JPanel panelNome = new JPanel();
+		panelNome.setBorder(new EmptyBorder(0, 40, 0, 40));
 		panelNome.setOpaque(false);
-		PainelInfo.add(panelNome);
-		panelNome.setLayout(new MigLayout("", "[][][]", "[]"));
+		panelPrincipal.add(panelNome, "cell 0 2,grow");
+		panelNome.setLayout(new MigLayout("", "[grow]", "[10px][30px]"));
 
-		JLabel lblNome = new JLabel("Nome");
-		lblNome.setFont(new Font("/Fontes/Roboto-Black.ttf", Font.BOLD, 13));
+		JLabel lblNome = new JLabel("<html>Nome<span style='color: red;'>*</span></html>");
+		lblNome.setForeground(Color.BLACK); // Define a cor do texto principal
+		lblNome.setFont(new Font("Tahoma", Font.BOLD, 12)); // Define a fonte
 		panelNome.add(lblNome, "cell 0 0");
-		lblNome.setForeground(new Color(0, 0, 0));
-
-		JLabel lblNewLabel_7 = new JLabel("*");
-		lblNewLabel_7.setForeground(new Color(255, 0, 0));
-		panelNome.add(lblNewLabel_7, "cell 1 0");
 
 		txtNome = new JTextField();
-		txtNome.setBorder(new LineBorder(new Color(0, 0, 0), 1, true));
-		txtNome.setBackground(new Color(255, 255, 255));
-		txtNome.setForeground(new Color(0, 0, 0));
-		PainelInfo.add(txtNome);
+		txtNome.setBorder(new LineBorder(new Color(0, 0, 0), 2));
+		txtNome.setOpaque(false);
+		panelNome.add(txtNome, "cell 0 1,grow");
 		txtNome.setColumns(10);
 
 		JPanel panelCpf = new JPanel();
+		panelCpf.setBorder(new EmptyBorder(0, 40, 0, 40));
 		panelCpf.setOpaque(false);
-		PainelInfo.add(panelCpf);
-		panelCpf.setLayout(new MigLayout("", "[][]", "[]"));
+		panelPrincipal.add(panelCpf, "cell 0 3,grow");
+		panelCpf.setLayout(new MigLayout("", "[grow]", "[10px][30px]"));
 
-		JLabel lblCpf = new JLabel("CPF");
-		lblCpf.setFont(new Font("/Fontes/Roboto-Black.ttf", Font.BOLD, 13));
-		panelCpf.add(lblCpf, "cell 0 0");
-		lblCpf.setForeground(new Color(0, 0, 0));
-
-		JLabel lblNewLabel_7_1 = new JLabel("*");
-		lblNewLabel_7_1.setForeground(Color.RED);
-		panelCpf.add(lblNewLabel_7_1, "cell 1 0");
+		JLabel lblCPF = new JLabel("<html>CPF<span style='color: red;'>*</span></html>");
+		lblCPF.setForeground(Color.BLACK);
+		lblCPF.setFont(new Font("Tahoma", Font.BOLD, 12));
+		panelCpf.add(lblCPF, "cell 0 0");
 
 		txtCPF = new JTextField();
-		txtCPF.setBorder(new LineBorder(new Color(0, 0, 0), 1, true));
-		PainelInfo.add(txtCPF);
+		txtCPF.setBorder(new LineBorder(new Color(0, 0, 0), 2));
+		txtCPF.setOpaque(false);
 		txtCPF.setColumns(10);
+		panelCpf.add(txtCPF, "cell 0 1,grow");
 
 		JPanel panelEmail = new JPanel();
+		panelEmail.setBorder(new EmptyBorder(0, 40, 0, 40));
 		panelEmail.setOpaque(false);
-		PainelInfo.add(panelEmail);
-		panelEmail.setLayout(new MigLayout("", "[][]", "[]"));
+		panelPrincipal.add(panelEmail, "cell 0 4,grow");
+		panelEmail.setLayout(new MigLayout("", "[grow]", "[10px][30px]"));
 
-		JLabel lblEmail = new JLabel("Email");
-		lblEmail.setFont(new Font("/Fontes/Roboto-Black.ttf", Font.BOLD, 13));
-		panelEmail.add(lblEmail, "cell 0 0");
+		JLabel lblEmail = new JLabel("<html>Email<span style='color: red;'>*</span></html>");
 		lblEmail.setForeground(new Color(0, 0, 0));
-
-		JLabel lblNewLabel_7_2 = new JLabel("*");
-		lblNewLabel_7_2.setForeground(Color.RED);
-		panelEmail.add(lblNewLabel_7_2, "cell 1 0");
+		lblEmail.setFont(new Font("Tahoma", Font.BOLD, 12));
+		panelEmail.add(lblEmail, "cell 0 0");
 
 		txtEmail = new JTextField();
-		txtEmail.setBorder(new LineBorder(new Color(0, 0, 0), 1, true));
-		PainelInfo.add(txtEmail);
+		txtEmail.setBorder(new LineBorder(new Color(0, 0, 0), 2));
+		txtEmail.setOpaque(false);
 		txtEmail.setColumns(10);
+		panelEmail.add(txtEmail, "cell 0 1,grow");
 
 		JPanel panelSenha = new JPanel();
+		panelSenha.setBorder(new EmptyBorder(0, 40, 0, 40));
 		panelSenha.setOpaque(false);
-		PainelInfo.add(panelSenha);
-		panelSenha.setLayout(new MigLayout("", "[][]", "[]"));
+		panelPrincipal.add(panelSenha, "cell 0 5,grow");
+		panelSenha.setLayout(new MigLayout("", "[grow]", "[10px][30px]"));
 
-		JLabel lblSenha = new JLabel("Senha");
-		lblSenha.setFont(new Font("/Fontes/Roboto-Black.ttf", Font.BOLD, 13));
-		panelSenha.add(lblSenha, "cell 0 0");
+		JLabel lblSenha = new JLabel("<html>Senha<span style='color: red;'>*</span></html>");
 		lblSenha.setForeground(new Color(0, 0, 0));
+		lblSenha.setFont(new Font("Tahoma", Font.BOLD, 12));
+		panelSenha.add(lblSenha, "cell 0 0");
+		
+		txtSenha = new JPasswordField();
+		txtSenha.setBorder(new LineBorder(new Color(0, 0, 0), 2));
+		txtSenha.setOpaque(false);
+		panelSenha.add(txtSenha, "cell 0 1,grow");
 
-		JLabel lblNewLabel_7_3 = new JLabel("*");
-		lblNewLabel_7_3.setForeground(Color.RED);
-		panelSenha.add(lblNewLabel_7_3, "cell 1 0");
+		JPanel panelCheck = new JPanel();
+		panelCheck.setOpaque(false);
+		FlowLayout flowLayout = (FlowLayout) panelCheck.getLayout();
+		flowLayout.setVgap(-5);
+		flowLayout.setAlignment(FlowLayout.LEFT);
+		panelCheck.setBorder(new EmptyBorder(0, 40, 0, 40));
+		panelPrincipal.add(panelCheck, "cell 0 6,grow");
 
-		txtSenha = new JTextField();
-		txtSenha.setBorder(new LineBorder(new Color(0, 0, 0), 1, true));
-		PainelInfo.add(txtSenha);
-		txtSenha.setColumns(10);
+		JCheckBox chckboxVendedor = new JCheckBox("Criar conta como vendedor");
+		chckboxVendedor.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		chckboxVendedor.setForeground(new Color(0, 0, 0));
+		chckboxVendedor.setFont(new Font("Tahoma", Font.BOLD, 11));
+		chckboxVendedor.setOpaque(false);
+		chckboxVendedor.setHorizontalAlignment(SwingConstants.LEFT);
+		panelCheck.add(chckboxVendedor);
+		chckboxVendedor.setIcon(new CustomCheckBoxIcon(16)); // Definir o ícone personalizado
+		chckboxVendedor.setSelectedIcon(new CustomCheckBoxIcon(16));
 
-		JPanel PainelOpcao = new JPanel();
-		PainelOpcao.setBorder(new EmptyBorder(0, 60, 0, 50));
-		PainelCadastro.add(PainelOpcao, "cell 1 3,grow");
-		PainelOpcao.setLayout(new GridLayout(0, 1, 0, 0));
-
-		JPanel panelOpcUser = new JPanel();
-		panelOpcUser.setOpaque(false);
-		PainelOpcao.add(panelOpcUser);
-		panelOpcUser.setLayout(new MigLayout("", "[][]", "[][]"));
-
-		JLabel lblOpcUser = new JLabel("Selecione uma opção de usuario");
-		lblOpcUser.setFont(new Font("/Fontes/Roboto-Black.ttf", Font.BOLD, 13));
-		lblOpcUser.setForeground(new Color(0, 0, 0));
-		panelOpcUser.add(lblOpcUser, "cell 0 0,alignx left,aligny bottom");
-		lblOpcUser.setHorizontalAlignment(SwingConstants.LEFT);
-		lblOpcUser.setVerticalAlignment(SwingConstants.BOTTOM);
-
-		JLabel lblNewLabel_7_3_1 = new JLabel("*");
-		lblNewLabel_7_3_1.setForeground(Color.RED);
-		panelOpcUser.add(lblNewLabel_7_3_1, "cell 1 0");
-
-		JComboBox cboxOpcUser = new JComboBox();
-		cboxOpcUser.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		cboxOpcUser.setModel(new DefaultComboBoxModel(new String[] {"Vendedor", "Cliente"}));
-		cboxOpcUser.setSelectedIndex(1);
-		cboxOpcUser.setBorder(new LineBorder(new Color(0, 0, 0), 1, true));
-		panelOpcUser.add(cboxOpcUser, "cell 0 1");
-		cboxOpcUser.setBackground(new Color(154, 205, 217));
-
-		JPanel PainelConfirm = new JPanel();
-		PainelConfirm.setBorder(new EmptyBorder(0, 60, 0, 50));
-		PainelCadastro.add(PainelConfirm, "cell 1 4,grow");
-		PainelConfirm.setLayout(new GridLayout(0, 1, 0, 0));
+		JPanel panelConfirmacao = new JPanel();
+		panelConfirmacao.setOpaque(false);
+		panelConfirmacao.setBorder(new EmptyBorder(0, 40, 0, 40));
+		panelPrincipal.add(panelConfirmacao, "cell 0 7,grow");
+		panelConfirmacao.setLayout(new GridLayout(0, 1, 0, 0));
 
 		JPanel PainelBTN = new JPanel();
-		PainelConfirm.add(PainelBTN);
-
-		painelTitulo.setOpaque(false);
-		PainelInfo.setOpaque(false);
-		PainelOpcao.setOpaque(false);
-		PainelConfirm.setOpaque(false);
 		PainelBTN.setOpaque(false);
-
-		txtNome.setOpaque(false);
-		txtCPF.setOpaque(false);
-		txtEmail.setOpaque(false);
-		txtSenha.setOpaque(false);
+		panelConfirmacao.add(PainelBTN);
+		SpringLayout sl_PainelBTN = new SpringLayout();
+		PainelBTN.setLayout(sl_PainelBTN);
 
 		JButton btnCadastrar = new RoundButton("Cadastrar");
+		sl_PainelBTN.putConstraint(SpringLayout.NORTH, btnCadastrar, 0, SpringLayout.NORTH, PainelBTN);
+		sl_PainelBTN.putConstraint(SpringLayout.SOUTH, btnCadastrar, 48, SpringLayout.NORTH, PainelBTN);
 		btnCadastrar.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		btnCadastrar.setFont(new Font("/Fontes/Roboto-Black.ttf", Font.BOLD, 13));
-		btnCadastrar.setBackground(new Color(8, 127, 140));
-		btnCadastrar.setForeground(new Color(0, 0, 0));
+		btnCadastrar.setFont(new Font("Dialog", Font.PLAIN, 22));
+		btnCadastrar.setBackground(new Color(2, 73, 89));
+		btnCadastrar.setForeground(new Color(255, 255, 255));
 		btnCadastrar.setBorderPainted(false);
 		btnCadastrar.setBorder(new LineBorder(new Color(0, 0, 0), 1, true));
 		btnCadastrar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				String cpf = txtCPF.getText();
+				String email = txtEmail.getText();
+				String senha = new String(txtSenha.getPassword());
+				String nome = txtNome.getText();
 
-				Usuario user = new Usuario();
+				// Consulta o usuário
+				Usuario u = uDAO.consultaUsuarioCadastrado(cpf, email);
 
-				String Nome = txtNome.getText();
-				String CPF = txtCPF.getText();
-				String Email = txtEmail.getText();
-				String Senha = txtSenha.getText();
-
-				if (!Nome.isEmpty() || !CPF.isEmpty() || !Email.isEmpty() || !Senha.isEmpty()) {
-
-					user.setNome(Nome);
-					user.setCpf(CPF);
-					user.setEmail(Email);
-					user.setSenha(Senha);
-					uDAO.inserirUsuario(user);
-					System.out.println("User inserido!");
-					TelaPerfil perfil = new TelaPerfil();
-					perfil.setLocationRelativeTo(null);
-					perfil.setVisible(true);
-					dispose();
-
-				} else {
+				if (u != null) {
+					System.out.println("Nao deu bom");
 					TelaError erro = new TelaError();
-
-					System.out.println("Campo vazio");
+					erro.setLabelText("CPF ou Email já cadastrado");
 					erro.setLocationRelativeTo(null);
 					erro.setVisible(true);
-				}
 
+				} else {
+					Usuario novoUsuario = new Usuario();
+					if (email.isEmpty() || senha.isEmpty() || cpf.isEmpty() || nome.isEmpty()) {
+
+						TelaError erro = new TelaError();
+						erro.setLabelText("Informações inválidas");
+						erro.setLocationRelativeTo(null);
+						erro.setVisible(true);
+					} else {
+						novoUsuario.setNome(nome);
+						novoUsuario.setCpf(cpf);
+						novoUsuario.setEmail(email);
+						novoUsuario.setSenha(senha);
+						if (!chckboxVendedor.isSelected()) {
+							uDAO.inserirUsuario(novoUsuario);
+							TelaLogin tela = new TelaLogin();
+							tela.setLocationRelativeTo(null);
+							tela.setVisible(true);
+
+							dispose();
+						} else {
+//							TelaCadastroComercio tela = new TelaCadastroComercio(novoUsuario);
+//							tela.setLocationRelativeTo(null);
+//							tela.setVisible(true);
+//	
+//							dispose();
+
+							uDAO.inserirUsuario(novoUsuario);
+							TelaLogin tela = new TelaLogin();
+							tela.setLocationRelativeTo(null);
+							tela.setVisible(true);
+
+							dispose();
+
+						}
+					}
+				}
 			}
 		});
-
-		JLabel lblJaTemConta = new JLabel("Já tem uma conta? Acesse Aqui.");
-		lblJaTemConta.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		lblJaTemConta.setFont(new Font("Dialog", Font.PLAIN, 16));
-		lblJaTemConta.setForeground(new Color(0, 92, 214));
-		lblJaTemConta.addMouseListener(new MouseAdapter() {
+		JLabel lblClique = new JLabel("Acesse Aqui.");
+		sl_PainelBTN.putConstraint(SpringLayout.EAST, btnCadastrar, -9, SpringLayout.EAST, lblClique);
+		lblClique.setHorizontalAlignment(SwingConstants.LEFT);
+		lblClique.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		lblClique.setFont(new Font("Dialog", Font.PLAIN, 14));
+		lblClique.setForeground(new Color(0, 92, 214));
+		lblClique.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				TelaLogin frame = new TelaLogin();
 
-				setVisible(false);
 				frame.setLocationRelativeTo(null);
 				frame.setVisible(true);
+				dispose();
 
 			}
-			
+
 		});
-		SpringLayout sl_PainelBTN = new SpringLayout();
-		sl_PainelBTN.putConstraint(SpringLayout.NORTH, lblJaTemConta, 3, SpringLayout.SOUTH, btnCadastrar);
-		sl_PainelBTN.putConstraint(SpringLayout.WEST, lblJaTemConta, 0, SpringLayout.WEST, btnCadastrar);
-		sl_PainelBTN.putConstraint(SpringLayout.NORTH, btnCadastrar, 0, SpringLayout.NORTH, PainelBTN);
-		sl_PainelBTN.putConstraint(SpringLayout.WEST, btnCadastrar, 97, SpringLayout.WEST, PainelBTN);
-		sl_PainelBTN.putConstraint(SpringLayout.SOUTH, btnCadastrar, 57, SpringLayout.NORTH, PainelBTN);
-		sl_PainelBTN.putConstraint(SpringLayout.EAST, btnCadastrar, 326, SpringLayout.WEST, PainelBTN);
 		PainelBTN.setLayout(sl_PainelBTN);
 		PainelBTN.add(btnCadastrar);
-		PainelBTN.add(lblJaTemConta);
-		PainelKSF.setOpaque(false);
-		PainelKSF.setLayout(null);
+		PainelBTN.add(lblClique);
 
+		JLabel lblJaTemConta = new JLabel("Já tem uma conta?");
+		sl_PainelBTN.putConstraint(SpringLayout.NORTH, lblJaTemConta, 6, SpringLayout.SOUTH, btnCadastrar);
+		sl_PainelBTN.putConstraint(SpringLayout.WEST, btnCadastrar, 9, SpringLayout.WEST, lblJaTemConta);
+		sl_PainelBTN.putConstraint(SpringLayout.WEST, lblJaTemConta, 62, SpringLayout.WEST, PainelBTN);
+		sl_PainelBTN.putConstraint(SpringLayout.NORTH, lblClique, 0, SpringLayout.NORTH, lblJaTemConta);
+		sl_PainelBTN.putConstraint(SpringLayout.WEST, lblClique, 1, SpringLayout.EAST, lblJaTemConta);
+		lblJaTemConta.setHorizontalAlignment(SwingConstants.RIGHT);
+		lblJaTemConta.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
+		lblJaTemConta.setFont(new Font("Dialog", Font.PLAIN, 14));
+		lblJaTemConta.setForeground(new Color(0, 0, 0));
+		PainelBTN.add(lblJaTemConta);
+
+		JPanel panel_3 = new JPanel();
+		panel_3.setOpaque(false);
+		panel.add(panel_3);
+
+		RestrictedTextField validar = new RestrictedTextField(txtCPF);
+		validar.setOnlyNums(true);
+		validar.setLimit(11);
 	}
 }
