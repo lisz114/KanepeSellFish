@@ -256,6 +256,10 @@ public class TelaCadastroComercio extends JFrame {
 		btnCadastrar.setBorder(new LineBorder(new Color(0, 0, 0), 1, true));
 		btnCadastrar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				// verificacao de dados vazios
+
+				// verificacao de cep incorreto
+
 				Endereco endereco = new Endereco();
 				Produtor produtor = new Produtor();
 
@@ -264,32 +268,43 @@ public class TelaCadastroComercio extends JFrame {
 				String cep = txtCEP.getText();
 				String cidade = txtCidade.getText();
 				String bairro = txtBairro.getText();
-				int numero = Integer.parseInt(txtNumero.getText());
+				String numero = txtNumero.getText();
 				String logradouro = txtLogradouro.getText();
 
-				endereco.setCep(cep);
-				endereco.setCidade(cidade);
-				endereco.setBairro(bairro);
-				endereco.setNumero(numero);
-				endereco.setLogradouro(logradouro);
-				
-				eDAO.inserirEnderecoDoComercio(endereco);
-				
-				produtor.setNomeComercio(nomeComercio);
-				produtor.setCnpj(cnpj);
-//				produtor.setIdUsuario(/*id retornado*/);
-//				produtor.setEndereco(/*id retornado ao add endereco*/);
+				if (nomeComercio.isEmpty() || cnpj.isEmpty() || cep.isEmpty() || logradouro.isEmpty()
+						|| bairro.isEmpty() || cidade.isEmpty() || numero.isEmpty()) {
+					TelaError erro = new TelaError();
+					erro.setLabelText("Informações inválidas");
+					erro.setLocationRelativeTo(null);
+					erro.setVisible(true);
+				} else {
 
-				uDAO.inserirUsuario(novoUsuario);
-				
+					endereco.setCep(cep);
+					endereco.setCidade(cidade);
+					endereco.setBairro(bairro);
+					endereco.setNumero(numero);
+					endereco.setLogradouro(logradouro);
 
-				eDAO.inserirEnderecoDoComercio(endereco);
+					eDAO.inserirEnderecoDoComercio(endereco);
 
-				TelaLogin tela = new TelaLogin();
-				tela.setLocationRelativeTo(null);
-				tela.setVisible(true);
+					produtor.setNomeComercio(nomeComercio);
+					produtor.setCnpj(cnpj);
+//					pegar id do endereco e id do usuario e setar no produtor
+//					|
+//					v
+//					produtor.setIdUsuario(/*id retornado*/);
+//					produtor.setEndereco(/*id retornado ao add endereco*/);
 
-				dispose();
+					uDAO.inserirUsuario(novoUsuario);
+
+					TelaLogin tela = new TelaLogin();
+					tela.setLocationRelativeTo(null);
+					tela.setVisible(true);
+
+					dispose();
+
+				}
+
 			}
 		});
 		JLabel lblClique = new JLabel("Acesse Aqui.");
