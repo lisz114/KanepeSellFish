@@ -11,8 +11,7 @@ public class UsuarioDAO implements IUsuarioDAO {
 
 	private static UsuarioDAO instancia;
 
-	private UsuarioDAO() {
-	}
+	private UsuarioDAO() {}
 
 	public static UsuarioDAO getInstancia() {
 
@@ -41,7 +40,7 @@ public class UsuarioDAO implements IUsuarioDAO {
 	@Override
 	public boolean removerUsuario(String cpf) {
 		for (Usuario usuario : listaUsuarios) {
-			if(usuario.getCpf()==cpf) {
+			if(usuario.getCpf().equals(cpf)) {
 				listaUsuarios.remove(usuario);
 			}
 		}

@@ -59,7 +59,11 @@ public class Produto {
 	public void setQuantidadeEstoque(int quantidadeEstoque) {
 		this.quantidadeEstoque = quantidadeEstoque;
 	}
-	 
 	
-
+	public boolean equals(Object obj) {
+		if(this == obj) return true;
+		if(obj == null || getClass() != obj.getClass()) return false;
+		Produto produto = (Produto) obj;
+		return codigo == produto.codigo;
+	}
 }
