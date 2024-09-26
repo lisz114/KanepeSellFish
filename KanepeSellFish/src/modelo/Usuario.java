@@ -6,10 +6,7 @@ public class Usuario {
 	private String email;
 	private String cpf;
 	private String tel;
-//	private String nempresa;
-//	private String cidade;
-//	private String rua;
-//	private String bairro;
+	private int idUsuario;
 
 	public Usuario() {
 	}
@@ -59,5 +56,13 @@ public class Usuario {
 
 	public void setTel(String tel) {
 		this.tel = tel;
+	}
+
+	public int getIdUsuario() {
+		return idUsuario;
+	}
+
+	public void setIdUsuario(int idUsuario) {
+		this.idUsuario = idUsuario;
 	}
 }

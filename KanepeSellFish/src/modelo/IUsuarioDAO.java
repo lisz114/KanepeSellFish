@@ -1,7 +1,7 @@
 package modelo;
 
 public interface IUsuarioDAO {
-	public boolean inserirUsuario(Usuario usuario);
+	public int inserirUsuario(Usuario usuario);
 
 	public boolean alterarUsuario(Usuario usuario);
 
