@@ -63,6 +63,13 @@ public class UsuarioDAO implements IUsuarioDAO {
 		// TODO Auto-generated method stub
 		return false;
 	}
+	@Override
+	public boolean atualizarUsuario(Usuario usuario) {
+		// TODO Auto-generated method stub
+		//String buscar = "select * from Kanepe.Usuarios where cpf_Usuario = ?";
+		
+		return false;
+	}
 
 	@Override
 	public boolean removerUsuario(String cpf) {

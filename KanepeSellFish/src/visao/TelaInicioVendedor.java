@@ -152,7 +152,7 @@ public class TelaInicioVendedor extends JFrame {
 		imgConta.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				TelaPerfil telaPerfil = new TelaPerfil();
+				TelaPerfilVendedor telaPerfil = new TelaPerfilVendedor();
 				telaPerfil.setVisible(true);
 				dispose();
 			}

@@ -99,25 +99,16 @@ public class TelaPerfilVendedor extends JFrame {
 
 		JPanel Panelinfo = new JPanel();
 		Panelinfo.setBorder(null);
-		Panelinfo.setBounds(39, 218, 674, 400);
+		Panelinfo.setBounds(39, 213, 674, 400);
 		PanelPrincipal.add(Panelinfo);
 		GridBagLayout gbl_Panelinfo = new GridBagLayout();
-		gbl_Panelinfo.columnWidths = new int[] { 46, 46, 300, 0, 30, 46, 0 };
-		gbl_Panelinfo.rowHeights = new int[] { 39, 14, 14, 14, 1, 14, 14, 14, 1, 14, 14, 0, 0, 0, 0, 0, 0 };
-		gbl_Panelinfo.columnWeights = new double[] { 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE };
-		gbl_Panelinfo.rowWeights = new double[] { 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
+		gbl_Panelinfo.columnWidths = new int[] { 46, 46, 300, 0, 30, 46, 0, 0, 0 };
+		gbl_Panelinfo.rowHeights = new int[] { 39, 14, 14, 0, 14, 1, 14, 14, 0, 0, 0, 0, 14, 1, 0, 14, 14, 0, 0, 0, 0, 0, 0, 0, 0 };
+		gbl_Panelinfo.columnWeights = new double[] { 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE };
+		gbl_Panelinfo.rowWeights = new double[] { 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
 				0.0, 0.0, Double.MIN_VALUE };
 		Panelinfo.setLayout(gbl_Panelinfo);
 		Panelinfo.setOpaque(false);
-
-		JLabel lblNewLabel_1 = new JLabel("Cidade:");
-		lblNewLabel_1.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		GridBagConstraints gbc_lblNewLabel_1 = new GridBagConstraints();
-		gbc_lblNewLabel_1.anchor = GridBagConstraints.NORTHWEST;
-		gbc_lblNewLabel_1.insets = new Insets(0, 0, 5, 5);
-		gbc_lblNewLabel_1.gridx = 3;
-		gbc_lblNewLabel_1.gridy = 1;
-		Panelinfo.add(lblNewLabel_1, gbc_lblNewLabel_1);
 
 		JLabel lblCidade = new JLabel("");
 		GridBagConstraints gbc_lblCidade = new GridBagConstraints();
@@ -126,50 +117,24 @@ public class TelaPerfilVendedor extends JFrame {
 		gbc_lblCidade.gridx = 3;
 		gbc_lblCidade.gridy = 2;
 		Panelinfo.add(lblCidade, gbc_lblCidade);
+		
+				JLabel lblNewLabel_1 = new JLabel("Cidade:");
+				lblNewLabel_1.setFont(new Font("Tahoma", Font.PLAIN, 15));
+				GridBagConstraints gbc_lblNewLabel_1 = new GridBagConstraints();
+				gbc_lblNewLabel_1.anchor = GridBagConstraints.NORTHWEST;
+				gbc_lblNewLabel_1.insets = new Insets(0, 0, 5, 5);
+				gbc_lblNewLabel_1.gridx = 3;
+				gbc_lblNewLabel_1.gridy = 3;
+				Panelinfo.add(lblNewLabel_1, gbc_lblNewLabel_1);
 
-		JLabel lblNewLabel = new JLabel("Telefone:");
+		JLabel lblNewLabel = new JLabel("Email:");
 		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		GridBagConstraints gbc_lblNewLabel = new GridBagConstraints();
 		gbc_lblNewLabel.anchor = GridBagConstraints.NORTHWEST;
 		gbc_lblNewLabel.insets = new Insets(0, 0, 5, 5);
 		gbc_lblNewLabel.gridx = 1;
-		gbc_lblNewLabel.gridy = 3;
+		gbc_lblNewLabel.gridy = 4;
 		Panelinfo.add(lblNewLabel, gbc_lblNewLabel);
-
-		JLabel lblTel = new JLabel("");
-		lblTel.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		GridBagConstraints gbc_lblTel = new GridBagConstraints();
-		gbc_lblTel.anchor = GridBagConstraints.NORTHWEST;
-		gbc_lblTel.insets = new Insets(0, 0, 5, 5);
-		gbc_lblTel.gridx = 1;
-		gbc_lblTel.gridy = 4;
-		Panelinfo.add(lblTel, gbc_lblTel);
-
-		JLabel lblNewLabel_4 = new JLabel("Bairro:");
-		lblNewLabel_4.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		GridBagConstraints gbc_lblNewLabel_4 = new GridBagConstraints();
-		gbc_lblNewLabel_4.anchor = GridBagConstraints.NORTHWEST;
-		gbc_lblNewLabel_4.insets = new Insets(0, 0, 5, 5);
-		gbc_lblNewLabel_4.gridx = 3;
-		gbc_lblNewLabel_4.gridy = 6;
-		Panelinfo.add(lblNewLabel_4, gbc_lblNewLabel_4);
-
-		JLabel lblBairro = new JLabel("");
-		GridBagConstraints gbc_lblBairro = new GridBagConstraints();
-		gbc_lblBairro.anchor = GridBagConstraints.WEST;
-		gbc_lblBairro.insets = new Insets(0, 0, 5, 5);
-		gbc_lblBairro.gridx = 3;
-		gbc_lblBairro.gridy = 7;
-		Panelinfo.add(lblBairro, gbc_lblBairro);
-
-		JLabel lblNewLabel_2 = new JLabel("Email:");
-		lblNewLabel_2.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		GridBagConstraints gbc_lblNewLabel_2 = new GridBagConstraints();
-		gbc_lblNewLabel_2.anchor = GridBagConstraints.NORTHWEST;
-		gbc_lblNewLabel_2.insets = new Insets(0, 0, 5, 5);
-		gbc_lblNewLabel_2.gridx = 1;
-		gbc_lblNewLabel_2.gridy = 10;
-		Panelinfo.add(lblNewLabel_2, gbc_lblNewLabel_2);
 
 		JLabel lblEmail = new JLabel("");
 		lblEmail.setFont(new Font("Tahoma", Font.PLAIN, 15));
@@ -177,50 +142,103 @@ public class TelaPerfilVendedor extends JFrame {
 		gbc_lblEmail.anchor = GridBagConstraints.NORTHWEST;
 		gbc_lblEmail.insets = new Insets(0, 0, 5, 5);
 		gbc_lblEmail.gridx = 1;
-		gbc_lblEmail.gridy = 11;
+		gbc_lblEmail.gridy = 5;
 		Panelinfo.add(lblEmail, gbc_lblEmail);
+		
+				JLabel lblNewLabel_2 = new JLabel("CPF:");
+				lblNewLabel_2.setFont(new Font("Tahoma", Font.PLAIN, 15));
+				GridBagConstraints gbc_lblNewLabel_2 = new GridBagConstraints();
+				gbc_lblNewLabel_2.anchor = GridBagConstraints.NORTHWEST;
+				gbc_lblNewLabel_2.insets = new Insets(0, 0, 5, 5);
+				gbc_lblNewLabel_2.gridx = 1;
+				gbc_lblNewLabel_2.gridy = 7;
+				Panelinfo.add(lblNewLabel_2, gbc_lblNewLabel_2);
 
-		JLabel lblNewLabel_6 = new JLabel("Rua:");
-		lblNewLabel_6.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		GridBagConstraints gbc_lblNewLabel_6 = new GridBagConstraints();
-		gbc_lblNewLabel_6.insets = new Insets(0, 0, 5, 5);
-		gbc_lblNewLabel_6.anchor = GridBagConstraints.NORTHWEST;
-		gbc_lblNewLabel_6.gridx = 3;
-		gbc_lblNewLabel_6.gridy = 13;
-		Panelinfo.add(lblNewLabel_6, gbc_lblNewLabel_6);
-
-		JLabel lblRua = new JLabel("");
-		GridBagConstraints gbc_lblRua = new GridBagConstraints();
-		gbc_lblRua.anchor = GridBagConstraints.WEST;
-		gbc_lblRua.insets = new Insets(0, 0, 5, 5);
-		gbc_lblRua.gridx = 3;
-		gbc_lblRua.gridy = 14;
-		Panelinfo.add(lblRua, gbc_lblRua);
+		JLabel lblNewLabel_4 = new JLabel("Bairro:");
+		lblNewLabel_4.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		GridBagConstraints gbc_lblNewLabel_4 = new GridBagConstraints();
+		gbc_lblNewLabel_4.anchor = GridBagConstraints.NORTHWEST;
+		gbc_lblNewLabel_4.insets = new Insets(0, 0, 5, 5);
+		gbc_lblNewLabel_4.gridx = 3;
+		gbc_lblNewLabel_4.gridy = 7;
+		Panelinfo.add(lblNewLabel_4, gbc_lblNewLabel_4);
+				
+						JLabel lblBairro = new JLabel("");
+						GridBagConstraints gbc_lblBairro = new GridBagConstraints();
+						gbc_lblBairro.anchor = GridBagConstraints.WEST;
+						gbc_lblBairro.insets = new Insets(0, 0, 5, 5);
+						gbc_lblBairro.gridx = 3;
+						gbc_lblBairro.gridy = 8;
+						Panelinfo.add(lblBairro, gbc_lblBairro);
+		
+				JLabel lblCPF = new JLabel("");
+				lblCPF.setFont(new Font("Tahoma", Font.PLAIN, 15));
+				GridBagConstraints gbc_lblCPF = new GridBagConstraints();
+				gbc_lblCPF.anchor = GridBagConstraints.NORTHWEST;
+				gbc_lblCPF.insets = new Insets(0, 0, 5, 5);
+				gbc_lblCPF.gridx = 1;
+				gbc_lblCPF.gridy = 9;
+				Panelinfo.add(lblCPF, gbc_lblCPF);
+		
+		JLabel lblNewLabel_5 = new JLabel("CNPJ:");
+		lblNewLabel_5.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		GridBagConstraints gbc_lblNewLabel_5 = new GridBagConstraints();
+		gbc_lblNewLabel_5.insets = new Insets(0, 0, 5, 5);
+		gbc_lblNewLabel_5.gridx = 1;
+		gbc_lblNewLabel_5.gridy = 12;
+		Panelinfo.add(lblNewLabel_5, gbc_lblNewLabel_5);
+		
+				JLabel lblNewLabel_6 = new JLabel("Logadouro:");
+				lblNewLabel_6.setFont(new Font("Tahoma", Font.PLAIN, 15));
+				GridBagConstraints gbc_lblNewLabel_6 = new GridBagConstraints();
+				gbc_lblNewLabel_6.insets = new Insets(0, 0, 5, 5);
+				gbc_lblNewLabel_6.anchor = GridBagConstraints.NORTHEAST;
+				gbc_lblNewLabel_6.gridx = 3;
+				gbc_lblNewLabel_6.gridy = 12;
+				Panelinfo.add(lblNewLabel_6, gbc_lblNewLabel_6);
+		
+		JLabel lblNewLabel_3 = new JLabel("Número:");
+		lblNewLabel_3.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		GridBagConstraints gbc_lblNewLabel_3 = new GridBagConstraints();
+		gbc_lblNewLabel_3.insets = new Insets(0, 0, 5, 5);
+		gbc_lblNewLabel_3.gridx = 5;
+		gbc_lblNewLabel_3.gridy = 12;
+		Panelinfo.add(lblNewLabel_3, gbc_lblNewLabel_3);
+		
+		JLabel lblCNPJ = new JLabel("çç");
+		GridBagConstraints gbc_lblCNPJ = new GridBagConstraints();
+		gbc_lblCNPJ.insets = new Insets(0, 0, 5, 5);
+		gbc_lblCNPJ.gridx = 1;
+		gbc_lblCNPJ.gridy = 13;
+		Panelinfo.add(lblCNPJ, gbc_lblCNPJ);
+		
+				JLabel lbllogadouro = new JLabel("ll");
+				GridBagConstraints gbc_lbllogadouro = new GridBagConstraints();
+				gbc_lbllogadouro.anchor = GridBagConstraints.WEST;
+				gbc_lbllogadouro.insets = new Insets(0, 0, 5, 5);
+				gbc_lbllogadouro.gridx = 3;
+				gbc_lbllogadouro.gridy = 13;
+				Panelinfo.add(lbllogadouro, gbc_lbllogadouro);
+		
+		JLabel lblNum = new JLabel("oo");
+		GridBagConstraints gbc_lblNum = new GridBagConstraints();
+		gbc_lblNum.insets = new Insets(0, 0, 5, 5);
+		gbc_lblNum.gridx = 5;
+		gbc_lblNum.gridy = 13;
+		Panelinfo.add(lblNum, gbc_lblNum);
 
 		JPanel panel_2 = new JPanel();
 		panel_2.setBounds(45, 270, 284, 279);
 		panel_1.add(panel_2);
 		panel_2.setLayout(null);
 		panel_2.setOpaque(false);
+		
+				JButton btnNewButton = new RoundButton("Estoque");
+				btnNewButton.setBounds(65, 65, 146, 39);
+				panel_2.add(btnNewButton);
+				btnNewButton.setText("Editar");
+				btnNewButton.setBackground(new Color(154, 205, 217));
+				btnNewButton.setFont(new Font("Tahoma", Font.BOLD, 15));
 
-		JButton btnNewButton = new RoundButton("Estoque");
-		btnNewButton.setBackground(new Color(154, 205, 217));
-		btnNewButton.setFont(new Font("Tahoma", Font.BOLD, 15));
-		btnNewButton.setBounds(67, 80, 143, 34);
-		panel_2.add(btnNewButton);
-
-		JButton btnNewButton_1 = new RoundButton("Excluir Conta");
-		btnNewButton_1.setBackground(new Color(255, 0, 0));
-		btnNewButton_1.setFont(new Font("Tahoma", Font.BOLD, 15));
-		btnNewButton_1.setBounds(67, 169, 143, 34);
-		panel_2.add(btnNewButton_1);
-
-		Usuario user = new Usuario();
-
-		lblNome.setText(user.getNome());
-		lblEmail.setText(user.getEmail());
-//		lblBairro.setText(user.getBairro());
-//		lblCidade.setText(user.getCidade());
-//		lblNomeEmpresa.setText(user.getNempresa());
 	}
 }
