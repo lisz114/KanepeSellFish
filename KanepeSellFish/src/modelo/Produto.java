@@ -1,6 +1,7 @@
 package modelo;
 
 import java.time.LocalDate;
+import java.util.Objects;
 
 public class Produto {
 	
@@ -64,6 +65,11 @@ public class Produto {
 		if(this == obj) return true;
 		if(obj == null || getClass() != obj.getClass()) return false;
 		Produto produto = (Produto) obj;
-		return codigo == produto.codigo;
+		return Double.compare(produto.preco, preco) == 0 &&
+				nome.equals(produto.nome);
+	}
+	
+	public int hashCode() {
+		return Objects.hash(nome, preco);
 	}
 }
