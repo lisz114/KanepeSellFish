@@ -2,15 +2,20 @@ package visao;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.EventQueue;
-import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.SystemColor;
 import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 import javax.swing.ButtonGroup;
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -20,17 +25,20 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 
+import controle.ProdutoDAO;
+import controle.UsuarioDAO;
+import modelo.Produto;
 import net.miginfocom.swing.MigLayout;
-import javax.swing.JButton;
 
 public class TelaCadastroProduto extends JFrame {
 
 	private JPanel contentPane;
-	private JTextField textField;
-	private JTextField textField_1;
-	private JTextField textField_4;
-	private JTextField textField_2;
-
+	private JTextField txtNome;
+	private JTextField txtValidade;
+	private JTextField txtPreco;
+	private JTextField txtQuantidade;
+	private static ProdutoDAO pDAO = ProdutoDAO.getInstancia();
+	
 	/**
 	 * Launch the application.
 	 */
@@ -69,115 +77,172 @@ public class TelaCadastroProduto extends JFrame {
 		getContentPane().add(panelBackground, BorderLayout.CENTER);
 		panelBackground.setLayout(new MigLayout("", "[grow]", "[100px][300px,grow][100px]"));
 		
-		JPanel panel = new JPanel();
-		panel.setOpaque(false);
-		panelBackground.add(panel, "cell 0 0,grow");
+		JPanel panelTitulo = new JPanel();
+		panelTitulo.setOpaque(false);
+		panelBackground.add(panelTitulo, "cell 0 0,grow");
 		
-		JLabel lblNewLabel = new JLabel("Adicionar Produto");
-		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 38));
-		panel.add(lblNewLabel);
+		JLabel lblTitulo = new JLabel("Adicionar Produto");
+		lblTitulo.setFont(new Font("Tahoma", Font.PLAIN, 38));
+		panelTitulo.add(lblTitulo);
 		
-		JPanel panel_2 = new JPanel();
-		panel_2.setOpaque(false);
-		panelBackground.add(panel_2, "cell 0 1,grow");
-		panel_2.setLayout(new GridLayout(0, 2, 0, 0));
+		JPanel panelInformacoes = new JPanel();
+		panelInformacoes.setOpaque(false);
+		panelBackground.add(panelInformacoes, "cell 0 1,grow");
+		panelInformacoes.setLayout(new GridLayout(0, 2, 0, 0));
 		
-		JPanel panel_3 = new JPanel();
-		panel_3.setOpaque(false);
-		panel_3.setBorder(new EmptyBorder(0, 60, 0, 40));
-		panel_2.add(panel_3);
-		panel_3.setLayout(new MigLayout("", "[grow]", "[50px][30px,grow][50px][30px,grow][50px][30px,grow][50px]"));
+		JPanel panelEsquerda = new JPanel();
+		panelEsquerda.setOpaque(false);
+		panelEsquerda.setBorder(new EmptyBorder(0, 60, 0, 40));
+		panelInformacoes.add(panelEsquerda);
+		panelEsquerda.setLayout(new MigLayout("", "[grow]", "[50px][30px,grow][50px][30px,grow][50px][30px,grow][50px]"));
 		
-		textField = new JTextField();
-		textField.setOpaque(false);
-		textField.setToolTipText("");
-		textField.setColumns(10);
-		textField.setBorder(new TitledBorder(new LineBorder(new Color(0, 0, 0), 2), "Nome*", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		textField.setBackground(SystemColor.menu);
-		panel_3.add(textField, "cell 0 0,grow");
+		txtNome = new JTextField();
+		txtNome.setOpaque(false);
+		txtNome.setToolTipText("");
+		txtNome.setColumns(10);
+		txtNome.setBorder(new TitledBorder(new LineBorder(new Color(0, 0, 0), 2), "<html>Nome<span style='color: red;'>*</span></html>", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
+		txtNome.setBackground(SystemColor.menu);
+		panelEsquerda.add(txtNome, "cell 0 0,grow");
 		
-		textField_1 = new JTextField();
-		textField_1.setOpaque(false);
-		textField_1.setToolTipText("");
-		textField_1.setColumns(10);
-		textField_1.setBorder(new TitledBorder(new LineBorder(new Color(0, 0, 0), 2), "Nome*", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		textField_1.setBackground(SystemColor.menu);
-		panel_3.add(textField_1, "cell 0 2,grow");
+		txtValidade = new JTextField();
+		txtValidade.setOpaque(false);
+		txtValidade.setToolTipText("");
+		txtValidade.setColumns(10);
+		txtValidade.setBorder(new TitledBorder(new LineBorder(new Color(0, 0, 0), 2), "<html>Validade<span style='color: red;'>*</span></html>", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
+		txtValidade.setBackground(SystemColor.menu);
+		panelEsquerda.add(txtValidade, "cell 0 2,grow");
 		
-		textField_2 = new JTextField();
-		textField_2.setToolTipText("");
-		textField_2.setOpaque(false);
-		textField_2.setColumns(10);
-		textField_2.setBorder(new TitledBorder(new LineBorder(new Color(0, 0, 0), 2), "Nome*", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		textField_2.setBackground(SystemColor.menu);
-		panel_3.add(textField_2, "cell 0 4,grow");
+		txtQuantidade = new JTextField();
+		txtQuantidade.setToolTipText("");
+		txtQuantidade.setOpaque(false);
+		txtQuantidade.setColumns(10);
+		txtQuantidade.setBorder(new TitledBorder(new LineBorder(new Color(0, 0, 0), 2), "<html>Quantidade<span style='color: red;'>*</span></html>", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
+		txtQuantidade.setBackground(SystemColor.menu);
+		panelEsquerda.add(txtQuantidade, "cell 0 4,grow");
 		
-		textField_4 = new JTextField();
-		textField_4.setToolTipText("");
-		textField_4.setOpaque(false);
-		textField_4.setColumns(10);
-		textField_4.setBorder(new TitledBorder(new LineBorder(new Color(0, 0, 0), 2), "Nome*", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		textField_4.setBackground(SystemColor.menu);
-		panel_3.add(textField_4, "cell 0 6,grow");
+		txtPreco = new JTextField();
+		txtPreco.setToolTipText("");
+		txtPreco.setOpaque(false);
+		txtPreco.setColumns(10);
+		txtPreco.setBorder(new TitledBorder(new LineBorder(new Color(0, 0, 0), 2), "<html>Preco<span style='color: red;'>*</span></html>", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
+		txtPreco.setBackground(SystemColor.menu);
+		panelEsquerda.add(txtPreco, "cell 0 6,grow");
 		
-		JPanel panel_4 = new JPanel();
-		panel_4.setOpaque(false);
-		panel_4.setBorder(new EmptyBorder(5, 40, 0, 60));
-		panel_2.add(panel_4);
-		panel_4.setLayout(new MigLayout("", "[grow]", "[200px][25px][40px]"));
+		JPanel panelDireita = new JPanel();
+		panelDireita.setOpaque(false);
+		panelDireita.setBorder(new EmptyBorder(5, 40, 0, 60));
+		panelInformacoes.add(panelDireita);
+		panelDireita.setLayout(new MigLayout("", "[grow]", "[200px][25px][40px]"));
 		
-		JPanel panel_5 = new JPanel();
-		panel_5.setBorder(new LineBorder(new Color(0, 0, 0)));
-		panel_5.setOpaque(false);
-		panel_4.add(panel_5, "cell 0 0,grow");
+		JPanel panelImage = new JPanel();
+		panelImage.setBorder(new LineBorder(new Color(0, 0, 0)));
+		panelImage.setOpaque(false);
+		panelDireita.add(panelImage, "cell 0 0,grow");
 		
-		JLabel lblNewLabel_1 = new JLabel("Mudar imagem");
-		lblNewLabel_1.setBorder(null);
-		lblNewLabel_1.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		lblNewLabel_1.setForeground(new Color(0, 128, 255));
-		panel_4.add(lblNewLabel_1, "cell 0 1,alignx right");
+		JLabel lblAdcImagem = new JLabel("Adicionar Imagem");
+		lblAdcImagem.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				
+				//Adicionar imagem
+				
+			}
+		});
+		lblAdcImagem.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		lblAdcImagem.setBorder(null);
+		lblAdcImagem.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		lblAdcImagem.setForeground(new Color(0, 128, 255));
+		panelDireita.add(lblAdcImagem, "cell 0 1,alignx right");
 		
-		JRadioButton rdbtnNewRadioButton = new JRadioButton("Água doce");
-		rdbtnNewRadioButton.setBorder(null);
-		rdbtnNewRadioButton.setOpaque(false);
-		rdbtnNewRadioButton.setSelected(true);
-		panel_4.add(rdbtnNewRadioButton, "flowx,cell 0 2");
+		JRadioButton rdbtnDoce = new JRadioButton("Água doce");
+		rdbtnDoce.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		rdbtnDoce.setBorder(null);
+		rdbtnDoce.setOpaque(false);
+		rdbtnDoce.setSelected(true);
+		panelDireita.add(rdbtnDoce, "flowx,cell 0 2");
 		
-		JRadioButton rdbtnNewRadioButton_1 = new JRadioButton("Água salgada");
-		rdbtnNewRadioButton_1.setBorder(null);
-		rdbtnNewRadioButton_1.setOpaque(false);
-		panel_4.add(rdbtnNewRadioButton_1, "cell 0 2");
+		JRadioButton rdbtnSalgada = new JRadioButton("Água salgada");
+		rdbtnSalgada.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		rdbtnSalgada.setBorder(null);
+		rdbtnSalgada.setOpaque(false);
+		panelDireita.add(rdbtnSalgada, "cell 0 2");
 		
 		ButtonGroup g = new ButtonGroup();
-		g.add(rdbtnNewRadioButton_1);
-		g.add(rdbtnNewRadioButton);
+		g.add(rdbtnSalgada);
+		g.add(rdbtnDoce);
 		
-		JPanel panel_1 = new JPanel();
-		panel_1.setOpaque(false);
-		panelBackground.add(panel_1, "cell 0 2,grow");
-		panel_1.setLayout(new GridLayout(1, 0, 0, 0));
+		JPanel panelBotoes = new JPanel();
+		panelBotoes.setOpaque(false);
+		panelBackground.add(panelBotoes, "cell 0 2,grow");
+		panelBotoes.setLayout(new GridLayout(1, 0, 0, 0));
 		
-		JPanel panel_6 = new JPanel();
-		panel_6.setOpaque(false);
-		panel_1.add(panel_6);
-		panel_6.setLayout(new MigLayout("", "[230px][130px]", "[5px][30px,grow][5px]"));
+		JPanel panelAdicionar = new JPanel();
+		panelAdicionar.setOpaque(false);
+		panelBotoes.add(panelAdicionar);
+		panelAdicionar.setLayout(new MigLayout("", "[230px][130px]", "[5px][30px,grow][5px]"));
 		
-		JButton btnNewButton = new RoundButton("Adicionar");
-		btnNewButton.setBackground(new Color(2, 73, 89));
-		btnNewButton.setForeground(new Color(255, 255, 255));
-		btnNewButton.setBorderPainted(false);
-		panel_6.add(btnNewButton, "cell 1 1,grow");
+		JButton btnAdicionar = new RoundButton("Adicionar");
+		btnAdicionar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Produto prod = new Produto();
+				
+				String nome = txtNome.getText();
+				String validade = txtValidade.getText();
+				Float preco = Float.parseFloat(txtPreco.getText());
+				int quantidade = Integer.parseInt(txtQuantidade.getText());
+				
+				if (nome.isEmpty()||validade.isEmpty()||preco==null||quantidade==0) {
+					TelaError erro = new TelaError();
+					erro.setLabelText("Informações inválidas");
+					erro.setLocationRelativeTo(null);
+					erro.setVisible(true);
+				} else {
+					
+					prod.setNome(nome);
+					prod.setQuantidadeEstoque(quantidade);
+					prod.setPreco(preco);
+//					prod.setValidade(validade);
+					
+					if (pDAO.inserirProduto(prod)) {
+						TelaError erro = new TelaError();
+						erro.setLabelText("Adicionado com sucesso");
+						erro.setLocationRelativeTo(null);
+						erro.setVisible(true);
+					}else {
+						TelaError erro = new TelaError();
+						erro.setLabelText("Erro ao adicionar");
+						erro.setLocationRelativeTo(null);
+						erro.setVisible(true);
+					}
+
+				}
+				
+			}
+		});
+		btnAdicionar.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		btnAdicionar.setBackground(new Color(2, 73, 89));
+		btnAdicionar.setForeground(new Color(255, 255, 255));
+		btnAdicionar.setBorderPainted(false);
+		panelAdicionar.add(btnAdicionar, "cell 1 1,grow");
 		
-		JPanel panel_7 = new JPanel();
-		panel_7.setOpaque(false);
-		panel_1.add(panel_7);
-		panel_7.setLayout(new MigLayout("", "[130px][grow]", "[5px][30px,grow][5px]"));
+		JPanel panelCancelar = new JPanel();
+		panelCancelar.setOpaque(false);
+		panelBotoes.add(panelCancelar);
+		panelCancelar.setLayout(new MigLayout("", "[130px][grow]", "[5px][30px,grow][5px]"));
 		
-		JButton btnNewButton_1 = new RoundButton("Cancelar");
-		btnNewButton_1.setBackground(new Color(200, 0, 0));
-		btnNewButton_1.setForeground(new Color(0, 0, 0));
-		btnNewButton_1.setBorderPainted(false);
-		panel_7.add(btnNewButton_1, "cell 0 1,grow");
+		JButton btnCancelar = new RoundButton("Cancelar");
+		btnCancelar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				dispose();
+				
+			}
+		});
+		btnCancelar.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		btnCancelar.setBackground(new Color(200, 0, 0));
+		btnCancelar.setForeground(new Color(0, 0, 0));
+		btnCancelar.setBorderPainted(false);
+		panelCancelar.add(btnCancelar, "cell 0 1,grow");
 	}
 
 }
