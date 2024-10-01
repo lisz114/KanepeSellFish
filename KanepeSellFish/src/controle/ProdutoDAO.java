@@ -1,6 +1,9 @@
 package controle;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
 
 import modelo.IProdutoDAO;
 import modelo.Produto;
@@ -10,8 +13,7 @@ public class ProdutoDAO implements IProdutoDAO {
 	private static ProdutoDAO instancia;
 	private static ArrayList<Produto> listaProdutos;
 
-	private ProdutoDAO() {
-	}
+	private ProdutoDAO() {}
 
 	public ProdutoDAO getInstancia() {
 
@@ -42,5 +44,22 @@ public class ProdutoDAO implements IProdutoDAO {
 			}
 		}
 		return false;
+	}
+	
+	public List<Produto> ordenarPorPreco(boolean crescente, List<Produto> produtos){
+		produtos.sort(Comparator.comparingDouble(Produto::getPreco));
+		if(!crescente) {
+			Collections.reverse(produtos);
+		}
+		return produtos;
+	}
+	
+	public List<Produto> ordenarNome(boolean crescente, List<Produto> produtos){
+		
+		produtos.sort(Comparator.comparing(Produto::getNome));
+		if(!crescente) {
+			Collections.reverse(produtos);
+		}
+		return produtos;
 	}
 }
