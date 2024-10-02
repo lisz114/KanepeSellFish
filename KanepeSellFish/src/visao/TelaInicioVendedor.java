@@ -147,13 +147,14 @@ public class TelaInicioVendedor extends JFrame {
 		ImageIcon notificacao = new ImageIcon(TelaInicioVendedor.class.getResource("/IMG/sino.png"));
 		Image imgN = notificacao.getImage().getScaledInstance(30, 30, Image.SCALE_SMOOTH);
 		imgNotificacao.setIcon(new ImageIcon(imgN));
-
+		
+		/*Ver Perfil Vendedor */
 		JLabel imgConta = new JLabel("");
 		imgConta.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				TelaPerfilVendedor telaPerfil = new TelaPerfilVendedor();
-				telaPerfil.setVisible(true);
+				//TelaPerfilVendedor telaPerfil = new TelaPerfilVendedor();
+				//telaPerfil.setVisible(true);
 				dispose();
 			}
 		});
