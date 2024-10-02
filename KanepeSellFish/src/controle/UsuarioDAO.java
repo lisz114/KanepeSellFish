@@ -146,5 +146,38 @@ public class UsuarioDAO implements IUsuarioDAO {
 		}
 		return null;
 	}
+	
+	// Método para validar CPF
+    public boolean validarCPF(String cpf) {
+        // Remove caracteres não numéricos
+        cpf = cpf.replaceAll("[^0-9]", "");
+
+        // Verifica se o CPF tem 11 dígitos
+        if (cpf.length() != 11) return false;
+
+        // Lógica de validação do CPF
+        int soma = 0;
+        int peso = 10;
+
+        for (int i = 0; i < 9; i++) {
+            soma += Character.getNumericValue(cpf.charAt(i)) * peso;
+            peso--;
+        }
+
+        int primeiroDigito = 11 - (soma % 11);
+        primeiroDigito = primeiroDigito >= 10 ? 0 : primeiroDigito;
+        if (Character.getNumericValue(cpf.charAt(9)) != primeiroDigito) return false;
+
+        soma = 0;
+        peso = 11;
+        for (int i = 0; i < 10; i++) {
+            soma += Character.getNumericValue(cpf.charAt(i)) * peso;
+            peso--;
+        }
+
+        int segundoDigito = 11 - (soma % 11);
+        segundoDigito = segundoDigito >= 10 ? 0 : segundoDigito;
+        return Character.getNumericValue(cpf.charAt(10)) == segundoDigito;
+    }
 
 }

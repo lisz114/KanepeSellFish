@@ -10,5 +10,7 @@ public interface IUsuarioDAO {
 	public Usuario consultarUsuarioLoginSenha(String email, String senha);
 	
 	public Usuario consultaUsuarioCadastrado(String cpf, String email);
-
+	
+    public boolean validarCPF(String cpf);
+    
 }

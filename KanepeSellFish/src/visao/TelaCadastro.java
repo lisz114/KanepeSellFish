@@ -233,6 +233,9 @@ public class TelaCadastro extends JFrame {
 						erro.setLocationRelativeTo(null);
 						erro.setVisible(true);
 					} else {
+						if(uDAO.validarCPF(cpf)) {
+							
+						
 						novoUsuario.setNome(nome);
 						novoUsuario.setCpf(cpf);
 						novoUsuario.setEmail(email);
@@ -253,6 +256,12 @@ public class TelaCadastro extends JFrame {
 							dispose();
 
 						}
+					}else {
+						TelaError erro = new TelaError();
+						erro.setLabelText("CPF Invalido	");
+						erro.setLocationRelativeTo(null);
+						erro.setVisible(true);
+					}
 					}
 				}
 			}
