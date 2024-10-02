@@ -7,33 +7,31 @@ import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.Image;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.util.List;
 
 import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
-import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.JRadioButton;
+import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
+import javax.swing.table.DefaultTableModel;
 
-import modelo.Produto;
 import net.miginfocom.swing.MigLayout;
-import javax.swing.JTable;
 
 public class TelaInicioVendedor extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JTextField textField;
+	private JTable table;
+	private JTable table_1;
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -98,7 +96,7 @@ public class TelaInicioVendedor extends JFrame {
 		imgUp.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				
+
 				// trazer método de pesquisa por maior preço
 			}
 		});
@@ -112,7 +110,7 @@ public class TelaInicioVendedor extends JFrame {
 		imgDown.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				
+
 				// metodo consulta por preco menor
 			}
 		});
@@ -150,11 +148,11 @@ public class TelaInicioVendedor extends JFrame {
 		imgMenu.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				
-		//		if (menu.isVisible) {
-					//menu.setVisible(false);
-				//}else
-				
+
+				// if (menu.isVisible) {
+				// menu.setVisible(false);
+				// }else
+
 			}
 		});
 		imgMenu.setIcon(new ImageIcon(TelaInicioVendedor.class.getResource("/IMG/menu-hamburguer.png")));
@@ -221,38 +219,15 @@ public class TelaInicioVendedor extends JFrame {
 
 		grupo.add(rbAguaDoce);
 		grupo.add(rbAguaSalgada);
-
-		JPanel panel_3 = new JPanel();
-		panel_1.add(panel_3, "cell 3 1,grow");
-		panel_3.setLayout(new MigLayout("", "[200px,grow][20px][200px,grow][20px][200px,grow][20px][200px,grow][20px]",
-				"[][200px][]"));
 		
-				JPanel panel_8 = new JPanel();
-				panel_8.setBackground(new Color(154, 205, 217));
-				panel_3.add(panel_8, "cell 2 1,grow");
-				panel_8.setLayout(new MigLayout("", "[][][][][][][][][][][]", "[][100px][][][][]"));
-				
-						JLabel lblNomeProduto = new JLabel("Nome");
-						lblNomeProduto.setFont(new Font("Tahoma", Font.PLAIN, 13));
-						panel_8.add(lblNomeProduto, "cell 0 3");
-						
-								JLabel lblQuantidadeEstoque = new JLabel("Contém X unidades");
-								lblQuantidadeEstoque.setFont(new Font("Tahoma", Font.PLAIN, 10));
-								panel_8.add(lblQuantidadeEstoque, "cell 10 3");
-								
-										JLabel lblPreco = new JLabel("R$");
-										lblPreco.setFont(new Font("Tahoma", Font.PLAIN, 14));
-										panel_8.add(lblPreco, "cell 0 4");
-										
-												JButton btnNewButton = new JButton("Adicionar");
-												btnNewButton.setForeground(new Color(255, 255, 255));
-												btnNewButton.setBackground(new Color(2, 73, 89));
-												btnNewButton.setFont(new Font("Tahoma", Font.PLAIN, 13));
-												btnNewButton.addActionListener(new ActionListener() {
-													public void actionPerformed(ActionEvent e) {
-													}
-												});
-												panel_8.add(btnNewButton, "cell 10 5");
+		panel_1.add(table, "cell 2 1 2 1,grow");
+		
+		table_1 = new JTable();
+		panel_1.add(table_1, "cell 3 1,grow");
+		String[] colunas = {"Nome", "Quantidade", "Preço"};
+		DefaultTableModel modelo = new DefaultTableModel(colunas, 0);
+
+		table = new JTable(modelo);
 
 	}
 
