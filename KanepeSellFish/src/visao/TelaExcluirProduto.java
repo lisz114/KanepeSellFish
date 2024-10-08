@@ -6,8 +6,7 @@ import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
-
+import controle.ProdutoDAO;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -15,13 +14,13 @@ import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
-import modelo.Produto;
 import net.miginfocom.swing.MigLayout;
 
 @SuppressWarnings("serial")
 public class TelaExcluirProduto extends JFrame {
 
 	private JPanel contentPane;
+
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -71,7 +70,8 @@ public class TelaExcluirProduto extends JFrame {
 		btExcluir.setFont(new Font("/Fontes/Roboto-Black.ttf", Font.PLAIN, 13));
 		btExcluir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
+				ProdutoDAO p = new ProdutoDAO();
+				p.removerProduto(codigo);
 			}
 		});
 
@@ -80,15 +80,12 @@ public class TelaExcluirProduto extends JFrame {
 		btCancelar.setBorder(null);
 		btCancelar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				dispose();
 			}
 		});
 		btCancelar.setFont(new Font("Dialog", Font.PLAIN, 13));
 		btCancelar.setBackground(new Color(8, 127, 140));
 		panel.add(btCancelar, "cell 0 1,grow");
 		panel.add(btExcluir, "cell 3 1,grow");
-	}
-
-	public void setLabelText(String text) {
-		lblExcluirProduto.setText(text);
 	}
 }
