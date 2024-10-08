@@ -48,7 +48,7 @@ public class TelaPerfilVendedor extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(new BorderLayout(0, 0));
 
-		PicPanel panel = new PicPanel("src//IMG/TelaNovaPerfilVendedor");
+		PicPanel panel = new PicPanel("src//IMG/TelaNovadoPerfilVendedor.png");
 		contentPane.add(panel, BorderLayout.CENTER);
 		panel.setLayout(new GridLayout(1, 0, 0, 0));
 
@@ -190,6 +190,7 @@ public class TelaPerfilVendedor extends JFrame {
 
 		JLabel lblCNPJ = new JLabel("çç");
 		GridBagConstraints gbc_lblCNPJ = new GridBagConstraints();
+		gbc_lblCNPJ.anchor = GridBagConstraints.WEST;
 		gbc_lblCNPJ.insets = new Insets(0, 0, 5, 5);
 		gbc_lblCNPJ.gridx = 1;
 		gbc_lblCNPJ.gridy = 16;
@@ -238,9 +239,12 @@ public class TelaPerfilVendedor extends JFrame {
 		lblNewLabel_7.setBounds(21, 57, 85, 14);
 		panel_2.add(lblNewLabel_7);
 
-		JLabel lblDesc = new JLabel("");
-		lblDesc.setBounds(21, 82, 46, 14);
+		JLabel lblDesc = new JLabel("oo");
+		lblDesc.setBounds(21, 82, 253, 14);
 		panel_2.add(lblDesc);
 
+		String valor = new UsuarioDAO().BuscarUsuario(1);
+		lblNome.setText(valor);
+		
 	}
 }

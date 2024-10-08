@@ -23,6 +23,7 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 
 import controle.UsuarioDAO;
+import modelo.RoundButton;
 import modelo.Usuario;
 import net.miginfocom.swing.MigLayout;
 import javax.swing.JPasswordField;

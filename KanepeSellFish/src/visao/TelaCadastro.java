@@ -26,6 +26,7 @@ import javax.swing.border.LineBorder;
 
 import Atxy2k.CustomTextField.RestrictedTextField;
 import controle.UsuarioDAO;
+import modelo.RoundButton;
 import modelo.Usuario;
 import net.miginfocom.swing.MigLayout;
 import javax.swing.JPasswordField;

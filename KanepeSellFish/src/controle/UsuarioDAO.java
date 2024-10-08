@@ -16,7 +16,7 @@ public class UsuarioDAO implements IUsuarioDAO {
 
 	private static UsuarioDAO instancia;
 
-	private UsuarioDAO() {}
+	//private UsuarioDAO() {}
 
 	public static UsuarioDAO getInstancia() {
 
@@ -155,4 +155,20 @@ public class UsuarioDAO implements IUsuarioDAO {
 		return null;
 	}
 
+	public String BuscarUsuario(Integer codUsuario) {
+		try(Connection conn = ConexaoBD.getConexaoMySQL()) {
+			String nomeUsuario = "";
+			PreparedStatement prep = conn.prepareStatement("Select * from Kanepe.Usuarios where nome_Usuario = ?");
+			prep.setInt(1, codUsuario);
+	           ResultSet result = prep.executeQuery();
+	           if (result.next()) {
+	               nomeUsuario = result.getString(1);                
+	           }
+	           return nomeUsuario;
+		} catch (java.sql.SQLException e) {
+			// TODO: handle exception
+			System.out.println(e.getSQLState() + " - " + e.getMessage());
+	           return null;
+		}
+	}
 }
