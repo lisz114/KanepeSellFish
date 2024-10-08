@@ -30,7 +30,7 @@ import controle.UsuarioDAO;
 import modelo.Produto;
 import net.miginfocom.swing.MigLayout;
 
-public class TelaCadastroProduto extends JFrame {
+public class TelaAlterarProduto extends JFrame {
 
 	private JPanel contentPane;
 	private JTextField txtNome;
@@ -46,7 +46,7 @@ public class TelaCadastroProduto extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					TelaCadastroProduto frame = new TelaCadastroProduto();
+					TelaAlterarProduto frame = new TelaAlterarProduto();
 					frame.setLocationRelativeTo(null);
 					frame.setVisible(true);
 				} catch (Exception e) {
@@ -59,7 +59,7 @@ public class TelaCadastroProduto extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public TelaCadastroProduto() {
+	public TelaAlterarProduto() {
 		setTitle("Cadastro de produto");
 		setIconImage(Toolkit.getDefaultToolkit().getImage(TelaCadastroComercio.class.getResource("/img/logo.png")));
 		setResizable(false);
@@ -81,7 +81,7 @@ public class TelaCadastroProduto extends JFrame {
 		panelTitulo.setOpaque(false);
 		panelBackground.add(panelTitulo, "cell 0 0,grow");
 		
-		JLabel lblTitulo = new JLabel("Adicionar Produto");
+		JLabel lblTitulo = new JLabel("Alterar Produto");
 		lblTitulo.setFont(new Font("Tahoma", Font.PLAIN, 38));
 		panelTitulo.add(lblTitulo);
 		
@@ -182,6 +182,7 @@ public class TelaCadastroProduto extends JFrame {
 		panelAdicionar.setLayout(new MigLayout("", "[230px][130px]", "[5px][30px,grow][5px]"));
 		
 		JButton btnAdicionar = new RoundButton("Adicionar");
+		btnAdicionar.setText("Alterar");
 		btnAdicionar.addActionListener(new ActionListener() {
 		    public void actionPerformed(ActionEvent e) {
 		        Produto prod = new Produto();
