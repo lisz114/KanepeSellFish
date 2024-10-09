@@ -14,6 +14,7 @@ import javax.swing.JTextField;
 import javax.swing.SpringLayout;
 import javax.swing.border.LineBorder;
 
+import modelo.EnvioDeEmail;
 import modelo.RoundButton2;
 import net.miginfocom.swing.MigLayout;
 import java.awt.event.ActionListener;
@@ -27,11 +28,13 @@ import com.jgoodies.forms.layout.ColumnSpec;
 import com.jgoodies.forms.layout.RowSpec;
 import javax.swing.SwingConstants;
 
+
+
 public class TelaEsqueceuSenha extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
-	private JTextField textField;
+	private JTextField txtEmail;
 
 	/**
 	 * Launch the application.
@@ -71,10 +74,9 @@ public class TelaEsqueceuSenha extends JFrame {
 		panel.setLayout(sl_panel);
 		
 		JPanel panel_3 = new JPanel();
-		sl_panel.putConstraint(SpringLayout.NORTH, panel_3, 7, SpringLayout.NORTH, panel);
+		sl_panel.putConstraint(SpringLayout.NORTH, panel_3, 38, SpringLayout.NORTH, panel);
 		sl_panel.putConstraint(SpringLayout.WEST, panel_3, 105, SpringLayout.WEST, panel);
-		sl_panel.putConstraint(SpringLayout.SOUTH, panel_3, 126, SpringLayout.NORTH, panel);
-		sl_panel.putConstraint(SpringLayout.EAST, panel_3, 379, SpringLayout.WEST, panel);
+		sl_panel.putConstraint(SpringLayout.EAST, panel_3, -105, SpringLayout.EAST, panel);
 		panel_3.setOpaque(false);
 		panel.add(panel_3);
 		SpringLayout sl_panel_3 = new SpringLayout();
@@ -87,10 +89,10 @@ public class TelaEsqueceuSenha extends JFrame {
 		panel_3.add(lblNewLabel);
 		
 		JPanel panel_1 = new JPanel();
-		sl_panel.putConstraint(SpringLayout.NORTH, panel_1, 127, SpringLayout.NORTH, panel);
-		sl_panel.putConstraint(SpringLayout.WEST, panel_1, 105, SpringLayout.WEST, panel);
-		sl_panel.putConstraint(SpringLayout.SOUTH, panel_1, 178, SpringLayout.NORTH, panel);
-		sl_panel.putConstraint(SpringLayout.EAST, panel_1, 379, SpringLayout.WEST, panel);
+		sl_panel.putConstraint(SpringLayout.NORTH, panel_1, 185, SpringLayout.NORTH, panel);
+		sl_panel.putConstraint(SpringLayout.SOUTH, panel_3, -28, SpringLayout.NORTH, panel_1);
+		sl_panel.putConstraint(SpringLayout.WEST, panel_1, 0, SpringLayout.WEST, panel_3);
+		sl_panel.putConstraint(SpringLayout.EAST, panel_1, -105, SpringLayout.EAST, panel);
 		panel_1.setOpaque(false);
 		panel.add(panel_1);
 		panel_1.setLayout(new MigLayout("", "[][][][][grow][][]", "[][][][][][]"));
@@ -103,39 +105,35 @@ public class TelaEsqueceuSenha extends JFrame {
 		panel_1.add(lblNewLabel_1, "cell 2 0,alignx center");
 		
 		JPanel panel_2 = new JPanel();
-		sl_panel.putConstraint(SpringLayout.NORTH, panel_2, 6, SpringLayout.SOUTH, panel_1);
+		sl_panel.putConstraint(SpringLayout.NORTH, panel_2, 242, SpringLayout.NORTH, panel);
 		sl_panel.putConstraint(SpringLayout.WEST, panel_2, 0, SpringLayout.WEST, panel_3);
-		sl_panel.putConstraint(SpringLayout.SOUTH, panel_2, 374, SpringLayout.NORTH, panel);
-		sl_panel.putConstraint(SpringLayout.EAST, panel_2, 379, SpringLayout.WEST, panel);
+		sl_panel.putConstraint(SpringLayout.EAST, panel_2, 0, SpringLayout.EAST, panel_3);
 		panel_2.setOpaque(false);
 		
 		JLabel lblNewLabel_1_1 = new JLabel(" redefinir sua senha.");
 		lblNewLabel_1_1.setFont(new Font("Dialog", Font.BOLD, 12));
 		panel_1.add(lblNewLabel_1_1, "cell 2 1,alignx center");
 		panel.add(panel_2);
-		SpringLayout sl_panel_2 = new SpringLayout();
-		panel_2.setLayout(sl_panel_2);
+		panel_2.setLayout(null);
 		
-		textField = new JTextField();
-		sl_panel_2.putConstraint(SpringLayout.NORTH, textField, 70, SpringLayout.NORTH, panel_2);
-		sl_panel_2.putConstraint(SpringLayout.WEST, textField, 10, SpringLayout.WEST, panel_2);
-		sl_panel_2.putConstraint(SpringLayout.SOUTH, textField, -90, SpringLayout.SOUTH, panel_2);
-		sl_panel_2.putConstraint(SpringLayout.EAST, textField, -10, SpringLayout.EAST, panel_2);
-		panel_2.add(textField);
-		textField.setBorder(new LineBorder(new Color(0, 0, 0), 2));
-		textField.setOpaque(false);
-		textField.setColumns(10);
+		txtEmail = new JTextField();
+		txtEmail.setBounds(10, 54, 254, 30);
+		panel_2.add(txtEmail);
+		txtEmail.setBorder(new LineBorder(new Color(0, 0, 0), 2));
+		txtEmail.setOpaque(false);
+		txtEmail.setColumns(10);
 		
 		JPanel panel_1_1 = new JPanel();
-		sl_panel.putConstraint(SpringLayout.NORTH, panel_1_1, 6, SpringLayout.SOUTH, panel_2);
+		sl_panel.putConstraint(SpringLayout.SOUTH, panel_1, -107, SpringLayout.NORTH, panel_1_1);
+		sl_panel.putConstraint(SpringLayout.SOUTH, panel_2, -6, SpringLayout.NORTH, panel_1_1);
+		sl_panel.putConstraint(SpringLayout.NORTH, panel_1_1, 343, SpringLayout.NORTH, panel);
+		sl_panel.putConstraint(SpringLayout.SOUTH, panel_1_1, -99, SpringLayout.SOUTH, panel);
 		sl_panel.putConstraint(SpringLayout.WEST, panel_1_1, 0, SpringLayout.WEST, panel_3);
-		sl_panel.putConstraint(SpringLayout.SOUTH, panel_1_1, -62, SpringLayout.SOUTH, panel);
 		sl_panel.putConstraint(SpringLayout.EAST, panel_1_1, 0, SpringLayout.EAST, panel_3);
 		
 		JLabel lblNewLabel_2 = new JLabel("<html>Email<span style='color: red;'>*</span></html>");
+		lblNewLabel_2.setBounds(10, 32, 36, 16);
 		lblNewLabel_2.setFont(new Font("Dialog", Font.BOLD, 12));
-		sl_panel_2.putConstraint(SpringLayout.WEST, lblNewLabel_2, 10, SpringLayout.WEST, panel_2);
-		sl_panel_2.putConstraint(SpringLayout.SOUTH, lblNewLabel_2, -6, SpringLayout.NORTH, textField);
 		panel_2.add(lblNewLabel_2);
 		panel_1_1.setOpaque(false);
 		panel.add(panel_1_1);
@@ -143,8 +141,16 @@ public class TelaEsqueceuSenha extends JFrame {
 		panel_1_1.setLayout(sl_panel_1_1);
 		
 		RoundButton2 btnCadastrar = new RoundButton2("Enviar");
+		btnCadastrar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			EnvioDeEmail enviar = new EnvioDeEmail();
+				
+			
+			}
+		});
 		sl_panel_1_1.putConstraint(SpringLayout.NORTH, btnCadastrar, 10, SpringLayout.NORTH, panel_1_1);
-		sl_panel_1_1.putConstraint(SpringLayout.EAST, btnCadastrar, -102, SpringLayout.EAST, panel_1_1);
+		sl_panel_1_1.putConstraint(SpringLayout.WEST, btnCadastrar, 85, SpringLayout.WEST, panel_1_1);
+		sl_panel_1_1.putConstraint(SpringLayout.EAST, btnCadastrar, -85, SpringLayout.EAST, panel_1_1);
 		btnCadastrar.setText("Enviar");
 		btnCadastrar.setForeground(Color.WHITE);
 		btnCadastrar.setFont(new Font("Dialog", Font.PLAIN, 22));
@@ -156,35 +162,40 @@ public class TelaEsqueceuSenha extends JFrame {
 		JLabel lblNoPossuiUma = new JLabel("Não Possui uma conta?");
 		sl_panel_1_1.putConstraint(SpringLayout.SOUTH, btnCadastrar, -6, SpringLayout.NORTH, lblNoPossuiUma);
 		sl_panel_1_1.putConstraint(SpringLayout.NORTH, lblNoPossuiUma, 47, SpringLayout.NORTH, panel_1_1);
+		sl_panel_1_1.putConstraint(SpringLayout.WEST, lblNoPossuiUma, 35, SpringLayout.WEST, panel_1_1);
+		sl_panel_1_1.putConstraint(SpringLayout.EAST, lblNoPossuiUma, 174, SpringLayout.WEST, panel_1_1);
 		lblNoPossuiUma.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblNoPossuiUma.setForeground(Color.BLACK);
-		lblNoPossuiUma.setFont(new Font("Dialog", Font.PLAIN, 11));
+		lblNoPossuiUma.setFont(new Font("Dialog", Font.PLAIN, 13));
 		panel_1_1.add(lblNoPossuiUma);
 		
 		JLabel lblCadastrese = new JLabel(" Cadastre-se");
-		sl_panel_1_1.putConstraint(SpringLayout.EAST, lblNoPossuiUma, -1, SpringLayout.WEST, lblCadastrese);
-		sl_panel_1_1.putConstraint(SpringLayout.WEST, lblCadastrese, 175, SpringLayout.WEST, panel_1_1);
+		sl_panel_1_1.putConstraint(SpringLayout.WEST, lblCadastrese, -99, SpringLayout.EAST, panel_1_1);
+		sl_panel_1_1.putConstraint(SpringLayout.EAST, lblCadastrese, -25, SpringLayout.EAST, panel_1_1);
 		lblCadastrese.setHorizontalAlignment(SwingConstants.LEFT);
 		lblCadastrese.setForeground(new Color(0, 92, 214));
-		lblCadastrese.setFont(new Font("Dialog", Font.PLAIN, 11));
+		lblCadastrese.setFont(new Font("Dialog", Font.PLAIN, 13));
 		panel_1_1.add(lblCadastrese);
 		
 		JLabel lblLembraDaSenha = new JLabel("Lembra da senha?");
-		sl_panel_1_1.putConstraint(SpringLayout.WEST, btnCadastrar, 0, SpringLayout.WEST, lblLembraDaSenha);
-		sl_panel_1_1.putConstraint(SpringLayout.NORTH, lblLembraDaSenha, 6, SpringLayout.SOUTH, lblNoPossuiUma);
+		sl_panel_1_1.putConstraint(SpringLayout.SOUTH, lblNoPossuiUma, -6, SpringLayout.NORTH, lblLembraDaSenha);
+		sl_panel_1_1.putConstraint(SpringLayout.NORTH, lblLembraDaSenha, -48, SpringLayout.SOUTH, panel_1_1);
+		sl_panel_1_1.putConstraint(SpringLayout.SOUTH, lblLembraDaSenha, -30, SpringLayout.SOUTH, panel_1_1);
+		sl_panel_1_1.putConstraint(SpringLayout.WEST, lblLembraDaSenha, 68, SpringLayout.WEST, panel_1_1);
+		sl_panel_1_1.putConstraint(SpringLayout.EAST, lblLembraDaSenha, 175, SpringLayout.WEST, panel_1_1);
 		lblLembraDaSenha.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblLembraDaSenha.setForeground(Color.BLACK);
-		lblLembraDaSenha.setFont(new Font("Dialog", Font.PLAIN, 11));
+		lblLembraDaSenha.setFont(new Font("Dialog", Font.PLAIN, 13));
 		panel_1_1.add(lblLembraDaSenha);
 		
 		JLabel lblLogin = new JLabel(" Login");
-		sl_panel_1_1.putConstraint(SpringLayout.EAST, lblLembraDaSenha, 0, SpringLayout.WEST, lblLogin);
+		sl_panel_1_1.putConstraint(SpringLayout.NORTH, lblLogin, 71, SpringLayout.NORTH, panel_1_1);
+		sl_panel_1_1.putConstraint(SpringLayout.NORTH, lblCadastrese, -24, SpringLayout.NORTH, lblLogin);
+		sl_panel_1_1.putConstraint(SpringLayout.WEST, lblLogin, 175, SpringLayout.WEST, panel_1_1);
 		sl_panel_1_1.putConstraint(SpringLayout.SOUTH, lblCadastrese, -6, SpringLayout.NORTH, lblLogin);
-		sl_panel_1_1.putConstraint(SpringLayout.NORTH, lblLogin, 6, SpringLayout.SOUTH, lblNoPossuiUma);
-		sl_panel_1_1.putConstraint(SpringLayout.WEST, lblLogin, 0, SpringLayout.WEST, lblCadastrese);
 		lblLogin.setHorizontalAlignment(SwingConstants.LEFT);
 		lblLogin.setForeground(new Color(0, 92, 214));
-		lblLogin.setFont(new Font("Dialog", Font.PLAIN, 11));
+		lblLogin.setFont(new Font("Dialog", Font.PLAIN, 13));
 		panel_1_1.add(lblLogin);
 
 		
