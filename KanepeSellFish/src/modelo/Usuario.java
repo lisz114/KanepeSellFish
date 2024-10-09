@@ -7,6 +7,7 @@ public class Usuario {
 	private String email;
 	private String cpf;
 	private String tel;
+	private int idUsuario;
 
 	public Usuario() {}
 
@@ -56,6 +57,10 @@ public class Usuario {
 	public void setTel(String tel) {
 		this.tel = tel;
 	}
+  
+  	public void setIdUsuario(int idUsuario) {
+		this.idUsuario = idUsuario;
+	}
 
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -64,5 +69,8 @@ public class Usuario {
 			return false;
 		Usuario usuario = (Usuario) obj;
 		return cpf == usuario.cpf;
+
+	public int getIdUsuario() {
+		return idUsuario;
 	}
 }

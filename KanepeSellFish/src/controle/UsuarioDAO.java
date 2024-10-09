@@ -29,34 +29,32 @@ public class UsuarioDAO implements IUsuarioDAO {
 	}
 
 	@Override
-	public boolean inserirUsuario(Usuario usuario) {
-		String sql = "INSERT INTO usuarios (email_Usuario, senha_Usuario, cpf_Usuario, nome_Usuario) VALUES (?, ?, ?, ?)";
-		try (Connection conn = ConexaoBD.getConexaoMySQL();
-				PreparedStatement pstmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+	public int inserirUsuario(Usuario usuario) {
+	    String sql = "INSERT INTO usuarios (email_Usuario, senha_Usuario, cpf_Usuario, nome_Usuario) VALUES (?, ?, ?, ?)";
+	    try (Connection conn = ConexaoBD.getConexaoMySQL();
+	            PreparedStatement pstmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
 
-			pstmt.setString(1, usuario.getEmail());
-			pstmt.setString(2, usuario.getSenha());
-			pstmt.setString(3, usuario.getCpf());
-			pstmt.setString(4, usuario.getNome());
+	        pstmt.setString(1, usuario.getEmail());
+	        pstmt.setString(2, usuario.getSenha());
+	        pstmt.setString(3, usuario.getCpf());
+	        pstmt.setString(4, usuario.getNome());
 
-			pstmt.executeUpdate();
+	        pstmt.executeUpdate();
 
-			ResultSet rs = pstmt.getGeneratedKeys(); // Retrieve the automatically 2
-			// generated key value in a ResultSet.
-			// Only one row is returned.
-			// Create ResultSet for query
-			while (rs.next()) {
-				java.math.BigDecimal idColVar = rs.getBigDecimal(1);
-				// Get automatically generated key
-				// value
-			}
+	        ResultSet rs = pstmt.getGeneratedKeys();
+	        if (rs.next()) {
+	            return rs.getInt(1);  // Retorna o ID gerado
+	        }
 
-			return true;
-		} catch (SQLException e) {
-			e.printStackTrace();
-			return false;
-		}
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+
+	    return -1;  // Retorna -1 em caso de erro
 	}
+
+
+
 
 	@Override
 	public boolean alterarUsuario(Usuario usuario) {
@@ -147,5 +145,38 @@ public class UsuarioDAO implements IUsuarioDAO {
 		}
 		return null;
 	}
+	
+	// Método para validar CPF
+    public boolean validarCPF(String cpf) {
+        // Remove caracteres não numéricos
+        cpf = cpf.replaceAll("[^0-9]", "");
+
+        // Verifica se o CPF tem 11 dígitos
+        if (cpf.length() != 11) return false;
+
+        // Lógica de validação do CPF
+        int soma = 0;
+        int peso = 10;
+
+        for (int i = 0; i < 9; i++) {
+            soma += Character.getNumericValue(cpf.charAt(i)) * peso;
+            peso--;
+        }
+
+        int primeiroDigito = 11 - (soma % 11);
+        primeiroDigito = primeiroDigito >= 10 ? 0 : primeiroDigito;
+        if (Character.getNumericValue(cpf.charAt(9)) != primeiroDigito) return false;
+
+        soma = 0;
+        peso = 11;
+        for (int i = 0; i < 10; i++) {
+            soma += Character.getNumericValue(cpf.charAt(i)) * peso;
+            peso--;
+        }
+
+        int segundoDigito = 11 - (soma % 11);
+        segundoDigito = segundoDigito >= 10 ? 0 : segundoDigito;
+        return Character.getNumericValue(cpf.charAt(10)) == segundoDigito;
+    }
 
 }
