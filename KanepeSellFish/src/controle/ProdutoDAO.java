@@ -1,44 +1,63 @@
 package controle;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
 
 import modelo.IProdutoDAO;
 import modelo.Produto;
 
-public class ProdutoDAO implements IProdutoDAO{
+public class ProdutoDAO implements IProdutoDAO {
+
 	private static ProdutoDAO instancia;
+	private static ArrayList<Produto> listaProdutos;
 
-	private ProdutoDAO() {
-	}
+	private ProdutoDAO() {}
 
-	public static ProdutoDAO getInstancia() {
+	public ProdutoDAO getInstancia() {
 
 		if (instancia == null) {
 			instancia = new ProdutoDAO();
+			listaProdutos = new ArrayList<>();
 		}
 
 		return instancia;
 	}
+	public boolean inserirProduto(Produto produto) {
 
-	@Override
-	public boolean inserirProduto(Produto prod) {
-		// TODO Auto-generated method stub
+		listaProdutos.add(produto);
+
 		return false;
 	}
 
-	@Override
-	public boolean removerProduto(int idProduto) {
-		// TODO Auto-generated method stub
+	public boolean alterarProduto(Produto produto) {
 		return false;
 	}
 
-	@Override
-	public boolean atualizarProduto(Produto prod) {
-		// TODO Auto-generated method stub
+	public boolean removerProduto(long codigo) {
+
+		for (Produto produto : listaProdutos) {
+			if (produto.getCodigo().equals(produto.getCodigo())) {
+				listaProdutos.remove(produto);
+			}
+		}
 		return false;
 	}
-
-	@Override
-	public boolean listarProdutos() {
-		// TODO Auto-generated method stub
-		return false;
+	
+	public List<Produto> ordenarPorPreco(boolean crescente, List<Produto> produtos){
+		produtos.sort(Comparator.comparingDouble(Produto::getPreco));
+		if(!crescente) {
+			Collections.reverse(produtos);
+		}
+		return produtos;
+	}
+	
+	public List<Produto> ordenarNome(boolean crescente, List<Produto> produtos){
+		
+		produtos.sort(Comparator.comparing(Produto::getNome));
+		if(!crescente) {
+			Collections.reverse(produtos);
+		}
+		return produtos;
 	}
 }

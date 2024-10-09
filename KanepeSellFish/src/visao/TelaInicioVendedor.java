@@ -1,7 +1,7 @@
 package visao;
-
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.Font;
@@ -13,22 +13,23 @@ import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JRadioButton;
-import javax.swing.border.EmptyBorder;
-import net.miginfocom.swing.MigLayout;
 import javax.swing.JPopupMenu;
-import java.awt.Component;
-import javax.swing.JButton;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
+import javax.swing.JRadioButton;
+import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
+import javax.swing.border.EmptyBorder;
+import javax.swing.table.DefaultTableModel;
+
+import net.miginfocom.swing.MigLayout;
 
 public class TelaInicioVendedor extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JTextField textField;
+	private JTable table;
+	private JTable table_1;
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -72,8 +73,8 @@ public class TelaInicioVendedor extends JFrame {
 		panel_7.setLayout(new MigLayout("", "[300px,grow]", "[][80px][]"));
 
 		textField = new JTextField();
-		textField.setHorizontalAlignment(SwingConstants.RIGHT);
-		textField.setBackground(new Color(192, 192, 192));
+		textField.setHorizontalAlignment(SwingConstants.CENTER);
+		textField.setBackground(new Color(245, 245, 245));
 		panel_7.add(textField, "cell 0 0,grow");
 		textField.setColumns(50);
 
@@ -90,6 +91,13 @@ public class TelaInicioVendedor extends JFrame {
 		lblOrdenar.setFont(new Font("/Fontes/Roboto-Black.ttf", Font.PLAIN, 14));
 
 		JLabel imgUp = new JLabel("");
+		imgUp.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+
+				// trazer método de pesquisa por maior preço
+			}
+		});
 		imgUp.setIcon(new ImageIcon(TelaInicioVendedor.class.getResource("/IMG/imgUp.png")));
 		panel_2.add(imgUp, "cell 3 1,alignx center");
 		ImageIcon iconUp = new ImageIcon(TelaInicioVendedor.class.getResource("/IMG/imgUp.png"));
@@ -97,6 +105,13 @@ public class TelaInicioVendedor extends JFrame {
 		imgUp.setIcon(new ImageIcon(imgU));
 
 		JLabel imgDown = new JLabel("");
+		imgDown.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+
+				// metodo consulta por preco menor
+			}
+		});
 		imgDown.setIcon(new ImageIcon(TelaInicioVendedor.class.getResource("/IMG/imgDown.png")));
 		panel_2.add(imgDown, "cell 5 1,alignx center");
 		ImageIcon iconDown = new ImageIcon(TelaInicioVendedor.class.getResource("/IMG/imgDown.png"));
@@ -128,6 +143,16 @@ public class TelaInicioVendedor extends JFrame {
 		Image more = iconMore.getImage().getScaledInstance(40, 40, Image.SCALE_SMOOTH);
 
 		JLabel imgMenu = new JLabel("");
+		imgMenu.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+
+				// if (menu.isVisible) {
+				// menu.setVisible(false);
+				// }else
+
+			}
+		});
 		imgMenu.setIcon(new ImageIcon(TelaInicioVendedor.class.getResource("/IMG/menu-hamburguer.png")));
 		panel.add(imgMenu, "cell 0 0");
 		ImageIcon menu = new ImageIcon(TelaInicioVendedor.class.getResource("/IMG/menu-hamburguer.png"));
@@ -192,63 +217,15 @@ public class TelaInicioVendedor extends JFrame {
 
 		grupo.add(rbAguaDoce);
 		grupo.add(rbAguaSalgada);
-
-		JPanel panel_3 = new JPanel();
-		panel_1.add(panel_3, "cell 3 1,grow");
-		panel_3.setLayout(new MigLayout("", "[200px,grow][20px][200px,grow][20px][200px,grow][20px][200px,grow][20px]",
-				"[][200px][]"));
-
-		JPanel panel_8 = new JPanel();
-		panel_8.setBackground(new Color(154, 205, 217));
-		panel_3.add(panel_8, "cell 0 1,grow");
-		panel_8.setLayout(new MigLayout("", "[][][][][][][][][][][]", "[][100px][][][][]"));
-
-		JLabel lblNomeProduto = new JLabel("Nome");
-		lblNomeProduto.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		panel_8.add(lblNomeProduto, "cell 0 3");
-
-		JLabel lblQuantidadeEstoque = new JLabel("Contém X unidades");
-		lblQuantidadeEstoque.setFont(new Font("Tahoma", Font.PLAIN, 10));
-		panel_8.add(lblQuantidadeEstoque, "cell 10 3");
-
-		JLabel lblPreco = new JLabel("R$");
-		lblPreco.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		panel_8.add(lblPreco, "cell 0 4");
-
-		JButton btnNewButton = new JButton("Adicionar");
-		btnNewButton.setForeground(new Color(255, 255, 255));
-		btnNewButton.setBackground(new Color(2, 73, 89));
-		btnNewButton.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		btnNewButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
-		panel_8.add(btnNewButton, "cell 10 5");
-
-		JPanel panel_4 = new JPanel();
-		panel_4.setBackground(new Color(154, 205, 217));
-		panel_3.add(panel_4, "cell 2 1,grow");
-		panel_4.setLayout(new MigLayout("", "[]", "[][][][][]"));
 		
-		JLabel lblNewLabel_1 = new JLabel("New label");
-		lblNewLabel_1.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		panel_4.add(lblNewLabel_1, "cell 0 4");
-
-		JPanel panel_5 = new JPanel();
-		panel_5.setBackground(new Color(154, 205, 217));
-		panel_3.add(panel_5, "cell 4 1,grow");
-		panel_5.setLayout(new MigLayout("", "[]", "[][][][][]"));
+		panel_1.add(table, "cell 2 1 2 1,grow");
 		
-		JLabel lblNewLabel = new JLabel("New label");
-		panel_5.add(lblNewLabel, "cell 0 4");
+		table_1 = new JTable();
+		panel_1.add(table_1, "cell 3 1,grow");
+		String[] colunas = {"Nome", "Quantidade", "Preço"};
+		DefaultTableModel modelo = new DefaultTableModel(colunas, 0);
 
-		JPanel panel_6 = new JPanel();
-		panel_6.setBackground(new Color(154, 205, 217));
-		panel_3.add(panel_6, "cell 6 1,grow");
-		panel_6.setLayout(new MigLayout("", "[]", "[][][][][]"));
-		
-		JLabel lblNewLabel_2 = new JLabel("New label");
-		panel_6.add(lblNewLabel_2, "cell 0 4");
+		table = new JTable(modelo);
 
 	}
 
