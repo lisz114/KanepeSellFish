@@ -39,27 +39,7 @@ public class TelaCadastroProduto extends JFrame {
 	private JTextField txtQuantidade;
 	private static ProdutoDAO pDAO = ProdutoDAO.getInstancia();
 	
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					TelaCadastroProduto frame = new TelaCadastroProduto();
-					frame.setLocationRelativeTo(null);
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
-	/**
-	 * Create the frame.
-	 */
-	public TelaCadastroProduto() {
+	public TelaCadastroProduto(TelaEstoque janelaPrincipal) {
 		setTitle("Cadastro de produto");
 		setIconImage(Toolkit.getDefaultToolkit().getImage(TelaCadastroComercio.class.getResource("/img/logo.png")));
 		setResizable(false);
@@ -230,6 +210,8 @@ public class TelaCadastroProduto extends JFrame {
 		        // prod.setValidade(validade); // Descomente se necessário
 
 		        if (pDAO.inserirProduto(prod)) {
+		        	janelaPrincipal.atualizarTabela();;
+					dispose();
 		            TelaError erro = new TelaError();
 		            erro.setLabelText("Adicionado com sucesso");
 		            erro.setLocationRelativeTo(null);

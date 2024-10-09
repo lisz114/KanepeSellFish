@@ -26,7 +26,6 @@ import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 
 import controle.ProdutoDAO;
-import controle.UsuarioDAO;
 import modelo.Produto;
 import net.miginfocom.swing.MigLayout;
 
@@ -181,9 +180,9 @@ public class TelaAlterarProduto extends JFrame {
 		panelBotoes.add(panelAdicionar);
 		panelAdicionar.setLayout(new MigLayout("", "[230px][130px]", "[5px][30px,grow][5px]"));
 		
-		JButton btnAdicionar = new RoundButton("Adicionar");
-		btnAdicionar.setText("Alterar");
-		btnAdicionar.addActionListener(new ActionListener() {
+		JButton btnAlterar = new RoundButton("Adicionar");
+		btnAlterar.setText("Alterar");
+		btnAlterar.addActionListener(new ActionListener() {
 		    public void actionPerformed(ActionEvent e) {
 		        Produto prod = new Produto();
 		        
@@ -244,11 +243,11 @@ public class TelaAlterarProduto extends JFrame {
 		    }
 		});
 
-		btnAdicionar.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		btnAdicionar.setBackground(new Color(2, 73, 89));
-		btnAdicionar.setForeground(new Color(255, 255, 255));
-		btnAdicionar.setBorderPainted(false);
-		panelAdicionar.add(btnAdicionar, "cell 1 1,grow");
+		btnAlterar.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		btnAlterar.setBackground(new Color(2, 73, 89));
+		btnAlterar.setForeground(new Color(255, 255, 255));
+		btnAlterar.setBorderPainted(false);
+		panelAdicionar.add(btnAlterar, "cell 1 1,grow");
 		
 		JPanel panelCancelar = new JPanel();
 		panelCancelar.setOpaque(false);
@@ -268,6 +267,22 @@ public class TelaAlterarProduto extends JFrame {
 		btnCancelar.setForeground(new Color(0, 0, 0));
 		btnCancelar.setBorderPainted(false);
 		panelCancelar.add(btnCancelar, "cell 0 1,grow");
+	}
+	
+	public void mostrarDados(Produto produtoSelecionado) {
+		
+		txtNome.setText(produtoSelecionado.getNome());
+		txtQuantidade.setText(String.valueOf(produtoSelecionado.getQuantidadeEstoque()));
+//		txtValidade.setText(null);
+		txtPreco.setText(String.valueOf(produtoSelecionado.getPreco()));
+		/*if(é agua salgaa) {
+			rdbtnSalgada.setSelected();
+		}else{
+			rdbtnDoce.setSelected();
+		}*/
+		
+		//setar imagem  tiver
+		
 	}
 
 }
