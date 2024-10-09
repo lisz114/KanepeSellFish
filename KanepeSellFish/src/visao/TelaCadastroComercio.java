@@ -7,6 +7,7 @@ import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.GridLayout;
+import java.awt.Image;
 import java.awt.SystemColor;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
@@ -167,20 +168,25 @@ public class TelaCadastroComercio extends JFrame {
 		txtCEP.setColumns(10);
 		panelEmail.add(txtCEP, "cell 0 1,grow");
 
-		JButton btnProcurarCep = new JButton("");
-		btnProcurarCep.setBackground(SystemColor.control);
-		btnProcurarCep.setBorder(null);
-		btnProcurarCep.setOpaque(false);
-		btnProcurarCep.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
+		JLabel lblImagem = new JLabel("");
+		lblImagem.setToolTipText("Procurar CEP");
+		lblImagem.setName("");
+		lblImagem.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
 				Endereco endereco = eDAO.buscaCEP(txtCEP.getText());
 				txtLogradouro.setText(endereco.getLogradouro());
 				txtBairro.setText(endereco.getBairro());
 				txtCidade.setText(endereco.getCidade());
+
 			}
 		});
-		btnProcurarCep.setIcon(new ImageIcon(TelaCadastroComercio.class.getResource("/img/verifica.png")));
-		panelEmail.add(btnProcurarCep, "cell 1 1,grow");
+		lblImagem.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		lblImagem.setIcon(new ImageIcon(TelaCadastroComercio.class.getResource("/img/procurar.png")));
+		panelEmail.add(lblImagem, "cell 1 1,alignx trailing");
+		ImageIcon iconProcurar = new ImageIcon(TelaInicioVendedor.class.getResource("/IMG/procurar.png"));
+		Image iconP = iconProcurar.getImage().getScaledInstance(26, 26, Image.SCALE_SMOOTH);
+		lblImagem.setIcon(new ImageIcon(iconP));
 
 		txtCidade = new JTextField();
 		txtCidade.setOpaque(false);
@@ -278,30 +284,33 @@ public class TelaCadastroComercio extends JFrame {
 					erro.setLocationRelativeTo(null);
 					erro.setVisible(true);
 				} else {
-
 					endereco.setCep(cep);
 					endereco.setCidade(cidade);
 					endereco.setBairro(bairro);
-					endereco.setNumero(numero);
+					endereco.setNumero(Integer.parseInt(numero));
 					endereco.setLogradouro(logradouro);
 
-					eDAO.inserirEnderecoDoComercio(endereco);
+					int idEndereco = eDAO.inserirEnderecoDoComercio(endereco);
+					int idUsuario = uDAO.inserirUsuario(novoUsuario);
 
-					produtor.setNomeComercio(nomeComercio);
-					produtor.setCnpj(cnpj);
-//					pegar id do endereco e id do usuario e setar no produtor
-//					|
-//					v
-//					produtor.setIdUsuario(/*id retornado*/);
-//					produtor.setEndereco(/*id retornado ao add endereco*/);
+					if (idEndereco != -1 || idUsuario != -1) {
 
-					uDAO.inserirUsuario(novoUsuario);
+						produtor.setNomeComercio(nomeComercio);
+						produtor.setCnpj(cnpj);
+						produtor.setEndereco(idEndereco);
+						produtor.setIdUsuario(idUsuario);
 
-					TelaLogin tela = new TelaLogin();
-					tela.setLocationRelativeTo(null);
-					tela.setVisible(true);
+						TelaLogin tela = new TelaLogin();
+						tela.setLocationRelativeTo(null);
+						tela.setVisible(true);
 
-					dispose();
+						dispose();
+					}else {
+						TelaError erro = new TelaError();
+						erro.setLabelText("Erro ao inserir dados");
+						erro.setLocationRelativeTo(null);
+						erro.setVisible(true);
+					}
 
 				}
 

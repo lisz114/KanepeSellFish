@@ -1,7 +1,7 @@
 package modelo;
 
 public interface IUsuarioDAO {
-	public boolean inserirUsuario(Usuario usuario);
+	public int inserirUsuario(Usuario usuario);
 
 	public boolean alterarUsuario(Usuario usuario);
 
@@ -10,5 +10,7 @@ public interface IUsuarioDAO {
 	public Usuario consultarUsuarioLoginSenha(String email, String senha);
 	
 	public Usuario consultaUsuarioCadastrado(String cpf, String email);
-
+	
+    public boolean validarCPF(String cpf);
+    
 }

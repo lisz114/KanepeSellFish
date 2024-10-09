@@ -70,8 +70,8 @@ public class TelaExcluirProduto extends JFrame {
 		btExcluir.setFont(new Font("/Fontes/Roboto-Black.ttf", Font.PLAIN, 13));
 		btExcluir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				ProdutoDAO p = new ProdutoDAO();
-				p.removerProduto(codigo);
+//				ProdutoDAO p = new ProdutoDAO();
+//				p.removerProduto(codigo);
 			}
 		});
 

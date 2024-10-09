@@ -1,5 +1,4 @@
 package visao;
-
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
@@ -10,7 +9,6 @@ import java.awt.Image;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
-
 import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
@@ -220,9 +218,9 @@ public class TelaInicioVendedor extends JFrame {
 		imgConta.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				TelaPerfilVendedor telaPerfil = new TelaPerfilVendedor();
-				telaPerfil.setVisible(true);
-				dispose();
+//				TelaPerfil telaPerfil = new TelaPerfil();
+//				telaPerfil.setVisible(true);
+//				dispose();
 			}
 		});
 		imgConta.setIcon(new ImageIcon(TelaInicioVendedor.class.getResource("/IMG/do-utilizador.png")));

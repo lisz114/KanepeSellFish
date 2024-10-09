@@ -1,5 +1,4 @@
 package controle;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -15,7 +14,7 @@ public class ProdutoDAO implements IProdutoDAO {
 
 	private ProdutoDAO() {}
 
-	public ProdutoDAO getInstancia() {
+	public static ProdutoDAO getInstancia() {
 
 		if (instancia == null) {
 			instancia = new ProdutoDAO();
@@ -24,7 +23,6 @@ public class ProdutoDAO implements IProdutoDAO {
 
 		return instancia;
 	}
-
 	public boolean inserirProduto(Produto produto) {
 
 		listaProdutos.add(produto);
