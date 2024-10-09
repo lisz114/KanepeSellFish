@@ -14,7 +14,7 @@ public class ProdutoDAO implements IProdutoDAO {
 
 	private ProdutoDAO() {}
 
-	public ProdutoDAO getInstancia() {
+	public static ProdutoDAO getInstancia() {
 
 		if (instancia == null) {
 			instancia = new ProdutoDAO();

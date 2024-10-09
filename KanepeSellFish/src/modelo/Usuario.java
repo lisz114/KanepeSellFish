@@ -69,7 +69,7 @@ public class Usuario {
 			return false;
 		Usuario usuario = (Usuario) obj;
 		return cpf == usuario.cpf;
-
+	}
 	public int getIdUsuario() {
 		return idUsuario;
 	}

@@ -37,7 +37,7 @@ public class TelaAlterarProduto extends JFrame {
 	private JTextField txtValidade;
 	private JTextField txtPreco;
 	private JTextField txtQuantidade;
-	private static ProdutoDAO pDAO = ProdutoDAO.getInstancia();
+	private ProdutoDAO pDAO = ProdutoDAO.getInstancia();
 	
 	/**
 	 * Launch the application.
