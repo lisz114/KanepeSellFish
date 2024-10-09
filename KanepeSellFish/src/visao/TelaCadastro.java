@@ -246,18 +246,18 @@ public class TelaCadastro extends JFrame {
 
 							dispose();
 						} else {
-//							TelaCadastroComercio tela = new TelaCadastroComercio(novoUsuario);
-//							tela.setLocationRelativeTo(null);
-//							tela.setVisible(true);
-//	
-//							dispose();
+							TelaCadastroComercio tela = new TelaCadastroComercio(novoUsuario);
+							tela.setLocationRelativeTo(null);
+							tela.setVisible(true);
+	
+							dispose();
 
-							uDAO.inserirUsuario(novoUsuario);
+							/*uDAO.inserirUsuario(novoUsuario);
 							TelaLogin tela = new TelaLogin();
 							tela.setLocationRelativeTo(null);
 							tela.setVisible(true);
 
-							dispose();
+							dispose();*/
 
 						}
 					}

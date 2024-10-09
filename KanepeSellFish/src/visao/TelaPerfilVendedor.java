@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.GridLayout;
+import java.awt.Image;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -16,6 +17,7 @@ import java.awt.GridBagConstraints;
 import java.awt.Insets;
 import java.util.ArrayList;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.border.LineBorder;
 
@@ -32,7 +34,6 @@ public class TelaPerfilVendedor extends JFrame {
 	private JPanel contentPane;
 	private ArrayList<Usuario> listaUsuarios;
 
-	
 	public TelaPerfilVendedor(Usuario u) {
 
 		setResizable(false);
@@ -229,7 +230,7 @@ public class TelaPerfilVendedor extends JFrame {
 		btnNewButton.setFont(new Font("Tahoma", Font.BOLD, 15));
 
 		JPanel panel_2 = new JPanel();
-		panel_2.setBounds(45, 270, 284, 279);
+		panel_2.setBounds(52, 307, 284, 279);
 		panel_1.add(panel_2);
 		panel_2.setLayout(null);
 		panel_2.setOpaque(false);
@@ -243,8 +244,41 @@ public class TelaPerfilVendedor extends JFrame {
 		lblDesc.setBounds(21, 82, 253, 14);
 		panel_2.add(lblDesc);
 
-		String valor = new UsuarioDAO().BuscarUsuario(1);
+		String valor = new UsuarioDAO().BuscarProdutor(1);
 		lblNome.setText(valor);
+
+		JLabel imgNot = new JLabel("");
+		imgNot.setBounds(604, -6, 40, 52);
+		PanelNome.add(imgNot);
+		ImageIcon sino = new ImageIcon(TelaPerfilVendedor.class.getResource("/img/sino.png"));
+		Image sonoR = sino.getImage().getScaledInstance(40, 40, Image.SCALE_SMOOTH);
+		imgNot.setIcon(new ImageIcon(sonoR));
 		
+		JLabel imgCar = new JLabel("");
+		imgCar.setIcon(new ImageIcon(TelaPerfilVendedor.class.getResource("/img/carrinho-de-compras.png")));
+		imgCar.setBounds(551, -6, 46, 52);
+		PanelNome.add(imgCar);
+		ImageIcon car = new ImageIcon(TelaPerfilVendedor.class.getResource("/img/carrinho-de-compras.png"));
+		Image kart = car.getImage().getScaledInstance(40, 40, Image.SCALE_SMOOTH);
+		imgCar.setIcon(new ImageIcon(kart));
+
+		JLabel imgVoltar = new JLabel("");
+		imgVoltar.setIcon(new ImageIcon(TelaPerfilVendedor.class.getResource("/img/Voltar.png")));
+		imgVoltar.setBounds(696, 4, 46, 45);
+		PanelPrincipal.add(imgVoltar);
+
+		JLabel imgBarras = new JLabel("");
+		imgBarras.setIcon(new ImageIcon(TelaPerfilVendedor.class.getResource("/img/menu-hamburguer.png")));
+		imgBarras.setBounds(10, 11, 35, 30);
+		panel_1.add(imgBarras);
+		ImageIcon barras = new ImageIcon(TelaPerfilVendedor.class.getResource("/img/menu-hamburguer.png"));
+		Image ImgB = barras.getImage().getScaledInstance(30, 30, Image.SCALE_SMOOTH);
+		imgBarras.setIcon(new ImageIcon(ImgB));
+
+		JLabel lblNewLabel_8 = new JLabel("");
+		lblNewLabel_8.setIcon(new ImageIcon(TelaPerfilVendedor.class.getResource("/img/Avatar.png")));
+		lblNewLabel_8.setBounds(89, 73, 202, 202);
+		panel_1.add(lblNewLabel_8);
+
 	}
 }
