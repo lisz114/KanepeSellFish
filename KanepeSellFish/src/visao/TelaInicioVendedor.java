@@ -9,30 +9,29 @@ import java.awt.Image;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
+
 import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
-import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
-import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.ScrollPaneConstants;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 
+import controle.ProdutoDAO;
 import modelo.Produto;
 import net.miginfocom.swing.MigLayout;
-import javax.swing.ScrollPaneConstants;
 
 public class TelaInicioVendedor extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JTextField textField;
-	private JTable table_1;
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -138,7 +137,7 @@ public class TelaInicioVendedor extends JFrame {
 		imgUp.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-
+				
 				// trazer método de pesquisa por maior preço
 			}
 		});
@@ -238,6 +237,15 @@ public class TelaInicioVendedor extends JFrame {
 		lblZaA.setFont(new Font("/Fontes/Roboto-Black.ttf", Font.PLAIN, 12));
 
 		JLabel imgMore = new JLabel("");
+		imgMore.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				TelaCadastroProduto cadastrar = new TelaCadastroProduto();
+				
+				cadastrar.setVisible(true);
+				cadastrar.setLocationRelativeTo(null);
+			}
+		});
 		imgMore.setIcon(new ImageIcon(TelaInicioVendedor.class.getResource("/IMG/iconMore.png")));
 		panel_2.add(imgMore, "cell 0 8,alignx center");
 		imgMore.setIcon(new ImageIcon(more));
@@ -248,10 +256,6 @@ public class TelaInicioVendedor extends JFrame {
 
 		String[] colunas = { "Nome", "Quantidade", "Preço" };
 		DefaultTableModel modelo = new DefaultTableModel(colunas, 0);
-
-		// table_1 = new JTable(modelo);
-		// panel_1.add(table_1, "cell 3 1,grow");
-
 	}
 
 	private static void addPopup(Component component, final JPopupMenu popup) {

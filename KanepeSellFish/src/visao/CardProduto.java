@@ -16,6 +16,7 @@ import javax.swing.border.BevelBorder;
 import java.awt.Font;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.Label;
 
 @SuppressWarnings("serial")
 public class CardProduto extends JPanel {
@@ -26,6 +27,13 @@ public class CardProduto extends JPanel {
 	public CardProduto(Produto p) {
 		setLayout(new MigLayout("", "[20px][100px][20px]", "[][200px][][][][][]"));
 
+		JLabel imgPeixe = new JLabel("");
+		imgPeixe.setIcon(new ImageIcon(CardProduto.class.getResource("/img/ttilapia.jpg")));
+		add(imgPeixe, "cell 1 1");
+		ImageIcon iconFoto = new ImageIcon(CardProduto.class.getResource("/img/ttilapia.jpg"));
+		Image foto = iconFoto.getImage().getScaledInstance(160, 160, Image.SCALE_SMOOTH);
+		imgPeixe.setIcon(new ImageIcon(foto));
+
 		JLabel lblNome = new JLabel("Nome");
 		add(lblNome, "flowx,cell 1 2,alignx left");
 
@@ -35,6 +43,9 @@ public class CardProduto extends JPanel {
 		lblQuantidadeEstoque.setFont(new Font("Tahoma", Font.PLAIN, 9));
 		lblQuantidadeEstoque.setHorizontalAlignment(SwingConstants.RIGHT);
 		add(lblQuantidadeEstoque, "cell 1 2,alignx right");
+		
+		
+		
 
 		JLabel lblPreco = new JLabel("R$0,00 kg");
 		add(lblPreco, "cell 1 4");
@@ -74,6 +85,15 @@ public class CardProduto extends JPanel {
 		imgMais.setIcon(new ImageIcon(m));
 
 		JButton btAdicionar = new JButton("Adicionar");
+		btAdicionar.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				int quantidade = Integer.parseInt(lblQuantidadeEstoque.getText());
+				
+				 //CarrinhoDAO c = new CarrinhoDAO();
+				// c.adicionarProduto();
+			}
+		});
 		btAdicionar.setForeground(Color.WHITE);
 		btAdicionar.setBackground(new Color(2, 73, 89));
 		add(btAdicionar, "cell 1 6");
