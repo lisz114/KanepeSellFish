@@ -14,6 +14,8 @@ import javax.swing.JTextField;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import java.awt.Color;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class TelaPerfilCliente extends JFrame {
 
@@ -45,89 +47,91 @@ public class TelaPerfilCliente extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
 		setContentPane(contentPane);
-		contentPane.setLayout(new MigLayout("", "[150][grow][][150][200][grow][][][][][][70][][][][][][grow][][][][200][][][][][][][][][][][][grow][grow][][][][][][][][][][]", "[50,grow][][][][][][][][][grow][][][][][][][grow][][][][][][][][][][][50][50][grow][][][][][][50][][50][][][][][][][][][][80][170][][][][][20]"));
+		contentPane.setLayout(new MigLayout("", "[150][grow]", "[50][grow]"));
 		ImageIcon carrinho = new ImageIcon(TelaPerfilCliente.class.getResource("/IMG/carrinho-de-compras.png"));
 		Image imgC = carrinho.getImage().getScaledInstance(30, 30, Image.SCALE_SMOOTH);
 		ImageIcon notificacao = new ImageIcon(TelaPerfilCliente.class.getResource("/IMG/sino.png"));
 		Image imgN = notificacao.getImage().getScaledInstance(30, 30, Image.SCALE_SMOOTH);
-		
+
 		JPanel panel = new JPanel();
 		panel.setBackground(new Color(154, 205, 220));
-		contentPane.add(panel, "cell 0 0 45 1,growx");
-		panel.setLayout(new MigLayout("", "[][][][][][][][][][][300][][][][][][][][][300][][][][150][][][100][][][][][][][][]", "[][]"));
+		contentPane.add(panel, "cell 0 0 2 1,growx");
+		panel.setLayout(new MigLayout("", "[][905.00][][][]", "[grow][]"));
 		ImageIcon menu = new ImageIcon(TelaPerfilCliente.class.getResource("/IMG/menu-hamburguer.png"));
 		Image iconMenu = menu.getImage().getScaledInstance(30, 30, Image.SCALE_SMOOTH);
-		
+
 		JLabel imgMenu = new JLabel("");
-		panel.add(imgMenu, "cell 1 0");
+		panel.add(imgMenu, "cell 0 0");
 		imgMenu.setIcon(new ImageIcon(TelaPerfilCliente.class.getResource("/IMG/menu-hamburguer.png")));
 		imgMenu.setIcon(new ImageIcon(iconMenu));
-		
+
 		JLabel imgCarrinho = new JLabel("");
-		panel.add(imgCarrinho, "cell 33 0");
+		imgCarrinho.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				
+				// TelaCarrinho frame = new TeaCarrinho
+				
+				//frame.setLocationRelativeTo(null);
+				//frame.setVisible(true);
+				//dispose();
+			}
+		});
+		panel.add(imgCarrinho, "cell 2 0");
 		imgCarrinho.setIcon(new ImageIcon(TelaPerfilCliente.class.getResource("/IMG/carrinho-de-compras.png")));
 		imgCarrinho.setIcon(new ImageIcon(imgC));
-		
+
 		JLabel imgNotificacao = new JLabel("");
-		panel.add(imgNotificacao, "cell 34 0");
+		panel.add(imgNotificacao, "cell 3 0");
 		imgNotificacao.setIcon(new ImageIcon(TelaPerfilCliente.class.getResource("/IMG/sino.png")));
 		imgNotificacao.setIcon(new ImageIcon(imgN));
+
+		JLabel imgLogoff = new JLabel("");
+		imgLogoff.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				TelaLogin frame = new TelaLogin();
+
+				frame.setLocationRelativeTo(null);
+				frame.setVisible(true);
+				dispose();
+			}
+		});
+		imgLogoff.setIcon(new ImageIcon(TelaPerfilCliente.class.getResource("/img/saida.png")));
+		panel.add(imgLogoff, "cell 4 0");
+		ImageIcon deslogar = new ImageIcon(TelaPerfilCliente.class.getResource("/img/saida.png"));
+		Image imgD = deslogar.getImage().getScaledInstance(30, 30, Image.SCALE_SMOOTH);
+		imgLogoff.setIcon(new ImageIcon(imgD));
 		
 		JPanel panel_1 = new JPanel();
-		contentPane.add(panel_1, "cell 0 9 45 1,grow");
-		panel_1.setLayout(new MigLayout("", "[][][][][][][][][][][][][200][][][]", "[][]"));
-		
-		JLabel lblNome = new JLabel("Maria Querida Souza");
-		panel_1.add(lblNome, "cell 15 0");
-		lblNome.setFont(new Font("Dialog", Font.PLAIN, 30));
-		
-		JPanel panel_2 = new JPanel();
-		contentPane.add(panel_2, "cell 0 10 11 44,grow");
-		panel_2.setLayout(new MigLayout("", "[][50][120][50][][][][90][][][][][][][]", "[][80][][][][][][][][20][][45][][][20][-14.00][][][][][]"));
-		
-		JLabel lblFotoDPerfil = new JLabel("Editar foto de perfil");
-		lblFotoDPerfil.setFont(new Font("Dialog", Font.PLAIN, 12));
-		panel_2.add(lblFotoDPerfil, "cell 2 5,alignx left");
-		
-		JLabel lblEmail = new JLabel("Email:");
-		lblEmail.setFont(new Font("Dialog", Font.PLAIN, 12));
-		panel_2.add(lblEmail, "cell 9 5,growx");
-		
-		JLabel lblEmailCliente = new JLabel("");
-		lblEmailCliente.setFont(new Font("Dialog", Font.PLAIN, 12));
-		panel_2.add(lblEmailCliente, "cell 9 6 5 1");
-		
-		JLabel lblDescricao = new JLabel("Descrição");
-		lblDescricao.setFont(new Font("Dialog", Font.PLAIN, 12));
-		panel_2.add(lblDescricao, "cell 2 10,alignx left");
-		
-		JLabel lblCPF = new JLabel("CPF: ");
-		lblCPF.setFont(new Font("Dialog", Font.PLAIN, 12));
-		panel_2.add(lblCPF, "cell 9 10,aligny center");
-		
-		JLabel lblCPFcliente = new JLabel("");
-		lblCPFcliente.setFont(new Font("Dialog", Font.PLAIN, 12));
-		panel_2.add(lblCPFcliente, "cell 9 11 5 1,alignx left,aligny top");
-		
-		JLabel lblDescCliente = new JLabel("");
-		lblDescCliente.setFont(new Font("Dialog", Font.PLAIN, 12));
-		panel_2.add(lblDescCliente, "cell 2 11 2 2,alignx left,aligny top");
-		
-		JPanel panel_3 = new JPanel();
-		contentPane.add(panel_3, "cell 11 10 33 44,grow");
-		panel_3.setLayout(new MigLayout("", "[][][][][100][][][][100][][100][50][]", "[][40][][50][][50][][][][100][][80][][][100][]"));
-		
-		JLabel lblInfoPagamento = new JLabel("Informaçoes de pagamento");
-		lblInfoPagamento.setFont(new Font("Dialog", Font.PLAIN, 12));
-		panel_3.add(lblInfoPagamento, "cell 8 1");
-		
-		
-		JButton bntEditar = new JButton("Editar");
-		bntEditar.setBackground(new Color(154, 205, 220));
-		bntEditar.setForeground(new Color(0, 0, 0));
-		bntEditar.setFont(new Font("Dialog", Font.PLAIN, 12));
-		panel_3.add(bntEditar, "cell 12 15");
-		
+		contentPane.add(panel_1, "cell 1 1,grow");
+		panel_1.setLayout(
+				new MigLayout("", "[][][][][][][][][][][][][][][][][][][][][][][][][][][][]", "[][][][][][][][][][]"));
+				
+						JLabel lblNome = new JLabel("Maria Querida Souza");
+						panel_1.add(lblNome, "cell 10 1,alignx right");
+						lblNome.setFont(new Font("Dialog", Font.PLAIN, 30));
+						
+								JLabel lblInfoPagamento = new JLabel("Informaçoes de pagamento");
+								panel_1.add(lblInfoPagamento, "cell 19 4");
+								lblInfoPagamento.setFont(new Font("Dialog", Font.PLAIN, 12));
+								
+										JLabel lblFotoDPerfil = new JLabel("Editar foto de perfil");
+										panel_1.add(lblFotoDPerfil, "cell 1 6");
+										lblFotoDPerfil.setFont(new Font("Dialog", Font.PLAIN, 12));
+						
+								JLabel lblEmail = new JLabel("Email:");
+								panel_1.add(lblEmail, "cell 7 7");
+								lblEmail.setFont(new Font("Dialog", Font.PLAIN, 12));
+				
+						JLabel lblDescricao = new JLabel("Descrição");
+						panel_1.add(lblDescricao, "cell 1 9");
+						lblDescricao.setFont(new Font("Dialog", Font.PLAIN, 12));
+						
+								JLabel lblCPF = new JLabel("CPF: ");
+								panel_1.add(lblCPF, "cell 7 9");
+								lblCPF.setFont(new Font("Dialog", Font.PLAIN, 12));
+
 	}
 
 }
