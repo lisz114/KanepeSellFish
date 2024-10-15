@@ -5,15 +5,16 @@ import java.util.Objects;
 
 public class Produto {
 	
-	private String codigo;
+	private int codigo;
 	private String nome;
 	private LocalDate validade;
 	private float preco;
 	private int quantidadeEstoque;
+	private int idProdutor;
 	
 	public Produto() {}
 	
-	public Produto(String codigo, String nome, LocalDate validade, float preco, int quantidadeEstoque) {
+	public Produto(int codigo, String nome, LocalDate validade, float preco, int quantidadeEstoque) {
 		this.codigo = codigo;
 		this.nome = nome;
 		this.validade = validade;
@@ -21,11 +22,11 @@ public class Produto {
 		this.quantidadeEstoque = quantidadeEstoque;
 	}
 
-	public String getCodigo() {
+	public int getCodigo() {
 		return codigo;
 	}
 
-	public void setCodigo(String codigo) {
+	public void setCodigo(int codigo) {
 		this.codigo = codigo;
 	}
 
@@ -61,6 +62,14 @@ public class Produto {
 		this.quantidadeEstoque = quantidadeEstoque;
 	}
 	
+	public int getIdProdutor() {
+		return idProdutor;
+	}
+
+	public void setIdProdutor(int idProdutor) {
+		this.idProdutor = idProdutor;
+	}
+
 	public boolean equals(Object obj) {
 		if(this == obj) return true;
 		if(obj == null || getClass() != obj.getClass()) return false;

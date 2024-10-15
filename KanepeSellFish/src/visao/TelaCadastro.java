@@ -304,8 +304,8 @@ public class TelaCadastro extends JFrame {
 		panel_3.setOpaque(false);
 		panel.add(panel_3);
 
-		RestrictedTextField validar = new RestrictedTextField(txtCPF);
-		validar.setOnlyNums(true);
-		validar.setLimit(11);
+		RestrictedTextField validarcpf = new RestrictedTextField(txtCPF);
+		validarcpf.setOnlyNums(true);
+		validarcpf.setLimit(11);
 	}
 }

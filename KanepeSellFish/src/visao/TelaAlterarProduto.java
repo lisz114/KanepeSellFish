@@ -27,6 +27,7 @@ import javax.swing.border.TitledBorder;
 
 import controle.ProdutoDAO;
 import modelo.Produto;
+import modelo.Usuario;
 import net.miginfocom.swing.MigLayout;
 
 public class TelaAlterarProduto extends JFrame {
@@ -41,24 +42,24 @@ public class TelaAlterarProduto extends JFrame {
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					TelaAlterarProduto frame = new TelaAlterarProduto();
-					frame.setLocationRelativeTo(null);
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+//	public static void main(String[] args) {
+//		EventQueue.invokeLater(new Runnable() {
+//			public void run() {
+//				try {
+//					TelaAlterarProduto frame = new TelaAlterarProduto();
+//					frame.setLocationRelativeTo(null);
+//					frame.setVisible(true);
+//				} catch (Exception e) {
+//					e.printStackTrace();
+//				}
+//			}
+//		});
+//	}
 
 	/**
 	 * Create the frame.
 	 */
-	public TelaAlterarProduto() {
+	public TelaAlterarProduto(Usuario u) {
 		setTitle("Cadastro de produto");
 		setIconImage(Toolkit.getDefaultToolkit().getImage(TelaCadastroComercio.class.getResource("/img/logo.png")));
 		setResizable(false);
@@ -229,7 +230,7 @@ public class TelaAlterarProduto extends JFrame {
 		        prod.setPreco(preco);
 		        // prod.setValidade(validade); // Descomente se necessário
 
-		        if (pDAO.inserirProduto(prod)) {
+		        if (pDAO.inserirProduto(prod, u)) {
 		            TelaError erro = new TelaError();
 		            erro.setLabelText("Adicionado com sucesso");
 		            erro.setLocationRelativeTo(null);

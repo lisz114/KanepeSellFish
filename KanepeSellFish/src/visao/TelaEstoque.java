@@ -19,6 +19,7 @@ import javax.swing.table.DefaultTableModel;
 
 import controle.ProdutoDAO;
 import modelo.Produto;
+import modelo.Usuario;
 import net.miginfocom.swing.MigLayout;
 
 public class TelaEstoque extends JFrame {
@@ -26,28 +27,29 @@ public class TelaEstoque extends JFrame {
 	private static final long serialVersionUID = 3710277884173399876L;
 	private JPanel contentPane;
 	private JTable table;
-	private JButton btnSMTJAIR;
+	private JButton btnEditar;
 	private JLabel lblNewLabel;
 	private JButton btnAdicionar;
 	TelaEstoque estaJanela = this;
 	private JButton btnNewButton;
+	public static ArrayList<Produto> listaProdutos;
 	private static ProdutoDAO pDAO = ProdutoDAO.getInstancia();
 
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					TelaEstoque frame = new TelaEstoque();
-					frame.setLocationRelativeTo(null);
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+//	public static void main(String[] args) {
+//		EventQueue.invokeLater(new Runnable() {
+//			public void run() {
+//				try {
+//					TelaEstoque frame = new TelaEstoque();
+//					frame.setLocationRelativeTo(null);
+//					frame.setVisible(true);
+//				} catch (Exception e) {
+//					e.printStackTrace();
+//				}
+//			}
+//		});
+//	}
 
-	public TelaEstoque() {
+	public TelaEstoque(Usuario u) {
 		setResizable(false);
 		setLocationByPlatform(true);
 		setMinimumSize(new Dimension(1176, 664));
@@ -66,15 +68,15 @@ public class TelaEstoque extends JFrame {
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		contentPane.add(lblNewLabel, "cell 0 1,alignx center");
 
-		btnSMTJAIR = new JButton(" Editar Produtos");
-		btnSMTJAIR.addActionListener(new ActionListener() {
+		btnEditar = new JButton(" Editar Produtos");
+		btnEditar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				int posicaoSelecionada = -1;
 				posicaoSelecionada = table.getSelectedRow();
 				if(posicaoSelecionada!=-1) {
 				
 				Produto produtoSelecionado = ProdutoDAO.listaProdutos.get(posicaoSelecionada);
-				TelaAlterarProduto novaJanela = new TelaAlterarProduto();
+				TelaAlterarProduto novaJanela = new TelaAlterarProduto(u);
 					novaJanela.mostrarDados(produtoSelecionado);
 					novaJanela.setVisible(true);
 				}else {
@@ -104,18 +106,18 @@ public class TelaEstoque extends JFrame {
 		btnNewButton = new JButton("Excluir Produto");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				atualizarTabela();
+				atualizarTabela(u);
 			}
 		});
 		contentPane.add(btnNewButton, "flowx,cell 0 8,alignx right");
 
-		contentPane.add(btnSMTJAIR, "cell 0 8,alignx right");
+		contentPane.add(btnEditar, "cell 0 8,alignx right");
 
 		btnAdicionar = new JButton("Adicionar Produto");
 		btnAdicionar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
-				TelaCadastroProduto addProd = new TelaCadastroProduto(estaJanela);
+				TelaCadastroProduto addProd = new TelaCadastroProduto(estaJanela, u);
 				addProd.setLocationRelativeTo(null);
 				addProd.setVisible(true);
 				
@@ -124,18 +126,21 @@ public class TelaEstoque extends JFrame {
 		contentPane.add(btnAdicionar, "cell 0 8,alignx trailing");
 
 		try {
-			atualizarTabela();
+			atualizarTabela(u);
 
 		} catch (Exception e) {
 			System.out.println(e);
 		}
 	}
 
-	protected void atualizarTabela() {
+	protected void atualizarTabela(Usuario u) {
+		
+		listaProdutos = pDAO.addListaProd(u);
+		
 		DefaultTableModel tableModel = new DefaultTableModel(new Object[][] {  },
 				new String[] { "C\u00F3digo", "Nome", "QuantidadeEstoque:", "Validade", "Salinidade", "Pre\u00E7o" });
 
-		for (Produto produto : ProdutoDAO.listaProdutos) {
+		for (Produto produto : listaProdutos) {
 
 			tableModel.addRow(new Object[] { produto.getCodigo(), produto.getNome(), produto.getQuantidadeEstoque(),
 					produto.getValidade(), "null", produto.getPreco() });

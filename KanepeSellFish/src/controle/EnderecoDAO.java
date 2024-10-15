@@ -33,7 +33,7 @@ public class EnderecoDAO implements IEnderecoDAO {
 
 	public int inserirEnderecoDoComercio(Endereco endereco) {
 
-	    String sql = "INSERT INTO enderecos (Cidade, Rua, Bairro, Numero) VALUES (?, ?, ?, ?)";
+	    String sql = "INSERT INTO enderecos (Cidade, Rua, Bairro, Numero, cep) VALUES (?, ?, ?, ?, ?)";
 
 	    try (Connection conn = ConexaoBD.getConexaoMySQL();
 	            PreparedStatement pstmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
@@ -42,6 +42,7 @@ public class EnderecoDAO implements IEnderecoDAO {
 	        pstmt.setString(2, endereco.getLogradouro());
 	        pstmt.setString(3, endereco.getBairro());
 	        pstmt.setInt(4, endereco.getNumero());
+	        pstmt.setString(5, endereco.getCep());
 
 	        pstmt.executeUpdate();
 

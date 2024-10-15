@@ -8,7 +8,6 @@ import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.Image;
-import java.awt.SystemColor;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -28,6 +27,7 @@ import javax.swing.border.LineBorder;
 
 import Atxy2k.CustomTextField.RestrictedTextField;
 import controle.EnderecoDAO;
+import controle.ProdutorDAO;
 import controle.UsuarioDAO;
 import modelo.Endereco;
 import modelo.Produtor;
@@ -43,6 +43,7 @@ public class TelaCadastroComercio extends JFrame {
 	private JTextField txtBairro;
 	private static UsuarioDAO uDAO = UsuarioDAO.getInstancia();
 	private static EnderecoDAO eDAO = EnderecoDAO.getInstancia();
+	private static ProdutorDAO pDAO = ProdutorDAO.getInstancia();
 	private JTextField txtLogradouro;
 	private JTextField txtCidade;
 	private JTextField txtNumero;
@@ -299,7 +300,10 @@ public class TelaCadastroComercio extends JFrame {
 						produtor.setCnpj(cnpj);
 						produtor.setEndereco(idEndereco);
 						produtor.setIdUsuario(idUsuario);
-
+						
+						System.out.println(idUsuario);
+						
+						pDAO.inserirProdutor(produtor);
 						TelaLogin tela = new TelaLogin();
 						tela.setLocationRelativeTo(null);
 						tela.setVisible(true);
@@ -354,8 +358,12 @@ public class TelaCadastroComercio extends JFrame {
 		panel_3.setOpaque(false);
 		panel.add(panel_3);
 
-		RestrictedTextField validar = new RestrictedTextField(txtCEP);
-		validar.setOnlyNums(true);
-		validar.setLimit(8);
+		RestrictedTextField validarCep = new RestrictedTextField(txtCEP);
+		validarCep.setOnlyNums(true);
+		validarCep.setLimit(8);
+		
+		RestrictedTextField validarCnpj = new RestrictedTextField(txtCNPJ);
+		validarCnpj.setOnlyNums(true);
+		validarCnpj.setLimit(14);
 	}
 }

@@ -7,7 +7,7 @@ public class Usuario {
 	private String email;
 	private String cpf;
 	private String tel;
-	private int idUsuario;
+	protected int idUsuario;
 
 	public Usuario() {}
 
@@ -71,6 +71,6 @@ public class Usuario {
 		return cpf == usuario.cpf;
 	}
 	public int getIdUsuario() {
-		return idUsuario;
+		return this.idUsuario;
 	}
 }
