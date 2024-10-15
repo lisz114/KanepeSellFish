@@ -12,7 +12,7 @@ public class ProdutoDAO implements IProdutoDAO {
 	private static ProdutoDAO instancia;
 	private static ArrayList<Produto> listaProdutos;
 
-	private ProdutoDAO() {}
+	public ProdutoDAO() {}
 
 	public static ProdutoDAO getInstancia() {
 
