@@ -72,4 +72,5 @@ public class Produto {
 	public int hashCode() {
 		return Objects.hash(nome, preco);
 	}
+
 }
