@@ -352,8 +352,8 @@ public class TelaEdiçãoVendedor extends JFrame {
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Usuario u = new Usuario();
-				TelaPerfilVendedor frame = new TelaPerfilVendedor(u);
-				frame.setVisible(true);
+				//TelaPerfilVendedor frame = new TelaPerfilVendedor(u);
+				//frame.setVisible(true);
 				dispose();
 			}
 		});
@@ -374,6 +374,15 @@ public class TelaEdiçãoVendedor extends JFrame {
 		PanelEditor.add(btnNewButton_1, gbc_btnNewButton_1);
 		
 		JLabel lblNewLabel_10 = new JLabel("");
+		lblNewLabel_10.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				Usuario u = new Usuario();
+				//TelaPerfilVendedor frame = new TelaPerfilVendedor(u);
+				//frame.setVisible(true);
+				dispose();
+			}
+		});
 		lblNewLabel_10.setIcon(new ImageIcon(TelaEdiçãoVendedor.class.getResource("/img/Voltar.png")));
 		lblNewLabel_10.setBounds(520, 4, 46, 45);
 		panel_2.add(lblNewLabel_10);

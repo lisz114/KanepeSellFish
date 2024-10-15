@@ -155,21 +155,4 @@ public class UsuarioDAO implements IUsuarioDAO {
 		return null;
 	}
 
-	public String BuscarProdutor(Integer codUsuario) {
-		try(Connection conn = ConexaoBD.getConexaoMySQL()) {
-			String nomeP = "";
-			PreparedStatement prep = conn.prepareStatement("Select * from kanepe.produtores where Nome = ?");
-			prep.setInt(1, codUsuario);
-	           ResultSet result = prep.executeQuery();
-	           if (result.next()) {
-	               nomeP = result.getString(1);  
-	               
-	           }
-	           return nomeP;
-		} catch (java.sql.SQLException e) {
-			// TODO: handle exception
-			System.out.println(e.getSQLState() + " - " + e.getMessage());
-	           return null;
-		}
-	}
 }

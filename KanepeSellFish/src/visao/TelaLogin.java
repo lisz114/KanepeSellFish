@@ -183,9 +183,9 @@ public class TelaLogin extends JFrame {
 
 				if (u != null) {
 
-					TelaPerfilVendedor tela = new TelaPerfilVendedor(u);
+					/*TelaPerfilVendedor tela = new TelaPerfilVendedor(u);
 					tela.setLocationRelativeTo(null);
-					tela.setVisible(true);
+					tela.setVisible(true);*/
 
 					dispose();
 
