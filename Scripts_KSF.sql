@@ -57,10 +57,12 @@ CREATE TABLE IF NOT EXISTS Produtores (
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS Produtos (
     idProdutos BIGINT NOT NULL AUTO_INCREMENT,
+    produtoCod bigint not null,
     quantidade INT NOT NULL,
     validade DATE NOT NULL,
     nome_Produto VARCHAR(100) NOT NULL,
     preco DECIMAL(65) NOT NULL,
+    Produtores_idProdutores BIGINT NOT NULL,
     PRIMARY KEY (idProdutos),
     FOREIGN KEY (Produtores_idProdutores) REFERENCES Produtores (idProdutores)
 );
@@ -101,3 +103,7 @@ CREATE TABLE IF NOT EXISTS Carrinho (
     FOREIGN KEY (Vendas_idVendas) REFERENCES Vendas (idVendas),
     FOREIGN KEY (Produtos_idProdutos) REFERENCES Produtos (idProdutos)
 );
+
+INSERT INTO `kanepe`.`usuarios` (`cpf_Usuario`, `nome_Usuario`, `senha_Usuario`, `email_Usuario`) VALUES ('85318806961', 'vini', 'vini', 'vini');
+INSERT INTO `kanepe`.`enderecos` (`Cidade`, `Rua`, `Bairro`, `cep`, `numero`) VALUES ('Gaspar', 'Josefina Schmitt', 'Belchior Central', '89117625', '83');
+INSERT INTO `kanepe`.`produtores` (`nomeNegocio`, `Usuarios_idUsuarios`, `Enderecos_idEnderecos`, `cnpj`) VALUES ('vini', '1', '1', '12345678910111');
