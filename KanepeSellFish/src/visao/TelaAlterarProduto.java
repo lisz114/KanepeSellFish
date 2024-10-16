@@ -13,6 +13,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
@@ -26,8 +29,8 @@ import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 
 import controle.ProdutoDAO;
-import controle.UsuarioDAO;
 import modelo.Produto;
+import modelo.Usuario;
 import net.miginfocom.swing.MigLayout;
 
 public class TelaAlterarProduto extends JFrame {
@@ -42,24 +45,24 @@ public class TelaAlterarProduto extends JFrame {
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					TelaAlterarProduto frame = new TelaAlterarProduto();
-					frame.setLocationRelativeTo(null);
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+//	public static void main(String[] args) {
+//		EventQueue.invokeLater(new Runnable() {
+//			public void run() {
+//				try {
+//					TelaAlterarProduto frame = new TelaAlterarProduto();
+//					frame.setLocationRelativeTo(null);
+//					frame.setVisible(true);
+//				} catch (Exception e) {
+//					e.printStackTrace();
+//				}
+//			}
+//		});
+//	}
 
 	/**
 	 * Create the frame.
 	 */
-	public TelaAlterarProduto() {
+	public TelaAlterarProduto(TelaEstoque janelaPrincipal, Usuario u) {
 		setTitle("Cadastro de produto");
 		setIconImage(Toolkit.getDefaultToolkit().getImage(TelaCadastroComercio.class.getResource("/img/logo.png")));
 		setResizable(false);
@@ -181,19 +184,19 @@ public class TelaAlterarProduto extends JFrame {
 		panelBotoes.add(panelAdicionar);
 		panelAdicionar.setLayout(new MigLayout("", "[230px][130px]", "[5px][30px,grow][5px]"));
 		
-		JButton btnAdicionar = new RoundButton("Adicionar");
-		btnAdicionar.setText("Alterar");
-		btnAdicionar.addActionListener(new ActionListener() {
+		JButton btnAlterar = new RoundButton("Alterar");
+		btnAlterar.setText("Alterar");
+		btnAlterar.addActionListener(new ActionListener() {
 		    public void actionPerformed(ActionEvent e) {
-		        Produto prod = new Produto();
+		    	Produto prod = new Produto();
 		        
 		        String nome = txtNome.getText();
-		        String validade = txtValidade.getText();
+		        String validadeStr = txtValidade.getText();
 		        String precoStr = txtPreco.getText();
 		        String quantidadeStr = txtQuantidade.getText();
 		        
 		        // Verificação de campos vazios
-		        if (nome.isEmpty() || validade.isEmpty() || precoStr.isEmpty() || quantidadeStr.isEmpty()) {
+		        if (nome.isEmpty() || validadeStr.isEmpty() || precoStr.isEmpty() || quantidadeStr.isEmpty()) {
 		            TelaError erro = new TelaError();
 		            erro.setLabelText("Campos inseridos incorretamente");
 		            erro.setLocationRelativeTo(null);
@@ -203,18 +206,20 @@ public class TelaAlterarProduto extends JFrame {
 		        
 		        Float preco;
 		        int quantidade;
-
+		        LocalDate validade;
 		        try {
 		            preco = Float.parseFloat(precoStr);
 		            quantidade = Integer.parseInt(quantidadeStr);
-		        } catch (NumberFormatException ex) {
+		            // Converter validadeStr para LocalDate
+		            validade = LocalDate.parse(validadeStr, DateTimeFormatter.ofPattern("dd-MM-yyyy"));
+		        } catch (NumberFormatException | DateTimeParseException ex) {
 		            TelaError erro = new TelaError();
-		            erro.setLabelText("Preço ou quantidade inválidos");
+		            erro.setLabelText("Preço, quantidade ou validade inválidos");
 		            erro.setLocationRelativeTo(null);
 		            erro.setVisible(true);
 		            return;
 		        }
-
+		        
 		        // Verificação de valores negativos
 		        if (preco < 0 || quantidade < 0) {
 		            TelaError erro = new TelaError();
@@ -223,14 +228,17 @@ public class TelaAlterarProduto extends JFrame {
 		            erro.setVisible(true);
 		            return;
 		        }
-
+		        
 		        // Preenchendo os atributos do produto
 		        prod.setNome(nome);
 		        prod.setQuantidadeEstoque(quantidade);
 		        prod.setPreco(preco);
-		        // prod.setValidade(validade); // Descomente se necessário
-
-		        if (pDAO.inserirProduto(prod)) {
+		        prod.setCodigo(123);
+		        prod.setValidade(validade); // Descomente se necessário
+		        
+		        if (pDAO.inserirProduto(prod, u)) {
+		            janelaPrincipal.atualizarTabela(u);
+		            dispose();
 		            TelaError erro = new TelaError();
 		            erro.setLabelText("Adicionado com sucesso");
 		            erro.setLocationRelativeTo(null);
@@ -244,11 +252,11 @@ public class TelaAlterarProduto extends JFrame {
 		    }
 		});
 
-		btnAdicionar.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		btnAdicionar.setBackground(new Color(2, 73, 89));
-		btnAdicionar.setForeground(new Color(255, 255, 255));
-		btnAdicionar.setBorderPainted(false);
-		panelAdicionar.add(btnAdicionar, "cell 1 1,grow");
+		btnAlterar.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		btnAlterar.setBackground(new Color(2, 73, 89));
+		btnAlterar.setForeground(new Color(255, 255, 255));
+		btnAlterar.setBorderPainted(false);
+		panelAdicionar.add(btnAlterar, "cell 1 1,grow");
 		
 		JPanel panelCancelar = new JPanel();
 		panelCancelar.setOpaque(false);
@@ -268,6 +276,22 @@ public class TelaAlterarProduto extends JFrame {
 		btnCancelar.setForeground(new Color(0, 0, 0));
 		btnCancelar.setBorderPainted(false);
 		panelCancelar.add(btnCancelar, "cell 0 1,grow");
+	}
+	
+	public void mostrarDados(Produto produtoSelecionado) {
+		
+		txtNome.setText(produtoSelecionado.getNome());
+		txtQuantidade.setText(String.valueOf(produtoSelecionado.getQuantidadeEstoque()));
+//		txtValidade.setText(null);
+		txtPreco.setText(String.valueOf(produtoSelecionado.getPreco()));
+		/*if(é agua salgaa) {
+			rdbtnSalgada.setSelected();
+		}else{
+			rdbtnDoce.setSelected();
+		}*/
+		
+		//setar imagem  tiver
+		
 	}
 
 }

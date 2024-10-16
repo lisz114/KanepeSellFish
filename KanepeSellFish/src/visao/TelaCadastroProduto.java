@@ -4,7 +4,6 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Dimension;
-import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.SystemColor;
@@ -13,6 +12,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
@@ -26,8 +28,8 @@ import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 
 import controle.ProdutoDAO;
-import controle.UsuarioDAO;
 import modelo.Produto;
+import modelo.Usuario;
 import net.miginfocom.swing.MigLayout;
 
 public class TelaCadastroProduto extends JFrame {
@@ -39,27 +41,7 @@ public class TelaCadastroProduto extends JFrame {
 	private JTextField txtQuantidade;
 	private static ProdutoDAO pDAO = ProdutoDAO.getInstancia();
 	
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					TelaCadastroProduto frame = new TelaCadastroProduto();
-					frame.setLocationRelativeTo(null);
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
-	/**
-	 * Create the frame.
-	 */
-	public TelaCadastroProduto() {
+	public TelaCadastroProduto(TelaEstoque janelaPrincipal, Usuario u) {
 		setTitle("Cadastro de produto");
 		setIconImage(Toolkit.getDefaultToolkit().getImage(TelaCadastroComercio.class.getResource("/img/logo.png")));
 		setResizable(false);
@@ -187,12 +169,12 @@ public class TelaCadastroProduto extends JFrame {
 		        Produto prod = new Produto();
 		        
 		        String nome = txtNome.getText();
-		        String validade = txtValidade.getText();
+		        String validadeStr = txtValidade.getText();
 		        String precoStr = txtPreco.getText();
 		        String quantidadeStr = txtQuantidade.getText();
 		        
 		        // Verificação de campos vazios
-		        if (nome.isEmpty() || validade.isEmpty() || precoStr.isEmpty() || quantidadeStr.isEmpty()) {
+		        if (nome.isEmpty() || validadeStr.isEmpty() || precoStr.isEmpty() || quantidadeStr.isEmpty()) {
 		            TelaError erro = new TelaError();
 		            erro.setLabelText("Campos inseridos incorretamente");
 		            erro.setLocationRelativeTo(null);
@@ -202,18 +184,20 @@ public class TelaCadastroProduto extends JFrame {
 		        
 		        Float preco;
 		        int quantidade;
-
+		        LocalDate validade;
 		        try {
 		            preco = Float.parseFloat(precoStr);
 		            quantidade = Integer.parseInt(quantidadeStr);
-		        } catch (NumberFormatException ex) {
+		            // Converter validadeStr para LocalDate
+		            validade = LocalDate.parse(validadeStr, DateTimeFormatter.ofPattern("dd-MM-yyyy"));
+		        } catch (NumberFormatException | DateTimeParseException ex) {
 		            TelaError erro = new TelaError();
-		            erro.setLabelText("Preço ou quantidade inválidos");
+		            erro.setLabelText("Preço, quantidade ou validade inválidos");
 		            erro.setLocationRelativeTo(null);
 		            erro.setVisible(true);
 		            return;
 		        }
-
+		        
 		        // Verificação de valores negativos
 		        if (preco < 0 || quantidade < 0) {
 		            TelaError erro = new TelaError();
@@ -222,14 +206,17 @@ public class TelaCadastroProduto extends JFrame {
 		            erro.setVisible(true);
 		            return;
 		        }
-
+		        
 		        // Preenchendo os atributos do produto
 		        prod.setNome(nome);
 		        prod.setQuantidadeEstoque(quantidade);
 		        prod.setPreco(preco);
-		        // prod.setValidade(validade); // Descomente se necessário
-
-		        if (pDAO.inserirProduto(prod)) {
+		        prod.setCodigo(123);
+		        prod.setValidade(validade); // Descomente se necessário
+		        
+		        if (pDAO.atualizarProduto(prod, u)) {
+		            janelaPrincipal.atualizarTabela(u);
+		            dispose();
 		            TelaError erro = new TelaError();
 		            erro.setLabelText("Adicionado com sucesso");
 		            erro.setLocationRelativeTo(null);
@@ -242,6 +229,7 @@ public class TelaCadastroProduto extends JFrame {
 		        }
 		    }
 		});
+
 
 		btnAdicionar.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnAdicionar.setBackground(new Color(2, 73, 89));

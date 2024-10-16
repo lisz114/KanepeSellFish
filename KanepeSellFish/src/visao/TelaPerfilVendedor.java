@@ -43,25 +43,26 @@ public class TelaPerfilVendedor extends JFrame {
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					TelaPerfilVendedor frame = new TelaPerfilVendedor();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+//	public static void main(String[] args) {
+//		EventQueue.invokeLater(new Runnable() {
+//			public void run() {
+//				try {
+//					TelaPerfilVendedor frame = new TelaPerfilVendedor();
+//					frame.setVisible(true);
+//				} catch (Exception e) {
+//					e.printStackTrace();
+//				}
+//			}
+//		});
+//	}
 
 	/**
 	 * Create the frame.
+	 * @param u 
 	 * 
 	 * @param tela
 	 */
-	public TelaPerfilVendedor() {
+	public TelaPerfilVendedor(Usuario u) {
 
 		setResizable(false);
 		setLocationByPlatform(true);
@@ -157,7 +158,17 @@ public class TelaPerfilVendedor extends JFrame {
 		btnNewButton_2.setOpaque(false);
 		panelLeft.add(btnNewButton_2, "cell 0 2,grow");
 		
-		JButton btnNewButton_3 = new JButton("Meu negocio");
+		JButton btnNewButton_3 = new JButton("Estoque");
+		btnNewButton_3.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				TelaEstoque frame = new TelaEstoque(u);
+				frame.setLocationRelativeTo(null);
+				frame.setVisible(true);
+				dispose();
+				
+			}
+		});
 		btnNewButton_3.setBackground(new Color(154, 205, 217));
 		btnNewButton_3.setBorder(null);
 		btnNewButton_3.setOpaque(false);

@@ -96,6 +96,8 @@ public class UsuarioDAO implements IUsuarioDAO {
 				u.setCpf(res1.getString("cpf_Usuario"));
 				u.setEmail(res1.getString("email_Usuario"));
 				u.setSenha(res1.getString("senha_Usuario"));
+				u.setIdUsuario(res1.getInt("idUsuarios"));
+				u.setTel(res1.getString("telefone"));
 
 				return u;
 			}
