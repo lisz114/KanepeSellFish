@@ -13,6 +13,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
@@ -59,7 +62,7 @@ public class TelaAlterarProduto extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public TelaAlterarProduto(Usuario u) {
+	public TelaAlterarProduto(TelaEstoque janelaPrincipal, Usuario u) {
 		setTitle("Cadastro de produto");
 		setIconImage(Toolkit.getDefaultToolkit().getImage(TelaCadastroComercio.class.getResource("/img/logo.png")));
 		setResizable(false);
@@ -181,19 +184,19 @@ public class TelaAlterarProduto extends JFrame {
 		panelBotoes.add(panelAdicionar);
 		panelAdicionar.setLayout(new MigLayout("", "[230px][130px]", "[5px][30px,grow][5px]"));
 		
-		JButton btnAlterar = new RoundButton("Adicionar");
+		JButton btnAlterar = new RoundButton("Alterar");
 		btnAlterar.setText("Alterar");
 		btnAlterar.addActionListener(new ActionListener() {
 		    public void actionPerformed(ActionEvent e) {
-		        Produto prod = new Produto();
+		    	Produto prod = new Produto();
 		        
 		        String nome = txtNome.getText();
-		        String validade = txtValidade.getText();
+		        String validadeStr = txtValidade.getText();
 		        String precoStr = txtPreco.getText();
 		        String quantidadeStr = txtQuantidade.getText();
 		        
 		        // Verificação de campos vazios
-		        if (nome.isEmpty() || validade.isEmpty() || precoStr.isEmpty() || quantidadeStr.isEmpty()) {
+		        if (nome.isEmpty() || validadeStr.isEmpty() || precoStr.isEmpty() || quantidadeStr.isEmpty()) {
 		            TelaError erro = new TelaError();
 		            erro.setLabelText("Campos inseridos incorretamente");
 		            erro.setLocationRelativeTo(null);
@@ -203,18 +206,20 @@ public class TelaAlterarProduto extends JFrame {
 		        
 		        Float preco;
 		        int quantidade;
-
+		        LocalDate validade;
 		        try {
 		            preco = Float.parseFloat(precoStr);
 		            quantidade = Integer.parseInt(quantidadeStr);
-		        } catch (NumberFormatException ex) {
+		            // Converter validadeStr para LocalDate
+		            validade = LocalDate.parse(validadeStr, DateTimeFormatter.ofPattern("dd-MM-yyyy"));
+		        } catch (NumberFormatException | DateTimeParseException ex) {
 		            TelaError erro = new TelaError();
-		            erro.setLabelText("Preço ou quantidade inválidos");
+		            erro.setLabelText("Preço, quantidade ou validade inválidos");
 		            erro.setLocationRelativeTo(null);
 		            erro.setVisible(true);
 		            return;
 		        }
-
+		        
 		        // Verificação de valores negativos
 		        if (preco < 0 || quantidade < 0) {
 		            TelaError erro = new TelaError();
@@ -223,14 +228,17 @@ public class TelaAlterarProduto extends JFrame {
 		            erro.setVisible(true);
 		            return;
 		        }
-
+		        
 		        // Preenchendo os atributos do produto
 		        prod.setNome(nome);
 		        prod.setQuantidadeEstoque(quantidade);
 		        prod.setPreco(preco);
-		        // prod.setValidade(validade); // Descomente se necessário
-
+		        prod.setCodigo(123);
+		        prod.setValidade(validade); // Descomente se necessário
+		        
 		        if (pDAO.inserirProduto(prod, u)) {
+		            janelaPrincipal.atualizarTabela(u);
+		            dispose();
 		            TelaError erro = new TelaError();
 		            erro.setLabelText("Adicionado com sucesso");
 		            erro.setLocationRelativeTo(null);

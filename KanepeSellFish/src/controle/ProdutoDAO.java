@@ -4,6 +4,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -79,6 +81,7 @@ public class ProdutoDAO implements IProdutoDAO {
 	}
 	
 	public ArrayList<Produto> addListaProd(Usuario u) {
+		listaProdutos.clear();
 		
 		PreparedStatement stmt1 = null;
 
@@ -92,7 +95,9 @@ public class ProdutoDAO implements IProdutoDAO {
 			stmt1.setString(1, pegarIdProdutor(u));
 			
 			res1 = stmt1.executeQuery();
-
+			
+//			listaProdutos = null;
+			
 			while (res1.next()) {
 
 				Produto prod = new Produto();
@@ -101,6 +106,8 @@ public class ProdutoDAO implements IProdutoDAO {
 				prod.setCodigo(Integer.parseInt(res1.getString("produtoCod")));
 				prod.setQuantidadeEstoque(Integer.parseInt(res1.getString("quantidade")));
 				prod.setPreco(Float.parseFloat(res1.getString("preco")));
+				prod.setIdProdutor(Integer.parseInt(res1.getString("Produtores_idProdutores")));
+				prod.setValidade(LocalDate.parse(res1.getString("validade"), DateTimeFormatter.ofPattern("yyyy-MM-dd")));
 				listaProdutos.add(prod);
 			}
 
@@ -130,7 +137,7 @@ public class ProdutoDAO implements IProdutoDAO {
 
 			while (res1.next()) {
 				
-				return res1.getString("idProdutor");
+				return res1.getString("idProdutores");
 			}
 
 			res1.close();
@@ -141,5 +148,10 @@ public class ProdutoDAO implements IProdutoDAO {
 			e.printStackTrace();
 		}
 		return null;
+	}
+
+	public boolean atualizarProduto(Produto prod, Usuario u) {
+		// TODO Auto-generated method stub
+		return false;
 	}
 }

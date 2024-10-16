@@ -54,7 +54,7 @@ public class TelaEstoque extends JFrame {
 		setLocationByPlatform(true);
 		setMinimumSize(new Dimension(1176, 664));
 		setMaximumSize(new Dimension(1920, 1080));
-		
+
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1280, 768);
 		contentPane = new JPanel();
@@ -73,17 +73,17 @@ public class TelaEstoque extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				int posicaoSelecionada = -1;
 				posicaoSelecionada = table.getSelectedRow();
-				if(posicaoSelecionada!=-1) {
-				
-				Produto produtoSelecionado = ProdutoDAO.listaProdutos.get(posicaoSelecionada);
-				TelaAlterarProduto novaJanela = new TelaAlterarProduto(u);
+				if (posicaoSelecionada != -1) {
+
+					Produto produtoSelecionado = ProdutoDAO.listaProdutos.get(posicaoSelecionada);
+					TelaAlterarProduto novaJanela = new TelaAlterarProduto(estaJanela, u);
 					novaJanela.mostrarDados(produtoSelecionado);
 					novaJanela.setVisible(true);
-				}else {
-					 TelaError erro = new TelaError();
-			            erro.setLabelText("Selecione um produto");
-			            erro.setLocationRelativeTo(null);
-			            erro.setVisible(true);
+				} else {
+					TelaError erro = new TelaError();
+					erro.setLabelText("Selecione um produto");
+					erro.setLocationRelativeTo(null);
+					erro.setVisible(true);
 				}
 
 			}
@@ -93,16 +93,11 @@ public class TelaEstoque extends JFrame {
 		contentPane.add(scrollPane, "cell 0 7,grow");
 
 		table = new JTable();
-		table.setModel(new DefaultTableModel(
-			new Object[][] {
-			},
-			new String[] {
-				"C\u00F3digo", "Nome", "QuantidadeEstoque:", "Validade", "Salinidade", "Pre\u00E7o"
-			}
-		));
+		table.setModel(new DefaultTableModel(new Object[][] {},
+				new String[] { "C\u00F3digo", "Nome", "QuantidadeEstoque:", "Validade", "Salinidade", "Pre\u00E7o" }));
 		table.setBorder(null);
 		scrollPane.setViewportView(table);
-		
+
 		btnNewButton = new JButton("Excluir Produto");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -116,11 +111,11 @@ public class TelaEstoque extends JFrame {
 		btnAdicionar = new JButton("Adicionar Produto");
 		btnAdicionar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
+
 				TelaCadastroProduto addProd = new TelaCadastroProduto(estaJanela, u);
 				addProd.setLocationRelativeTo(null);
 				addProd.setVisible(true);
-				
+
 			}
 		});
 		contentPane.add(btnAdicionar, "cell 0 8,alignx trailing");
@@ -137,13 +132,16 @@ public class TelaEstoque extends JFrame {
 		
 		listaProdutos = pDAO.addListaProd(u);
 		
-		DefaultTableModel tableModel = new DefaultTableModel(new Object[][] {  },
-				new String[] { "C\u00F3digo", "Nome", "QuantidadeEstoque:", "Validade", "Salinidade", "Pre\u00E7o" });
+		DefaultTableModel tableModel = new DefaultTableModel(
+				new Object[][] {
+				},
+				new String[] { "C\u00F3digo", "Nome", "QuantidadeEstoque:", "Validade", "Salinidade", "Pre\u00E7o" 
+				}
+		);
 
 		for (Produto produto : listaProdutos) {
-
 			tableModel.addRow(new Object[] { produto.getCodigo(), produto.getNome(), produto.getQuantidadeEstoque(),
-					produto.getValidade(), "null", produto.getPreco() });
+					String.valueOf(produto.getValidade()), "null", produto.getPreco() });
 		}
 
 		table.setModel(tableModel);
