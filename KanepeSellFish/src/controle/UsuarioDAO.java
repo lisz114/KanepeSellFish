@@ -7,7 +7,9 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
+import modelo.Endereco;
 import modelo.IUsuarioDAO;
+import modelo.Produtor;
 import modelo.Usuario;
 
 public class UsuarioDAO implements IUsuarioDAO {
@@ -90,7 +92,7 @@ public class UsuarioDAO implements IUsuarioDAO {
 
 		try {
 			stmt1 = conn
-					.prepareStatement("SELECT * FROM kanepe.usuarios where email_Usuario = ? and senha_Usuario = ?;");
+					.prepareStatement("SELECT * FROM kanepe.usuarios INNER JOIN enderecos as idEndereco where email_Usuario = ? and senha_Usuario = ?;");
 			ResultSet res1 = null;
 			stmt1.setString(1, email);
 			stmt1.setString(2, senha);
@@ -100,11 +102,22 @@ public class UsuarioDAO implements IUsuarioDAO {
 			while (res1.next()) {
 
 				Usuario u = new Usuario();
-
 				u.setNome(res1.getString("nome_Usuario"));
 				u.setCpf(res1.getString("cpf_Usuario"));
 				u.setEmail(res1.getString("email_Usuario"));
 				u.setSenha(res1.getString("senha_Usuario"));
+				
+				Endereco e = new Endereco();
+				e.setBairro(res1.getString("Bairro"));
+				e.setCidade(res1.getString("Cidade"));
+				e.setLogradouro(res1.getString("Rua"));
+				e.setNumero(res1.getString("Numero"));
+				u.setEnd(e);
+				
+				Produtor p = new Produtor();
+				p.setNomeComercio(res1.getString("nomeNegocio"));
+				p.setCnpj(res1.getString("cnpj"));
+				u.setProd(p);
 
 				return u;
 			}

@@ -25,6 +25,7 @@ import controle.UsuarioDAO;
 import modelo.Usuario;
 import modelo.Endereco;
 import modelo.RoundButton;
+import modelo.Produtor;
 
 import java.awt.Color;
 import java.awt.event.ActionListener;
@@ -37,7 +38,7 @@ public class TelaPerfilVendedor extends JFrame {
 	private JPanel contentPane;
 	private ArrayList<Usuario> listaUsuarios;
 
-	public TelaPerfilVendedor(Usuario u, Endereco e) {
+	public TelaPerfilVendedor(Usuario u) {
 
 		setResizable(false);
 		setLocationByPlatform(true);
@@ -83,13 +84,14 @@ public class TelaPerfilVendedor extends JFrame {
 		lblNomeEmpresa.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		lblNomeEmpresa.setBounds(10, 122, 250, 50);
 		PanelNome.add(lblNomeEmpresa);
+		lblNomeEmpresa.setText(u.getProd().getNomeComercio());
 
 		JPanel Panelinfo = new JPanel();
 		Panelinfo.setBorder(null);
 		Panelinfo.setBounds(39, 213, 674, 400);
 		PanelPrincipal.add(Panelinfo);
 		GridBagLayout gbl_Panelinfo = new GridBagLayout();
-		gbl_Panelinfo.columnWidths = new int[] { 46, 46, 300, 0, 30, 46, 0, 0, 0 };
+		gbl_Panelinfo.columnWidths = new int[] {46, 46, 300, 0, 30, 46, 30, 30, 0, 0};
 		gbl_Panelinfo.rowHeights = new int[] { 39, 14, 14, 0, 14, 0, 1, 14, 14, 0, 0, 0, 0, 14, 1, 0, 14, 14, 0, 0, 0,
 				0, 0, 0, 0, 0 };
 		gbl_Panelinfo.columnWeights = new double[] { 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE };
@@ -133,7 +135,7 @@ public class TelaPerfilVendedor extends JFrame {
 		gbc_lblCidade.gridx = 3;
 		gbc_lblCidade.gridy = 5;
 		Panelinfo.add(lblCidade, gbc_lblCidade);
-		lblCidade.setText(e.getCidade());
+		lblCidade.setText(u.getEnd().getCidade());
 
 		JLabel lblNewLabel_2 = new JLabel("CPF:");
 		lblNewLabel_2.setFont(new Font("Tahoma", Font.PLAIN, 15));
@@ -170,21 +172,22 @@ public class TelaPerfilVendedor extends JFrame {
 		gbc_lblBairro.gridx = 3;
 		gbc_lblBairro.gridy = 10;
 		Panelinfo.add(lblBairro, gbc_lblBairro);
-		lblBairro.setText(e.getBairro());
+		lblBairro.setText(u.getEnd().getBairro());
 
 		JLabel lblNewLabel_5 = new JLabel("CNPJ:");
 		lblNewLabel_5.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		GridBagConstraints gbc_lblNewLabel_5 = new GridBagConstraints();
+		gbc_lblNewLabel_5.anchor = GridBagConstraints.WEST;
 		gbc_lblNewLabel_5.insets = new Insets(0, 0, 5, 5);
 		gbc_lblNewLabel_5.gridx = 1;
 		gbc_lblNewLabel_5.gridy = 15;
 		Panelinfo.add(lblNewLabel_5, gbc_lblNewLabel_5);
 
-		JLabel lblNewLabel_6 = new JLabel("Logadouro:");
+		JLabel lblNewLabel_6 = new JLabel("Logradouro:");
 		lblNewLabel_6.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		GridBagConstraints gbc_lblNewLabel_6 = new GridBagConstraints();
 		gbc_lblNewLabel_6.insets = new Insets(0, 0, 5, 5);
-		gbc_lblNewLabel_6.anchor = GridBagConstraints.NORTHEAST;
+		gbc_lblNewLabel_6.anchor = GridBagConstraints.NORTHWEST;
 		gbc_lblNewLabel_6.gridx = 3;
 		gbc_lblNewLabel_6.gridy = 15;
 		Panelinfo.add(lblNewLabel_6, gbc_lblNewLabel_6);
@@ -197,13 +200,14 @@ public class TelaPerfilVendedor extends JFrame {
 		gbc_lblNewLabel_3.gridy = 15;
 		Panelinfo.add(lblNewLabel_3, gbc_lblNewLabel_3);
 
-		JLabel lblCNPJ = new JLabel("çç");
+		JLabel lblCNPJ = new JLabel("");
 		GridBagConstraints gbc_lblCNPJ = new GridBagConstraints();
 		gbc_lblCNPJ.anchor = GridBagConstraints.WEST;
 		gbc_lblCNPJ.insets = new Insets(0, 0, 5, 5);
 		gbc_lblCNPJ.gridx = 1;
 		gbc_lblCNPJ.gridy = 16;
 		Panelinfo.add(lblCNPJ, gbc_lblCNPJ);
+		lblCNPJ.setText(u.getProd().getCnpj());
 
 		JLabel lbllogadouro = new JLabel("ll");
 		GridBagConstraints gbc_lbllogadouro = new GridBagConstraints();
@@ -212,7 +216,7 @@ public class TelaPerfilVendedor extends JFrame {
 		gbc_lbllogadouro.gridx = 3;
 		gbc_lbllogadouro.gridy = 16;
 		Panelinfo.add(lbllogadouro, gbc_lbllogadouro);
-		lbllogadouro.setText(e.getLogradouro());
+		lbllogadouro.setText(u.getEnd().getLogradouro());
 
 		JLabel lblNum = new JLabel("oo");
 		GridBagConstraints gbc_lblNum = new GridBagConstraints();
@@ -220,7 +224,7 @@ public class TelaPerfilVendedor extends JFrame {
 		gbc_lblNum.gridx = 5;
 		gbc_lblNum.gridy = 16;
 		Panelinfo.add(lblNum, gbc_lblNum);
-		lblNum.setText(e.getNumero());
+		lblNum.setText(u.getEnd().getNumero());
 
 		JButton btnNewButton = new RoundButton("Editar");
 		btnNewButton.addActionListener(new ActionListener() {
@@ -250,7 +254,7 @@ public class TelaPerfilVendedor extends JFrame {
 		lblNewLabel_7.setBounds(21, 57, 85, 14);
 		panel_2.add(lblNewLabel_7);
 
-		JLabel lblDesc = new JLabel("oo");
+		JLabel lblDesc = new JLabel("");
 		lblDesc.setBounds(21, 82, 253, 14);
 		panel_2.add(lblDesc);
 

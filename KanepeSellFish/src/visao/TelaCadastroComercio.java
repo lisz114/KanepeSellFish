@@ -27,6 +27,7 @@ import javax.swing.border.LineBorder;
 
 import Atxy2k.CustomTextField.RestrictedTextField;
 import controle.EnderecoDAO;
+import controle.ProdutorDAO;
 import controle.UsuarioDAO;
 import modelo.Endereco;
 import modelo.Produtor;
@@ -43,6 +44,7 @@ public class TelaCadastroComercio extends JFrame {
 	private JTextField txtBairro;
 	private static UsuarioDAO uDAO = UsuarioDAO.getInstancia();
 	private static EnderecoDAO eDAO = EnderecoDAO.getInstancia();
+	private static ProdutorDAO pDAO= ProdutorDAO.getInstancia();
 	private JTextField txtLogradouro;
 	private JTextField txtCidade;
 	private JTextField txtNumero;
@@ -296,7 +298,7 @@ public class TelaCadastroComercio extends JFrame {
 //					produtor.setIdUsuario(/*id retornado*/);
 //					produtor.setEndereco(/*id retornado ao add endereco*/);
 
-					uDAO.inserirUsuario(novoUsuario);
+					pDAO.inserirProdutor(produtor);
 
 					TelaLogin tela = new TelaLogin();
 					tela.setLocationRelativeTo(null);
