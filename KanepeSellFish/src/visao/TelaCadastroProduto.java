@@ -214,7 +214,7 @@ public class TelaCadastroProduto extends JFrame {
 		        prod.setCodigo(123);
 		        prod.setValidade(validade); // Descomente se necessário
 		        
-		        if (pDAO.atualizarProduto(prod, u)) {
+		        if (pDAO.inserirProduto(prod, u)) {
 		            janelaPrincipal.atualizarTabela(u);
 		            dispose();
 		            TelaError erro = new TelaError();

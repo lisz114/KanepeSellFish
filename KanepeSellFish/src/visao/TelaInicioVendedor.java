@@ -23,8 +23,8 @@ import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 
-import controle.ProdutoDAO;
 import modelo.Produto;
+import modelo.Usuario;
 import net.miginfocom.swing.MigLayout;
 
 public class TelaInicioVendedor extends JFrame {
@@ -33,21 +33,9 @@ public class TelaInicioVendedor extends JFrame {
 	private JPanel contentPane;
 	private JTextField textField;
 
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					TelaInicioVendedor frame = new TelaInicioVendedor();
-					frame.setLocationRelativeTo(null);
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+	
 
-	public TelaInicioVendedor() {
+	public TelaInicioVendedor(Usuario u) {
 		setResizable(false);
 		setLocationByPlatform(true);
 		setMinimumSize(new Dimension(1176, 664));
@@ -240,7 +228,8 @@ public class TelaInicioVendedor extends JFrame {
 		imgMore.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				TelaCadastroProduto cadastrar = new TelaCadastroProduto();
+				TelaEstoque estoque = new TelaEstoque(u);
+				TelaCadastroProduto cadastrar = new TelaCadastroProduto(estoque, u);
 				
 				cadastrar.setVisible(true);
 				cadastrar.setLocationRelativeTo(null);

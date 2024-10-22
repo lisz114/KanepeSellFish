@@ -37,11 +37,20 @@ public class CarrinhoDAO implements ICarrinhoDAO {
 	}
 
 	public boolean removerProduto(long id) {
+		return false;
 
-		for (Produto produto: listaProdutos) {
-			if(produto.getId().equals(id));
-			listaProdutos.remove(produto);
-		}
+		
+	}
+
+	@Override
+	public boolean inserirProduto(Pedido pedido) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean alterarQuantidade(Pedido pedido) {
+		// TODO Auto-generated method stub
 		return false;
 	}
 }

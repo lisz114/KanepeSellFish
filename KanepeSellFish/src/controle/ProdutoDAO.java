@@ -20,7 +20,8 @@ public class ProdutoDAO implements IProdutoDAO {
 	private static ProdutoDAO instancia;
 	public static ArrayList<Produto> listaProdutos;
 
-	public ProdutoDAO() {}
+	public ProdutoDAO() {
+	}
 
 	public static ProdutoDAO getInstancia() {
 
@@ -50,16 +51,28 @@ public class ProdutoDAO implements IProdutoDAO {
 			e.printStackTrace();
 			return false;
 		}
-		
+
 	}
 
 	public boolean alterarProduto(Produto produto) {
 		return false;
 	}
 
-	public boolean removerProduto(long codigo) {
+	public boolean removerProduto(Produto p) {
+		int id = Integer.parseInt(pegarIdProduto(p));
 
-		return false;
+		String sql = "DELETE FROM produtos WHERE idProdutos = ?";
+		try (Connection conn = ConexaoBD.getConexaoMySQL(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
+			
+			pstmt.setInt(1, id);
+
+			int rowsAffected = pstmt.executeUpdate();
+			return rowsAffected > 0;
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
 	}
 
 	public List<Produto> ordenarPorPreco(boolean crescente, List<Produto> produtos) {
@@ -78,25 +91,24 @@ public class ProdutoDAO implements IProdutoDAO {
 		}
 		return produtos;
 	}
-	
+
 	public ArrayList<Produto> addListaProd(Usuario u) {
 		listaProdutos.clear();
-		
+
 		PreparedStatement stmt1 = null;
 
 		Connection conn = ConexaoBD.getConexaoMySQL();
-		
+
 		try {
-			stmt1 = conn
-					.prepareStatement("SELECT * FROM kanepe.produtos where Produtores_idProdutores = ?;");
+			stmt1 = conn.prepareStatement("SELECT * FROM kanepe.produtos where Produtores_idProdutores = ?;");
 			ResultSet res1 = null;
-			
+
 			stmt1.setString(1, pegarIdProdutor(u));
-			
+
 			res1 = stmt1.executeQuery();
-			
+
 //			listaProdutos = null;
-			
+
 			while (res1.next()) {
 
 				Produto prod = new Produto();
@@ -106,7 +118,8 @@ public class ProdutoDAO implements IProdutoDAO {
 				prod.setQuantidadeEstoque(Integer.parseInt(res1.getString("quantidade")));
 				prod.setPreco(Float.parseFloat(res1.getString("preco")));
 				prod.setIdProdutor(Integer.parseInt(res1.getString("Produtores_idProdutores")));
-				prod.setValidade(LocalDate.parse(res1.getString("validade"), DateTimeFormatter.ofPattern("yyyy-MM-dd")));
+				prod.setValidade(
+						LocalDate.parse(res1.getString("validade"), DateTimeFormatter.ofPattern("yyyy-MM-dd")));
 				listaProdutos.add(prod);
 			}
 
@@ -116,26 +129,25 @@ public class ProdutoDAO implements IProdutoDAO {
 		} catch (Exception e) {
 			// TODO: handle exception
 		}
-		
+
 		return listaProdutos;
 	}
-	
+
 	public String pegarIdProdutor(Usuario u) {
-		
+
 		PreparedStatement stmt1 = null;
 
 		Connection conn = ConexaoBD.getConexaoMySQL();
 
 		try {
-			stmt1 = conn
-					.prepareStatement("SELECT * FROM kanepe.produtores where Usuarios_idUsuarios = ?;");
+			stmt1 = conn.prepareStatement("SELECT * FROM kanepe.produtores where Usuarios_idUsuarios = ?;");
 			ResultSet res1 = null;
 			stmt1.setString(1, String.valueOf(u.getIdUsuario()));
 
 			res1 = stmt1.executeQuery();
 
 			while (res1.next()) {
-				
+
 				return res1.getString("idProdutores");
 			}
 
@@ -149,8 +161,54 @@ public class ProdutoDAO implements IProdutoDAO {
 		return null;
 	}
 
-	public boolean atualizarProduto(Produto prod, Usuario u) {
-		// TODO Auto-generated method stub
-		return false;
+	public String pegarIdProduto(Produto p) {
+
+		PreparedStatement stmt1 = null;
+
+		Connection conn = ConexaoBD.getConexaoMySQL();
+
+		try {
+			stmt1 = conn.prepareStatement("SELECT * FROM produtos where nome_Produto = ?");
+			ResultSet res1 = null;
+			
+			stmt1.setString(1, String.valueOf(p.getNome()));
+
+			res1 = stmt1.executeQuery();
+
+			while (res1.next()) {
+
+				return res1.getString("idProdutos");
+			}
+
+			res1.close();
+			stmt1.close();
+			conn.close();
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	public boolean atualizarProduto(Produto oprod, Produto produto, Usuario u) {
+		int id = Integer.parseInt(pegarIdProduto(oprod));
+
+		String sql = "UPDATE produtos SET nome_Produto = ?, produtoCod = ?, quantidade = ?, preco = ?, validade = ? WHERE idProdutos = ?";
+		try (Connection conn = ConexaoBD.getConexaoMySQL(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+			pstmt.setString(1, produto.getNome());
+			pstmt.setInt(2, produto.getCodigo());
+			pstmt.setInt(3, produto.getQuantidadeEstoque());
+			pstmt.setFloat(4, produto.getPreco());
+			pstmt.setDate(5, (java.sql.Date.valueOf(produto.getValidade())));
+			pstmt.setInt(6, id);
+
+			int rowsAffected = pstmt.executeUpdate();
+			return rowsAffected > 0;
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
 	}
 }

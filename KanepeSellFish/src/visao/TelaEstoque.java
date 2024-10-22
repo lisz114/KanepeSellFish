@@ -76,7 +76,7 @@ public class TelaEstoque extends JFrame {
 				if (posicaoSelecionada != -1) {
 
 					Produto produtoSelecionado = ProdutoDAO.listaProdutos.get(posicaoSelecionada);
-					TelaAlterarProduto novaJanela = new TelaAlterarProduto(estaJanela, u);
+					TelaAlterarProduto novaJanela = new TelaAlterarProduto(produtoSelecionado, estaJanela, u);
 					novaJanela.mostrarDados(produtoSelecionado);
 					novaJanela.setVisible(true);
 				} else {
@@ -101,6 +101,22 @@ public class TelaEstoque extends JFrame {
 		btnNewButton = new JButton("Excluir Produto");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				int posicaoSelecionada = -1;
+				posicaoSelecionada = table.getSelectedRow();
+				if (posicaoSelecionada != -1) {
+					Produto produtoSelecionado = ProdutoDAO.listaProdutos.get(posicaoSelecionada);
+					
+					TelaExcluirProduto erro = new TelaExcluirProduto(produtoSelecionado, estaJanela, u);
+					erro.setLocationRelativeTo(null);
+					erro.setVisible(true);
+				} else {
+					TelaError erro = new TelaError();
+					erro.setLabelText("Selecione um produto");
+					erro.setLocationRelativeTo(null);
+					erro.setVisible(true);
+				}
+
+				
 				atualizarTabela(u);
 			}
 		});
