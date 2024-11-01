@@ -92,7 +92,7 @@ public class UsuarioDAO implements IUsuarioDAO {
 
 		try {
 			stmt1 = conn
-					.prepareStatement("SELECT * FROM kanepe.usuarios INNER JOIN enderecos as idEndereco where email_Usuario = ? and senha_Usuario = ?;");
+					.prepareStatement("SELECT * FROM kanepe.usuarios INNER JOIN enderecos as idEndereco INNER JOIN produtores as idProdutores where email_Usuario = ? and senha_Usuario = ?;");
 			ResultSet res1 = null;
 			stmt1.setString(1, email);
 			stmt1.setString(2, senha);
