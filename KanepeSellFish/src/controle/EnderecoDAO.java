@@ -39,10 +39,10 @@ public class EnderecoDAO implements IEnderecoDAO {
 				PreparedStatement pstmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
 
 			pstmt.setString(1, endereco.getCidade());
-			pstmt.setString(2, endereco.getLogradouro());
-			pstmt.setString(3, endereco.getBairro());
+			pstmt.setString(2, endereco.getBairro());
+			pstmt.setString(3, endereco.getCep());
 			pstmt.setString(4, endereco.getNumero());
-			pstmt.setString(5, endereco.getCep());
+			pstmt.setString(5, endereco.getLogradouro());
 
 			pstmt.executeUpdate();
 
