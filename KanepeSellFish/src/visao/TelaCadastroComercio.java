@@ -31,6 +31,7 @@ import controle.ProdutorDAO;
 import controle.UsuarioDAO;
 import modelo.Endereco;
 import modelo.Produtor;
+import modelo.RoundButton;
 import modelo.Usuario;
 import net.miginfocom.swing.MigLayout;
 

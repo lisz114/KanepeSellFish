@@ -29,6 +29,7 @@ import javax.swing.border.TitledBorder;
 
 import controle.ProdutoDAO;
 import modelo.Produto;
+import modelo.RoundButton;
 import modelo.Usuario;
 import net.miginfocom.swing.MigLayout;
 

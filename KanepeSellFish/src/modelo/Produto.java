@@ -21,7 +21,7 @@ public class Produto {
 		this.preco = preco;
 		this.quantidadeEstoque = quantidadeEstoque;
 	}
-
+	
 	public int getCodigo() {
 		return codigo;
 	}

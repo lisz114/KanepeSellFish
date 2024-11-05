@@ -18,6 +18,7 @@ import javax.swing.JCheckBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.SpringLayout;
 import javax.swing.SwingConstants;
@@ -26,9 +27,9 @@ import javax.swing.border.LineBorder;
 
 import Atxy2k.CustomTextField.RestrictedTextField;
 import controle.UsuarioDAO;
+import modelo.RoundButton;
 import modelo.Usuario;
 import net.miginfocom.swing.MigLayout;
-import javax.swing.JPasswordField;
 
 @SuppressWarnings("serial")
 public class TelaCadastro extends JFrame {

@@ -23,7 +23,6 @@ import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 
-import controle.ProdutoDAO;
 import modelo.Produto;
 import net.miginfocom.swing.MigLayout;
 
@@ -240,10 +239,10 @@ public class TelaInicioVendedor extends JFrame {
 		imgMore.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				TelaCadastroProduto cadastrar = new TelaCadastroProduto();
-				
-				cadastrar.setVisible(true);
-				cadastrar.setLocationRelativeTo(null);
+//				TelaCadastroProduto cadastrar = new TelaCadastroProduto();
+//				
+//				cadastrar.setVisible(true);
+//				cadastrar.setLocationRelativeTo(null);
 			}
 		});
 		imgMore.setIcon(new ImageIcon(TelaInicioVendedor.class.getResource("/IMG/iconMore.png")));

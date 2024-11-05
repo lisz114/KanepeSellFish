@@ -4,7 +4,6 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Dimension;
-import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.SystemColor;
@@ -30,6 +29,7 @@ import javax.swing.border.TitledBorder;
 
 import controle.ProdutoDAO;
 import modelo.Produto;
+import modelo.RoundButton;
 import modelo.Usuario;
 import net.miginfocom.swing.MigLayout;
 
@@ -233,7 +233,7 @@ public class TelaAlterarProduto extends JFrame {
 		        prod.setNome(nome);
 		        prod.setQuantidadeEstoque(quantidade);
 		        prod.setPreco(preco);
-		        prod.setCodigo(123);
+//		        prod.setCodigo(123);
 		        prod.setValidade(validade); // Descomente se necessário
 		        
 		        if (pDAO.inserirProduto(prod, u)) {
