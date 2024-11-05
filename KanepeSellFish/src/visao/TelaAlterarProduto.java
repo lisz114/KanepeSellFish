@@ -27,6 +27,7 @@ import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
+import javax.xml.crypto.Data;
 
 import controle.ProdutoDAO;
 import modelo.Produto;
@@ -41,6 +42,8 @@ public class TelaAlterarProduto extends JFrame {
 	private JTextField txtPreco;
 	private JTextField txtQuantidade;
 	private ProdutoDAO pDAO = ProdutoDAO.getInstancia();
+	private JRadioButton rdbtnDoce;
+	private JRadioButton rdbtnSalgada;
 
 	/**
 	 * Launch the application.
@@ -63,9 +66,7 @@ public class TelaAlterarProduto extends JFrame {
 	 * Create the frame.
 	 */
 	public TelaAlterarProduto(Produto oprod, TelaEstoque janelaPrincipal, Usuario u) {
-		
-		
-		
+
 		setTitle("Cadastro de produto");
 		setIconImage(Toolkit.getDefaultToolkit().getImage(TelaCadastroComercio.class.getResource("/img/logo.png")));
 		setResizable(false);
@@ -169,14 +170,14 @@ public class TelaAlterarProduto extends JFrame {
 		lblAdcImagem.setForeground(new Color(0, 128, 255));
 		panelDireita.add(lblAdcImagem, "cell 0 1,alignx right");
 
-		JRadioButton rdbtnDoce = new JRadioButton("Água doce");
+		rdbtnDoce = new JRadioButton("Água doce");
 		rdbtnDoce.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		rdbtnDoce.setBorder(null);
 		rdbtnDoce.setOpaque(false);
 		rdbtnDoce.setSelected(true);
 		panelDireita.add(rdbtnDoce, "flowx,cell 0 2");
 
-		JRadioButton rdbtnSalgada = new JRadioButton("Água salgada");
+		rdbtnSalgada = new JRadioButton("Água salgada");
 		rdbtnSalgada.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		rdbtnSalgada.setBorder(null);
 		rdbtnSalgada.setOpaque(false);
@@ -202,13 +203,19 @@ public class TelaAlterarProduto extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				Produto prod = new Produto();
 				Produto oriProd = new Produto();
-				
+
 				oriProd = oprod;
 
 				String nome = txtNome.getText();
 				String validadeStr = txtValidade.getText();
 				String precoStr = txtPreco.getText();
 				String quantidadeStr = txtQuantidade.getText();
+				Boolean salinidade;
+				if (rdbtnDoce.isSelected()){
+					salinidade = true;
+				}else {
+					salinidade = false;
+				}
 
 				// Verificação de campos vazios
 				if (nome.isEmpty() || validadeStr.isEmpty() || precoStr.isEmpty() || quantidadeStr.isEmpty()) {
@@ -248,8 +255,8 @@ public class TelaAlterarProduto extends JFrame {
 				prod.setNome(nome);
 				prod.setQuantidadeEstoque(quantidade);
 				prod.setPreco(preco);
-				prod.setCodigo(123);
 				prod.setValidade(validade); // Descomente se necessário
+				prod.setSalinidade(salinidade);
 
 				if (pDAO.atualizarProduto(oriProd, prod, u)) {
 					janelaPrincipal.atualizarTabela(u);
@@ -294,18 +301,19 @@ public class TelaAlterarProduto extends JFrame {
 	}
 
 	public void mostrarDados(Produto produtoSelecionado) {
+		LocalDate validade = produtoSelecionado.getValidade();
+		DateTimeFormatter desiredFormatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+		String formattedDate = validade.format(desiredFormatter);
 
+		if(produtoSelecionado.getSalinidade()!=null && produtoSelecionado.getSalinidade()==true) {
+			rdbtnDoce.setSelected(true);
+		}else {
+			rdbtnSalgada.setSelected(true);
+		}
 		txtNome.setText(produtoSelecionado.getNome());
 		txtQuantidade.setText(String.valueOf(produtoSelecionado.getQuantidadeEstoque()));
-//		txtValidade.setText(null);
+		txtValidade.setText(formattedDate);
 		txtPreco.setText(String.valueOf(produtoSelecionado.getPreco()));
-		/*
-		 * if(é agua salgaa) { rdbtnSalgada.setSelected(); }else{
-		 * rdbtnDoce.setSelected(); }
-		 */
-
-		// setar imagem tiver
-
 	}
 
 }

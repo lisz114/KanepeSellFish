@@ -5,6 +5,8 @@ import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 import javax.swing.JButton;
@@ -105,7 +107,7 @@ public class TelaEstoque extends JFrame {
 				posicaoSelecionada = table.getSelectedRow();
 				if (posicaoSelecionada != -1) {
 					Produto produtoSelecionado = ProdutoDAO.listaProdutos.get(posicaoSelecionada);
-					
+
 					TelaExcluirProduto erro = new TelaExcluirProduto(produtoSelecionado, estaJanela, u);
 					erro.setLocationRelativeTo(null);
 					erro.setVisible(true);
@@ -116,7 +118,6 @@ public class TelaEstoque extends JFrame {
 					erro.setVisible(true);
 				}
 
-				
 				atualizarTabela(u);
 			}
 		});
@@ -145,19 +146,26 @@ public class TelaEstoque extends JFrame {
 	}
 
 	protected void atualizarTabela(Usuario u) {
-		
+
 		listaProdutos = pDAO.addListaProd(u);
-		
-		DefaultTableModel tableModel = new DefaultTableModel(
-				new Object[][] {
-				},
-				new String[] { "C\u00F3digo", "Nome", "QuantidadeEstoque:", "Validade", "Salinidade", "Pre\u00E7o" 
-				}
-		);
+
+		DefaultTableModel tableModel = new DefaultTableModel(new Object[][] {},
+				new String[] {"Nome", "QuantidadeEstoque:", "Validade", "Salinidade", "Pre\u00E7o" });
 
 		for (Produto produto : listaProdutos) {
-			tableModel.addRow(new Object[] { produto.getCodigo(), produto.getNome(), produto.getQuantidadeEstoque(),
-					String.valueOf(produto.getValidade()), "null", produto.getPreco() });
+			LocalDate validade = produto.getValidade();
+			DateTimeFormatter desiredFormatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+			String formattedDate = validade.format(desiredFormatter);
+			String salinidade;
+			
+			if(produto.getSalinidade()!=null && produto.getSalinidade()==true) {
+				salinidade = "Doce";
+			}else {
+				salinidade = "Salgada";
+			}
+
+			tableModel.addRow(new Object[] {produto.getNome(), produto.getQuantidadeEstoque(),
+					formattedDate, salinidade, produto.getPreco() });
 		}
 
 		table.setModel(tableModel);

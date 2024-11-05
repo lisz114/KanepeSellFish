@@ -34,15 +34,15 @@ public class ProdutoDAO implements IProdutoDAO {
 	}
 
 	public boolean inserirProduto(Produto produto, Usuario u) {
-		String sql = "INSERT INTO produtos (nome_Produto, produtoCod, quantidade, preco, Produtores_idProdutores, validade) VALUES (?, ?, ?, ?, ?, ?)";
+		String sql = "INSERT INTO produtos (nome_Produto, quantidade, preco, Produtores_idProdutores, validade, salinidade) VALUES (?, ?, ?, ?, ?, ?)";
 		try (Connection conn = ConexaoBD.getConexaoMySQL(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
 			pstmt.setString(1, produto.getNome());
-			pstmt.setInt(2, produto.getCodigo());
-			pstmt.setInt(3, produto.getQuantidadeEstoque());
-			pstmt.setFloat(4, produto.getPreco());
-			pstmt.setInt(5, u.getIdUsuario());
-			pstmt.setDate(6, (java.sql.Date.valueOf(produto.getValidade())));
+			pstmt.setInt(2, produto.getQuantidadeEstoque());
+			pstmt.setFloat(3, produto.getPreco());
+			pstmt.setInt(4, u.getIdUsuario());
+			pstmt.setDate(5, (java.sql.Date.valueOf(produto.getValidade())));
+			pstmt.setBoolean(6, produto.getSalinidade());
 
 			int rowsAffected = pstmt.executeUpdate();
 			return rowsAffected > 0;
@@ -63,7 +63,7 @@ public class ProdutoDAO implements IProdutoDAO {
 
 		String sql = "DELETE FROM produtos WHERE idProdutos = ?";
 		try (Connection conn = ConexaoBD.getConexaoMySQL(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
-			
+
 			pstmt.setInt(1, id);
 
 			int rowsAffected = pstmt.executeUpdate();
@@ -114,7 +114,6 @@ public class ProdutoDAO implements IProdutoDAO {
 				Produto prod = new Produto();
 
 				prod.setNome(res1.getString("nome_Produto"));
-				prod.setCodigo(Integer.parseInt(res1.getString("produtoCod")));
 				prod.setQuantidadeEstoque(Integer.parseInt(res1.getString("quantidade")));
 				prod.setPreco(Float.parseFloat(res1.getString("preco")));
 				prod.setIdProdutor(Integer.parseInt(res1.getString("Produtores_idProdutores")));
@@ -170,7 +169,7 @@ public class ProdutoDAO implements IProdutoDAO {
 		try {
 			stmt1 = conn.prepareStatement("SELECT * FROM produtos where nome_Produto = ?");
 			ResultSet res1 = null;
-			
+
 			stmt1.setString(1, String.valueOf(p.getNome()));
 
 			res1 = stmt1.executeQuery();
@@ -193,15 +192,15 @@ public class ProdutoDAO implements IProdutoDAO {
 	public boolean atualizarProduto(Produto oprod, Produto produto, Usuario u) {
 		int id = Integer.parseInt(pegarIdProduto(oprod));
 
-		String sql = "UPDATE produtos SET nome_Produto = ?, produtoCod = ?, quantidade = ?, preco = ?, validade = ? WHERE idProdutos = ?";
+		String sql = "UPDATE produtos SET nome_Produto = ?, quantidade = ?, preco = ?, validade = ?, salinidade = ? WHERE idProdutos = ?";
 		try (Connection conn = ConexaoBD.getConexaoMySQL(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
 			pstmt.setString(1, produto.getNome());
-			pstmt.setInt(2, produto.getCodigo());
-			pstmt.setInt(3, produto.getQuantidadeEstoque());
-			pstmt.setFloat(4, produto.getPreco());
-			pstmt.setDate(5, (java.sql.Date.valueOf(produto.getValidade())));
+			pstmt.setInt(2, produto.getQuantidadeEstoque());
+			pstmt.setFloat(3, produto.getPreco());
+			pstmt.setDate(4, (java.sql.Date.valueOf(produto.getValidade())));
 			pstmt.setInt(6, id);
+			pstmt.setBoolean(5, produto.getSalinidade());
 
 			int rowsAffected = pstmt.executeUpdate();
 			return rowsAffected > 0;
