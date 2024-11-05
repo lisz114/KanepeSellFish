@@ -7,10 +7,8 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
-
 import modelo.IProdutoDAO;
 import modelo.Produto;
 import modelo.Usuario;
@@ -63,19 +61,20 @@ public class ProdutoDAO implements IProdutoDAO {
 	}
 
 	public List<Produto> ordenarPorPreco(boolean crescente, List<Produto> produtos) {
-		produtos.sort(Comparator.comparingDouble(Produto::getPreco));
-		if (!crescente) {
-			Collections.reverse(produtos);
+		Comparator<Produto> comparador = Comparator.comparingDouble(Produto::getPreco);
+		if(!crescente) {
+			comparador = comparador.reversed();
 		}
+		produtos.sort(comparador);
 		return produtos;
 	}
 
 	public List<Produto> ordenarNome(boolean crescente, List<Produto> produtos) {
-
-		produtos.sort(Comparator.comparing(Produto::getNome));
-		if (!crescente) {
-			Collections.reverse(produtos);
+		Comparator<Produto> comparador = Comparator.comparing(Produto::getNome);
+		if(!crescente) {
+			comparador = comparador.reversed();
 		}
+		produtos.sort(comparador);
 		return produtos;
 	}
 	
@@ -114,7 +113,6 @@ public class ProdutoDAO implements IProdutoDAO {
 			stmt1.close();
 			conn.close();
 		} catch (Exception e) {
-			// TODO: handle exception
 		}
 		
 		return listaProdutos;
@@ -127,8 +125,7 @@ public class ProdutoDAO implements IProdutoDAO {
 		Connection conn = ConexaoBD.getConexaoMySQL();
 
 		try {
-			stmt1 = conn
-					.prepareStatement("SELECT * FROM kanepe.produtores where Usuarios_idUsuarios = ?;");
+			stmt1 = conn.prepareStatement("SELECT * FROM kanepe.produtores where Usuarios_idUsuarios = ?;");
 			ResultSet res1 = null;
 			stmt1.setString(1, String.valueOf(u.getIdUsuario()));
 
@@ -150,7 +147,6 @@ public class ProdutoDAO implements IProdutoDAO {
 	}
 
 	public boolean atualizarProduto(Produto prod, Usuario u) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 }
