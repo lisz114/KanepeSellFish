@@ -62,6 +62,7 @@ CREATE TABLE IF NOT EXISTS Produtos (
     nome_Produto VARCHAR(100) NOT NULL,
     preco DECIMAL(65) NOT NULL,
     Produtores_idProdutores BIGINT NOT NULL,
+    salinidade BOOLEAN NOT NULL,
     PRIMARY KEY (idProdutos),
     FOREIGN KEY (Produtores_idProdutores) REFERENCES Produtores (idProdutores)
 );
