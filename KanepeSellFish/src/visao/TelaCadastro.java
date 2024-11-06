@@ -18,6 +18,7 @@ import javax.swing.JCheckBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.SpringLayout;
 import javax.swing.SwingConstants;
@@ -29,7 +30,6 @@ import controle.UsuarioDAO;
 import modelo.RoundButton;
 import modelo.Usuario;
 import net.miginfocom.swing.MigLayout;
-import javax.swing.JPasswordField;
 
 @SuppressWarnings("serial")
 public class TelaCadastro extends JFrame {
@@ -163,7 +163,7 @@ public class TelaCadastro extends JFrame {
 		lblSenha.setForeground(new Color(0, 0, 0));
 		lblSenha.setFont(new Font("Tahoma", Font.BOLD, 12));
 		panelSenha.add(lblSenha, "cell 0 0");
-		
+
 		txtSenha = new JPasswordField();
 		txtSenha.setBorder(new LineBorder(new Color(0, 0, 0), 2));
 		txtSenha.setOpaque(false);
@@ -219,7 +219,7 @@ public class TelaCadastro extends JFrame {
 				Usuario u = uDAO.consultaUsuarioCadastrado(cpf, email);
 
 				if (u != null) {
-					System.out.println("Nao deu bom");
+					System.out.println("CPF ou Email já cadastrado");
 					TelaError erro = new TelaError();
 					erro.setLabelText("CPF ou Email já cadastrado");
 					erro.setLocationRelativeTo(null);
@@ -234,6 +234,9 @@ public class TelaCadastro extends JFrame {
 						erro.setLocationRelativeTo(null);
 						erro.setVisible(true);
 					} else {
+						if(uDAO.validarCPF(cpf)) {
+							
+						
 						novoUsuario.setNome(nome);
 						novoUsuario.setCpf(cpf);
 						novoUsuario.setEmail(email);
@@ -246,20 +249,20 @@ public class TelaCadastro extends JFrame {
 
 							dispose();
 						} else {
+
 							TelaCadastroComercio tela = new TelaCadastroComercio(novoUsuario);
 							tela.setLocationRelativeTo(null);
 							tela.setVisible(true);
-	
+
 							dispose();
 
-							/*uDAO.inserirUsuario(novoUsuario);
-							TelaLogin tela = new TelaLogin();
-							tela.setLocationRelativeTo(null);
-							tela.setVisible(true);
-
-							dispose();*/
-
 						}
+					}else {
+						TelaError erro = new TelaError();
+						erro.setLabelText("CPF Invalido	");
+						erro.setLocationRelativeTo(null);
+						erro.setVisible(true);
+					}
 					}
 				}
 			}
@@ -302,8 +305,8 @@ public class TelaCadastro extends JFrame {
 		panel_3.setOpaque(false);
 		panel.add(panel_3);
 
-		RestrictedTextField validar = new RestrictedTextField(txtCPF);
-		validar.setOnlyNums(true);
-		validar.setLimit(11);
+		RestrictedTextField validarcpf = new RestrictedTextField(txtCPF);
+		validarcpf.setOnlyNums(true);
+		validarcpf.setLimit(11);
 	}
 }

@@ -16,6 +16,7 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.SpringLayout;
 import javax.swing.SwingConstants;
@@ -26,7 +27,6 @@ import controle.UsuarioDAO;
 import modelo.RoundButton;
 import modelo.Usuario;
 import net.miginfocom.swing.MigLayout;
-import javax.swing.JPasswordField;
 
 public class TelaLogin extends JFrame {
 
@@ -176,8 +176,6 @@ public class TelaLogin extends JFrame {
 
 				String email = txtEmail.getText();
 				String senha = new String(txtSenha.getPassword());
-
-				uDAO.consultarUsuarioLoginSenha(email, senha);
 
 				u = uDAO.consultarUsuarioLoginSenha(email, senha);
 

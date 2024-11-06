@@ -3,7 +3,6 @@ package modelo;
 import java.util.ArrayList;
 
 public class Produtor extends Usuario {
-	private String idUsuario;
 	private String nomeComercio;
 	private int IdEndereco;
 	private ArrayList<Pedido> pedido;
@@ -12,7 +11,7 @@ public class Produtor extends Usuario {
 	public Produtor() {
 	}
 
-	public Produtor(String idUsuario, String nomeComercio, int IdEndereco, ArrayList<Pedido> pedido, String cnpj) {
+	public Produtor(int idUsuario, String nomeComercio, int IdEndereco, ArrayList<Pedido> pedido, String cnpj) {
 		this.idUsuario = idUsuario;
 		this.nomeComercio = nomeComercio;
 		this.IdEndereco = IdEndereco;
@@ -20,13 +19,6 @@ public class Produtor extends Usuario {
 		this.cnpj = cnpj;
 	}
 
-	public String getidUsuario() {
-		return idUsuario;
-	}
-
-	public void setidUsuario(String idUsuario) {
-		this.idUsuario = idUsuario;
-	}
 
 	public String getNomeComercio() {
 		return nomeComercio;

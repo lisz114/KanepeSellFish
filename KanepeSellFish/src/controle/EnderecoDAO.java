@@ -31,37 +31,33 @@ public class EnderecoDAO implements IEnderecoDAO {
 		return instancia;
 	}
 
-	public boolean inserirEnderecoDoComercio(Endereco endereco) {
+	public int inserirEnderecoDoComercio(Endereco endereco) {
 
-		String sql = "INSERT INTO enderecos (Cidade, Bairro, cep, Numero, Rua) VALUES (?, ?, ?, ?, ?)";
+	    String sql = "INSERT INTO enderecos (Cidade, Rua, Bairro, Numero, cep) VALUES (?, ?, ?, ?, ?)";
 
-		try (Connection conn = ConexaoBD.getConexaoMySQL();
-				PreparedStatement pstmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+	    try (Connection conn = ConexaoBD.getConexaoMySQL();
+	            PreparedStatement pstmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
 
-			pstmt.setString(1, endereco.getCidade());
-			pstmt.setString(2, endereco.getBairro());
-			pstmt.setString(3, endereco.getCep());
-			pstmt.setString(4, endereco.getNumero());
-			pstmt.setString(5, endereco.getLogradouro());
+	        pstmt.setString(1, endereco.getCidade());
+	        pstmt.setString(2, endereco.getLogradouro());
+	        pstmt.setString(3, endereco.getBairro());
+	        pstmt.setInt(4, endereco.getNumero());
+	        pstmt.setString(5, endereco.getCep());
 
-			pstmt.executeUpdate();
+	        pstmt.executeUpdate();
 
-			ResultSet rs = pstmt.getGeneratedKeys(); // Retrieve the automatically 2
-			// generated key value in a ResultSet.
-			// Only one row is returned.
-			// Create ResultSet for query
-			while (rs.next()) {
-				java.math.BigDecimal idColVar = rs.getBigDecimal(1);
-				// Get automatically generated key
-				// value
-			}
+	        ResultSet rs = pstmt.getGeneratedKeys(); // Recupera o ID gerado automaticamente
+	        if (rs.next()) {
+	            return rs.getInt(1); // Retorna o ID gerado
+	        }
 
-			return true;
-		} catch (SQLException e) {
-			e.printStackTrace();
-			return false;
-		}
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+
+	    return -1; // Retorna -1 em caso de erro
 	}
+
 
 	@SuppressWarnings("deprecation")
 	public Endereco buscaCEP(String cep) {

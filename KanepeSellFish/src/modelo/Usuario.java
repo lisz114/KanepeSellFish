@@ -7,37 +7,15 @@ public class Usuario {
 	private String email;
 	private String cpf;
 	private String tel;
-	private Endereco end;
-	private Produtor prod;
+	protected int idUsuario;
 
-	// private String nempresa;
-//	private String cidade;
-//	private String rua;
-//	private String bairro;
-	public Usuario() {
-	}
+	public Usuario() {}
 
 	public Usuario(String cpf, String nome, String senha, String email) {
 		this.cpf = cpf;
 		this.nome = nome;
 		this.senha = senha;
 		this.email = email;
-	}
-
-	public Endereco getEnd() {
-		return end;
-	}
-
-	public Produtor getProd() {
-		return prod;
-	}
-
-	public void setProd(Produtor prod) {
-		this.prod = prod;
-	}
-
-	public void setEnd(Endereco end) {
-		this.end = end;
 	}
 
 	public String getNome() {
@@ -79,6 +57,10 @@ public class Usuario {
 	public void setTel(String tel) {
 		this.tel = tel;
 	}
+  
+  	public void setIdUsuario(int idUsuario) {
+		this.idUsuario = idUsuario;
+	}
 
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -87,5 +69,8 @@ public class Usuario {
 			return false;
 		Usuario usuario = (Usuario) obj;
 		return cpf == usuario.cpf;
+	}
+	public int getIdUsuario() {
+		return this.idUsuario;
 	}
 }

@@ -25,10 +25,12 @@ public class ProdutorDAO implements IProdutorDAO {
 
 	@Override
 	public boolean inserirProdutor(Produtor produtor) {
-		String sql = "INSERT INTO produtores (nomeNegocio, cnpj) VALUES (?, ?)";
+		String sql = "INSERT INTO produtores (nomeNegocio, Usuarios_idUsuarios, Enderecos_idEnderecos, cnpj) VALUES (?, ?, ?, ?)";
 		try (Connection conn = ConexaoBD.getConexaoMySQL(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
 			pstmt.setString(1, produtor.getNomeComercio());
+			pstmt.setInt(2, produtor.getIdUsuario());
+			pstmt.setInt(3, produtor.getEndereco());
 			pstmt.setString(4, produtor.getCnpj());
 			System.out.println(pstmt);
 			int rowsAffected = pstmt.executeUpdate();
@@ -39,4 +41,7 @@ public class ProdutorDAO implements IProdutorDAO {
 			return false;
 		}
 	}
+
+	
+
 }

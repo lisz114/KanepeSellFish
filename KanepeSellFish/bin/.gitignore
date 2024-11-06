@@ -1,5 +1,14 @@
-/controle/
-/fontes/
-/img/
 /modelo/
 /visao/
+/controle/
+/IMG/
+
+
+.metadata/
+.bin/
+.classpath
+.project
+*.log
+*.tmp
+*.env
+*.class
