@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
+import modelo.Endereco;
 import modelo.IUsuarioDAO;
 import modelo.Usuario;
 
@@ -81,7 +82,7 @@ public class UsuarioDAO implements IUsuarioDAO {
 
 		try {
 			stmt1 = conn
-					.prepareStatement("SELECT * FROM kanepe.usuarios where email_Usuario = ? and senha_Usuario = ?;");
+					.prepareStatement("SELECT * FROM kanepe.usuarios inner join Enderecos as Endereco_idEndereco where email_Usuario = ? and senha_Usuario = ?;");
 			ResultSet res1 = null;
 			stmt1.setString(1, email);
 			stmt1.setString(2, senha);
@@ -98,6 +99,12 @@ public class UsuarioDAO implements IUsuarioDAO {
 				u.setSenha(res1.getString("senha_Usuario"));
 				u.setIdUsuario(res1.getInt("idUsuarios"));
 				u.setTel(res1.getString("telefone"));
+				
+				Endereco e = new Endereco();
+				e.setCidade(res1.getString("Cidade"));
+				e.setBairro(res1.getString("Bairro"));
+				e.setLogradouro(res1.getString("Rua"));
+				//e.setNumero(res1.getString("numero"));
 
 				return u;
 			}

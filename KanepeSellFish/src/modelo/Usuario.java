@@ -7,6 +7,8 @@ public class Usuario {
 	private String email;
 	private String cpf;
 	private String tel;
+	private Produtor prod;
+	private Endereco end;
 	protected int idUsuario;
 
 	public Usuario() {}
@@ -16,6 +18,22 @@ public class Usuario {
 		this.nome = nome;
 		this.senha = senha;
 		this.email = email;
+	}
+
+	public Produtor getProd() {
+		return prod;
+	}
+
+	public void setProd(Produtor prod) {
+		this.prod = prod;
+	}
+
+	public Endereco getEnd() {
+		return end;
+	}
+
+	public void setEnd(Endereco end) {
+		this.end = end;
 	}
 
 	public String getNome() {
