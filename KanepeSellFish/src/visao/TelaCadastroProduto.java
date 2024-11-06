@@ -182,9 +182,9 @@ public class TelaCadastroProduto extends JFrame {
 				String precoStr = txtPreco.getText();
 				String quantidadeStr = txtQuantidade.getText();
 				Boolean salinidade;
-				if (rdbtnDoce.isSelected()){
+				if (rdbtnDoce.isSelected()) {
 					salinidade = true;
-				}else {
+				} else {
 					salinidade = false;
 				}
 
