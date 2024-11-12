@@ -3,9 +3,11 @@ package visao;
 import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.Font;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -21,6 +23,8 @@ import modelo.Produto;
 import modelo.Produtor;
 import modelo.RoundButton2;
 import modelo.RoundButtonBola;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class CardProdutoCarrinho extends JFrame {
 
@@ -96,39 +100,56 @@ public class CardProdutoCarrinho extends JFrame {
 		contentPane.add(panel_1, "4, 6, fill, fill");
 		panel_1.setLayout(null);
 		
-		JLabel lblNewLabel = new JLabel("1");
-		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 11));
-		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel.setBounds(16, 13, 16, 14);
-		panel_1.add(lblNewLabel);
-		
-		RoundButtonBola  btnAdicionar1 = new RoundButtonBola("New button");
-		btnAdicionar1.setHorizontalAlignment(SwingConstants.TRAILING);
-		btnAdicionar1.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
-		btnAdicionar1.setText("+");
-		btnAdicionar1.setFont(new Font("Dialog", Font.PLAIN, 5));
-		btnAdicionar1.setBounds(35, 11, 16, 16);
-		panel_1.add(btnAdicionar1);
-		
-		RoundButtonBola btnRemover = new RoundButtonBola("New button");
-		btnRemover.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
-		btnRemover.setText("-");
-		btnRemover.setHorizontalAlignment(SwingConstants.TRAILING);
-		btnRemover.setFont(new Font("Dialog", Font.PLAIN, 5));
-		btnRemover.setBounds(0, 11, 16, 16);
-		panel_1.add(btnRemover);
+		JLabel lblQuantidade = new JLabel("1");
+		lblQuantidade.setFont(new Font("Tahoma", Font.BOLD, 11));
+		lblQuantidade.setHorizontalAlignment(SwingConstants.CENTER);
+		lblQuantidade.setBounds(16, 13, 16, 14);
+		panel_1.add(lblQuantidade);
 		
 		RoundButton2 btnAdicionar = new RoundButton2("New button");
 		btnAdicionar.setFont(new Font("Tahoma", Font.PLAIN, 10));
 		btnAdicionar.setBounds(55, 6, 73, 23);
 		panel_1.add(btnAdicionar);
 		btnAdicionar.setText("adicionar");
+		
+		JLabel lblMenos = new JLabel("");
+		lblMenos.addMouseListener(new MouseAdapter() {
+			public void mouseClicked(MouseEvent e) {
+				int quantidade = Integer.parseInt(lblQuantidade.getText());
+				if(quantidade > 0) {
+					quantidade = quantidade -1;
+					lblQuantidade.setText(Integer.toString(quantidade));
+				}else if(quantidade == 0) {
+					quantidade = 0;
+				}
+			}
+		});
+		lblMenos.setBounds(5, 11, 29, 19);
+		lblMenos.setIcon(new ImageIcon(CardProdutoCarrinho.class.getResource("/img/Menos.png")));
+		ImageIcon imgMe = new ImageIcon(CardProdutoCarrinho.class.getResource("/img/Menos.png"));
+		Image me = imgMe.getImage().getScaledInstance(12, 12, Image.SCALE_SMOOTH);
+		lblMenos.setIcon(new ImageIcon(me));
+		panel_1.add(lblMenos);
+		
+		
+		JLabel lblMais = new JLabel("");
+		lblMais.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+			int quantidade = Integer.parseInt(lblQuantidade.getText());
+			quantidade++;
+			lblQuantidade.setText(Integer.toString(quantidade));
+			
+			}
+		});
+		lblMais.setBounds(15, -14, 85, 100);
+		lblMais.setIcon(new ImageIcon(CardProdutoCarrinho.class.getResource("/img/More.png")));
+		ImageIcon imgMa = new ImageIcon(CardProdutoCarrinho.class.getResource("/img/More.png"));
+		Image ma = imgMa.getImage().getScaledInstance(12, 12, Image.SCALE_SMOOTH);
+		lblMais.setIcon(new ImageIcon(ma));
+		panel_1.add(lblMais);
+		
+		
 		btnAdicionar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			}
