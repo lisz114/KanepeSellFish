@@ -9,6 +9,7 @@ import java.util.ArrayList;
 
 import modelo.Endereco;
 import modelo.IUsuarioDAO;
+import modelo.Produtor;
 import modelo.Usuario;
 
 public class UsuarioDAO implements IUsuarioDAO {
@@ -82,7 +83,45 @@ public class UsuarioDAO implements IUsuarioDAO {
 
 		try {
 			stmt1 = conn
-					.prepareStatement("SELECT * FROM kanepe.usuarios inner join Enderecos as Endereco_idEndereco where email_Usuario = ? and senha_Usuario = ?;");
+					.prepareStatement("SELECT * FROM kanepe.usuarios where email_Usuario = ? and senha_Usuario = ?;");
+			ResultSet res1 = null;
+			stmt1.setString(1, email);
+			stmt1.setString(2, senha);
+
+			res1 = stmt1.executeQuery();
+
+			while (res1.next()) {
+
+				Usuario u = new Usuario();
+
+				u.setNome(res1.getString("nome_Usuario"));
+				u.setCpf(res1.getString("cpf_Usuario"));
+				u.setEmail(res1.getString("email_Usuario"));
+				u.setSenha(res1.getString("senha_Usuario"));
+				u.setIdUsuario(res1.getInt("idUsuarios"));
+				u.setTel(res1.getString("telefone"));
+				
+				return u;
+			}
+
+			res1.close();
+			stmt1.close();
+			conn.close();
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	public Usuario consultarVendedorLoginSenha(String email, String senha) {
+		PreparedStatement stmt1 = null;
+
+		Connection conn = ConexaoBD.getConexaoMySQL();
+
+		try {
+			stmt1 = conn
+					.prepareStatement("SELECT * FROM kanepe.usuarios inner join kanepe.produtores as Usuarios_idUsuarios where email_Usuario = ? and senha_Usuario = ?;");
 			ResultSet res1 = null;
 			stmt1.setString(1, email);
 			stmt1.setString(2, senha);
@@ -101,11 +140,15 @@ public class UsuarioDAO implements IUsuarioDAO {
 				u.setTel(res1.getString("telefone"));
 				
 				Endereco e = new Endereco();
-				e.setCidade(res1.getString("Cidade"));
 				e.setBairro(res1.getString("Bairro"));
+				e.setCidade(res1.getString("Cidade"));
 				e.setLogradouro(res1.getString("Rua"));
-				//e.setNumero(res1.getString("numero"));
-
+				//e.setNumero(res1.getString("Numero"));
+				
+				Produtor p = new Produtor();
+				p.setCnpj(res1.getString("cnpj"));
+				p.setNomeComercio(res1.getString("nomeNegocio"));
+				
 				return u;
 			}
 
@@ -119,6 +162,7 @@ public class UsuarioDAO implements IUsuarioDAO {
 		return null;
 	}
 
+	
 	@Override
 	public Usuario consultaUsuarioCadastrado(String cpf, String email) {
 		PreparedStatement stmt1 = null;
