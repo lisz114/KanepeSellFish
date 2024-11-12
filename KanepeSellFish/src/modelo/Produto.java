@@ -4,8 +4,7 @@ import java.time.LocalDate;
 import java.util.Objects;
 
 public class Produto {
-	
-	private int codigo;
+
 	private String nome;
 	private LocalDate validade;
 	private float preco;
@@ -14,20 +13,11 @@ public class Produto {
 	
 	public Produto() {}
 	
-	public Produto(int codigo, String nome, LocalDate validade, float preco, int quantidadeEstoque) {
-		this.codigo = codigo;
+	public Produto(String nome, LocalDate validade, float preco, int quantidadeEstoque) {
 		this.nome = nome;
 		this.validade = validade;
 		this.preco = preco;
 		this.quantidadeEstoque = quantidadeEstoque;
-	}
-	
-	public int getCodigo() {
-		return codigo;
-	}
-
-	public void setCodigo(int codigo) {
-		this.codigo = codigo;
 	}
 
 	public String getNome() {
