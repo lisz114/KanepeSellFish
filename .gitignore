@@ -1,0 +1,33 @@
+# Arquivos e pastas do Eclipse
+.metadata/
+bin/
+tmp/
+*.log
+
+# Arquivos de configuração do Eclipse
+.classpath
+.project
+.settings/
+
+# Arquivos gerados pelo WindowBuilder (pode variar conforme a configuração do seu projeto)
+*.user
+*.sublime-workspace
+*.sublime-project
+
+# Arquivos de compilação Java
+*.class
+*.jar
+
+# Dependências do Maven (caso esteja usando)
+target/
+
+# Arquivos específicos do sistema operacional
+# Windows
+Thumbs.db
+ehthumbs.db
+
+# MacOS
+.DS_Store
+
+# Linux
+*~
