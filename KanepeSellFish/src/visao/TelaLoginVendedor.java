@@ -177,7 +177,7 @@ public class TelaLoginVendedor extends JFrame {
 				String email = txtEmail.getText();
 				String senha = new String(txtSenha.getPassword());
 
-				u = uDAO.consultarUsuarioLoginSenha(email, senha);
+				u = uDAO.consultarVendedorLoginSenha(email, senha);
 
 				if (u != null) {
 

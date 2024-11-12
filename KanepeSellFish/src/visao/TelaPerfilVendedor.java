@@ -132,6 +132,15 @@ public class TelaPerfilVendedor extends JFrame {
 		panelLeft.setLayout(new MigLayout("", "[100px]", "[50px][50px][50px][50px]"));
 		
 		JButton btnNewButton = new JButton("Inicio");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				TelaInicioVendedor tiv = new TelaInicioVendedor();
+				tiv.setLocationRelativeTo(null);
+				tiv.setVisible(true);
+				dispose();
+			}
+		});
 		btnNewButton.setBackground(new Color(154, 205, 217));
 		btnNewButton.setBorder(null);
 		btnNewButton.setOpaque(false);
@@ -185,7 +194,7 @@ public class TelaPerfilVendedor extends JFrame {
 		lblNomeEmpresa.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		lblNomeEmpresa.setBounds(10, 83, 250, 50);
 		PanelNome.add(lblNomeEmpresa);
-		//lblNomeEmpresa.setText(u.getProd().getNomeComercio());
+		lblNomeEmpresa.setText(u.getProd().getNomeComercio());
 		
 		JPanel Panelinfo = new JPanel();
 		Panelinfo.setBorder(null);
@@ -308,7 +317,7 @@ public class TelaPerfilVendedor extends JFrame {
 		gbc_lblCNPJ.gridx = 1;
 		gbc_lblCNPJ.gridy = 16;
 		Panelinfo.add(lblCNPJ, gbc_lblCNPJ);
-		//lblCNPJ.setText(u.getProd().getCnpj());
+		lblCNPJ.setText(u.getProd().getCnpj());
 
 		JLabel lbllogadouro = new JLabel("ll");
 		GridBagConstraints gbc_lbllogadouro = new GridBagConstraints();
@@ -325,12 +334,13 @@ public class TelaPerfilVendedor extends JFrame {
 		gbc_lblNum.gridx = 5;
 		gbc_lblNum.gridy = 16;
 		Panelinfo.add(lblNum, gbc_lblNum);
-		//lblNum.setText(u.getEnd().getNumero());
+		String num = String.valueOf(u.getEnd().getNumero());
+		lblNum.setText(num);
 
 		RoundButton btnNewButton1 = new RoundButton("Editar");
 		btnNewButton1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				TelaEditarVendedor editVen = new TelaEditarVendedor();
+				TelaEditarVendedor editVen = new TelaEditarVendedor(u);
 				editVen.setVisible(true);
 				dispose();
 			}
@@ -356,12 +366,13 @@ public class TelaPerfilVendedor extends JFrame {
 		panel_21.add(lblNewLabel_7);
 
 		JLabel lblDesc = new JLabel("");
-		lblDesc.setBounds(21, 82, 253, 14);
+		lblDesc.setBounds(21, 82, 253, 169);
 		panel_21.add(lblDesc);
+		lblDesc.setText(u.getDesc());
 		
-		JLabel lblNewLabel_8 = new JLabel("");
-		lblNewLabel_8.setIcon(new ImageIcon(TelaPerfilVendedor.class.getResource("/img/Avatar.png")));
-		lblNewLabel_8.setBounds(48, 52, 202, 202);
-		panel_2.add(lblNewLabel_8);
+		JLabel lblAvatar = new JLabel("");
+		lblAvatar.setIcon(new ImageIcon(TelaPerfilVendedor.class.getResource("/img/Avatar.png")));
+		lblAvatar.setBounds(48, 52, 202, 202);
+		panel_2.add(lblAvatar);
 	}
 }

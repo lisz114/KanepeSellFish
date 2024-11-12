@@ -7,6 +7,7 @@ public class Usuario {
 	private String email;
 	private String cpf;
 	private String tel;
+	private String desc;
 	private Produtor prod;
 	private Endereco end;
 	protected int idUsuario;
@@ -34,6 +35,14 @@ public class Usuario {
 
 	public void setEnd(Endereco end) {
 		this.end = end;
+	}
+	
+	public String getDesc() {
+		return desc;
+	}
+
+	public void setDesc(String desc) {
+		this.desc = desc;
 	}
 
 	public String getNome() {

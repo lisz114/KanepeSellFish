@@ -18,7 +18,8 @@ public class UsuarioDAO implements IUsuarioDAO {
 
 	private static UsuarioDAO instancia;
 
-	private UsuarioDAO() {}
+	private UsuarioDAO() {
+	}
 
 	public static UsuarioDAO getInstancia() {
 
@@ -32,42 +33,52 @@ public class UsuarioDAO implements IUsuarioDAO {
 
 	@Override
 	public int inserirUsuario(Usuario usuario) {
-	    String sql = "INSERT INTO usuarios (email_Usuario, senha_Usuario, cpf_Usuario, nome_Usuario) VALUES (?, ?, ?, ?)";
-	    try (Connection conn = ConexaoBD.getConexaoMySQL();
-	            PreparedStatement pstmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+		String sql = "INSERT INTO usuarios (email_Usuario, senha_Usuario, cpf_Usuario, nome_Usuario) VALUES (?, ?, ?, ?)";
+		try (Connection conn = ConexaoBD.getConexaoMySQL();
+				PreparedStatement pstmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
 
-	        pstmt.setString(1, usuario.getEmail());
-	        pstmt.setString(2, usuario.getSenha());
-	        pstmt.setString(3, usuario.getCpf());
-	        pstmt.setString(4, usuario.getNome());
+			pstmt.setString(1, usuario.getEmail());
+			pstmt.setString(2, usuario.getSenha());
+			pstmt.setString(3, usuario.getCpf());
+			pstmt.setString(4, usuario.getNome());
 
-	        pstmt.executeUpdate();
+			pstmt.executeUpdate();
 
-	        ResultSet rs = pstmt.getGeneratedKeys();
-	        if (rs.next()) {
-	            return rs.getInt(1);  // Retorna o ID gerado
-	        }
+			ResultSet rs = pstmt.getGeneratedKeys();
+			if (rs.next()) {
+				return rs.getInt(1); // Retorna o ID gerado
+			}
 
-	    } catch (SQLException e) {
-	        e.printStackTrace();
-	    }
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 
-	    return -1;  // Retorna -1 em caso de erro
+		return -1; // Retorna -1 em caso de erro
 	}
 
-
-
-
 	@Override
-	public boolean alterarUsuario(Usuario usuario) {
+	public int alterarUsuario(Usuario usuario) {
 		// TODO Auto-generated method stub
-		return false;
+		String sql = "UPDATE usuarios set email_Usuario = ?, cpf_Usuario = ?, descricao = ? where idUsuario = ?";
+		try (Connection conn = ConexaoBD.getConexaoMySQL(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+			pstmt.setString(1, usuario.getEmail());
+			pstmt.setString(2, usuario.getCpf());
+			pstmt.setString(3, usuario.getDesc());
+
+			pstmt.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return -1;
 	}
 
 	@Override
 	public boolean removerUsuario(String cpf) {
 		for (Usuario usuario : listaUsuarios) {
-			if(usuario.getCpf().equals(cpf)) {
+			if (usuario.getCpf().equals(cpf)) {
 				listaUsuarios.remove(usuario);
 			}
 		}
@@ -100,7 +111,7 @@ public class UsuarioDAO implements IUsuarioDAO {
 				u.setSenha(res1.getString("senha_Usuario"));
 				u.setIdUsuario(res1.getInt("idUsuarios"));
 				u.setTel(res1.getString("telefone"));
-				
+
 				return u;
 			}
 
@@ -120,8 +131,8 @@ public class UsuarioDAO implements IUsuarioDAO {
 		Connection conn = ConexaoBD.getConexaoMySQL();
 
 		try {
-			stmt1 = conn
-					.prepareStatement("SELECT * FROM kanepe.usuarios inner join kanepe.produtores as Usuarios_idUsuarios where email_Usuario = ? and senha_Usuario = ?;");
+			stmt1 = conn.prepareStatement(
+					"SELECT * FROM kanepe.usuarios inner join kanepe.produtores as Usuarios_idUsuarios inner join kanepe.enderecos as idEnderecos where email_Usuario = ? and senha_Usuario = ?;");
 			ResultSet res1 = null;
 			stmt1.setString(1, email);
 			stmt1.setString(2, senha);
@@ -138,17 +149,19 @@ public class UsuarioDAO implements IUsuarioDAO {
 				u.setSenha(res1.getString("senha_Usuario"));
 				u.setIdUsuario(res1.getInt("idUsuarios"));
 				u.setTel(res1.getString("telefone"));
-				
+
 				Endereco e = new Endereco();
 				e.setBairro(res1.getString("Bairro"));
 				e.setCidade(res1.getString("Cidade"));
 				e.setLogradouro(res1.getString("Rua"));
-				//e.setNumero(res1.getString("Numero"));
-				
+				e.setNumero(res1.getInt("Numero"));
+				u.setEnd(e);
+
 				Produtor p = new Produtor();
 				p.setCnpj(res1.getString("cnpj"));
 				p.setNomeComercio(res1.getString("nomeNegocio"));
-				
+				u.setProd(p);
+
 				return u;
 			}
 
@@ -162,7 +175,6 @@ public class UsuarioDAO implements IUsuarioDAO {
 		return null;
 	}
 
-	
 	@Override
 	public Usuario consultaUsuarioCadastrado(String cpf, String email) {
 		PreparedStatement stmt1 = null;
@@ -198,38 +210,40 @@ public class UsuarioDAO implements IUsuarioDAO {
 		}
 		return null;
 	}
-	
+
 	// Método para validar CPF
-    public boolean validarCPF(String cpf) {
-        // Remove caracteres não numéricos
-        cpf = cpf.replaceAll("[^0-9]", "");
+	public boolean validarCPF(String cpf) {
+		// Remove caracteres não numéricos
+		cpf = cpf.replaceAll("[^0-9]", "");
 
-        // Verifica se o CPF tem 11 dígitos
-        if (cpf.length() != 11) return false;
+		// Verifica se o CPF tem 11 dígitos
+		if (cpf.length() != 11)
+			return false;
 
-        // Lógica de validação do CPF
-        int soma = 0;
-        int peso = 10;
+		// Lógica de validação do CPF
+		int soma = 0;
+		int peso = 10;
 
-        for (int i = 0; i < 9; i++) {
-            soma += Character.getNumericValue(cpf.charAt(i)) * peso;
-            peso--;
-        }
+		for (int i = 0; i < 9; i++) {
+			soma += Character.getNumericValue(cpf.charAt(i)) * peso;
+			peso--;
+		}
 
-        int primeiroDigito = 11 - (soma % 11);
-        primeiroDigito = primeiroDigito >= 10 ? 0 : primeiroDigito;
-        if (Character.getNumericValue(cpf.charAt(9)) != primeiroDigito) return false;
+		int primeiroDigito = 11 - (soma % 11);
+		primeiroDigito = primeiroDigito >= 10 ? 0 : primeiroDigito;
+		if (Character.getNumericValue(cpf.charAt(9)) != primeiroDigito)
+			return false;
 
-        soma = 0;
-        peso = 11;
-        for (int i = 0; i < 10; i++) {
-            soma += Character.getNumericValue(cpf.charAt(i)) * peso;
-            peso--;
-        }
+		soma = 0;
+		peso = 11;
+		for (int i = 0; i < 10; i++) {
+			soma += Character.getNumericValue(cpf.charAt(i)) * peso;
+			peso--;
+		}
 
-        int segundoDigito = 11 - (soma % 11);
-        segundoDigito = segundoDigito >= 10 ? 0 : segundoDigito;
-        return Character.getNumericValue(cpf.charAt(10)) == segundoDigito;
-    }
+		int segundoDigito = 11 - (soma % 11);
+		segundoDigito = segundoDigito >= 10 ? 0 : segundoDigito;
+		return Character.getNumericValue(cpf.charAt(10)) == segundoDigito;
+	}
 
 }
