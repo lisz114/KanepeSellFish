@@ -10,6 +10,7 @@ import java.awt.Font;
 import java.awt.Image;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -92,7 +93,7 @@ public class TelaInicio extends JFrame {
 
 		ArrayList<Produto> lista = new ArrayList<Produto>();
 
-		lista.add(new Produto(""));
+		lista.add(new Produto("Tilápia", LocalDate.now(), 10.50f, 10));
 		lista.add(new Produto());
 		lista.add(new Produto());
 		lista.add(new Produto());

@@ -31,11 +31,10 @@ public class ProdutoDAO implements IProdutoDAO {
 	}
 
 	public boolean inserirProduto(Produto produto, Usuario u) {
-		String sql = "INSERT INTO produtos (nome_Produto, produtoCod, quantidade, preco, Produtores_idProdutores, validade) VALUES (?, ?, ?, ?, ?, ?)";
+		String sql = "INSERT INTO produtos (nome_Produto, quantidade, preco, Produtores_idProdutores, validade) VALUES (?, ?, ?, ?, ?, ?)";
 		try (Connection conn = ConexaoBD.getConexaoMySQL(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
 			pstmt.setString(1, produto.getNome());
-			pstmt.setInt(2, produto.getCodigo());
 			pstmt.setInt(3, produto.getQuantidadeEstoque());
 			pstmt.setFloat(4, produto.getPreco());
 			pstmt.setInt(5, u.getIdUsuario());
@@ -55,7 +54,7 @@ public class ProdutoDAO implements IProdutoDAO {
 		return false;
 	}
 
-	public boolean removerProduto(long codigo) {
+	public boolean removerProduto() {
 
 		return false;
 	}
@@ -101,7 +100,6 @@ public class ProdutoDAO implements IProdutoDAO {
 				Produto prod = new Produto();
 
 				prod.setNome(res1.getString("nome_Produto"));
-				prod.setCodigo(Integer.parseInt(res1.getString("produtoCod")));
 				prod.setQuantidadeEstoque(Integer.parseInt(res1.getString("quantidade")));
 				prod.setPreco(Float.parseFloat(res1.getString("preco")));
 				prod.setIdProdutor(Integer.parseInt(res1.getString("Produtores_idProdutores")));
