@@ -30,6 +30,8 @@ import controle.ProdutoDAO;
 import modelo.Produto;
 import modelo.Usuario;
 import net.miginfocom.swing.MigLayout;
+import javax.swing.ListSelectionModel;
+import java.awt.Font;
 
 public class TelaEstoque extends JFrame {
 
@@ -44,11 +46,13 @@ public class TelaEstoque extends JFrame {
 	private JPanel panelTabelaProdutos;
 	private JScrollPane scrollPane_1;
 	private JTable table;
+	private JTable table_1;
 	private JPanel panel_3;
 	private JButton btnAdicionar;
 	private JButton btnNewButton;
 	private JButton btnEditar;
 	private JPanel panelMenu;
+	private JLabel lblNewLabel;
 
 //	public static void main(String[] args) {
 //		EventQueue.invokeLater(new Runnable() {
@@ -149,24 +153,30 @@ public class TelaEstoque extends JFrame {
 		panelTabelaProdutos = new JPanel();
 		panelTabelaProdutos.setOpaque(false);
 		contentPane.add(panelTabelaProdutos, BorderLayout.CENTER);
-		panelTabelaProdutos.setLayout(new MigLayout("", "[grow]", "[grow][]"));
+		panelTabelaProdutos.setLayout(new MigLayout("", "[grow]", "[center][grow][]"));
+		
+		lblNewLabel = new JLabel("ESTOQUE");
+		lblNewLabel.setFont(new Font("Dialog", Font.BOLD, 27));
+		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		panelTabelaProdutos.add(lblNewLabel, "cell 0 0,alignx center,aligny center");
 
 		scrollPane_1 = new JScrollPane();
 		scrollPane_1.setOpaque(false);
-		panelTabelaProdutos.add(scrollPane_1, "cell 0 0,grow");
+		panelTabelaProdutos.add(scrollPane_1, "cell 0 1,grow");
 
-		table = new JTable();
-		table.setForeground(new Color(2, 73, 89));
-		table.setBackground(new Color(255, 255, 255));
-		table.setOpaque(false);
-		table.setModel(new DefaultTableModel(new Object[][] {},
+		table_1 = new JTable();
+		table_1.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		table_1.setForeground(new Color(2, 73, 89));
+		table_1.setBackground(new Color(255, 255, 255));
+		table_1.setOpaque(false);
+		table_1.setModel(new DefaultTableModel(new Object[][] {},
 				new String[] { "C\u00F3digo", "Nome", "Quantidade", "Validade", "Salinidade", "Pre\u00E7o" }));
-		table.getTableHeader().setBackground(Color.BLACK);
-		scrollPane_1.setViewportView(table);
+		table_1.getTableHeader().setBackground(Color.BLACK);
+		scrollPane_1.setViewportView(table_1);
 
 		panel_3 = new JPanel();
 		panel_3.setOpaque(false);
-		panelTabelaProdutos.add(panel_3, "cell 0 1,alignx right,growy");
+		panelTabelaProdutos.add(panel_3, "cell 0 2,alignx right,growy");
 
 		btnEditar = new JButton(" Editar Produtos");
 		btnEditar.addActionListener(new ActionListener() {
@@ -304,24 +314,24 @@ public class TelaEstoque extends JFrame {
 					salinidade, produto.getPreco() });
 		}
 
-		table.setModel(tableModel);
+		table_1.setModel(tableModel);
 
 		DefaultTableCellRenderer renderer = new DefaultTableCellRenderer();
 		renderer.setHorizontalAlignment(SwingConstants.CENTER);
-		table.setDefaultRenderer(Object.class, renderer);
+		table_1.setDefaultRenderer(Object.class, renderer);
 
 		// Alterando a cor do título da coluna
-		table.getTableHeader().setBackground(new Color(2, 73, 89)); // Cor #024959
-		table.getTableHeader().setForeground(Color.WHITE); // Cor do texto do cabeçalho
+		table_1.getTableHeader().setBackground(new Color(2, 73, 89)); // Cor #024959
+		table_1.getTableHeader().setForeground(Color.WHITE); // Cor do texto do cabeçalho
 
 		// Alterando a cor do item selecionado
-		table.setSelectionBackground(new Color(96, 154, 168)); // Cor #609AA8
+		table_1.setSelectionBackground(new Color(96, 154, 168)); // Cor #609AA8
 
 		// Alterando a cor de fundo das células não selecionadas
-		table.setBackground(new Color(240, 240, 240)); // Cor suave para o fundo das células
+		table_1.setBackground(new Color(240, 240, 240)); // Cor suave para o fundo das células
 
 		// Cor da grade da tabela
-		table.setGridColor(new Color(200, 200, 200)); // Cor da grade (borda das células)
+		table_1.setGridColor(new Color(200, 200, 200)); // Cor da grade (borda das células)
 
 	}
 

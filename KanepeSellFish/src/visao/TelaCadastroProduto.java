@@ -176,17 +176,13 @@ public class TelaCadastroProduto extends JFrame {
 		btnAdicionar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Produto prod = new Produto();
-
+				
 				String nome = txtNome.getText();
 				String validadeStr = txtValidade.getText();
 				String precoStr = txtPreco.getText();
 				String quantidadeStr = txtQuantidade.getText();
-				Boolean salinidade;
-				if (rdbtnDoce.isSelected()) {
-					salinidade = true;
-				} else {
-					salinidade = false;
-				}
+				Boolean salinidade=rdbtnDoce.isSelected();
+				
 
 				// Verificação de campos vazios
 				if (nome.isEmpty() || validadeStr.isEmpty() || precoStr.isEmpty() || quantidadeStr.isEmpty()) {

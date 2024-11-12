@@ -120,6 +120,7 @@ public class ProdutoDAO implements IProdutoDAO {
 				prod.setValidade(
 						LocalDate.parse(res1.getString("validade"), DateTimeFormatter.ofPattern("yyyy-MM-dd")));
 				listaProdutos.add(prod);
+				prod.setSalinidade(res1.getBoolean("salinidade"));
 			}
 
 			res1.close();
@@ -199,8 +200,8 @@ public class ProdutoDAO implements IProdutoDAO {
 			pstmt.setInt(2, produto.getQuantidadeEstoque());
 			pstmt.setFloat(3, produto.getPreco());
 			pstmt.setDate(4, (java.sql.Date.valueOf(produto.getValidade())));
-			pstmt.setInt(6, id);
 			pstmt.setBoolean(5, produto.getSalinidade());
+			pstmt.setInt(6, id);
 
 			int rowsAffected = pstmt.executeUpdate();
 			return rowsAffected > 0;
