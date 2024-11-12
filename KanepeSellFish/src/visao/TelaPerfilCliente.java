@@ -70,11 +70,12 @@ public class TelaPerfilCliente extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				
-				// TelaCarrinho frame = new TeaCarrinho
+				TelaCarrinho frame = new TelaCarrinho();
 				
-				//frame.setLocationRelativeTo(null);
-				//frame.setVisible(true);
-				//dispose();
+				frame.setLocationRelativeTo(null);
+				frame.setVisible(true);
+				
+				dispose();
 			}
 		});
 		panel.add(imgCarrinho, "cell 2 0");
@@ -106,31 +107,43 @@ public class TelaPerfilCliente extends JFrame {
 		JPanel panel_1 = new JPanel();
 		contentPane.add(panel_1, "cell 1 1,grow");
 		panel_1.setLayout(
-				new MigLayout("", "[][][][][][][][][][][][][][][][][][][][][][][][][][][][]", "[][][][][][][][][][]"));
-				
-						JLabel lblNome = new JLabel("Maria Querida Souza");
-						panel_1.add(lblNome, "cell 10 1,alignx right");
-						lblNome.setFont(new Font("Dialog", Font.PLAIN, 30));
-						
-								JLabel lblInfoPagamento = new JLabel("Informaçoes de pagamento");
-								panel_1.add(lblInfoPagamento, "cell 19 4");
-								lblInfoPagamento.setFont(new Font("Dialog", Font.PLAIN, 12));
+				new MigLayout("", "[][grow 15][][grow 70][grow 40][]", "[grow 20][grow 20][][grow 30][grow]"));
+										
+										JLabel lblNomeCliente = new JLabel("");
+										lblNomeCliente.setFont(new Font("Dialog", Font.PLAIN, 30));
+										panel_1.add(lblNomeCliente, "cell 2 0 2 1");
+								
+										JLabel lblInfoPagamento = new JLabel("Informaçoes de pagamento");
+										panel_1.add(lblInfoPagamento, "cell 4 0");
+										lblInfoPagamento.setFont(new Font("Dialog", Font.PLAIN, 12));
 								
 										JLabel lblFotoDPerfil = new JLabel("Editar foto de perfil");
-										panel_1.add(lblFotoDPerfil, "cell 1 6");
+										panel_1.add(lblFotoDPerfil, "cell 0 1,aligny bottom");
 										lblFotoDPerfil.setFont(new Font("Dialog", Font.PLAIN, 12));
-						
-								JLabel lblEmail = new JLabel("Email:");
-								panel_1.add(lblEmail, "cell 7 7");
-								lblEmail.setFont(new Font("Dialog", Font.PLAIN, 12));
-				
-						JLabel lblDescricao = new JLabel("Descrição");
-						panel_1.add(lblDescricao, "cell 1 9");
-						lblDescricao.setFont(new Font("Dialog", Font.PLAIN, 12));
-						
-								JLabel lblCPF = new JLabel("CPF: ");
-								panel_1.add(lblCPF, "cell 7 9");
-								lblCPF.setFont(new Font("Dialog", Font.PLAIN, 12));
+																
+																		JLabel lblEmail = new JLabel("Email:");
+																		panel_1.add(lblEmail, "flowx,cell 2 1");
+																		lblEmail.setFont(new Font("Dialog", Font.PLAIN, 12));
+												
+														JLabel lblDescricao = new JLabel("Descrição");
+														panel_1.add(lblDescricao, "flowy,cell 0 3,aligny center");
+														lblDescricao.setFont(new Font("Dialog", Font.PLAIN, 12));
+														
+																JLabel lblCPF = new JLabel("CPF: ");
+																panel_1.add(lblCPF, "flowx,cell 2 3");
+																lblCPF.setFont(new Font("Dialog", Font.PLAIN, 12));
+																
+																JLabel lblEmailMostra = new JLabel("");
+																lblEmailMostra.setFont(new Font("Dialog", Font.PLAIN, 11));
+																panel_1.add(lblEmailMostra, "cell 2 1");
+																
+																JLabel lblCPFmostra = new JLabel("");
+																lblCPFmostra.setFont(new Font("Dialog", Font.PLAIN, 11));
+																panel_1.add(lblCPFmostra, "cell 2 3");
+																
+																JLabel lblDescMostra = new JLabel("");
+																lblDescMostra.setFont(new Font("Dialog", Font.PLAIN, 11));
+																panel_1.add(lblDescMostra, "cell 0 3");
 
 	}
 
