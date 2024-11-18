@@ -135,12 +135,12 @@ public class TelaEstoque extends JFrame {
 		DefaultTableModel tableModel = new DefaultTableModel(
 				new Object[][] {
 				},
-				new String[] { "C\u00F3digo", "Nome", "QuantidadeEstoque:", "Validade", "Salinidade", "Pre\u00E7o" 
+				new String[] { "Nome", "QuantidadeEstoque:", "Validade", "Salinidade", "Pre\u00E7o" 
 				}
 		);
 
 		for (Produto produto : listaProdutos) {
-			tableModel.addRow(new Object[] { produto.getCodigo(), produto.getNome(), produto.getQuantidadeEstoque(),
+			tableModel.addRow(new Object[] {produto.getNome(), produto.getQuantidadeEstoque(),
 					String.valueOf(produto.getValidade()), "null", produto.getPreco() });
 		}
 
