@@ -186,7 +186,7 @@ public class TelaCadastroComercio extends JFrame {
 		lblImagem.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		lblImagem.setIcon(new ImageIcon(TelaCadastroComercio.class.getResource("/img/procurar.png")));
 		panelEmail.add(lblImagem, "cell 1 1,alignx trailing");
-		ImageIcon iconProcurar = new ImageIcon(TelaInicioVendedor.class.getResource("/IMG/procurar.png"));
+		ImageIcon iconProcurar = new ImageIcon(TelaCadastroComercio.class.getResource("/IMG/procurar.png"));
 		Image iconP = iconProcurar.getImage().getScaledInstance(26, 26, Image.SCALE_SMOOTH);
 		lblImagem.setIcon(new ImageIcon(iconP));
 

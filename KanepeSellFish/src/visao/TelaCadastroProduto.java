@@ -212,7 +212,6 @@ public class TelaCadastroProduto extends JFrame {
 		        prod.setNome(nome);
 		        prod.setQuantidadeEstoque(quantidade);
 		        prod.setPreco(preco);
-		        prod.setCodigo(123);
 		        prod.setValidade(validade); // Descomente se necessário
 		        
 		        if (pDAO.atualizarProduto(prod, u)) {

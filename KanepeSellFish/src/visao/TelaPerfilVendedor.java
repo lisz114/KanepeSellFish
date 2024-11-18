@@ -82,7 +82,7 @@ public class TelaPerfilVendedor extends JFrame {
 		btnMenu.setBackground(SystemColor.control);
 		btnMenu.setOpaque(false);
 		panel.add(btnMenu, "cell 0 0,grow");
-		ImageIcon iconMenu = new ImageIcon(TelaInicioVendedor.class.getResource("/IMG/menu-hamburguer.png"));
+		ImageIcon iconMenu = new ImageIcon(TelaPerfilVendedor.class.getResource("/IMG/menu-hamburguer.png"));
 		Image iconM = iconMenu.getImage().getScaledInstance(26, 26, Image.SCALE_SMOOTH);
 		btnMenu.setIcon(new ImageIcon(iconM));
 		
@@ -96,7 +96,7 @@ public class TelaPerfilVendedor extends JFrame {
 		btnCarrinho.setBorder(null);
 		btnCarrinho.setBackground(SystemColor.control);
 		panel.add(btnCarrinho, "cell 2 0,grow");
-		ImageIcon iconCarrinho = new ImageIcon(TelaInicioVendedor.class.getResource("/IMG/carrinho-de-compras.png"));
+		ImageIcon iconCarrinho = new ImageIcon(TelaPerfilVendedor.class.getResource("/IMG/carrinho-de-compras.png"));
 		Image iconC = iconCarrinho.getImage().getScaledInstance(26, 26, Image.SCALE_SMOOTH);
 		btnCarrinho.setIcon(new ImageIcon(iconC));
 		
@@ -106,7 +106,7 @@ public class TelaPerfilVendedor extends JFrame {
 		btnSininho.setBorder(null);
 		btnSininho.setBackground(SystemColor.control);
 		panel.add(btnSininho, "cell 3 0,grow");
-		ImageIcon iconSininho = new ImageIcon(TelaInicioVendedor.class.getResource("/IMG/sino.png"));
+		ImageIcon iconSininho = new ImageIcon(TelaPerfilVendedor.class.getResource("/IMG/sino.png"));
 		Image iconS = iconSininho.getImage().getScaledInstance(26, 26, Image.SCALE_SMOOTH);
 		btnSininho.setIcon(new ImageIcon(iconS));
 		
@@ -116,7 +116,7 @@ public class TelaPerfilVendedor extends JFrame {
 		btnFlecha.setBorder(null);
 		btnFlecha.setBackground(SystemColor.control);
 		panel.add(btnFlecha, "cell 4 0,grow");
-		ImageIcon iconFlecha = new ImageIcon(TelaInicioVendedor.class.getResource("/IMG/saida.png"));
+		ImageIcon iconFlecha = new ImageIcon(TelaPerfilVendedor.class.getResource("/IMG/saida.png"));
 		Image iconF = iconFlecha.getImage().getScaledInstance(26, 26, Image.SCALE_SMOOTH);
 		btnFlecha.setIcon(new ImageIcon(iconF));
 		
