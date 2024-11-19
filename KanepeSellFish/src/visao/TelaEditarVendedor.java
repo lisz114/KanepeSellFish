@@ -36,6 +36,7 @@ import javax.swing.GroupLayout.Alignment;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.sql.SQLException;
 import java.awt.event.ActionEvent;
 import javax.swing.ImageIcon;
 import java.awt.event.MouseAdapter;
@@ -404,10 +405,14 @@ public class TelaEditarVendedor extends JFrame {
 					erro.setVisible(true);
 				}else {
 
+				user.setIdUsuario(u.getIdUsuario());
+				ende.setId(u.getEnd().getId());
+				vend.setIdP(u.getProd().getIdP());
+
 				user.setEmail(email);
 				user.setCpf(cpf);
 				user.setDesc(desc);
-
+				
 				vend.setCnpj(cnpj);
 
 				ende.setCidade(city);
@@ -415,8 +420,16 @@ public class TelaEditarVendedor extends JFrame {
 				ende.setLogradouro(log);
 				ende.setNumero(num1);
 				
-				eDAO.atualizarEndereco(ende);
+	
+				
+				try {
+					eDAO.atualizarEndereco(ende);
+				} catch (Exception e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 				uDAO.alterarUsuario(user);
+				pDAO.alterarProdutor(vend);
 				
 				TelaPerfilVendedor tpv = new TelaPerfilVendedor(u);
 				tpv.setLocationRelativeTo(null);

@@ -6,6 +6,7 @@ public class Endereco {
 	private String bairro;
 	private int numero;
 	private String logradouro;
+	private int id; 
 
 	public Endereco() {
 	}
@@ -17,6 +18,14 @@ public class Endereco {
 		this.numero = numero;
 		this.logradouro = logradouro;
 
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
 	}
 
 	public String getCep() {

@@ -14,11 +14,12 @@ public class Usuario {
 
 	public Usuario() {}
 
-	public Usuario(String cpf, String nome, String senha, String email) {
+	public Usuario(String cpf, String nome, String senha, String email, String desc) {
 		this.cpf = cpf;
 		this.nome = nome;
 		this.senha = senha;
 		this.email = email;
+		this.desc = desc;
 	}
 
 	public Produtor getProd() {

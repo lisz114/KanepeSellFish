@@ -7,6 +7,7 @@ public class Produtor extends Usuario {
 	private int IdEndereco;
 	private ArrayList<Pedido> pedido;
 	private String cnpj;
+	private int idP;
 
 	public Produtor() {
 	}
@@ -19,6 +20,14 @@ public class Produtor extends Usuario {
 		this.cnpj = cnpj;
 	}
 
+
+	public int getIdP() {
+		return idP;
+	}
+
+	public void setIdP(int idP) {
+		this.idP = idP;
+	}
 
 	public String getNomeComercio() {
 		return nomeComercio;

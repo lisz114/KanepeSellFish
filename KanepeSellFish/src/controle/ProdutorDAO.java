@@ -6,6 +6,7 @@ import java.sql.SQLException;
 
 import modelo.IProdutorDAO;
 import modelo.Produtor;
+import modelo.Usuario;
 
 public class ProdutorDAO implements IProdutorDAO {
 	
@@ -41,7 +42,22 @@ public class ProdutorDAO implements IProdutorDAO {
 			return false;
 		}
 	}
-
 	
+	public int alterarProdutor(Produtor produtor) {
+		// TODO Auto-generated method stub
+		String sql = "UPDATE kanepe.produtores set cnpj = ? where Usuarios_idUsuarios = ?";
+		try (Connection conn = ConexaoBD.getConexaoMySQL(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
+			pstmt.setString(1, produtor.getCnpj());
+			pstmt.setInt(2, produtor.getIdP());
+
+			pstmt.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return -1;
+	}
+	
 }

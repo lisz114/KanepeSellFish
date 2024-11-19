@@ -59,13 +59,13 @@ public class UsuarioDAO implements IUsuarioDAO {
 	@Override
 	public int alterarUsuario(Usuario usuario) {
 		// TODO Auto-generated method stub
-		String sql = "UPDATE usuarios set email_Usuario = ?, cpf_Usuario = ?, descricao = ? where idUsuario = ?";
+		String sql = "UPDATE kanepe.usuarios set email_Usuario = ?, cpf_Usuario = ?, descricao = ? where idUsuarios = ?";
 		try (Connection conn = ConexaoBD.getConexaoMySQL(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
 			pstmt.setString(1, usuario.getEmail());
 			pstmt.setString(2, usuario.getCpf());
 			pstmt.setString(3, usuario.getDesc());
-
+			pstmt.setInt(4, usuario.getIdUsuario());
 			pstmt.executeUpdate();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
