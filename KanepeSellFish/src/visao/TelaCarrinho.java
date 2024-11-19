@@ -21,18 +21,18 @@ public class TelaCarrinho extends JFrame {
 
 	private JPanel contentPane;
 
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					TelaCarrinho frame = new TelaCarrinho();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+//	public static void main(String[] args) {
+//		EventQueue.invokeLater(new Runnable() {
+//			public void run() {
+//				try {
+//					TelaCarrinho frame = new TelaCarrinho();
+//					frame.setVisible(true);
+//				} catch (Exception e) {
+//					e.printStackTrace();
+//				}
+//			}
+//		});
+//	}
 
 	public TelaCarrinho(Usuario u) {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

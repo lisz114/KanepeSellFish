@@ -110,7 +110,7 @@ public class TelaEstoque extends JFrame {
 		});
 		imgMenu.setIcon(new ImageIcon(TelaEstoque.class.getResource("/img/menu-hamburguer.png")));
 		panelTop.add(imgMenu, "cell 0 0,alignx trailing");
-		ImageIcon menu = new ImageIcon(TelaInicioVendedor.class.getResource("/IMG/menu-hamburguer.png"));
+		ImageIcon menu = new ImageIcon(TelaInicio.class.getResource("/IMG/menu-hamburguer.png"));
 		Image iconMenu = menu.getImage().getScaledInstance(30, 30, Image.SCALE_SMOOTH);
 		imgMenu.setIcon(new ImageIcon(iconMenu));
 
@@ -121,16 +121,16 @@ public class TelaEstoque extends JFrame {
 		textField.setColumns(50);
 
 		JLabel imgCarrinho = new JLabel("");
-		imgCarrinho.setIcon(new ImageIcon(TelaInicioVendedor.class.getResource("/IMG/carrinho-de-compras.png")));
+		imgCarrinho.setIcon(new ImageIcon(TelaInicio.class.getResource("/IMG/carrinho-de-compras.png")));
 		panelTop.add(imgCarrinho, "cell 2 0");
-		ImageIcon carrinho = new ImageIcon(TelaInicioVendedor.class.getResource("/IMG/carrinho-de-compras.png"));
+		ImageIcon carrinho = new ImageIcon(TelaInicio.class.getResource("/IMG/carrinho-de-compras.png"));
 		Image imgC = carrinho.getImage().getScaledInstance(30, 30, Image.SCALE_SMOOTH);
 		imgCarrinho.setIcon(new ImageIcon(imgC));
 
 		JLabel imgNotificacao = new JLabel("");
-		imgNotificacao.setIcon(new ImageIcon(TelaInicioVendedor.class.getResource("/IMG/sino.png")));
+		imgNotificacao.setIcon(new ImageIcon(TelaInicio.class.getResource("/IMG/sino.png")));
 		panelTop.add(imgNotificacao, "cell 3 0");
-		ImageIcon notificacao = new ImageIcon(TelaInicioVendedor.class.getResource("/IMG/sino.png"));
+		ImageIcon notificacao = new ImageIcon(TelaInicio.class.getResource("/IMG/sino.png"));
 		Image imgN = notificacao.getImage().getScaledInstance(30, 30, Image.SCALE_SMOOTH);
 		imgNotificacao.setIcon(new ImageIcon(imgN));
 
@@ -143,9 +143,9 @@ public class TelaEstoque extends JFrame {
 //				dispose();
 			}
 		});
-		imgConta.setIcon(new ImageIcon(TelaInicioVendedor.class.getResource("/IMG/do-utilizador.png")));
+		imgConta.setIcon(new ImageIcon(TelaInicio.class.getResource("/IMG/do-utilizador.png")));
 		panelTop.add(imgConta, "cell 4 0");
-		ImageIcon conta = new ImageIcon(TelaInicioVendedor.class.getResource("/IMG/do-utilizador.png"));
+		ImageIcon conta = new ImageIcon(TelaInicio.class.getResource("/IMG/do-utilizador.png"));
 		Image iconConta = conta.getImage().getScaledInstance(30, 30, Image.SCALE_SMOOTH);
 		imgConta.setIcon(new ImageIcon(iconConta));
 
