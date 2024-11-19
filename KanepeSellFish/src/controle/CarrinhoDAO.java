@@ -37,12 +37,9 @@ public class CarrinhoDAO implements ICarrinhoDAO {
 	}
 
 	public boolean removerProduto(long id) {
-
-//		for (Produto produto: listaProdutos) {
-//			if(produto.getIdProdutor().equals(idProdutor));
-//			listaProdutos.remove(produto);
-//		}
 		return false;
+
+		
 	}
 
 	@Override

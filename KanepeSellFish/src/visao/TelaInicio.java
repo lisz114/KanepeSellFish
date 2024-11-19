@@ -97,7 +97,7 @@ public class TelaInicio extends JFrame {
 
 		ArrayList<Produto> lista = new ArrayList<Produto>();
 
-		lista.add(new Produto("Tilápia", LocalDate.now(), 10.50f, 10));
+		lista.add(new Produto());
 		lista.add(new Produto());
 		lista.add(new Produto());
 		lista.add(new Produto());
@@ -286,10 +286,18 @@ public class TelaInicio extends JFrame {
 		JButton btnNewButton_2 = new JButton("Perfil");
 		btnNewButton_2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				
+				if(u.isProdutor()) {
+					TelaPerfilVendedor v = new TelaPerfilVendedor(u);
+					v.setLocationRelativeTo(null);
+					v.setVisible(true);
+					dispose();
+				} else {
 				TelaPerfilCliente telaPerfil = new TelaPerfilCliente(u);
 				telaPerfil.setLocationRelativeTo(null);
 				telaPerfil.setVisible(true);
-				dispose();	
+				dispose();
+				}
 			}
 		});
 		btnNewButton_2.setBackground(new Color(154, 205, 217));
@@ -336,6 +344,8 @@ public class TelaInicio extends JFrame {
 		JLabel lblZaA = new JLabel("De Z a A");
 		panel_2.add(lblZaA, "cell 2 6,alignx center");
 		lblZaA.setFont(new Font("/Fontes/Roboto-Black.ttf", Font.PLAIN, 12));
+		
+		if(u.isProdutor()) {
 
 		JLabel imgMore = new JLabel("");
 		imgMore.addMouseListener(new MouseAdapter() {
@@ -348,11 +358,11 @@ public class TelaInicio extends JFrame {
 				cadastrar.setLocationRelativeTo(null);
 			}
 		});
-
+		
 		imgMore.setIcon(new ImageIcon(TelaInicio.class.getResource("/IMG/iconMore.png")));
 		panel_2.add(imgMore, "cell 0 8,alignx center");
 		imgMore.setIcon(new ImageIcon(more));
-
+	}
 		JLabel lblAdicionarProduto = new JLabel("Adicionar Produto");
 		panel_2.add(lblAdicionarProduto, "cell 0 9,alignx center,aligny center");
 		lblAdicionarProduto.setFont(new Font("/Fontes/Roboto-Black.ttf", Font.PLAIN, 12));
