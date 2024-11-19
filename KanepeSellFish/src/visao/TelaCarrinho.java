@@ -8,6 +8,8 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import modelo.Usuario;
 import net.miginfocom.swing.MigLayout;
 import java.awt.Color;
 import java.awt.Font;
@@ -32,7 +34,7 @@ public class TelaCarrinho extends JFrame {
 		});
 	}
 
-	public TelaCarrinho() {
+	public TelaCarrinho(Usuario u) {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1083, 698);
 		contentPane = new JPanel();
@@ -73,6 +75,13 @@ public class TelaCarrinho extends JFrame {
 		JPanel panel_1 = new JPanel();
 		contentPane.add(panel_1, "cell 0 1,grow");
 		panel_1.setLayout(new MigLayout("", "[][][][grow][grow 10]", "[][grow 90][grow 40][grow 30][]"));
+		ImageIcon iconFoto = new ImageIcon(CardProduto.class.getResource("/img/ttilapia.jpg"));
+		Image foto = iconFoto.getImage().getScaledInstance(160, 160, Image.SCALE_SMOOTH);
+		
+		JLabel imgPeixe = new JLabel("");
+		panel_1.add(imgPeixe, "cell 0 1");
+		imgPeixe.setIcon(new ImageIcon(CardProduto.class.getResource("/img/ttilapia.jpg")));
+		imgPeixe.setIcon(new ImageIcon(foto));
 		
 		JLabel lblInfoCompra = new JLabel("Informações da compra: ");
 		lblInfoCompra.setFont(new Font("Dialog", Font.PLAIN, 14));
@@ -94,7 +103,7 @@ public class TelaCarrinho extends JFrame {
 		btnVoltaTela.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				TelaInicio tela = new TelaInicio();
+				TelaInicio tela = new TelaInicio(u, null);
 				tela.setLocationRelativeTo(null);
 				tela.setVisible(true);
 
@@ -109,11 +118,11 @@ public class TelaCarrinho extends JFrame {
 		btnPagamento.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				TelaPagamento tela = new TelaPagamento();
-				tela.setLocationRelativeTo(null);
-				tela.setVisible(true);
-
-				dispose();
+//				TelaPagamento tela = new TelaPagamento();
+//				tela.setLocationRelativeTo(null);
+//				tela.setVisible(true);
+//
+//				dispose();
 			}
 		});
 		btnPagamento.setFont(new Font("Dialog", Font.PLAIN, 11));
