@@ -46,7 +46,6 @@ public class TelaEstoque extends JFrame {
 	private JPanel panelTabelaProdutos;
 	private JScrollPane scrollPane_1;
 	private JTable table;
-	private JTable table_1;
 	private JPanel panel_3;
 	private JButton btnAdicionar;
 	private JButton btnNewButton;
@@ -164,15 +163,15 @@ public class TelaEstoque extends JFrame {
 		scrollPane_1.setOpaque(false);
 		panelTabelaProdutos.add(scrollPane_1, "cell 0 1,grow");
 
-		table_1 = new JTable();
-		table_1.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		table_1.setForeground(new Color(2, 73, 89));
-		table_1.setBackground(new Color(255, 255, 255));
-		table_1.setOpaque(false);
-		table_1.setModel(new DefaultTableModel(new Object[][] {},
+		table = new JTable();
+		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		table.setForeground(new Color(2, 73, 89));
+		table.setBackground(new Color(255, 255, 255));
+		table.setOpaque(false);
+		table.setModel(new DefaultTableModel(new Object[][] {},
 				new String[] { "C\u00F3digo", "Nome", "Quantidade", "Validade", "Salinidade", "Pre\u00E7o" }));
-		table_1.getTableHeader().setBackground(Color.BLACK);
-		scrollPane_1.setViewportView(table_1);
+		table.getTableHeader().setBackground(Color.BLACK);
+		scrollPane_1.setViewportView(table);
 
 		panel_3 = new JPanel();
 		panel_3.setOpaque(false);
@@ -300,7 +299,7 @@ public class TelaEstoque extends JFrame {
 
 		for (Produto produto : listaProdutos) {
 			LocalDate validade = produto.getValidade();
-			DateTimeFormatter desiredFormatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+			DateTimeFormatter desiredFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 			String formattedDate = validade.format(desiredFormatter);
 			String salinidade;
 
@@ -314,24 +313,24 @@ public class TelaEstoque extends JFrame {
 					salinidade, produto.getPreco() });
 		}
 
-		table_1.setModel(tableModel);
+		table.setModel(tableModel);
 
 		DefaultTableCellRenderer renderer = new DefaultTableCellRenderer();
 		renderer.setHorizontalAlignment(SwingConstants.CENTER);
-		table_1.setDefaultRenderer(Object.class, renderer);
+		table.setDefaultRenderer(Object.class, renderer);
 
 		// Alterando a cor do título da coluna
-		table_1.getTableHeader().setBackground(new Color(2, 73, 89)); // Cor #024959
-		table_1.getTableHeader().setForeground(Color.WHITE); // Cor do texto do cabeçalho
+		table.getTableHeader().setBackground(new Color(2, 73, 89)); // Cor #024959
+		table.getTableHeader().setForeground(Color.WHITE); // Cor do texto do cabeçalho
 
 		// Alterando a cor do item selecionado
-		table_1.setSelectionBackground(new Color(96, 154, 168)); // Cor #609AA8
+		table.setSelectionBackground(new Color(96, 154, 168)); // Cor #609AA8
 
 		// Alterando a cor de fundo das células não selecionadas
-		table_1.setBackground(new Color(240, 240, 240)); // Cor suave para o fundo das células
+		table.setBackground(new Color(240, 240, 240)); // Cor suave para o fundo das células
 
 		// Cor da grade da tabela
-		table_1.setGridColor(new Color(200, 200, 200)); // Cor da grade (borda das células)
+		table.setGridColor(new Color(200, 200, 200)); // Cor da grade (borda das células)
 
 	}
 

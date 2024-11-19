@@ -233,7 +233,7 @@ public class TelaAlterarProduto extends JFrame {
 					preco = Float.parseFloat(precoStr);
 					quantidade = Integer.parseInt(quantidadeStr);
 					// Converter validadeStr para LocalDate
-					validade = LocalDate.parse(validadeStr, DateTimeFormatter.ofPattern("dd-MM-yyyy"));
+					validade = LocalDate.parse(validadeStr, DateTimeFormatter.ofPattern("dd/MM/yyyy"));
 				} catch (NumberFormatException | DateTimeParseException ex) {
 					TelaError erro = new TelaError();
 					erro.setLabelText("Preço, quantidade ou validade inválidos");
@@ -302,7 +302,7 @@ public class TelaAlterarProduto extends JFrame {
 
 	public void mostrarDados(Produto produtoSelecionado) {
 		LocalDate validade = produtoSelecionado.getValidade();
-		DateTimeFormatter desiredFormatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+		DateTimeFormatter desiredFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 		String formattedDate = validade.format(desiredFormatter);
 
 		if(produtoSelecionado.getSalinidade()!=null && produtoSelecionado.getSalinidade()==true) {

@@ -200,7 +200,7 @@ public class TelaCadastroProduto extends JFrame {
 					preco = Float.parseFloat(precoStr);
 					quantidade = Integer.parseInt(quantidadeStr);
 					// Converter validadeStr para LocalDate
-					validade = LocalDate.parse(validadeStr, DateTimeFormatter.ofPattern("dd-MM-yyyy"));
+					validade = LocalDate.parse(validadeStr, DateTimeFormatter.ofPattern("dd/MM/yyyy"));
 				} catch (NumberFormatException | DateTimeParseException ex) {
 					TelaError erro = new TelaError();
 					erro.setLabelText("Preço, quantidade ou validade inválidos");
