@@ -1,7 +1,5 @@
 package modelo;
 
-import java.sql.SQLException;
-
 public interface IUsuarioDAO {
 	public int inserirUsuario(Usuario usuario);
 
@@ -9,10 +7,12 @@ public interface IUsuarioDAO {
 
 	public boolean removerUsuario(String cpf);
 	
-	public Usuario consultarUsuarioLoginSenha(String email, String senha);
+	public boolean consultarUsuarioVendedor(Usuario usuario);
 	
 	public Usuario consultaUsuarioCadastrado(String cpf, String email);
 	
     public boolean validarCPF(String cpf);
+
+	Usuario consultarUsuarioLoginSenha(String email, String senha);
     
 }
