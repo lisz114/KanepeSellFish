@@ -6,16 +6,13 @@ import java.awt.Font;
 import java.awt.Image;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
-
 import modelo.Usuario;
 import net.miginfocom.swing.MigLayout;
-import javax.swing.JTextField;
 import java.awt.SystemColor;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
@@ -28,18 +25,19 @@ public class TelaPerfilCliente extends JFrame {
 	/**
 	 * Launch the application.
 	 */
-//	public static void main(String[] args) {
-//		EventQueue.invokeLater(new Runnable() {
-//			public void run() {
-//				try {
-//					TelaPerfilCliente frame = new TelaPerfilCliente();
-//					frame.setVisible(true);
-//				} catch (Exception e) {
-//					e.printStackTrace();
-//				}
-//			}
-//		});
-//	}
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+
+			public void run() {
+				try {
+					TelaPerfilCliente frame = new TelaPerfilCliente(null);
+					frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
 
 	/**
 	 * Create the frame.
@@ -74,7 +72,7 @@ public class TelaPerfilCliente extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 
-				// TelaCarrinho frame = new TeaCarrinho
+				// TelaCarrinho frame = new TelaCarrinho
 
 				// frame.setLocationRelativeTo(null);
 				// frame.setVisible(true);
@@ -151,7 +149,7 @@ public class TelaPerfilCliente extends JFrame {
 		btEditar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
-				TelaEditarPerfil p = new TelaEditarPerfil();
+				TelaEditarPerfil p = new TelaEditarPerfil(null, u);
 				p.setVisible(true);
 			}
 		});
