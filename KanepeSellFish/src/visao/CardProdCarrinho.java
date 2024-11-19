@@ -70,18 +70,18 @@ public class CardProdCarrinho extends JFrame {
 		lblPreco.setFont(new Font("Dialog", Font.PLAIN, 11));
 		getContentPane().add(lblPreco, "cell 1 1,aligny center");
 		
-		JLabel imgMais = new JLabel("");
-		imgMais.addMouseListener(new MouseAdapter() {
-			public void mouseClicked(MouseEvent e) {
-				int quantidade = Integer.parseInt(lblQuantidadeEst.getText());
-				quantidade++;
-				lblQuantidadeEst.setText(Integer.toString(quantidade));
-			}
-		});
-		imgMais.setIcon(new ImageIcon(CardProduto.class.getResource("/img/More.png")));
-		getContentPane().add(imgMais, "flowx,cell 2 1");
-		imgMais.setIcon(new ImageIcon(m));
-		
+//		JLabel imgMais = new JLabel("");
+//		imgMais.addMouseListener(new MouseAdapter() {
+//			public void mouseClicked(MouseEvent e) {
+//				int quantidade = Integer.parseInt(lblQuantidadeEst.getText());
+//				quantidade++;
+//				lblQuantidadeEst.setText(Integer.toString(quantidade));
+//			}
+//		});
+//		imgMais.setIcon(new ImageIcon(CardProduto.class.getResource("/img/More.png")));
+//		getContentPane().add(imgMais, "flowx,cell 2 1");
+//		imgMais.setIcon(new ImageIcon(m));
+//		
 		JLabel lblQuantidadeEst = new JLabel("Quantidade no estoque");
 		lblQuantidadeEst.setFont(new Font("Dialog", Font.PLAIN, 11));
 		contentPane.add(lblQuantidadeEst, "cell 0 1,aligny center");

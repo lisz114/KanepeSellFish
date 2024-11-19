@@ -84,11 +84,11 @@ public class TelaPerfilCliente extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 
-				 TelaCarrinho frame = new TelaCarrinho();
-				 frame.setLocationRelativeTo(null);
-				 frame.setVisible(true);
-				 
-				 dispose();
+//				 TelaCarrinho frame = new TelaCarrinho();
+//				 frame.setLocationRelativeTo(null);
+//				 frame.setVisible(true);
+//				 
+//				 dispose();
 			}
 		});
 		panel.add(imgCarrinho, "cell 2 0");
@@ -142,11 +142,11 @@ public class TelaPerfilCliente extends JFrame {
 		btnCarrinho.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				TelaCarrinho tela = new TelaCarrinho();
-				tela.setLocationRelativeTo(null);
-				tela.setVisible(true);
-				
-				dispose();
+//				TelaCarrinho tela = new TelaCarrinho();
+//				tela.setLocationRelativeTo(null);
+//				tela.setVisible(true);
+//				
+//				dispose();
 			}
 		});
 		btnCarrinho.setFont(new Font("Dialog", Font.PLAIN, 12));
@@ -209,7 +209,7 @@ public class TelaPerfilCliente extends JFrame {
 		btEditar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
-				TelaEditarPerfil p = new TelaEditarPerfil(null, u);
+				TelaEditarPerfil p = new TelaEditarPerfil();
 				p.setVisible(true);
 			}
 		});
