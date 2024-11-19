@@ -206,7 +206,7 @@ public class TelaEditarVendedor extends JFrame {
 		lblNomeEmp.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		lblNomeEmp.setBounds(20, 108, 254, 25);
 		PanelNome.add(lblNomeEmp);
-		lblNomeEmp.setText(u.getProd().getNomeComercio());
+//		lblNomeEmp.setText(u.getProd().getNomeComercio());
 
 		JLabel imgKart = new JLabel("");
 		imgKart.setBounds(400, 6, 46, 39);
@@ -406,7 +406,7 @@ public class TelaEditarVendedor extends JFrame {
 
 				user.setEmail(email);
 				user.setCpf(cpf);
-				user.setDesc(desc);
+//				user.setDesc(desc);
 
 				vend.setCnpj(cnpj);
 

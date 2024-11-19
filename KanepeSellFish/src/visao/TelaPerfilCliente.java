@@ -149,7 +149,7 @@ public class TelaPerfilCliente extends JFrame {
 		btEditar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
-				TelaEditarPerfil p = new TelaEditarPerfil(null, u);
+				TelaEditarVendedor p = new TelaEditarVendedor(u);
 				p.setVisible(true);
 			}
 		});

@@ -41,7 +41,4 @@ public class ProdutorDAO implements IProdutorDAO {
 			return false;
 		}
 	}
-
-	
-
 }

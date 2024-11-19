@@ -7,8 +7,7 @@ public class Usuario {
 	private String email;
 	private String cpf;
 	private String tel;
-	private String desc;
-	private Produtor prod;
+	private boolean produtor;
 	private Endereco end;
 	protected int idUsuario;
 
@@ -21,13 +20,6 @@ public class Usuario {
 		this.email = email;
 	}
 
-	public Produtor getProd() {
-		return prod;
-	}
-
-	public void setProd(Produtor prod) {
-		this.prod = prod;
-	}
 
 	public Endereco getEnd() {
 		return end;
@@ -35,14 +27,6 @@ public class Usuario {
 
 	public void setEnd(Endereco end) {
 		this.end = end;
-	}
-	
-	public String getDesc() {
-		return desc;
-	}
-
-	public void setDesc(String desc) {
-		this.desc = desc;
 	}
 
 	public String getNome() {
@@ -88,6 +72,13 @@ public class Usuario {
   	public void setIdUsuario(int idUsuario) {
 		this.idUsuario = idUsuario;
 	}
+	public boolean isProdutor() {
+		return produtor;
+	}
+
+	public void setProdutor(boolean produtor) {
+		this.produtor = produtor;
+	}
 
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -100,5 +91,4 @@ public class Usuario {
 	public int getIdUsuario() {
 		return this.idUsuario;
 	}
-
 }

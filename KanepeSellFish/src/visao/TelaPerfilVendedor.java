@@ -4,6 +4,12 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Dimension;
+
+import java.awt.EventQueue;
+import java.awt.Font;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+
 import java.awt.Image;
 import java.awt.SystemColor;
 import java.awt.event.ActionEvent;
@@ -18,6 +24,7 @@ import javax.swing.border.EmptyBorder;
 
 import modelo.Usuario;
 import net.miginfocom.swing.MigLayout;
+import javax.swing.SwingConstants;
 
 public class TelaPerfilVendedor extends JFrame {
 
@@ -167,7 +174,18 @@ public class TelaPerfilVendedor extends JFrame {
 		btnNewButton_3.setBackground(new Color(154, 205, 217));
 		btnNewButton_3.setBorder(null);
 		panelLeft.add(btnNewButton_3, "cell 0 3,grow");
-
+		
+		JPanel panel_1 = new JPanel();
+		contentPane.add(panel_1, BorderLayout.CENTER);
+		panel_1.setLayout(new MigLayout("", "[grow][grow][grow][grow][grow]", "[][][][]"));
+		
+		JLabel lblNomeUsuario = new JLabel();
+		lblNomeUsuario.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNomeUsuario.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		panel_1.add(lblNomeUsuario, "cell 1 2");
+		
+		JLabel lblNomeComercio = new JLabel("");
+		panel_1.add(lblNomeComercio, "cell 1 3");
 		JPanel panel_2 = new JPanel();
 		contentPane.add(panel_2, BorderLayout.CENTER);
 

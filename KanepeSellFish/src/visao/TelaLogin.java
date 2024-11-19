@@ -24,6 +24,7 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 
 import controle.UsuarioDAO;
+import modelo.Produtor;
 import modelo.RoundButton;
 import modelo.Usuario;
 import net.miginfocom.swing.MigLayout;
@@ -173,17 +174,17 @@ public class TelaLogin extends JFrame {
 		btnEntrar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Usuario u = new Usuario();
-
+				
 				String email = txtEmail.getText();
 				String senha = new String(txtSenha.getPassword());
-
 				u = uDAO.consultarUsuarioLoginSenha(email, senha);
 
 				if (u != null) {
-
-					TelaInicio tela = new TelaInicio(u, null);
-					tela.setLocationRelativeTo(null);
-					tela.setVisible(true);
+					u.setProdutor(uDAO.consultarUsuarioVendedor(u));
+						TelaInicio tela = new TelaInicio(u, null);
+						tela.setLocationRelativeTo(null);
+						tela.setVisible(true);
+					
 
 					dispose();
 
