@@ -19,14 +19,18 @@ import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
+import controle.ProdutorDAO;
+import controle.UsuarioDAO;
 import modelo.Usuario;
 import net.miginfocom.swing.MigLayout;
+import javax.swing.JSeparator;
 
 public class TelaPerfilVendedor extends JFrame {
 
 	private JPanel contentPane;
 	private ArrayList<Usuario> listaUsuarios;
 	JPanel panelLeft;
+	private ProdutorDAO pDAO = ProdutorDAO.getInstancia();
 
 	/**
 	 * Launch the application.
@@ -173,17 +177,73 @@ public class TelaPerfilVendedor extends JFrame {
 		
 		JPanel panel_1 = new JPanel();
 		contentPane.add(panel_1, BorderLayout.CENTER);
-		panel_1.setLayout(new MigLayout("", "[grow][grow][grow][grow][grow]", "[][][][]"));
+		panel_1.setLayout(new MigLayout("", "[grow][grow][grow][grow][grow]", "[][][][][][]"));
 		
 		JLabel lblNomeUsuario = new JLabel();
 		lblNomeUsuario.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNomeUsuario.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		panel_1.add(lblNomeUsuario, "cell 1 2");
+		lblNomeUsuario.setFont(new Font("Tahoma", Font.PLAIN, 25));
+		panel_1.add(lblNomeUsuario, "flowy,cell 1 2,alignx left,aligny top");
+		lblNomeUsuario.setText(u.getNome());
+		
+		JLabel lblInfoC = new JLabel("Informações sobre  o comércio:");
+		panel_1.add(lblInfoC, "cell 2 2,alignx left,aligny bottom");
+		
+		JLabel lblEndereco = new JLabel("Endereço:");
+		panel_1.add(lblEndereco, "cell 3 2,aligny bottom");
+		
+		JLabel imgUsuario = new JLabel("");
+		imgUsuario.setIcon(new ImageIcon(TelaPerfilVendedor.class.getResource("/img/do-utilizador.png")));
+		panel_1.add(imgUsuario, "flowy,cell 0 3,alignx center,aligny center");
+		ImageIcon iconUsuario = new ImageIcon(TelaPerfilVendedor.class.getResource("/img/do-utilizador.png"));
+		Image iconU = iconUsuario.getImage().getScaledInstance(120, 120, Image.SCALE_SMOOTH);
+		imgUsuario.setIcon(new ImageIcon(iconU));
+		
+		JLabel lblEditarFt = new JLabel("Editar Foto de Perfil");
+		lblEditarFt.setFont(new Font("Tahoma", Font.ITALIC, 10));
+		lblEditarFt.setForeground(SystemColor.textHighlight);
+		panel_1.add(lblEditarFt, "cell 0 3,alignx center");
 		
 		JLabel lblNomeComercio = new JLabel("");
-		panel_1.add(lblNomeComercio, "cell 1 3");
-		JPanel panel_2 = new JPanel();
-		contentPane.add(panel_2, BorderLayout.CENTER);
+		lblNomeComercio.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		panel_1.add(lblNomeComercio, "cell 1 2,alignx left,aligny center");
+		lblNomeComercio.setText(pDAO.consultaProdutor(u).getNomeComercio());
+		
+		JLabel lblEmail = new JLabel("Email:");
+		panel_1.add(lblEmail, "flowx,cell 1 3,alignx left,aligny bottom");
+		
+		JLabel txtEmail = new JLabel("");
+		panel_1.add(txtEmail, "cell 1 3,alignx center,aligny bottom");
+		txtEmail.setText(u.getEmail());
+		
+		JLabel lblCpf = new JLabel("Cpf:");
+		panel_1.add(lblCpf, "flowx,cell 1 4");
+		
+		JLabel txtCpf = new JLabel("");
+		panel_1.add(txtCpf, "cell 1 4");
+		txtCpf.setText(u.getCpf());
+		
+		JLabel lblInfoComercio = new JLabel("Informações pessoais:");
+		panel_1.add(lblInfoComercio, "cell 1 2,alignx left,aligny center");
+		
+		JLabel lblTelefone = new JLabel("Telefone:");
+		panel_1.add(lblTelefone, "flowx,cell 1 5");
+		
+		JLabel txtTelefone = new JLabel("Adicionar Telefone");
+		panel_1.add(txtTelefone, "cell 1 5");
+		
+		JLabel lblNomeC = new JLabel("Nome do Comércio:");
+		panel_1.add(lblNomeC, "flowx,cell 2 3,aligny bottom");
+		
+		JLabel lblCnpj = new JLabel("Cnpj:");
+		panel_1.add(lblCnpj, "flowx,cell 2 4,aligny bottom");
+		
+		JLabel txtCnpj = new JLabel("");
+		panel_1.add(txtCnpj, "cell 2 4,aligny bottom");
+		txtCnpj.setText(pDAO.consultaProdutor(u).getCnpj());
+		
+		JLabel txtNomeC = new JLabel("");
+		panel_1.add(txtNomeC, "cell 2 3,aligny bottom");
+		txtNomeC.setText(pDAO.consultaProdutor(u).getNomeComercio());
 
 	}
 }
