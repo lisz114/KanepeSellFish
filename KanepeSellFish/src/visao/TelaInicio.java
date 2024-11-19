@@ -46,6 +46,7 @@ public class TelaInicio extends JFrame {
 	private JPanel contentPane;
 	private JTextField txtPesquisar;
 	JPanel panelLeft;
+
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -59,7 +60,8 @@ public class TelaInicio extends JFrame {
 			}
 		});
 	}
-	public TelaInicio(Usuario u,  List<Produto> produtos) {
+
+	public TelaInicio(Usuario u, List<Produto> produtos) {
 		setResizable(false);
 		setLocationByPlatform(true);
 		setMinimumSize(new Dimension(1176, 664));
@@ -220,9 +222,9 @@ public class TelaInicio extends JFrame {
 		imgMenu.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				if(panelLeft.isVisible()) {
+				if (panelLeft.isVisible()) {
 					panelLeft.setVisible(false);
-				}else {
+				} else {
 					panelLeft.setVisible(true);
 				}
 			}
@@ -263,12 +265,12 @@ public class TelaInicio extends JFrame {
 		panelLeft.setBackground(new Color(154, 208, 217));
 		contentPane.add(panelLeft, BorderLayout.WEST);
 		panelLeft.setLayout(new MigLayout("", "[100px]", "[50px][50px][50px][50px]"));
-		
+
 		JButton btnNewButton = new JButton("Inicio");
 		btnNewButton.setBackground(new Color(64, 128, 128));
 		btnNewButton.setBorder(null);
 		panelLeft.add(btnNewButton, "cell 0 0,grow");
-		
+
 		JButton btnNewButton_1 = new JButton("Carrinho");
 		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -282,53 +284,62 @@ public class TelaInicio extends JFrame {
 		btnNewButton_1.setBorder(null);
 		btnNewButton_1.setOpaque(false);
 		panelLeft.add(btnNewButton_1, "cell 0 1,grow");
-		
+
 		JButton btnNewButton_2 = new JButton("Perfil");
 		btnNewButton_2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
-				if(u.isProdutor()) {
+
+				if (u.isProdutor()) {
 					TelaPerfilVendedor v = new TelaPerfilVendedor(u);
 					v.setLocationRelativeTo(null);
 					v.setVisible(true);
 					dispose();
 				} else {
-				TelaPerfilCliente telaPerfil = new TelaPerfilCliente(u);
-				telaPerfil.setLocationRelativeTo(null);
-				telaPerfil.setVisible(true);
-				dispose();
+					TelaPerfilCliente telaPerfil = new TelaPerfilCliente(u);
+					telaPerfil.setLocationRelativeTo(null);
+					telaPerfil.setVisible(true);
+					dispose();
 				}
 			}
 		});
+
 		btnNewButton_2.setBackground(new Color(154, 205, 217));
 		btnNewButton_2.setBorder(null);
 		btnNewButton_2.setOpaque(false);
 		panelLeft.add(btnNewButton_2, "cell 0 2,grow");
 		
-		JButton btnNewButton_3 = new JButton("Estoque");
-		btnNewButton_3.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				
-				TelaEstoque frame = new TelaEstoque(u);
-				frame.setLocationRelativeTo(null);
-				frame.setVisible(true);
-				dispose();
-				
-			}
-		});
-		btnNewButton_3.setBackground(new Color(154, 205, 217));
-		btnNewButton_3.setBorder(null);
-		btnNewButton_3.setOpaque(false);
-		panelLeft.add(btnNewButton_3, "cell 0 3,grow");
-		
+		if (u.isProdutor()) {
+			JButton btnNewButton_3 = new JButton("Estoque");
+			btnNewButton_3.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					TelaEstoque frame = new TelaEstoque(u);
+					frame.setLocationRelativeTo(null);
+					frame.setVisible(true);
+					dispose();
+
+				}
+			});
+
+			btnNewButton_3.setBackground(new Color(154, 205, 217));
+			btnNewButton_3.setBorder(null);
+			btnNewButton_3.setOpaque(false);
+			panelLeft.add(btnNewButton_3, "cell 0 3,grow");
+		}
 		JLabel imgConta = new JLabel("");
 		imgConta.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				TelaPerfilCliente telaPerfil = new TelaPerfilCliente(u);
-				telaPerfil.setLocationRelativeTo(null);
-				telaPerfil.setVisible(true);
-				dispose();
+				if (u.isProdutor()) {
+					TelaPerfilVendedor v = new TelaPerfilVendedor(u);
+					v.setLocationRelativeTo(null);
+					v.setVisible(true);
+					dispose();
+				} else {
+					TelaPerfilCliente telaPerfil = new TelaPerfilCliente(u);
+					telaPerfil.setLocationRelativeTo(null);
+					telaPerfil.setVisible(true);
+					dispose();
+				}
 			}
 		});
 		imgConta.setIcon(new ImageIcon(TelaInicio.class.getResource("/IMG/do-utilizador.png")));
@@ -344,25 +355,25 @@ public class TelaInicio extends JFrame {
 		JLabel lblZaA = new JLabel("De Z a A");
 		panel_2.add(lblZaA, "cell 2 6,alignx center");
 		lblZaA.setFont(new Font("/Fontes/Roboto-Black.ttf", Font.PLAIN, 12));
-		
-		if(u.isProdutor()) {
 
-		JLabel imgMore = new JLabel("");
-		imgMore.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				TelaEstoque estoque = new TelaEstoque(u);
+		if (u.isProdutor()) {
 
-				TelaCadastroProduto cadastrar = new TelaCadastroProduto(estoque, u);
-				cadastrar.setVisible(true);
-				cadastrar.setLocationRelativeTo(null);
-			}
-		});
-		
-		imgMore.setIcon(new ImageIcon(TelaInicio.class.getResource("/IMG/iconMore.png")));
-		panel_2.add(imgMore, "cell 0 8,alignx center");
-		imgMore.setIcon(new ImageIcon(more));
-	}
+			JLabel imgMore = new JLabel("");
+			imgMore.addMouseListener(new MouseAdapter() {
+				@Override
+				public void mouseClicked(MouseEvent e) {
+					TelaEstoque estoque = new TelaEstoque(u);
+
+					TelaCadastroProduto cadastrar = new TelaCadastroProduto(estoque, u);
+					cadastrar.setVisible(true);
+					cadastrar.setLocationRelativeTo(null);
+				}
+			});
+
+			imgMore.setIcon(new ImageIcon(TelaInicio.class.getResource("/IMG/iconMore.png")));
+			panel_2.add(imgMore, "cell 0 8,alignx center");
+			imgMore.setIcon(new ImageIcon(more));
+		}
 		JLabel lblAdicionarProduto = new JLabel("Adicionar Produto");
 		panel_2.add(lblAdicionarProduto, "cell 0 9,alignx center,aligny center");
 		lblAdicionarProduto.setFont(new Font("/Fontes/Roboto-Black.ttf", Font.PLAIN, 12));
