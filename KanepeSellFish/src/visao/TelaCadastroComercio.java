@@ -305,7 +305,7 @@ public class TelaCadastroComercio extends JFrame {
 						System.out.println(idUsuario);
 						
 						pDAO.inserirProdutor(produtor);
-						TelaLogin tela = new TelaLogin();
+						TelaLoginVendedor tela = new TelaLoginVendedor();
 						tela.setLocationRelativeTo(null);
 						tela.setVisible(true);
 

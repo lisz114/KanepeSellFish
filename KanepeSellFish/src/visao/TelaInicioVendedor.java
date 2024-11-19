@@ -1,56 +1,45 @@
-package visao;
 
+package visao;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
-import java.awt.ComponentOrientation;
 import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.Image;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.List;
-
 import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
-import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
+import javax.swing.JTable;
 import javax.swing.JTextField;
-import javax.swing.ScrollPaneConstants;
 import javax.swing.SwingConstants;
-import javax.swing.border.BevelBorder;
 import javax.swing.border.EmptyBorder;
-import javax.swing.border.EtchedBorder;
-import javax.swing.border.SoftBevelBorder;
-import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
 
-import controle.ProdutoDAO;
 import modelo.Produto;
-import modelo.Usuario;
 import net.miginfocom.swing.MigLayout;
+import javax.swing.ScrollPaneConstants;
 
-public class TelaInicio extends JFrame {
+public class TelaInicioVendedor extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
-	private JTextField txtPesquisar;
-	JPanel panelLeft;
+	private JTextField textField;
+	private JTable table_1;
+
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					TelaInicio frame = new TelaInicio(null, null);
+					TelaInicioVendedor frame = new TelaInicioVendedor();
 					frame.setLocationRelativeTo(null);
 					frame.setVisible(true);
 				} catch (Exception e) {
@@ -59,7 +48,8 @@ public class TelaInicio extends JFrame {
 			}
 		});
 	}
-	public TelaInicio(Usuario u,  List<Produto> produtos) {
+
+	public TelaInicioVendedor() {
 		setResizable(false);
 		setLocationByPlatform(true);
 		setMinimumSize(new Dimension(1176, 664));
@@ -83,21 +73,16 @@ public class TelaInicio extends JFrame {
 		panel_1.setLayout(new MigLayout("", "[10px][300px][grow][grow]", "[160px,grow][150px,grow]"));
 
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBorder(new EmptyBorder(0, 0, 0, 0));
 		scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 		JPanel panel_7 = new JPanel();
-		panel_7.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		panel_7.setForeground(Color.WHITE);
-		panel_7.setBorder(new TitledBorder(
-				new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)),
-				"Peixes Dispon\u00EDveis", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
+		panel_7.setBorder(null);
 		scrollPane.setViewportView(panel_7);
 		panel_1.add(scrollPane, "cell 1 0 3 2,grow");
 		panel_7.setLayout(new MigLayout("", "[][][][]", "[][][][]"));
 
 		ArrayList<Produto> lista = new ArrayList<Produto>();
 
-		lista.add(new Produto("Tilápia", LocalDate.now(), 10.50f, 10));
 		lista.add(new Produto());
 		lista.add(new Produto());
 		lista.add(new Produto());
@@ -130,20 +115,23 @@ public class TelaInicio extends JFrame {
 		JPanel panel_2 = new JPanel();
 		panel_1.add(panel_2, "cell 0 0 1 2,grow");
 		panel_2.setLayout(new MigLayout("", "[][][]", "[60px][100px][60px][50px][][][][190px,grow][][]"));
+		
+				JLabel lblPeixes = new JLabel("PEIXES DISPONÍVEIS");
+				panel_2.add(lblPeixes, "cell 0 0 3 1,alignx right");
+				lblPeixes.setFont(new Font("Tahoma", Font.PLAIN, 16));
 
 		JLabel lblOrdenar = new JLabel("ORDENAR");
 		panel_2.add(lblOrdenar, "cell 1 1,alignx center");
 		lblOrdenar.setFont(new Font("/Fontes/Roboto-Black.ttf", Font.PLAIN, 14));
-		ImageIcon iconUp = new ImageIcon(TelaInicio.class.getResource("/IMG/imgUp.png"));
+		ImageIcon iconUp = new ImageIcon(TelaInicioVendedor.class.getResource("/IMG/imgUp.png"));
 		Image imgU = iconUp.getImage().getScaledInstance(40, 40, Image.SCALE_SMOOTH);
 
 		JLabel imgDown = new JLabel("");
 		imgDown.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				boolean crescente = true;
-				ProdutoDAO dao = new ProdutoDAO();
-				dao.ordenarPorPreco(crescente, produtos);
+
+				// metodo consulta por preco menor
 			}
 		});
 
@@ -151,181 +139,94 @@ public class TelaInicio extends JFrame {
 		imgUp.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				boolean crescente = false;
-				ProdutoDAO dao = new ProdutoDAO();
-				dao.ordenarPorPreco(crescente, produtos);
+
+				// trazer método de pesquisa por maior preço
 			}
 		});
-		imgUp.setIcon(new ImageIcon(TelaInicio.class.getResource("/IMG/imgUp.png")));
+		imgUp.setIcon(new ImageIcon(TelaInicioVendedor.class.getResource("/IMG/imgUp.png")));
 		panel_2.add(imgUp, "cell 0 2,alignx center");
 		imgUp.setIcon(new ImageIcon(imgU));
-		imgDown.setIcon(new ImageIcon(TelaInicio.class.getResource("/IMG/imgDown.png")));
+		imgDown.setIcon(new ImageIcon(TelaInicioVendedor.class.getResource("/IMG/imgDown.png")));
 		panel_2.add(imgDown, "cell 2 2,alignx center");
-		ImageIcon iconDown = new ImageIcon(TelaInicio.class.getResource("/IMG/imgDown.png"));
+		ImageIcon iconDown = new ImageIcon(TelaInicioVendedor.class.getResource("/IMG/imgDown.png"));
 		Image imgD = iconDown.getImage().getScaledInstance(40, 40, Image.SCALE_SMOOTH);
 		imgDown.setIcon(new ImageIcon(imgD));
 
 		JLabel lblMaiorValor = new JLabel("Maior Valor");
 		panel_2.add(lblMaiorValor, "cell 0 3,alignx center");
 		lblMaiorValor.setFont(new Font("Dialog", Font.PLAIN, 12));
-		ImageIcon iconAZ = new ImageIcon(TelaInicio.class.getResource("/IMG/imgA.png"));
+		ImageIcon iconAZ = new ImageIcon(TelaInicioVendedor.class.getResource("/IMG/imgA.png"));
 		Image ordemAZ = iconAZ.getImage().getScaledInstance(40, 40, Image.SCALE_SMOOTH);
 
 		JLabel imgAZ = new JLabel("");
-		imgAZ.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				boolean crescente = false;
-				ProdutoDAO dao = new ProdutoDAO();
-				dao.ordenarNome(crescente, produtos);
-			}
-		});
-		imgAZ.setIcon(new ImageIcon(TelaInicio.class.getResource("/IMG/imgA.png")));
+		imgAZ.setIcon(new ImageIcon(TelaInicioVendedor.class.getResource("/IMG/imgA.png")));
 		panel_2.add(imgAZ, "cell 0 5,alignx center");
 		imgAZ.setIcon(new ImageIcon(ordemAZ));
 
 		JLabel imgZA = new JLabel("");
-		imgZA.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				boolean crescente = true;
-				ProdutoDAO dao = new ProdutoDAO();
-				dao.ordenarNome(crescente, produtos);
-			}
-		});
-		imgZA.setIcon(new ImageIcon(TelaInicio.class.getResource("/IMG/imgZ.png")));
+		imgZA.setIcon(new ImageIcon(TelaInicioVendedor.class.getResource("/IMG/imgZ.png")));
 		panel_2.add(imgZA, "cell 2 5,alignx center");
-		ImageIcon iconZA = new ImageIcon(TelaInicio.class.getResource("/IMG/imgZ.png"));
+		ImageIcon iconZA = new ImageIcon(TelaInicioVendedor.class.getResource("/IMG/imgZ.png"));
 		Image ordemZA = iconZA.getImage().getScaledInstance(40, 40, Image.SCALE_SMOOTH);
 		imgZA.setIcon(new ImageIcon(ordemZA));
 
 		JLabel lblAaZ = new JLabel("De A a Z");
 		panel_2.add(lblAaZ, "cell 0 6,alignx center");
 		lblAaZ.setFont(new Font("/Fontes/Roboto-Black.ttf", Font.PLAIN, 12));
-		ImageIcon iconMore = new ImageIcon(TelaInicio.class.getResource("/IMG/iconMore.png"));
+		ImageIcon iconMore = new ImageIcon(TelaInicioVendedor.class.getResource("/IMG/iconMore.png"));
 		Image more = iconMore.getImage().getScaledInstance(40, 40, Image.SCALE_SMOOTH);
 
-		JRadioButton btDoce = new JRadioButton("Água Doce");
-		panel_2.add(btDoce, "cell 0 7");
-
-		JRadioButton btSalgada = new JRadioButton("Água Salgada");
-		panel_2.add(btSalgada, "cell 2 7");
-
 		ButtonGroup grupo = new ButtonGroup();
-
-		grupo.add(btSalgada);
-		grupo.add(btDoce);
 
 		JLabel imgMenu = new JLabel("");
 		imgMenu.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				if(panelLeft.isVisible()) {
-					panelLeft.setVisible(false);
-				}else {
-					panelLeft.setVisible(true);
-				}
+
+				// if (menu.isVisible) {
+				// menu.setVisible(false);
+				// }else
+
 			}
 		});
-		imgMenu.setIcon(new ImageIcon(TelaInicio.class.getResource("/IMG/menu-hamburguer.png")));
+		imgMenu.setIcon(new ImageIcon(TelaInicioVendedor.class.getResource("/IMG/menu-hamburguer.png")));
 		panel.add(imgMenu, "cell 0 0");
-		ImageIcon menu = new ImageIcon(TelaInicio.class.getResource("/IMG/menu-hamburguer.png"));
+		ImageIcon menu = new ImageIcon(TelaInicioVendedor.class.getResource("/IMG/menu-hamburguer.png"));
 		Image iconMenu = menu.getImage().getScaledInstance(30, 30, Image.SCALE_SMOOTH);
 		imgMenu.setIcon(new ImageIcon(iconMenu));
 
-		txtPesquisar = new JTextField();
-		txtPesquisar.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		txtPesquisar.setBorder(new SoftBevelBorder(BevelBorder.LOWERED, null, null, null, null));
-		txtPesquisar.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
-		txtPesquisar.setDisabledTextColor(new Color(192, 192, 192));
-		txtPesquisar.setForeground(new Color(0, 0, 0));
-		txtPesquisar.setToolTipText("");
-		panel.add(txtPesquisar, "cell 1 0,alignx center");
-		txtPesquisar.setHorizontalAlignment(SwingConstants.LEFT);
-		txtPesquisar.setBackground(new Color(245, 245, 245));
-		txtPesquisar.setColumns(50);
+		textField = new JTextField();
+		panel.add(textField, "cell 1 0,alignx center");
+		textField.setHorizontalAlignment(SwingConstants.CENTER);
+		textField.setBackground(new Color(245, 245, 245));
+		textField.setColumns(50);
 
 		JLabel imgCarrinho = new JLabel("");
-		imgCarrinho.setIcon(new ImageIcon(TelaInicio.class.getResource("/IMG/carrinho-de-compras.png")));
+		imgCarrinho.setIcon(new ImageIcon(TelaInicioVendedor.class.getResource("/IMG/carrinho-de-compras.png")));
 		panel.add(imgCarrinho, "cell 2 0");
-		ImageIcon carrinho = new ImageIcon(TelaInicio.class.getResource("/IMG/carrinho-de-compras.png"));
+		ImageIcon carrinho = new ImageIcon(TelaInicioVendedor.class.getResource("/IMG/carrinho-de-compras.png"));
 		Image imgC = carrinho.getImage().getScaledInstance(30, 30, Image.SCALE_SMOOTH);
 		imgCarrinho.setIcon(new ImageIcon(imgC));
 
 		JLabel imgNotificacao = new JLabel("");
-		imgNotificacao.setIcon(new ImageIcon(TelaInicio.class.getResource("/IMG/sino.png")));
+		imgNotificacao.setIcon(new ImageIcon(TelaInicioVendedor.class.getResource("/IMG/sino.png")));
 		panel.add(imgNotificacao, "cell 3 0");
-		ImageIcon notificacao = new ImageIcon(TelaInicio.class.getResource("/IMG/sino.png"));
+		ImageIcon notificacao = new ImageIcon(TelaInicioVendedor.class.getResource("/IMG/sino.png"));
 		Image imgN = notificacao.getImage().getScaledInstance(30, 30, Image.SCALE_SMOOTH);
 		imgNotificacao.setIcon(new ImageIcon(imgN));
 
-		panelLeft = new JPanel();
-		panelLeft.setBackground(new Color(154, 208, 217));
-		contentPane.add(panelLeft, BorderLayout.WEST);
-		panelLeft.setLayout(new MigLayout("", "[100px]", "[50px][50px][50px][50px]"));
-		
-		JButton btnNewButton = new JButton("Inicio");
-		btnNewButton.setBackground(new Color(64, 128, 128));
-		btnNewButton.setBorder(null);
-		panelLeft.add(btnNewButton, "cell 0 0,grow");
-		
-		JButton btnNewButton_1 = new JButton("Carrinho");
-		btnNewButton_1.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-//				TelaCarrinho carrinho = new TelaCarrinho();
-//				carrinho.setLocationRelativeTo(null);
-//				carrinho.setVisible(true);
-//				dispose();
-			}
-		});
-		btnNewButton_1.setBackground(new Color(154, 205, 217));
-		btnNewButton_1.setBorder(null);
-		btnNewButton_1.setOpaque(false);
-		panelLeft.add(btnNewButton_1, "cell 0 1,grow");
-		
-		JButton btnNewButton_2 = new JButton("Perfil");
-		btnNewButton_2.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				TelaPerfilCliente telaPerfil = new TelaPerfilCliente(u);
-				telaPerfil.setLocationRelativeTo(null);
-				telaPerfil.setVisible(true);
-				dispose();	
-			}
-		});
-		btnNewButton_2.setBackground(new Color(154, 205, 217));
-		btnNewButton_2.setBorder(null);
-		btnNewButton_2.setOpaque(false);
-		panelLeft.add(btnNewButton_2, "cell 0 2,grow");
-		
-		JButton btnNewButton_3 = new JButton("Estoque");
-		btnNewButton_3.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				
-				TelaEstoque frame = new TelaEstoque(u);
-				frame.setLocationRelativeTo(null);
-				frame.setVisible(true);
-				dispose();
-				
-			}
-		});
-		btnNewButton_3.setBackground(new Color(154, 205, 217));
-		btnNewButton_3.setBorder(null);
-		btnNewButton_3.setOpaque(false);
-		panelLeft.add(btnNewButton_3, "cell 0 3,grow");
-		
 		JLabel imgConta = new JLabel("");
 		imgConta.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				TelaPerfilCliente telaPerfil = new TelaPerfilCliente(u);
-				telaPerfil.setLocationRelativeTo(null);
-				telaPerfil.setVisible(true);
-				dispose();
+//				TelaPerfil telaPerfil = new TelaPerfil();
+//				telaPerfil.setVisible(true);
+//				dispose();
 			}
 		});
-		imgConta.setIcon(new ImageIcon(TelaInicio.class.getResource("/IMG/do-utilizador.png")));
+		imgConta.setIcon(new ImageIcon(TelaInicioVendedor.class.getResource("/IMG/do-utilizador.png")));
 		panel.add(imgConta, "cell 4 0");
-		ImageIcon conta = new ImageIcon(TelaInicio.class.getResource("/IMG/do-utilizador.png"));
+		ImageIcon conta = new ImageIcon(TelaInicioVendedor.class.getResource("/IMG/do-utilizador.png"));
 		Image iconConta = conta.getImage().getScaledInstance(30, 30, Image.SCALE_SMOOTH);
 		imgConta.setIcon(new ImageIcon(iconConta));
 
@@ -338,18 +239,7 @@ public class TelaInicio extends JFrame {
 		lblZaA.setFont(new Font("/Fontes/Roboto-Black.ttf", Font.PLAIN, 12));
 
 		JLabel imgMore = new JLabel("");
-		imgMore.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				TelaEstoque estoque = new TelaEstoque(u);
-
-				TelaCadastroProduto cadastrar = new TelaCadastroProduto(estoque, u);
-				cadastrar.setVisible(true);
-				cadastrar.setLocationRelativeTo(null);
-			}
-		});
-
-		imgMore.setIcon(new ImageIcon(TelaInicio.class.getResource("/IMG/iconMore.png")));
+		imgMore.setIcon(new ImageIcon(TelaInicioVendedor.class.getResource("/IMG/iconMore.png")));
 		panel_2.add(imgMore, "cell 0 8,alignx center");
 		imgMore.setIcon(new ImageIcon(more));
 
@@ -359,6 +249,10 @@ public class TelaInicio extends JFrame {
 
 		String[] colunas = { "Nome", "Quantidade", "Preço" };
 		DefaultTableModel modelo = new DefaultTableModel(colunas, 0);
+
+		// table_1 = new JTable(modelo);
+		// panel_1.add(table_1, "cell 3 1,grow");
+
 	}
 
 	private static void addPopup(Component component, final JPopupMenu popup) {

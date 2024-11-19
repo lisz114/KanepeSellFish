@@ -44,4 +44,16 @@ public class CarrinhoDAO implements ICarrinhoDAO {
 //		}
 		return false;
 	}
+
+	@Override
+	public boolean inserirProduto(Pedido pedido) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean alterarQuantidade(Pedido pedido) {
+		// TODO Auto-generated method stub
+		return false;
+	}
 }
