@@ -10,9 +10,11 @@ public class Produto {
 	private float preco;
 	private int quantidadeEstoque;
 	private int idProdutor;
-	
-	public Produto() {}
-	
+	private Boolean salinidade;
+
+	public Produto() {
+	}
+
 	public Produto(String nome, LocalDate validade, float preco, int quantidadeEstoque) {
 		this.nome = nome;
 		this.validade = validade;
@@ -51,7 +53,7 @@ public class Produto {
 	public void setQuantidadeEstoque(int quantidadeEstoque) {
 		this.quantidadeEstoque = quantidadeEstoque;
 	}
-	
+
 	public int getIdProdutor() {
 		return idProdutor;
 	}
@@ -60,14 +62,23 @@ public class Produto {
 		this.idProdutor = idProdutor;
 	}
 
-	public boolean equals(Object obj) {
-		if(this == obj) return true;
-		if(obj == null || getClass() != obj.getClass()) return false;
-		Produto produto = (Produto) obj;
-		return Double.compare(produto.preco, preco) == 0 &&
-				nome.equals(produto.nome);
+	public Boolean getSalinidade() {
+		return salinidade;
 	}
-	
+
+	public void setSalinidade(Boolean salinidade) {
+		this.salinidade = salinidade;
+	}
+
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null || getClass() != obj.getClass())
+			return false;
+		Produto produto = (Produto) obj;
+		return Double.compare(produto.preco, preco) == 0 && nome.equals(produto.nome);
+	}
+
 	public int hashCode() {
 		return Objects.hash(nome, preco);
 	}

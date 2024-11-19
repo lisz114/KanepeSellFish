@@ -72,6 +72,13 @@ public class Usuario {
   	public void setIdUsuario(int idUsuario) {
 		this.idUsuario = idUsuario;
 	}
+	public boolean isProdutor() {
+		return produtor;
+	}
+
+	public void setProdutor(boolean produtor) {
+		this.produtor = produtor;
+	}
 
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -83,13 +90,5 @@ public class Usuario {
 	}
 	public int getIdUsuario() {
 		return this.idUsuario;
-	}
-
-	public boolean isProdutor() {
-		return produtor;
-	}
-
-	public void setProdutor(boolean produtor) {
-		this.produtor = produtor;
 	}
 }
