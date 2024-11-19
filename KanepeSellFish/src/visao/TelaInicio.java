@@ -8,6 +8,8 @@ import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.Image;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.time.LocalDate;
@@ -16,6 +18,7 @@ import java.util.List;
 
 import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -42,6 +45,7 @@ public class TelaInicio extends JFrame {
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JTextField txtPesquisar;
+	JPanel panelLeft;
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -215,11 +219,11 @@ public class TelaInicio extends JFrame {
 		imgMenu.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-
-				// if (menu.isVisible) {
-				// menu.setVisible(false);
-				// }else
-
+				if(panelLeft.isVisible()) {
+					panelLeft.setVisible(false);
+				}else {
+					panelLeft.setVisible(true);
+				}
 			}
 		});
 		imgMenu.setIcon(new ImageIcon(TelaInicio.class.getResource("/IMG/menu-hamburguer.png")));
@@ -254,13 +258,68 @@ public class TelaInicio extends JFrame {
 		Image imgN = notificacao.getImage().getScaledInstance(30, 30, Image.SCALE_SMOOTH);
 		imgNotificacao.setIcon(new ImageIcon(imgN));
 
+		panelLeft = new JPanel();
+		panelLeft.setBackground(new Color(154, 208, 217));
+		contentPane.add(panelLeft, BorderLayout.WEST);
+		panelLeft.setLayout(new MigLayout("", "[100px]", "[50px][50px][50px][50px]"));
+		
+		JButton btnNewButton = new JButton("Inicio");
+		btnNewButton.setBackground(new Color(64, 128, 128));
+		btnNewButton.setBorder(null);
+		panelLeft.add(btnNewButton, "cell 0 0,grow");
+		
+		JButton btnNewButton_1 = new JButton("Carrinho");
+		btnNewButton_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+//				TelaCarrinho carrinho = new TelaCarrinho();
+//				carrinho.setLocationRelativeTo(null);
+//				carrinho.setVisible(true);
+//				dispose();
+			}
+		});
+		btnNewButton_1.setBackground(new Color(154, 205, 217));
+		btnNewButton_1.setBorder(null);
+		btnNewButton_1.setOpaque(false);
+		panelLeft.add(btnNewButton_1, "cell 0 1,grow");
+		
+		JButton btnNewButton_2 = new JButton("Perfil");
+		btnNewButton_2.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				TelaPerfilCliente telaPerfil = new TelaPerfilCliente(u);
+				telaPerfil.setLocationRelativeTo(null);
+				telaPerfil.setVisible(true);
+				dispose();	
+			}
+		});
+		btnNewButton_2.setBackground(new Color(154, 205, 217));
+		btnNewButton_2.setBorder(null);
+		btnNewButton_2.setOpaque(false);
+		panelLeft.add(btnNewButton_2, "cell 0 2,grow");
+		
+		JButton btnNewButton_3 = new JButton("Estoque");
+		btnNewButton_3.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				TelaEstoque frame = new TelaEstoque(u);
+				frame.setLocationRelativeTo(null);
+				frame.setVisible(true);
+				dispose();
+				
+			}
+		});
+		btnNewButton_3.setBackground(new Color(154, 205, 217));
+		btnNewButton_3.setBorder(null);
+		btnNewButton_3.setOpaque(false);
+		panelLeft.add(btnNewButton_3, "cell 0 3,grow");
+		
 		JLabel imgConta = new JLabel("");
 		imgConta.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-//				TelaPerfil telaPerfil = new TelaPerfil();
-//				telaPerfil.setVisible(true);
-//				dispose();
+				TelaPerfilCliente telaPerfil = new TelaPerfilCliente(u);
+				telaPerfil.setLocationRelativeTo(null);
+				telaPerfil.setVisible(true);
+				dispose();
 			}
 		});
 		imgConta.setIcon(new ImageIcon(TelaInicio.class.getResource("/IMG/do-utilizador.png")));
