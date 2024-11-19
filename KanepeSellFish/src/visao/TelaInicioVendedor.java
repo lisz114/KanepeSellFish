@@ -25,6 +25,7 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 
 import modelo.Produto;
+import modelo.Usuario;
 import net.miginfocom.swing.MigLayout;
 import javax.swing.ScrollPaneConstants;
 
@@ -35,21 +36,9 @@ public class TelaInicioVendedor extends JFrame {
 	private JTextField textField;
 	private JTable table_1;
 
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					TelaInicioVendedor frame = new TelaInicioVendedor();
-					frame.setLocationRelativeTo(null);
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+	
 
-	public TelaInicioVendedor() {
+	public TelaInicioVendedor(Usuario u) {
 		setResizable(false);
 		setLocationByPlatform(true);
 		setMinimumSize(new Dimension(1176, 664));
@@ -239,6 +228,16 @@ public class TelaInicioVendedor extends JFrame {
 		lblZaA.setFont(new Font("/Fontes/Roboto-Black.ttf", Font.PLAIN, 12));
 
 		JLabel imgMore = new JLabel("");
+		imgMore.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				TelaEstoque estoque = new TelaEstoque(u);
+				TelaCadastroProduto cadastrar = new TelaCadastroProduto(estoque, u);
+				
+				cadastrar.setVisible(true);
+				cadastrar.setLocationRelativeTo(null);
+			}
+		});
 		imgMore.setIcon(new ImageIcon(TelaInicioVendedor.class.getResource("/IMG/iconMore.png")));
 		panel_2.add(imgMore, "cell 0 8,alignx center");
 		imgMore.setIcon(new ImageIcon(more));

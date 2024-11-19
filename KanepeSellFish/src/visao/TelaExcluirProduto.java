@@ -1,12 +1,11 @@
 package visao;
 
 import java.awt.Color;
-import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import controle.ProdutoDAO;
+
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -14,27 +13,18 @@ import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
+import controle.ProdutoDAO;
+import modelo.Produto;
+import modelo.Usuario;
 import net.miginfocom.swing.MigLayout;
 
 @SuppressWarnings("serial")
 public class TelaExcluirProduto extends JFrame {
 
 	private JPanel contentPane;
+	private static ProdutoDAO pDAO = ProdutoDAO.getInstancia();
 
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					TelaExcluirProduto frame = new TelaExcluirProduto();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
-	public TelaExcluirProduto() {
+	public TelaExcluirProduto(Produto produtoSelecionado, TelaEstoque tela, Usuario u) {
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 284, 174);
@@ -70,8 +60,9 @@ public class TelaExcluirProduto extends JFrame {
 		btExcluir.setFont(new Font("/Fontes/Roboto-Black.ttf", Font.PLAIN, 13));
 		btExcluir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-//				ProdutoDAO p = new ProdutoDAO();
-//				p.removerProduto(codigo);
+				pDAO.removerProduto(produtoSelecionado);
+				tela.atualizarTabela(u);
+				dispose();
 			}
 		});
 

@@ -100,4 +100,5 @@ public class Usuario {
 	public int getIdUsuario() {
 		return this.idUsuario;
 	}
+
 }
