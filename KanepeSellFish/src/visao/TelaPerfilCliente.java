@@ -1,23 +1,23 @@
 package visao;
 
 import java.awt.Color;
-import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.Image;
+import java.awt.SystemColor;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
 import modelo.Usuario;
 import net.miginfocom.swing.MigLayout;
-import java.awt.SystemColor;
-import javax.swing.JButton;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-import javax.swing.SwingConstants;
 
 public class TelaPerfilCliente extends JFrame {
 
@@ -27,26 +27,26 @@ public class TelaPerfilCliente extends JFrame {
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-
-			public void run() {
-				try {
-					TelaPerfilCliente frame = new TelaPerfilCliente(null);
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+//	public static void main(String[] args) {
+//		EventQueue.invokeLater(new Runnable() {
+//
+//			public void run() {
+//				try {
+//					TelaPerfilCliente frame = new TelaPerfilCliente(null, false);
+//					frame.setVisible(true);
+//				} catch (Exception e) {
+//					e.printStackTrace();
+//				}
+//			}
+//		});
+//	}
 
 	/**
 	 * Create the frame.
 	 */
-	public TelaPerfilCliente(Usuario u) {
+	public TelaPerfilCliente(Usuario u, boolean isVendedor) {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 1117, 714);
+		setBounds(100, 100, 1280, 768);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
@@ -127,7 +127,7 @@ public class TelaPerfilCliente extends JFrame {
 		btnInicio.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
-				TelaInicio tela = new TelaInicio(u, null);
+				TelaInicio tela = new TelaInicio(u, isVendedor);
 				tela.setLocationRelativeTo(null);
 				tela.setVisible(true);
 				
