@@ -21,9 +21,6 @@ import java.awt.Label;
 @SuppressWarnings("serial")
 public class CardProduto extends JPanel {
 
-	/**
-	 * Create the panel.
-	 */
 	public CardProduto(Produto p) {
 		setLayout(new MigLayout("", "[20px][100px][20px]", "[][200px][][][][][]"));
 
@@ -43,9 +40,6 @@ public class CardProduto extends JPanel {
 		lblQuantidadeEstoque.setFont(new Font("Tahoma", Font.PLAIN, 9));
 		lblQuantidadeEstoque.setHorizontalAlignment(SwingConstants.RIGHT);
 		add(lblQuantidadeEstoque, "cell 1 2,alignx right");
-		
-		
-		
 
 		JLabel lblPreco = new JLabel("R$0,00 kg");
 		add(lblPreco, "cell 1 4");
@@ -89,8 +83,8 @@ public class CardProduto extends JPanel {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				int quantidade = Integer.parseInt(lblQuantidadeEstoque.getText());
-				
-				 //CarrinhoDAO c = new CarrinhoDAO();
+
+				// CarrinhoDAO c = new CarrinhoDAO();
 				// c.adicionarProduto();
 			}
 		});

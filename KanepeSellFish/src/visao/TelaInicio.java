@@ -127,6 +127,7 @@ public class TelaInicio extends JFrame {
 			CardProduto panel_8 = new CardProduto(p);
 			panel_7.add(panel_8, "cell " + coluna + " " + linha + "");
 
+
 		}
 
 		JPanel panel_2 = new JPanel();
@@ -274,10 +275,10 @@ public class TelaInicio extends JFrame {
 		JButton btnNewButton_1 = new JButton("Carrinho");
 		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-//				TelaCarrinho carrinho = new TelaCarrinho();
-//				carrinho.setLocationRelativeTo(null);
-//				carrinho.setVisible(true);
-//				dispose();
+				TelaCarrinho carrinho = new TelaCarrinho(u, produtos);
+				carrinho.setLocationRelativeTo(null);
+				carrinho.setVisible(true);
+				dispose();
 			}
 		});
 		btnNewButton_1.setBackground(new Color(154, 205, 217));
