@@ -48,6 +48,8 @@ public class TelaInicio extends JFrame {
 	JPanel panelLeft;
 	List<Produto> produtos;
 	JButton btnNewButton_2_1;
+	JLabel lblAddProduto;
+	JLabel lblAdicionarProduto;
 	
 
 //	public static void main(String[] args) {
@@ -379,7 +381,13 @@ public class TelaInicio extends JFrame {
 		btnNewButton_2_1.setBackground(new Color(154, 205, 217));
 		panelLeft.add(btnNewButton_2_1, "cell 0 3,alignx center,aligny center");
 		
+		lblAddProduto = new JLabel("");
+		lblAddProduto.setIcon(new ImageIcon(TelaInicio.class.getResource("/img/More.png")));
+		panel_2.add(lblAddProduto, "cell 0 8,alignx center,aligny center");
 
+		lblAdicionarProduto = new JLabel("Adicionar Produto");
+		panel_2.add(lblAdicionarProduto, "cell 0 9,alignx center,aligny center");
+		lblAdicionarProduto.setFont(new Font("/Fontes/Roboto-Black.ttf", Font.PLAIN, 12));
 		if (u.isProdutor()) {
 
 			JLabel imgMore = new JLabel("");
@@ -399,14 +407,12 @@ public class TelaInicio extends JFrame {
 			imgMore.setIcon(new ImageIcon(more));
 		}else {
 			btnNewButton_2_1.setVisible(isVendedor);
+			lblAddProduto.setVisible(isVendedor);
+			lblAdicionarProduto.setVisible(isVendedor);
 		}
 		
-		JLabel lblAddProduto = new JLabel("");
-		lblAddProduto.setIcon(new ImageIcon(TelaInicio.class.getResource("/img/More.png")));
-		panel_2.add(lblAddProduto, "cell 0 8,alignx center,aligny center");
-		JLabel lblAdicionarProduto = new JLabel("Adicionar Produto");
-		panel_2.add(lblAdicionarProduto, "cell 0 9,alignx center,aligny center");
-		lblAdicionarProduto.setFont(new Font("/Fontes/Roboto-Black.ttf", Font.PLAIN, 12));
+		
+		
 
 		String[] colunas = { "Nome", "Quantidade", "Preço" };
 		DefaultTableModel modelo = new DefaultTableModel(colunas, 0);
