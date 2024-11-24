@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -21,17 +22,17 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.ListSelectionModel;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 
 import controle.ProdutoDAO;
+import controle.UsuarioDAO;
 import modelo.Produto;
 import modelo.Usuario;
 import net.miginfocom.swing.MigLayout;
-import javax.swing.ListSelectionModel;
-import java.awt.Font;
 
 public class TelaEstoque extends JFrame {
 
@@ -40,6 +41,7 @@ public class TelaEstoque extends JFrame {
 	TelaEstoque estaJanela = this;
 	public static ArrayList<Produto> listaProdutos;
 	private static ProdutoDAO pDAO = ProdutoDAO.getInstancia();
+	private static UsuarioDAO uDAO = UsuarioDAO.getInstancia();
 	private JPanel panelTop;
 	private JLabel imgMenu;
 	private JTextField textField;
@@ -74,7 +76,7 @@ public class TelaEstoque extends JFrame {
 		setMaximumSize(new Dimension(1920, 1080));
 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 750, 603);
+		setBounds(100, 100, 1280, 768);
 		contentPane = new JPanel();
 		contentPane.setBackground(new Color(255, 255, 255));
 		contentPane.setBorder(new EmptyBorder(0, 0, 0, 0));
@@ -242,6 +244,23 @@ public class TelaEstoque extends JFrame {
 		panelMenu.setLayout(new MigLayout("", "[100px]", "[50px][50px][50px][50px]"));
 		
 		JButton btnNewButton = new JButton("Inicio");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(uDAO.consultarUsuarioVendedor(u)) {
+					TelaInicio tela = new TelaInicio(u, true);
+					tela.setLocationRelativeTo(null);
+					tela.setVisible(true);
+					
+					dispose();
+				}else {
+					TelaInicio tela = new TelaInicio(u, false);
+					tela.setLocationRelativeTo(null);
+					tela.setVisible(true);
+					
+					dispose();
+				}
+			}
+		});
 		btnNewButton.setBackground(new Color(154, 205, 217));
 		btnNewButton.setBorder(null);
 		btnNewButton.setOpaque(false);
@@ -257,7 +276,7 @@ public class TelaEstoque extends JFrame {
 		btnNewButton_2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
-				TelaPerfilVendedor frame = new TelaPerfilVendedor(u);
+				TelaPerfilVendedor frame = new TelaPerfilVendedor(u, true);
 				frame.setLocationRelativeTo(null);
 				frame.setVisible(true);
 				dispose();

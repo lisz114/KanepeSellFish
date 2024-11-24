@@ -46,22 +46,27 @@ public class TelaInicio extends JFrame {
 	private JPanel contentPane;
 	private JTextField txtPesquisar;
 	JPanel panelLeft;
+	List<Produto> produtos;
+	JButton btnNewButton_2_1;
+	JLabel lblAddProduto;
+	JLabel lblAdicionarProduto;
+	
 
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					TelaInicio frame = new TelaInicio(null, null);
-					frame.setLocationRelativeTo(null);
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+//	public static void main(String[] args) {
+//		EventQueue.invokeLater(new Runnable() {
+//			public void run() {
+//				try {
+//					TelaInicio frame = new TelaInicio(null, false);
+//					frame.setLocationRelativeTo(null);
+//					frame.setVisible(true);
+//				} catch (Exception e) {
+//					e.printStackTrace();
+//				}
+//			}
+//		});
+//	}
 
-	public TelaInicio(Usuario u, List<Produto> produtos) {
+	public TelaInicio(Usuario u, boolean isVendedor) {
 		setResizable(false);
 		setLocationByPlatform(true);
 		setMinimumSize(new Dimension(1176, 664));
@@ -114,6 +119,9 @@ public class TelaInicio extends JFrame {
 		lista.add(new Produto());
 		lista.add(new Produto());
 		lista.add(new Produto());
+		
+		
+		
 
 		int linha = 0;
 		int coluna = -1;
@@ -290,13 +298,13 @@ public class TelaInicio extends JFrame {
 		btnNewButton_2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
-				if (u.isProdutor()) {
-					TelaPerfilVendedor v = new TelaPerfilVendedor(u);
+				if (isVendedor) {
+					TelaPerfilVendedor v = new TelaPerfilVendedor(u, isVendedor);
 					v.setLocationRelativeTo(null);
 					v.setVisible(true);
 					dispose();
 				} else {
-					TelaPerfilCliente telaPerfil = new TelaPerfilCliente(u);
+					TelaPerfilCliente telaPerfil = new TelaPerfilCliente(u, isVendedor);
 					telaPerfil.setLocationRelativeTo(null);
 					telaPerfil.setVisible(true);
 					dispose();
@@ -308,6 +316,9 @@ public class TelaInicio extends JFrame {
 		btnNewButton_2.setBorder(null);
 		btnNewButton_2.setOpaque(false);
 		panelLeft.add(btnNewButton_2, "cell 0 2,grow");
+		
+		
+		
 		
 		if (u.isProdutor()) {
 			JButton btnNewButton_3 = new JButton("Estoque");
@@ -331,12 +342,12 @@ public class TelaInicio extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				if (u.isProdutor()) {
-					TelaPerfilVendedor v = new TelaPerfilVendedor(u);
+					TelaPerfilVendedor v = new TelaPerfilVendedor(u, isVendedor);
 					v.setLocationRelativeTo(null);
 					v.setVisible(true);
 					dispose();
 				} else {
-					TelaPerfilCliente telaPerfil = new TelaPerfilCliente(u);
+					TelaPerfilCliente telaPerfil = new TelaPerfilCliente(u, isVendedor);
 					telaPerfil.setLocationRelativeTo(null);
 					telaPerfil.setVisible(true);
 					dispose();
@@ -356,7 +367,28 @@ public class TelaInicio extends JFrame {
 		JLabel lblZaA = new JLabel("De Z a A");
 		panel_2.add(lblZaA, "cell 2 6,alignx center");
 		lblZaA.setFont(new Font("/Fontes/Roboto-Black.ttf", Font.PLAIN, 12));
+		
+		btnNewButton_2_1 = new JButton("Estoque");
+		btnNewButton_2_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				TelaEstoque frame = new TelaEstoque(u);
+				frame.setLocationRelativeTo(null);
+				frame.setVisible(true);
+				dispose();
+			}
+		});
+		btnNewButton_2_1.setOpaque(false);
+		btnNewButton_2_1.setBorder(null);
+		btnNewButton_2_1.setBackground(new Color(154, 205, 217));
+		panelLeft.add(btnNewButton_2_1, "cell 0 3,alignx center,aligny center");
+		
+		lblAddProduto = new JLabel("");
+		lblAddProduto.setIcon(new ImageIcon(TelaInicio.class.getResource("/img/More.png")));
+		panel_2.add(lblAddProduto, "cell 0 8,alignx center,aligny center");
 
+		lblAdicionarProduto = new JLabel("Adicionar Produto");
+		panel_2.add(lblAdicionarProduto, "cell 0 9,alignx center,aligny center");
+		lblAdicionarProduto.setFont(new Font("/Fontes/Roboto-Black.ttf", Font.PLAIN, 12));
 		if (u.isProdutor()) {
 
 			JLabel imgMore = new JLabel("");
@@ -374,10 +406,14 @@ public class TelaInicio extends JFrame {
 			imgMore.setIcon(new ImageIcon(TelaInicio.class.getResource("/IMG/iconMore.png")));
 			panel_2.add(imgMore, "cell 0 8,alignx center");
 			imgMore.setIcon(new ImageIcon(more));
+		}else {
+			btnNewButton_2_1.setVisible(isVendedor);
+			lblAddProduto.setVisible(isVendedor);
+			lblAdicionarProduto.setVisible(isVendedor);
 		}
-		JLabel lblAdicionarProduto = new JLabel("Adicionar Produto");
-		panel_2.add(lblAdicionarProduto, "cell 0 9,alignx center,aligny center");
-		lblAdicionarProduto.setFont(new Font("/Fontes/Roboto-Black.ttf", Font.PLAIN, 12));
+		
+		
+		
 
 		String[] colunas = { "Nome", "Quantidade", "Preço" };
 		DefaultTableModel modelo = new DefaultTableModel(colunas, 0);

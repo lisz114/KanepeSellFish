@@ -60,11 +60,9 @@ public class ProdutorDAO implements IProdutorDAO {
 
 			Produtor p = new Produtor();
 			
-			p.setNome(res1.getString("nome_Usuario"));
-			p.setCpf(res1.getString("cpf_Usuario"));
-			p.setEmail(res1.getString("email_Usuario"));
-			p.setNomeComercio(res1.getString("nome_Negocio"));
-			p.setCnpj(res1.getString("cnpj_produtor"));
+			
+			p.setNomeComercio(res1.getString("nomeNegocio"));
+			p.setCnpj(res1.getString("cnpj"));
 			
 			return p;
 			

@@ -24,7 +24,6 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 
 import controle.UsuarioDAO;
-import modelo.Produtor;
 import modelo.RoundButton;
 import modelo.Usuario;
 import net.miginfocom.swing.MigLayout;
@@ -79,7 +78,7 @@ public class TelaLogin extends JFrame {
 		JPanel panelPrincipal = new JPanel();
 		panelPrincipal.setOpaque(false);
 		panel.add(panelPrincipal);
-		panelPrincipal.setLayout(new MigLayout("", "[grow]", "[150px][95px][70px][81px][65px][grow]"));
+		panelPrincipal.setLayout(new MigLayout("", "[grow]", "[150px][95px][70px][88px][65px][grow]"));
 
 		JPanel panel_2 = new JPanel();
 		panel_2.setOpaque(false);
@@ -181,12 +180,19 @@ public class TelaLogin extends JFrame {
 				u = uDAO.consultarUsuarioLoginSenha(email, senha);
 
 				if (u != null) {
-					TelaInicio tela = new TelaInicio(u, null);
-					tela.setLocationRelativeTo(null);
-					tela.setVisible(true);
-					dispose();
-
-					System.out.println("Usuario encontrado");
+					if(uDAO.consultarUsuarioVendedor(u)) {
+						TelaInicio tela = new TelaInicio(u, true);
+						tela.setLocationRelativeTo(null);
+						tela.setVisible(true);
+						
+						dispose();
+					}else {
+						TelaInicio tela = new TelaInicio(u, false);
+						tela.setLocationRelativeTo(null);
+						tela.setVisible(true);
+						
+						dispose();
+					}
 				} else {
 					TelaError tela = new TelaError();
 					tela.setLabelText("Usuario não encontrado");
