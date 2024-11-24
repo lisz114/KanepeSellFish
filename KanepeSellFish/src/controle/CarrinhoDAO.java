@@ -25,7 +25,6 @@ public class CarrinhoDAO implements ICarrinhoDAO {
 	}
 
 	public boolean inserirProduto(Produto produto) {
-
 		listaProdutos.add(produto);
 
 		return false;

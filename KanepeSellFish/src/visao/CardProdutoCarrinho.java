@@ -1,16 +1,12 @@
 package visao;
 
-import java.awt.Color;
-import java.awt.Font;
 import java.awt.Image;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 import javax.swing.ImageIcon;
-import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.SwingConstants;
 
 import modelo.Produto;
 import net.miginfocom.swing.MigLayout;
@@ -64,9 +60,9 @@ public class CardProdutoCarrinho extends JPanel {
 		add(lblQuantidade, "cell 2 3");
 		imgMais.setIcon(new ImageIcon(CardProduto.class.getResource("/img/More.png")));
 		add(imgMais, "cell 2 3");
-		imgMais.setIcon(new ImageIcon(m));
 		ImageIcon imgM = new ImageIcon(CardProduto.class.getResource("/img/More.png"));
 		Image m = imgM.getImage().getScaledInstance(20, 20, Image.SCALE_SMOOTH);
+		imgMais.setIcon(new ImageIcon(m));
 
 	}
 }
