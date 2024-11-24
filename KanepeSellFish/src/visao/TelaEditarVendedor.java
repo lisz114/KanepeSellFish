@@ -364,7 +364,7 @@ public class TelaEditarVendedor extends JFrame {
 		JButton btnNewButton = new RoundButton("Cancelar");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				TelaPerfilVendedor frame = new TelaPerfilVendedor(u);
+				TelaPerfilVendedor frame = new TelaPerfilVendedor(u, true);
 				frame.setVisible(true);
 				dispose();
 			}
@@ -418,7 +418,7 @@ public class TelaEditarVendedor extends JFrame {
 				eDAO.atualizarEndereco(ende);
 				uDAO.alterarUsuario(user);
 				
-				TelaPerfilVendedor tpv = new TelaPerfilVendedor(u);
+				TelaPerfilVendedor tpv = new TelaPerfilVendedor(u, true);
 				tpv.setLocationRelativeTo(null);
 				tpv.setVisible(true);
 				dispose();
@@ -437,7 +437,7 @@ public class TelaEditarVendedor extends JFrame {
 		lblNewLabel_10.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				TelaPerfilVendedor frame = new TelaPerfilVendedor(u);
+				TelaPerfilVendedor frame = new TelaPerfilVendedor(u, true);
 				frame.setVisible(true);
 				dispose();
 			}

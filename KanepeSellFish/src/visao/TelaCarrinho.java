@@ -34,9 +34,9 @@ public class TelaCarrinho extends JFrame {
 //		});
 //	}
 
-	public TelaCarrinho(Usuario u) {
+	public TelaCarrinho(Usuario u, boolean isVendedor) {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 1083, 698);
+		setBounds(100, 100, 1280, 768);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
@@ -103,7 +103,7 @@ public class TelaCarrinho extends JFrame {
 		btnVoltaTela.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				TelaInicio tela = new TelaInicio(u, null);
+				TelaInicio tela = new TelaInicio(u, isVendedor);
 				tela.setLocationRelativeTo(null);
 				tela.setVisible(true);
 

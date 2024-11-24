@@ -55,7 +55,7 @@ public class TelaPerfilVendedor extends JFrame {
 	 * 
 	 * @param tela
 	 */
-	public TelaPerfilVendedor(Usuario u) {
+	public TelaPerfilVendedor(Usuario u, boolean isVendedor) {
 
 		setResizable(false);
 		setLocationByPlatform(true);
@@ -63,7 +63,7 @@ public class TelaPerfilVendedor extends JFrame {
 		setMaximumSize(new Dimension(1920, 1080));
 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 750, 603);
+		setBounds(100, 100, 1280, 768);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(1, 0, 0, 0));
 
@@ -137,7 +137,7 @@ public class TelaPerfilVendedor extends JFrame {
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
-				TelaInicio tiv = new TelaInicio(u, null);
+				TelaInicio tiv = new TelaInicio(u, isVendedor);
 				tiv.setLocationRelativeTo(null);
 				tiv.setVisible(true);
 				dispose();
