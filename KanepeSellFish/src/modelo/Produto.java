@@ -7,7 +7,7 @@ public class Produto {
 
 	private String nome;
 	private LocalDate validade;
-	private float preco;
+	private double preco;
 	private int quantidadeEstoque;
 	private int idProdutor;
 	private Boolean salinidade;
@@ -15,7 +15,7 @@ public class Produto {
 	public Produto() {
 	}
 
-	public Produto(String nome, LocalDate validade, float preco, int quantidadeEstoque) {
+	public Produto(String nome, LocalDate validade, double preco, int quantidadeEstoque) {
 		this.nome = nome;
 		this.validade = validade;
 		this.preco = preco;
@@ -38,11 +38,11 @@ public class Produto {
 		this.validade = validade;
 	}
 
-	public float getPreco() {
+	public double getPreco() {
 		return preco;
 	}
 
-	public void setPreco(float preco) {
+	public void setPreco(double preco) {
 		this.preco = preco;
 	}
 

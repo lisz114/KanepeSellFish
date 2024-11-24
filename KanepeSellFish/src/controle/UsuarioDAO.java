@@ -7,9 +7,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
-import modelo.Endereco;
 import modelo.IUsuarioDAO;
-import modelo.Produtor;
 import modelo.Usuario;
 
 public class UsuarioDAO implements IUsuarioDAO {
@@ -219,4 +217,19 @@ public class UsuarioDAO implements IUsuarioDAO {
 		return Character.getNumericValue(cpf.charAt(10)) == segundoDigito;
 	}
 
-}
+	public void alterarSenha(String senha, String email) {
+		
+		String sql = "UPDATE usuarios set senha_Usuario = ? where email_Usuario = ?";
+		try (Connection conn = ConexaoBD.getConexaoMySQL(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+			pstmt.setString(1, senha);
+			pstmt.setString(2, email);
+
+			pstmt.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	}

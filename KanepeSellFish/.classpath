@@ -11,5 +11,7 @@
 	<classpathentry kind="lib" path="mysql-connector-j-9.0.0.jar"/>
 	<classpathentry kind="lib" path="Atxy2k.jar"/>
 	<classpathentry kind="lib" path="dom4j-2.1.4.jar"/>
+	<classpathentry kind="lib" path="C:/Users/plugify/eclipse-workspace/KanepeSellFish/KanepeSellFish/javax.mail.jar"/>
+	<classpathentry kind="lib" path="javax.mail.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
