@@ -78,7 +78,7 @@ public class TelaLogin extends JFrame {
 		JPanel panelPrincipal = new JPanel();
 		panelPrincipal.setOpaque(false);
 		panel.add(panelPrincipal);
-		panelPrincipal.setLayout(new MigLayout("", "[grow]", "[150px][95px][70px][81px][65px][grow]"));
+		panelPrincipal.setLayout(new MigLayout("", "[grow]", "[150px][95px][70px][88px][65px][grow]"));
 
 		JPanel panel_2 = new JPanel();
 		panel_2.setOpaque(false);
