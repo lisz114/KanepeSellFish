@@ -130,6 +130,7 @@ public class TelaLogin extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				TelaEsqueceuSenha esqueceu = new TelaEsqueceuSenha(null);
+
 				esqueceu.setLocationRelativeTo(null);
 				esqueceu.setVisible(true);
 				dispose();
@@ -175,21 +176,21 @@ public class TelaLogin extends JFrame {
 				Usuario u = new Usuario();
 
 				String email = txtEmail.getText();
-				String senha = String.valueOf(txtSenha.getPassword());
+				String senha = new String(txtSenha.getPassword());
 				u = uDAO.consultarUsuarioLoginSenha(email, senha);
 
 				if (u != null) {
-					if (uDAO.consultarUsuarioVendedor(u)) {
+					if(uDAO.consultarUsuarioVendedor(u)) {
 						TelaInicio tela = new TelaInicio(u, true);
 						tela.setLocationRelativeTo(null);
 						tela.setVisible(true);
-
+						
 						dispose();
-					} else {
+					}else {
 						TelaInicio tela = new TelaInicio(u, false);
 						tela.setLocationRelativeTo(null);
 						tela.setVisible(true);
-
+						
 						dispose();
 					}
 				} else {

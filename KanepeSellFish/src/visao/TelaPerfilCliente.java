@@ -16,12 +16,13 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
 import modelo.Produto;
 import modelo.Usuario;
 import net.miginfocom.swing.MigLayout;
+import java.awt.SystemColor;
+import javax.swing.SwingConstants;
 
 public class TelaPerfilCliente extends JFrame {
 
