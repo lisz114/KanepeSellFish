@@ -209,4 +209,44 @@ public class ProdutoDAO implements IProdutoDAO {
 			return false;
 		}
 	}
+	
+	public ArrayList<Produto> addTodosProd() {
+		ArrayList<Produto> listaDeProdutos = new ArrayList<Produto>();
+		
+		PreparedStatement stmt1 = null;
+
+		Connection conn = ConexaoBD.getConexaoMySQL();
+
+		try {
+			stmt1 = conn.prepareStatement("SELECT * FROM kanepe.produtos;");
+			ResultSet res1 = null;
+
+
+			res1 = stmt1.executeQuery();
+
+//			listaProdutos = null;
+
+			while (res1.next()) {
+
+				Produto prod = new Produto();
+
+				prod.setNome(res1.getString("nome_Produto"));
+				prod.setQuantidadeEstoque(Integer.parseInt(res1.getString("quantidade")));
+				prod.setPreco(Float.parseFloat(res1.getString("preco")));
+				prod.setIdProdutor(Integer.parseInt(res1.getString("Produtores_idProdutores")));
+				prod.setValidade(
+						LocalDate.parse(res1.getString("validade"), DateTimeFormatter.ofPattern("yyyy-MM-dd")));
+				prod.setSalinidade(res1.getBoolean("salinidade"));
+				listaDeProdutos.add(prod);
+			}
+
+			res1.close();
+			stmt1.close();
+			conn.close();
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+
+		return listaDeProdutos;
+	}
 }
