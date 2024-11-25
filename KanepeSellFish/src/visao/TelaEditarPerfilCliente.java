@@ -57,12 +57,12 @@ public class TelaEditarPerfilCliente extends JFrame {
 
 		setContentPane(contentPane);
 		contentPane.setLayout(new BorderLayout(0, 0));
-		
+
 		JPanel panelLeft = new JPanel();
 		panelLeft.setBackground(new Color(154, 208, 217));
 		contentPane.add(panelLeft, BorderLayout.WEST);
 		panelLeft.setLayout(new MigLayout("", "[100px]", "[50px][50px][50px][50px]"));
-		
+
 		JButton btInicio = new JButton("Inicio");
 		btInicio.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -138,7 +138,7 @@ public class TelaEditarPerfilCliente extends JFrame {
 		btEstoque.setBorder(null);
 		btEstoque.setBackground(new Color(154, 205, 217));
 		panelLeft.add(btEstoque, "cell 0 3,alignx center,aligny center");
-		
+
 		JPanel panel = new JPanel();
 		panel.setBackground(new Color(154, 205, 217));
 		contentPane.add(panel, BorderLayout.NORTH);
@@ -163,28 +163,74 @@ public class TelaEditarPerfilCliente extends JFrame {
 		Image imgC = carrinho.getImage().getScaledInstance(30, 30, Image.SCALE_SMOOTH);
 		ImageIcon notificacao = new ImageIcon(TelaInicio.class.getResource("/IMG/sino.png"));
 		Image imgN = notificacao.getImage().getScaledInstance(30, 30, Image.SCALE_SMOOTH);
-						
-								txtPesquisar = new JTextField();
-								txtPesquisar.setFont(new Font("Tahoma", Font.PLAIN, 11));
-								txtPesquisar.setBorder(new SoftBevelBorder(BevelBorder.LOWERED, null, null, null, null));
-								txtPesquisar.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
-								txtPesquisar.setDisabledTextColor(new Color(192, 192, 192));
-								txtPesquisar.setForeground(new Color(0, 0, 0));
-								txtPesquisar.setToolTipText("");
-								panel.add(txtPesquisar, "cell 2 0,alignx center");
-								txtPesquisar.setHorizontalAlignment(SwingConstants.LEFT);
-								txtPesquisar.setBackground(new Color(245, 245, 245));
-								txtPesquisar.setColumns(50);
-				
-						JLabel imgCarrinho = new JLabel("");
-						imgCarrinho.setIcon(new ImageIcon(TelaInicio.class.getResource("/IMG/carrinho-de-compras.png")));
-						panel.add(imgCarrinho, "cell 4 0");
-						imgCarrinho.setIcon(new ImageIcon(imgC));
+
+		txtPesquisar = new JTextField();
+		txtPesquisar.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		txtPesquisar.setBorder(new SoftBevelBorder(BevelBorder.LOWERED, null, null, null, null));
+		txtPesquisar.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
+		txtPesquisar.setDisabledTextColor(new Color(192, 192, 192));
+		txtPesquisar.setForeground(new Color(0, 0, 0));
+		txtPesquisar.setToolTipText("");
+		panel.add(txtPesquisar, "cell 2 0,alignx center");
+		txtPesquisar.setHorizontalAlignment(SwingConstants.LEFT);
+		txtPesquisar.setBackground(new Color(245, 245, 245));
+		txtPesquisar.setColumns(50);
+
+		JLabel imgCarrinho = new JLabel("");
+		imgCarrinho.setIcon(new ImageIcon(TelaInicio.class.getResource("/IMG/carrinho-de-compras.png")));
+		panel.add(imgCarrinho, "cell 4 0");
+		imgCarrinho.setIcon(new ImageIcon(imgC));
+
+		JLabel imgNotificacao = new JLabel("");
+		imgNotificacao.setIcon(new ImageIcon(TelaInicio.class.getResource("/IMG/sino.png")));
+		panel.add(imgNotificacao, "cell 5 0");
+		imgNotificacao.setIcon(new ImageIcon(imgN));
+
+		JPanel panel_1 = new JPanel();
+		contentPane.add(panel_1, BorderLayout.CENTER);
+		panel_1.setLayout(new MigLayout("", "[][][][grow]", "[][][][][grow]"));
+
+		JLabel imgPerfil = new JLabel("");
+		imgPerfil.setIcon(new ImageIcon(TelaEditarPerfilCliente.class.getResource("/img/Avatar.png")));
+		panel_1.add(imgPerfil, "cell 0 1");
+
+		JLabel campoCPF = new JLabel("");
+		campoCPF.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		panel_1.add(campoCPF, "flowx,cell 2 1,alignx left,aligny bottom");
+		campoCPF.setText(u.getCpf());
+
+		JLabel lblcpf = new JLabel("CPF:");
+		lblcpf.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		panel_1.add(lblcpf, "flowx,cell 1 1,aligny bottom");
+
+		JLabel lblNome = new JLabel("lalal");
+		lblNome.setFont(new Font("Tahoma", Font.PLAIN, 32));
+		panel_1.add(lblNome, "cell 1 1,alignx center,aligny top");
+
+		JLabel lblEmail = new JLabel("Email:");
+		lblEmail.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		panel_1.add(lblEmail, "cell 1 2");
+
+		JLabel campoEmail = new JLabel("");
+		campoEmail.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		panel_1.add(campoEmail, "cell 2 2");
+		campoEmail.setText(u.getEmail());
+
+		JLabel lblTelefone = new JLabel("New label");
+		lblTelefone.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		panel_1.add(lblTelefone, "cell 1 3");
+
+		JLabel campoTelefone = new JLabel("");
+		campoTelefone.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		panel_1.add(campoTelefone, "cell 2 3");
+		campoTelefone.setText(u.getTel());
 		
-				JLabel imgNotificacao = new JLabel("");
-				imgNotificacao.setIcon(new ImageIcon(TelaInicio.class.getResource("/IMG/sino.png")));
-				panel.add(imgNotificacao, "cell 5 0");
-				imgNotificacao.setIcon(new ImageIcon(imgN));
+		JButton btCancelar = new JButton("Cancelar");
+		panel_1.add(btCancelar, "flowx,cell 3 4,alignx right,aligny bottom");
+		
+		JButton btSalvar = new JButton("Salvar");
+		btSalvar.setBackground(new Color(64, 128, 128));
+		panel_1.add(btSalvar, "cell 3 4,alignx right,aligny bottom");
 
 	}
 }

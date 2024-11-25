@@ -125,7 +125,7 @@ public class TelaPerfilCliente extends JFrame {
 		btnNewButton_4.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
-				TelaEditarPerfilCliente tela = new TelaEditarPerfilCliente();
+				TelaEditarPerfilCliente tela = new TelaEditarPerfilCliente(u, isVendedor);
 				tela.setLocationRelativeTo(null);
 				tela.setVisible(true);
 				
