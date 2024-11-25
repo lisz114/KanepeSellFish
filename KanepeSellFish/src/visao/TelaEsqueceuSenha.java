@@ -133,5 +133,3 @@ public class TelaEsqueceuSenha extends JFrame {
 		txtSenha.setColumns(25);
 	}
 }
-
-	
