@@ -20,10 +20,8 @@ import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
 import controle.ProdutorDAO;
-import controle.UsuarioDAO;
 import modelo.Usuario;
 import net.miginfocom.swing.MigLayout;
-import javax.swing.JSeparator;
 
 public class TelaPerfilVendedor extends JFrame {
 

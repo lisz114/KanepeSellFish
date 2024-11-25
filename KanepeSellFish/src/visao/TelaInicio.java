@@ -5,7 +5,6 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.ComponentOrientation;
 import java.awt.Dimension;
-import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
@@ -50,7 +49,6 @@ public class TelaInicio extends JFrame {
 	JButton btnNewButton_2_1;
 	JLabel lblAddProduto;
 	JLabel lblAdicionarProduto;
-	
 
 //	public static void main(String[] args) {
 //		EventQueue.invokeLater(new Runnable() {
@@ -104,24 +102,11 @@ public class TelaInicio extends JFrame {
 
 		ArrayList<Produto> lista = new ArrayList<Produto>();
 
-		lista.add(new Produto());
-		lista.add(new Produto());
-		lista.add(new Produto());
-		lista.add(new Produto());
-		lista.add(new Produto());
-		lista.add(new Produto());
-		lista.add(new Produto());
-		lista.add(new Produto());
-		lista.add(new Produto());
-		lista.add(new Produto());
-		lista.add(new Produto());
-		lista.add(new Produto());
-		lista.add(new Produto());
-		lista.add(new Produto());
-		lista.add(new Produto());
-		
-		
-		
+		lista.add(new Produto("Tilápia", LocalDate.now(), 15.00, 35));
+		lista.add(new Produto("Tainha", LocalDate.now(), 45.00, 25));
+		lista.add(new Produto("Lúcio", LocalDate.now(), 25.80, 4));
+		lista.add(new Produto("Sardinha", LocalDate.now(), 15.00, 10));
+		lista.add(new Produto("Bagre", LocalDate.now(), 19.60, 15));
 
 		int linha = 0;
 		int coluna = -1;
@@ -134,7 +119,6 @@ public class TelaInicio extends JFrame {
 			}
 			CardProduto panel_8 = new CardProduto(p);
 			panel_7.add(panel_8, "cell " + coluna + " " + linha + "");
-
 
 		}
 
@@ -283,7 +267,7 @@ public class TelaInicio extends JFrame {
 		JButton btnNewButton_1 = new JButton("Carrinho");
 		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				TelaCarrinho carrinho = new TelaCarrinho(u, produtos);
+				TelaCarrinho carrinho = new TelaCarrinho(u, produtos, isVendedor);
 				carrinho.setLocationRelativeTo(null);
 				carrinho.setVisible(true);
 				dispose();
@@ -316,10 +300,7 @@ public class TelaInicio extends JFrame {
 		btnNewButton_2.setBorder(null);
 		btnNewButton_2.setOpaque(false);
 		panelLeft.add(btnNewButton_2, "cell 0 2,grow");
-		
-		
-		
-		
+
 		if (u.isProdutor()) {
 			JButton btnNewButton_3 = new JButton("Estoque");
 			btnNewButton_3.addActionListener(new ActionListener() {
@@ -367,7 +348,7 @@ public class TelaInicio extends JFrame {
 		JLabel lblZaA = new JLabel("De Z a A");
 		panel_2.add(lblZaA, "cell 2 6,alignx center");
 		lblZaA.setFont(new Font("/Fontes/Roboto-Black.ttf", Font.PLAIN, 12));
-		
+
 		btnNewButton_2_1 = new JButton("Estoque");
 		btnNewButton_2_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -381,9 +362,20 @@ public class TelaInicio extends JFrame {
 		btnNewButton_2_1.setBorder(null);
 		btnNewButton_2_1.setBackground(new Color(154, 205, 217));
 		panelLeft.add(btnNewButton_2_1, "cell 0 3,alignx center,aligny center");
-		
+
 		lblAddProduto = new JLabel("");
+		lblAddProduto.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				TelaCadastroProduto cadastro = new TelaCadastroProduto(null, u);
+				cadastro.setLocationRelativeTo(null);
+			}
+		});
 		lblAddProduto.setIcon(new ImageIcon(TelaInicio.class.getResource("/img/More.png")));
+		ImageIcon imgM = new ImageIcon(TelaInicio.class.getResource("/img/More.png"));
+		Image m = imgM.getImage().getScaledInstance(40, 40, Image.SCALE_SMOOTH);
+		lblAddProduto.setIcon(new ImageIcon(m));
+
 		panel_2.add(lblAddProduto, "cell 0 8,alignx center,aligny center");
 
 		lblAdicionarProduto = new JLabel("Adicionar Produto");
@@ -406,14 +398,11 @@ public class TelaInicio extends JFrame {
 			imgMore.setIcon(new ImageIcon(TelaInicio.class.getResource("/IMG/iconMore.png")));
 			panel_2.add(imgMore, "cell 0 8,alignx center");
 			imgMore.setIcon(new ImageIcon(more));
-		}else {
+		} else {
 			btnNewButton_2_1.setVisible(isVendedor);
 			lblAddProduto.setVisible(isVendedor);
 			lblAdicionarProduto.setVisible(isVendedor);
 		}
-		
-		
-		
 
 		String[] colunas = { "Nome", "Quantidade", "Preço" };
 		DefaultTableModel modelo = new DefaultTableModel(colunas, 0);
