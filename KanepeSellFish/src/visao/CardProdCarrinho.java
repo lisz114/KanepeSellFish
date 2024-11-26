@@ -59,15 +59,10 @@ public class CardProdCarrinho extends JPanel {
 
 		imgMenos.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				int quantidade = Integer.parseInt(lblQuantidadeCarrinho.getText());
-				if (quantidade > 0) {
-					quantidade = quantidade - 1;
-					double preco = Double.parseDouble(lblPreco.getText());
-					preco = preco - preco;
-					lblQuantidadeCarrinho.setText(Integer.toString(quantidade));
-				} else if (quantidade == 0) {
-					quantidade = 0;
-				}
+				if(Integer.parseInt(lblQuantidadeCarrinho.getText())>= 0) {
+				lblQuantidadeCarrinho.setText(String.valueOf(Integer.parseInt(lblQuantidadeCarrinho.getText())-1));
+				lblPreco.setText(String.valueOf(Double.parseDouble(lblQuantidadeCarrinho.getText())*p.getPreco()));
+			}
 			}
 		});
 		JLabel lblNome = new JLabel("");
@@ -99,12 +94,8 @@ public class CardProdCarrinho extends JPanel {
 		JButton imgMais = new JButton("");
 		imgMais.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				int quantidade = Integer.parseInt(lblQuantidadeCarrinho.getText());
-				quantidade++;
-				lblQuantidadeCarrinho.setText(Integer.toString(quantidade));
-				double preco = Double.parseDouble(lblPreco.getText());
-				preco = preco + preco;
-
+				lblQuantidadeCarrinho.setText(String.valueOf(Integer.parseInt(lblQuantidadeCarrinho.getText())+1));
+				lblPreco.setText(String.valueOf(Double.parseDouble(lblQuantidadeCarrinho.getText())*p.getPreco()));
 			}
 		});
 

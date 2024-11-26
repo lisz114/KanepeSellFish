@@ -325,7 +325,7 @@ public class TelaInicio extends JFrame {
 		imgConta.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				if (u.isProdutor()) {
+				if (isVendedor) {
 					TelaPerfilVendedor v = new TelaPerfilVendedor(u, isVendedor);
 					v.setLocationRelativeTo(null);
 					v.setVisible(true);

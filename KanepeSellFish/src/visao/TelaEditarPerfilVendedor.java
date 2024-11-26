@@ -10,6 +10,7 @@ import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.Insets;
+import java.awt.SystemColor;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -36,6 +37,8 @@ import modelo.Endereco;
 import modelo.Produtor;
 import modelo.RoundButton;
 import modelo.Usuario;
+import javax.swing.border.LineBorder;
+import javax.swing.border.TitledBorder;
 
 public class TelaEditarPerfilVendedor extends JFrame {
 
@@ -203,7 +206,7 @@ public class TelaEditarPerfilVendedor extends JFrame {
 		imgSino.setIcon(new ImageIcon(imgS));
 
 		JPanel PanelEditor = new JPanel();
-		PanelEditor.setBounds(10, 166, 555, 438);
+		PanelEditor.setBounds(20, 166, 555, 438);
 		panel_2.add(PanelEditor);
 		PanelEditor.setOpaque(false);
 		GridBagLayout gbl_PanelEditor = new GridBagLayout();
@@ -214,23 +217,14 @@ public class TelaEditarPerfilVendedor extends JFrame {
 				Double.MIN_VALUE };
 		PanelEditor.setLayout(gbl_PanelEditor);
 
-		JLabel lblNewLabel_2 = new JLabel("Email:");
-		GridBagConstraints gbc_lblNewLabel_2 = new GridBagConstraints();
-		gbc_lblNewLabel_2.anchor = GridBagConstraints.NORTHWEST;
-		gbc_lblNewLabel_2.insets = new Insets(0, 0, 5, 5);
-		gbc_lblNewLabel_2.gridx = 1;
-		gbc_lblNewLabel_2.gridy = 1;
-		PanelEditor.add(lblNewLabel_2, gbc_lblNewLabel_2);
-
-		JLabel lblNewLabel_5 = new JLabel("Cidade:");
-		GridBagConstraints gbc_lblNewLabel_5 = new GridBagConstraints();
-		gbc_lblNewLabel_5.anchor = GridBagConstraints.NORTHWEST;
-		gbc_lblNewLabel_5.insets = new Insets(0, 0, 5, 5);
-		gbc_lblNewLabel_5.gridx = 3;
-		gbc_lblNewLabel_5.gridy = 1;
-		PanelEditor.add(lblNewLabel_5, gbc_lblNewLabel_5);
-
 		txtEmail = new JTextField();
+		txtEmail.setBorder(new LineBorder(new Color(171, 173, 179)));
+		txtEmail.setOpaque(false);
+		txtEmail.setToolTipText("");
+		txtEmail.setBorder(new TitledBorder(new LineBorder(new Color(0, 0, 0), 2),
+				"<html>Email<span style='color: red;'>*</span></html>", TitledBorder.LEADING, TitledBorder.TOP, null,
+				new Color(0, 0, 0)));
+		txtEmail.setBackground(SystemColor.menu);
 		GridBagConstraints gbc_txtEmail = new GridBagConstraints();
 		gbc_txtEmail.anchor = GridBagConstraints.NORTH;
 		gbc_txtEmail.fill = GridBagConstraints.HORIZONTAL;
@@ -241,6 +235,13 @@ public class TelaEditarPerfilVendedor extends JFrame {
 		txtEmail.setColumns(10);
 
 		txtCidade = new JTextField();
+		txtCidade.setBorder(new LineBorder(new Color(171, 173, 179)));
+		txtCidade.setOpaque(false);
+		txtCidade.setToolTipText("");
+		txtCidade.setBorder(new TitledBorder(new LineBorder(new Color(0, 0, 0), 2),
+				"<html>Cidade<span style='color: red;'>*</span></html>", TitledBorder.LEADING, TitledBorder.TOP, null,
+				new Color(0, 0, 0)));
+		txtCidade.setBackground(SystemColor.menu);
 		GridBagConstraints gbc_txtCidade = new GridBagConstraints();
 		gbc_txtCidade.anchor = GridBagConstraints.NORTH;
 		gbc_txtCidade.fill = GridBagConstraints.HORIZONTAL;
@@ -250,23 +251,14 @@ public class TelaEditarPerfilVendedor extends JFrame {
 		PanelEditor.add(txtCidade, gbc_txtCidade);
 		txtCidade.setColumns(10);
 
-		JLabel lblNewLabel_3 = new JLabel("CPF:");
-		GridBagConstraints gbc_lblNewLabel_3 = new GridBagConstraints();
-		gbc_lblNewLabel_3.anchor = GridBagConstraints.NORTHWEST;
-		gbc_lblNewLabel_3.insets = new Insets(0, 0, 5, 5);
-		gbc_lblNewLabel_3.gridx = 1;
-		gbc_lblNewLabel_3.gridy = 4;
-		PanelEditor.add(lblNewLabel_3, gbc_lblNewLabel_3);
-
-		JLabel lblNewLabel_6 = new JLabel("Bairro:");
-		GridBagConstraints gbc_lblNewLabel_6 = new GridBagConstraints();
-		gbc_lblNewLabel_6.anchor = GridBagConstraints.NORTHWEST;
-		gbc_lblNewLabel_6.insets = new Insets(0, 0, 5, 5);
-		gbc_lblNewLabel_6.gridx = 3;
-		gbc_lblNewLabel_6.gridy = 4;
-		PanelEditor.add(lblNewLabel_6, gbc_lblNewLabel_6);
-
 		txtCPF = new JTextField();
+		txtCPF.setBorder(new LineBorder(new Color(171, 173, 179)));
+		txtCPF.setOpaque(false);
+		txtCPF.setToolTipText("");
+		txtCPF.setBorder(new TitledBorder(new LineBorder(new Color(0, 0, 0), 2),
+				"<html>CPF<span style='color: red;'>*</span></html>", TitledBorder.LEADING, TitledBorder.TOP, null,
+				new Color(0, 0, 0)));
+		txtCPF.setBackground(SystemColor.menu);
 		GridBagConstraints gbc_txtCPF = new GridBagConstraints();
 		gbc_txtCPF.anchor = GridBagConstraints.NORTH;
 		gbc_txtCPF.fill = GridBagConstraints.HORIZONTAL;
@@ -277,6 +269,13 @@ public class TelaEditarPerfilVendedor extends JFrame {
 		txtCPF.setColumns(10);
 
 		txtBairro = new JTextField();
+		txtBairro.setBorder(new LineBorder(new Color(171, 173, 179)));
+		txtBairro.setOpaque(false);
+		txtBairro.setToolTipText("");
+		txtBairro.setBorder(new TitledBorder(new LineBorder(new Color(0, 0, 0), 2),
+				"<html>Bairro<span style='color: red;'>*</span></html>", TitledBorder.LEADING, TitledBorder.TOP, null,
+				new Color(0, 0, 0)));
+		txtBairro.setBackground(SystemColor.menu);
 		GridBagConstraints gbc_txtBairro = new GridBagConstraints();
 		gbc_txtBairro.anchor = GridBagConstraints.NORTH;
 		gbc_txtBairro.fill = GridBagConstraints.HORIZONTAL;
@@ -286,31 +285,14 @@ public class TelaEditarPerfilVendedor extends JFrame {
 		PanelEditor.add(txtBairro, gbc_txtBairro);
 		txtBairro.setColumns(10);
 
-		JLabel lblNewLabel_4 = new JLabel("CNPJ:");
-		GridBagConstraints gbc_lblNewLabel_4 = new GridBagConstraints();
-		gbc_lblNewLabel_4.anchor = GridBagConstraints.NORTHWEST;
-		gbc_lblNewLabel_4.insets = new Insets(0, 0, 5, 5);
-		gbc_lblNewLabel_4.gridx = 1;
-		gbc_lblNewLabel_4.gridy = 7;
-		PanelEditor.add(lblNewLabel_4, gbc_lblNewLabel_4);
-
-		JLabel lblNewLabel_7 = new JLabel("Logadouro:");
-		GridBagConstraints gbc_lblNewLabel_7 = new GridBagConstraints();
-		gbc_lblNewLabel_7.anchor = GridBagConstraints.NORTHWEST;
-		gbc_lblNewLabel_7.insets = new Insets(0, 0, 5, 5);
-		gbc_lblNewLabel_7.gridx = 3;
-		gbc_lblNewLabel_7.gridy = 7;
-		PanelEditor.add(lblNewLabel_7, gbc_lblNewLabel_7);
-
-		JLabel lblNewLabel_8 = new JLabel("Número:");
-		GridBagConstraints gbc_lblNewLabel_8 = new GridBagConstraints();
-		gbc_lblNewLabel_8.anchor = GridBagConstraints.NORTHWEST;
-		gbc_lblNewLabel_8.insets = new Insets(0, 0, 5, 0);
-		gbc_lblNewLabel_8.gridx = 5;
-		gbc_lblNewLabel_8.gridy = 7;
-		PanelEditor.add(lblNewLabel_8, gbc_lblNewLabel_8);
-
 		txtCNPJ = new JTextField();
+		txtCNPJ.setBorder(new LineBorder(new Color(171, 173, 179)));
+		txtCNPJ.setOpaque(false);
+		txtCNPJ.setToolTipText("");
+		txtCNPJ.setBorder(new TitledBorder(new LineBorder(new Color(0, 0, 0), 2),
+				"<html>CNPJ<span style='color: red;'>*</span></html>", TitledBorder.LEADING, TitledBorder.TOP, null,
+				new Color(0, 0, 0)));
+		txtCNPJ.setBackground(SystemColor.menu);
 		GridBagConstraints gbc_txtCNPJ = new GridBagConstraints();
 		gbc_txtCNPJ.anchor = GridBagConstraints.NORTH;
 		gbc_txtCNPJ.fill = GridBagConstraints.HORIZONTAL;
@@ -321,6 +303,13 @@ public class TelaEditarPerfilVendedor extends JFrame {
 		txtCNPJ.setColumns(10);
 
 		txtLogadouro = new JTextField();
+		txtLogadouro.setBorder(new LineBorder(new Color(171, 173, 179)));
+		txtLogadouro.setOpaque(false);
+		txtLogadouro.setToolTipText("");
+		txtLogadouro.setBorder(new TitledBorder(new LineBorder(new Color(0, 0, 0), 2),
+				"<html>Logadouro<span style='color: red;'>*</span></html>", TitledBorder.LEADING, TitledBorder.TOP, null,
+				new Color(0, 0, 0)));
+		txtLogadouro.setBackground(SystemColor.menu);
 		GridBagConstraints gbc_txtLogadouro = new GridBagConstraints();
 		gbc_txtLogadouro.anchor = GridBagConstraints.NORTH;
 		gbc_txtLogadouro.fill = GridBagConstraints.HORIZONTAL;
@@ -331,6 +320,13 @@ public class TelaEditarPerfilVendedor extends JFrame {
 		txtLogadouro.setColumns(10);
 
 		txtNum = new JTextField();
+		txtNum.setBorder(new LineBorder(new Color(171, 173, 179)));
+		txtNum.setOpaque(false);
+		txtNum.setToolTipText("");
+		txtNum.setBorder(new TitledBorder(new LineBorder(new Color(0, 0, 0), 2),
+				"<html>Num<span style='color: red;'>*</span></html>", TitledBorder.LEADING, TitledBorder.TOP, null,
+				new Color(0, 0, 0)));
+		txtNum.setBackground(SystemColor.menu);
 		GridBagConstraints gbc_txtNum = new GridBagConstraints();
 		gbc_txtNum.insets = new Insets(0, 0, 5, 0);
 		gbc_txtNum.anchor = GridBagConstraints.NORTH;

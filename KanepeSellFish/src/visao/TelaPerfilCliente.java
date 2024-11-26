@@ -251,9 +251,9 @@ public class TelaPerfilCliente extends JFrame {
 				dispose();
 			}
 		});
-		imgSair.setIcon(new ImageIcon(TelaInicio.class.getResource("/IMG/do-utilizador.png")));
+		imgSair.setIcon(new ImageIcon(TelaPerfilCliente.class.getResource("/img/saida.png")));
 		panel.add(imgSair, "cell 4 0");
-		ImageIcon conta = new ImageIcon(TelaInicio.class.getResource("/IMG/do-utilizador.png"));
+		ImageIcon conta = new ImageIcon(TelaInicio.class.getResource("/img/saida.png"));
 		Image iconConta = conta.getImage().getScaledInstance(30, 30, Image.SCALE_SMOOTH);
 		imgSair.setIcon(new ImageIcon(iconConta));
 
