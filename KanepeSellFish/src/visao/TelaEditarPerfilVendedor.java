@@ -93,16 +93,14 @@ public class TelaEditarPerfilVendedor extends JFrame {
 		panel.add(panel_1);
 		panel_1.setOpaque(false);
 
-		JLabel lblNewLabel_9 = new JLabel("Descrição:");
-
 		JLabel imgBarra = new JLabel("");
 		imgBarra.setIcon(new ImageIcon(TelaEditarPerfilVendedor.class.getResource("/img/menu-hamburguer.png")));
 
 		JLabel imgAvatar = new JLabel("");
 		imgAvatar.setIcon(new ImageIcon(TelaEditarPerfilVendedor.class.getResource("/img/Avatar.png")));
 
-		JLabel lblNewLabel_11 = new JLabel("Editar foto de Perfil");
-		lblNewLabel_11.addMouseListener(new MouseAdapter() {
+		JLabel lblEditarFoto = new JLabel("Editar foto de Perfil");
+		lblEditarFoto.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 
@@ -126,25 +124,16 @@ public class TelaEditarPerfilVendedor extends JFrame {
 
 		JLabel imgLapis = new JLabel("");
 		imgLapis.setIcon(new ImageIcon(TelaEditarPerfilVendedor.class.getResource("/img/lapis.png")));
-		
-		JTextPane txtDesc = new JTextPane();
 		GroupLayout gl_panel_1 = new GroupLayout(panel_1);
 		gl_panel_1.setHorizontalGroup(
 			gl_panel_1.createParallelGroup(Alignment.TRAILING)
 				.addGroup(gl_panel_1.createSequentialGroup()
-					.addGroup(gl_panel_1.createParallelGroup(Alignment.LEADING)
-						.addGroup(gl_panel_1.createSequentialGroup()
-							.addContainerGap()
-							.addComponent(imgBarra))
-						.addGroup(gl_panel_1.createSequentialGroup()
-							.addGap(184)
-							.addGroup(gl_panel_1.createParallelGroup(Alignment.LEADING)
-								.addComponent(txtDesc, GroupLayout.PREFERRED_SIZE, 198, GroupLayout.PREFERRED_SIZE)
-								.addComponent(lblNewLabel_9))))
+					.addContainerGap()
+					.addComponent(imgBarra)
 					.addContainerGap(193, Short.MAX_VALUE))
 				.addGroup(gl_panel_1.createSequentialGroup()
 					.addContainerGap(241, Short.MAX_VALUE)
-					.addComponent(lblNewLabel_11)
+					.addComponent(lblEditarFoto)
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addComponent(imgLapis)
 					.addGap(215))
@@ -155,20 +144,16 @@ public class TelaEditarPerfilVendedor extends JFrame {
 		);
 		gl_panel_1.setVerticalGroup(
 			gl_panel_1.createParallelGroup(Alignment.TRAILING)
-				.addGroup(gl_panel_1.createSequentialGroup()
+				.addGroup(Alignment.LEADING, gl_panel_1.createSequentialGroup()
 					.addContainerGap()
 					.addComponent(imgBarra)
 					.addGap(30)
 					.addComponent(imgAvatar)
 					.addGap(12)
 					.addGroup(gl_panel_1.createParallelGroup(Alignment.TRAILING)
-						.addComponent(lblNewLabel_11)
+						.addComponent(lblEditarFoto)
 						.addComponent(imgLapis))
-					.addPreferredGap(ComponentPlacement.RELATED, 17, Short.MAX_VALUE)
-					.addComponent(lblNewLabel_9)
-					.addGap(18)
-					.addComponent(txtDesc, GroupLayout.PREFERRED_SIZE, 133, GroupLayout.PREFERRED_SIZE)
-					.addGap(128))
+					.addContainerGap(310, Short.MAX_VALUE))
 		);
 		ImageIcon barras = new ImageIcon(TelaEditarPerfilVendedor.class.getResource("/img/menu-hamburguer.png"));
 		Image imgB = barras.getImage().getScaledInstance(30, 30, Image.SCALE_SMOOTH);
