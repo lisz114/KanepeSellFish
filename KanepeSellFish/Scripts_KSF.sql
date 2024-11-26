@@ -22,8 +22,6 @@ CREATE TABLE IF NOT EXISTS Usuarios (
     senha_Usuario VARCHAR(100) NOT NULL,
     email_Usuario VARCHAR(100) NOT NULL UNIQUE,
     telefone BIGINT UNIQUE,
-    img longblob,
-    descricao varchar(360),
     PRIMARY KEY (idUsuarios)
 );
 
@@ -62,7 +60,7 @@ CREATE TABLE IF NOT EXISTS Produtos (
     quantidade INT NOT NULL,
     validade DATE NOT NULL,
     nome_Produto VARCHAR(100) NOT NULL,
-    preco DECIMAL(65) NOT NULL,
+    preco DOUBLE NOT NULL,
     Produtores_idProdutores BIGINT NOT NULL,
     salinidade BOOLEAN NOT NULL,
     PRIMARY KEY (idProdutos),
@@ -98,12 +96,20 @@ CREATE TABLE IF NOT EXISTS Vendas (
 -- Table Carrinho
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS Carrinho (
-    Vendas_idVendas BIGINT NOT NULL,
-    Produtos_idProdutos BIGINT NOT NULL,
-    idCarrinho BIGINT NOT NULL AUTO_INCREMENT,
-    PRIMARY KEY (idCarrinho),
-    FOREIGN KEY (Vendas_idVendas) REFERENCES Vendas (idVendas),
-    FOREIGN KEY (Produtos_idProdutos) REFERENCES Produtos (idProdutos)
+	idCarrinho BIGINT NOT NULL AUTO_INCREMENT,
+    Usuarios_idUsuarios BIGINT NOT NULL,
+	PRIMARY KEY (idCarrinho),
+    FOREIGN KEY (Usuarios_idUsuarios) REFERENCES Usuarios (idUsuarios)
+);
+CREATE TABLE IF NOT EXISTS ItensCarrinho (
+	idItensCarrinho BIGINT NOT NULL AUTO_INCREMENT,
+	Carrinho_idCarrinho BIGINT NOT NULL,
+	Produtos_idProdutos BIGINT NOT NULL,
+	quantidade BIGINT NOT NULL,
+	preco BOOLEAN NOT NULL,
+    PRIMARY KEY(idItensCarrinho),
+	FOREIGN KEY (Produtos_idProdutos) REFERENCES Produtos (idProdutos),
+	FOREIGN KEY (Carrinho_idCarrinho) REFERENCES Carrinho (idCarrinho)
 );
 
 INSERT INTO `kanepe`.`usuarios` (`cpf_Usuario`, `nome_Usuario`, `senha_Usuario`, `email_Usuario`) VALUES ('85318806961', 'vini', 'vini', 'vini');

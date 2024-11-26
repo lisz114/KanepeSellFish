@@ -1,7 +1,6 @@
 package visao;
 
 import java.awt.Color;
-import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.Image;
 import java.awt.event.MouseAdapter;
@@ -17,9 +16,8 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.border.EmptyBorder;
-import javax.swing.border.EtchedBorder;
-import javax.swing.border.TitledBorder;
 
+import controle.ProdutoDAO;
 import modelo.Produto;
 import modelo.Usuario;
 import net.miginfocom.swing.MigLayout;
@@ -27,6 +25,7 @@ import net.miginfocom.swing.MigLayout;
 public class TelaCarrinho extends JFrame {
 
 	private JPanel contentPane;
+	ProdutoDAO pDAO = new ProdutoDAO();
 
 //	public static void main(String[] args) {
 //		EventQueue.invokeLater(new Runnable() {
@@ -49,7 +48,7 @@ public class TelaCarrinho extends JFrame {
 
 		setContentPane(contentPane);
 		contentPane.setLayout(new MigLayout("", "[grow][]", "[50][576.00,grow]"));
-		
+
 		JPanel panel = new JPanel();
 		panel.setBackground(new Color(154, 205, 220));
 		contentPane.add(panel, "cell 0 0,grow");
@@ -63,7 +62,7 @@ public class TelaCarrinho extends JFrame {
 		imgMenu.setIcon(new ImageIcon(iconMenu));
 		ImageIcon deslogar = new ImageIcon(TelaCarrinho.class.getResource("/img/saida.png"));
 		Image imgD = deslogar.getImage().getScaledInstance(30, 30, Image.SCALE_SMOOTH);
-		
+
 		JLabel imgLogoff = new JLabel("");
 		imgLogoff.addMouseListener(new MouseAdapter() {
 			@Override
@@ -78,11 +77,11 @@ public class TelaCarrinho extends JFrame {
 		imgLogoff.setIcon(new ImageIcon(TelaCarrinho.class.getResource("/img/saida.png")));
 		panel.add(imgLogoff, "cell 1 0,alignx right");
 		imgLogoff.setIcon(new ImageIcon(imgD));
-		
+
 		JPanel panel_1 = new JPanel();
 		contentPane.add(panel_1, "cell 0 1,grow");
 		panel_1.setLayout(new MigLayout("", "[grow][][][grow][grow 10]", "[][grow][grow 40][grow 30][]"));
-		
+
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBorder(null);
 		scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
@@ -94,55 +93,41 @@ public class TelaCarrinho extends JFrame {
 		panel_1.add(scrollPane, "cell 1 0 3 2,grow");
 		panel_7.setLayout(new MigLayout("", "[][][][]", "[][][][]"));
 
-		ArrayList<Produto> lista = new ArrayList<Produto>();
-
-		lista.add(new Produto());
-		lista.add(new Produto());
-		lista.add(new Produto());
-		lista.add(new Produto());
-		lista.add(new Produto());
-		lista.add(new Produto());
-		lista.add(new Produto());
-		lista.add(new Produto());
-		lista.add(new Produto());
-		lista.add(new Produto());
-		lista.add(new Produto());
-		lista.add(new Produto());
-		lista.add(new Produto());
-		lista.add(new Produto());
-		lista.add(new Produto());
+		ArrayList<Produto> lista = pDAO.addTodosProd();
 
 		int linha = 0;
 		int coluna = -1;
-		for (Produto p : lista) {
+		if (lista == null) {
+			System.out.println("lista ta Vazia");
+		} else {
+			for (Produto p : lista) {
 
-			coluna++;
-			if (coluna > 3) {
-				coluna = 0;
-				linha++;
+				coluna++;
+				if (coluna > 3) {
+					coluna = 0;
+					linha++;
+				}
+				CardProdCarrinho panel_8 = new CardProdCarrinho(p);
+				panel_7.add(panel_8, "cell " + coluna + " " + linha + "");
+
 			}
-			CardProdCarrinho panel_8 = new CardProdCarrinho(p);
-			panel_7.add(panel_8, "cell " + coluna + " " + linha + "");
-
-
 		}
-		
 		JLabel lblInfoCompra = new JLabel("Informações da compra: ");
 		lblInfoCompra.setFont(new Font("Dialog", Font.PLAIN, 14));
 		panel_1.add(lblInfoCompra, "cell 0 2 1 2");
-		
+
 		JLabel lblNomeProduto = new JLabel("");
 		lblNomeProduto.setFont(new Font("Dialog", Font.PLAIN, 11));
 		panel_1.add(lblNomeProduto, "cell 0 3");
-		
+
 		JLabel lblQuantidadeDesej = new JLabel("");
 		lblQuantidadeDesej.setFont(new Font("Dialog", Font.PLAIN, 11));
 		panel_1.add(lblQuantidadeDesej, "cell 3 3,alignx right");
-		
+
 		JLabel lblValorProduto = new JLabel("");
 		lblValorProduto.setFont(new Font("Dialog", Font.PLAIN, 11));
 		panel_1.add(lblValorProduto, "cell 4 3,alignx center");
-		
+
 		JButton btnVoltaTela = new JButton("Continuar comprando");
 		btnVoltaTela.addMouseListener(new MouseAdapter() {
 			@Override
@@ -156,7 +141,7 @@ public class TelaCarrinho extends JFrame {
 		btnVoltaTela.setFont(new Font("Dialog", Font.PLAIN, 11));
 		btnVoltaTela.setBackground(new Color(154, 205, 217));
 		panel_1.add(btnVoltaTela, "cell 3 4,alignx right");
-		
+
 		JButton btnPagamento = new JButton("Concluir compra");
 		btnPagamento.addMouseListener(new MouseAdapter() {
 			@Override
@@ -171,7 +156,6 @@ public class TelaCarrinho extends JFrame {
 		btnPagamento.setFont(new Font("Dialog", Font.PLAIN, 11));
 		btnPagamento.setBackground(new Color(154, 205, 217));
 		panel_1.add(btnPagamento, "cell 4 4,alignx center");
-		
-		
+
 	}
 }

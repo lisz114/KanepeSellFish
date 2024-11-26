@@ -49,6 +49,7 @@ public class TelaInicio extends JFrame {
 	JButton btEstoque;
 	JLabel lblAddProduto;
 	JLabel lblAdicionarProduto;
+	ProdutoDAO pDAO = new ProdutoDAO();
 
 //	public static void main(String[] args) {
 //		EventQueue.invokeLater(new Runnable() {
@@ -100,28 +101,26 @@ public class TelaInicio extends JFrame {
 		panel_1.add(scrollPane, "cell 1 0 3 2,grow");
 		panel_7.setLayout(new MigLayout("", "[][][][]", "[][][][]"));
 
-		ArrayList<Produto> lista = new ArrayList<Produto>();
-
-		lista.add(new Produto("Tilápia", LocalDate.now(), 15.00, 35));
-		lista.add(new Produto("Tainha", LocalDate.now(), 45.00, 25));
-		lista.add(new Produto("Lúcio", LocalDate.now(), 25.80, 4));
-		lista.add(new Produto("Sardinha", LocalDate.now(), 15.00, 10));
-		lista.add(new Produto("Bagre", LocalDate.now(), 19.60, 15));
+		ArrayList<Produto> lista = pDAO.addTodosProd();
 
 		int linha = 0;
 		int coluna = -1;
-		for (Produto p : lista) {
+		if (lista == null) {
+			System.out.println("lista ta Vazia");
+		} else {
 
-			coluna++;
-			if (coluna > 3) {
-				coluna = 0;
-				linha++;
+			for (Produto p : lista) {
+
+				coluna++;
+				if (coluna > 3) {
+					coluna = 0;
+					linha++;
+				}
+				CardProduto panel_8 = new CardProduto(p);
+				panel_7.add(panel_8, "cell " + coluna + " " + linha + "");
+
 			}
-			CardProduto panel_8 = new CardProduto(p);
-			panel_7.add(panel_8, "cell " + coluna + " " + linha + "");
-
 		}
-
 		JPanel panel_2 = new JPanel();
 		panel_1.add(panel_2, "cell 0 0 1 2,grow");
 		panel_2.setLayout(new MigLayout("", "[][][]", "[60px][100px][60px][50px][][][][190px,grow][][]"));
@@ -356,10 +355,12 @@ public class TelaInicio extends JFrame {
 		btEstoque = new JButton("Estoque");
 		btEstoque.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+
 				TelaEstoque frame = new TelaEstoque(u);
 				frame.setLocationRelativeTo(null);
 				frame.setVisible(true);
 				dispose();
+
 			}
 		});
 		btEstoque.setOpaque(false);
