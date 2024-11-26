@@ -46,7 +46,7 @@ public class TelaInicio extends JFrame {
 	private JTextField txtPesquisar;
 	JPanel panelLeft;
 	List<Produto> produtos;
-	JButton btnNewButton_2_1;
+	JButton btEstoque;
 	JLabel lblAddProduto;
 	JLabel lblAdicionarProduto;
 	ProdutoDAO pDAO = new ProdutoDAO();
@@ -258,13 +258,17 @@ public class TelaInicio extends JFrame {
 		contentPane.add(panelLeft, BorderLayout.WEST);
 		panelLeft.setLayout(new MigLayout("", "[100px]", "[50px][50px][50px][50px]"));
 
-		JButton btnNewButton = new JButton("Inicio");
-		btnNewButton.setBackground(new Color(64, 128, 128));
-		btnNewButton.setBorder(null);
-		panelLeft.add(btnNewButton, "cell 0 0,grow");
+		JButton btInicio = new JButton("Inicio");
+		btInicio.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		btInicio.setBackground(new Color(64, 128, 128));
+		btInicio.setBorder(null);
+		panelLeft.add(btInicio, "cell 0 0,grow");
 
-		JButton btnNewButton_1 = new JButton("Carrinho");
-		btnNewButton_1.addActionListener(new ActionListener() {
+		JButton btCarrinho = new JButton("Carrinho");
+		btCarrinho.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				TelaCarrinho carrinho = new TelaCarrinho(u, produtos, isVendedor);
 				carrinho.setLocationRelativeTo(null);
@@ -272,13 +276,13 @@ public class TelaInicio extends JFrame {
 				dispose();
 			}
 		});
-		btnNewButton_1.setBackground(new Color(154, 205, 217));
-		btnNewButton_1.setBorder(null);
-		btnNewButton_1.setOpaque(false);
-		panelLeft.add(btnNewButton_1, "cell 0 1,grow");
+		btCarrinho.setBackground(new Color(154, 205, 217));
+		btCarrinho.setBorder(null);
+		btCarrinho.setOpaque(false);
+		panelLeft.add(btCarrinho, "cell 0 1,grow");
 
-		JButton btnNewButton_2 = new JButton("Perfil");
-		btnNewButton_2.addActionListener(new ActionListener() {
+		JButton btPerfil = new JButton("Perfil");
+		btPerfil.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
 				if (isVendedor) {
@@ -295,10 +299,10 @@ public class TelaInicio extends JFrame {
 			}
 		});
 
-		btnNewButton_2.setBackground(new Color(154, 205, 217));
-		btnNewButton_2.setBorder(null);
-		btnNewButton_2.setOpaque(false);
-		panelLeft.add(btnNewButton_2, "cell 0 2,grow");
+		btPerfil.setBackground(new Color(154, 205, 217));
+		btPerfil.setBorder(null);
+		btPerfil.setOpaque(false);
+		panelLeft.add(btPerfil, "cell 0 2,grow");
 
 		if (u.isProdutor()) {
 			JButton btnNewButton_3 = new JButton("Estoque");
@@ -348,8 +352,8 @@ public class TelaInicio extends JFrame {
 		panel_2.add(lblZaA, "cell 2 6,alignx center");
 		lblZaA.setFont(new Font("/Fontes/Roboto-Black.ttf", Font.PLAIN, 12));
 
-		btnNewButton_2_1 = new JButton("Estoque");
-		btnNewButton_2_1.addActionListener(new ActionListener() {
+		btEstoque = new JButton("Estoque");
+		btEstoque.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
 				TelaEstoque frame = new TelaEstoque(u);
@@ -359,10 +363,10 @@ public class TelaInicio extends JFrame {
 
 			}
 		});
-		btnNewButton_2_1.setBackground(new Color(154, 205, 217));
-		btnNewButton_2_1.setBorder(null);
-		btnNewButton_2_1.setOpaque(true);
-		panelLeft.add(btnNewButton_2_1, "cell 0 3,grow");
+		btEstoque.setOpaque(false);
+		btEstoque.setBorder(null);
+		btEstoque.setBackground(new Color(154, 205, 217));
+		panelLeft.add(btEstoque, "cell 0 3,alignx center,aligny center");
 
 		lblAddProduto = new JLabel("");
 		lblAddProduto.addMouseListener(new MouseAdapter() {
@@ -370,6 +374,7 @@ public class TelaInicio extends JFrame {
 			public void mouseClicked(MouseEvent e) {
 				TelaCadastroProduto cadastro = new TelaCadastroProduto(null, u);
 				cadastro.setLocationRelativeTo(null);
+				cadastro.setVisible(true);
 			}
 		});
 		lblAddProduto.setIcon(new ImageIcon(TelaInicio.class.getResource("/img/More.png")));
@@ -400,7 +405,7 @@ public class TelaInicio extends JFrame {
 			panel_2.add(imgMore, "cell 0 8,alignx center");
 			imgMore.setIcon(new ImageIcon(more));
 		} else {
-			btnNewButton_2_1.setVisible(isVendedor);
+			btEstoque.setVisible(isVendedor);
 			lblAddProduto.setVisible(isVendedor);
 			lblAdicionarProduto.setVisible(isVendedor);
 		}

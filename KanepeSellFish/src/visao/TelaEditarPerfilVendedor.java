@@ -37,7 +37,7 @@ import modelo.Produtor;
 import modelo.RoundButton;
 import modelo.Usuario;
 
-public class TelaEditarVendedor extends JFrame {
+public class TelaEditarPerfilVendedor extends JFrame {
 
 	private JPanel contentPane;
 	private JTextField txtEmail;
@@ -71,7 +71,7 @@ public class TelaEditarVendedor extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public TelaEditarVendedor(Usuario u) {
+	public TelaEditarPerfilVendedor(Usuario u) {
 		setResizable(false);
 		setLocationByPlatform(true);
 		setMinimumSize(new Dimension(1176, 664));
@@ -93,16 +93,14 @@ public class TelaEditarVendedor extends JFrame {
 		panel.add(panel_1);
 		panel_1.setOpaque(false);
 
-		JLabel lblNewLabel_9 = new JLabel("Descrição:");
-
 		JLabel imgBarra = new JLabel("");
-		imgBarra.setIcon(new ImageIcon(TelaEditarVendedor.class.getResource("/img/menu-hamburguer.png")));
+		imgBarra.setIcon(new ImageIcon(TelaEditarPerfilVendedor.class.getResource("/img/menu-hamburguer.png")));
 
 		JLabel imgAvatar = new JLabel("");
-		imgAvatar.setIcon(new ImageIcon(TelaEditarVendedor.class.getResource("/img/Avatar.png")));
+		imgAvatar.setIcon(new ImageIcon(TelaEditarPerfilVendedor.class.getResource("/img/Avatar.png")));
 
-		JLabel lblNewLabel_11 = new JLabel("Editar foto de Perfil");
-		lblNewLabel_11.addMouseListener(new MouseAdapter() {
+		JLabel lblEditarFoto = new JLabel("Editar foto de Perfil");
+		lblEditarFoto.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 
@@ -125,26 +123,17 @@ public class TelaEditarVendedor extends JFrame {
 		});
 
 		JLabel imgLapis = new JLabel("");
-		imgLapis.setIcon(new ImageIcon(TelaEditarVendedor.class.getResource("/img/lapis.png")));
-		
-		JTextPane txtDesc = new JTextPane();
+		imgLapis.setIcon(new ImageIcon(TelaEditarPerfilVendedor.class.getResource("/img/lapis.png")));
 		GroupLayout gl_panel_1 = new GroupLayout(panel_1);
 		gl_panel_1.setHorizontalGroup(
 			gl_panel_1.createParallelGroup(Alignment.TRAILING)
 				.addGroup(gl_panel_1.createSequentialGroup()
-					.addGroup(gl_panel_1.createParallelGroup(Alignment.LEADING)
-						.addGroup(gl_panel_1.createSequentialGroup()
-							.addContainerGap()
-							.addComponent(imgBarra))
-						.addGroup(gl_panel_1.createSequentialGroup()
-							.addGap(184)
-							.addGroup(gl_panel_1.createParallelGroup(Alignment.LEADING)
-								.addComponent(txtDesc, GroupLayout.PREFERRED_SIZE, 198, GroupLayout.PREFERRED_SIZE)
-								.addComponent(lblNewLabel_9))))
+					.addContainerGap()
+					.addComponent(imgBarra)
 					.addContainerGap(193, Short.MAX_VALUE))
 				.addGroup(gl_panel_1.createSequentialGroup()
 					.addContainerGap(241, Short.MAX_VALUE)
-					.addComponent(lblNewLabel_11)
+					.addComponent(lblEditarFoto)
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addComponent(imgLapis)
 					.addGap(215))
@@ -155,27 +144,23 @@ public class TelaEditarVendedor extends JFrame {
 		);
 		gl_panel_1.setVerticalGroup(
 			gl_panel_1.createParallelGroup(Alignment.TRAILING)
-				.addGroup(gl_panel_1.createSequentialGroup()
+				.addGroup(Alignment.LEADING, gl_panel_1.createSequentialGroup()
 					.addContainerGap()
 					.addComponent(imgBarra)
 					.addGap(30)
 					.addComponent(imgAvatar)
 					.addGap(12)
 					.addGroup(gl_panel_1.createParallelGroup(Alignment.TRAILING)
-						.addComponent(lblNewLabel_11)
+						.addComponent(lblEditarFoto)
 						.addComponent(imgLapis))
-					.addPreferredGap(ComponentPlacement.RELATED, 17, Short.MAX_VALUE)
-					.addComponent(lblNewLabel_9)
-					.addGap(18)
-					.addComponent(txtDesc, GroupLayout.PREFERRED_SIZE, 133, GroupLayout.PREFERRED_SIZE)
-					.addGap(128))
+					.addContainerGap(310, Short.MAX_VALUE))
 		);
-		ImageIcon barras = new ImageIcon(TelaEditarVendedor.class.getResource("/img/menu-hamburguer.png"));
+		ImageIcon barras = new ImageIcon(TelaEditarPerfilVendedor.class.getResource("/img/menu-hamburguer.png"));
 		Image imgB = barras.getImage().getScaledInstance(30, 30, Image.SCALE_SMOOTH);
 		imgBarra.setIcon(new ImageIcon(imgB));
 		panel_1.setLayout(gl_panel_1);
 
-		ImageIcon lapis = new ImageIcon(TelaEditarVendedor.class.getResource("/img/lapis.png"));
+		ImageIcon lapis = new ImageIcon(TelaEditarPerfilVendedor.class.getResource("/img/lapis.png"));
 		Image imgL = lapis.getImage().getScaledInstance(20, 20, Image.SCALE_SMOOTH);
 		imgLapis.setIcon(new ImageIcon(imgL));
 
@@ -205,15 +190,15 @@ public class TelaEditarVendedor extends JFrame {
 		JLabel imgKart = new JLabel("");
 		imgKart.setBounds(400, 6, 46, 39);
 		panel_2.add(imgKart);
-		imgKart.setIcon(new ImageIcon(TelaEditarVendedor.class.getResource("/img/carrinho-de-compras.png")));
-		ImageIcon car = new ImageIcon(TelaEditarVendedor.class.getResource("/img/carrinho-de-compras.png"));
+		imgKart.setIcon(new ImageIcon(TelaEditarPerfilVendedor.class.getResource("/img/carrinho-de-compras.png")));
+		ImageIcon car = new ImageIcon(TelaEditarPerfilVendedor.class.getResource("/img/carrinho-de-compras.png"));
 		Image imgC = car.getImage().getScaledInstance(40, 40, Image.SCALE_SMOOTH);
 		imgKart.setIcon(new ImageIcon(imgC));
 		JLabel imgSino = new JLabel("");
 		imgSino.setBounds(460, 4, 46, 45);
 		panel_2.add(imgSino);
-		imgSino.setIcon(new ImageIcon(TelaEditarVendedor.class.getResource("/img/sino.png")));
-		ImageIcon sino = new ImageIcon(TelaEditarVendedor.class.getResource("/img/sino.png"));
+		imgSino.setIcon(new ImageIcon(TelaEditarPerfilVendedor.class.getResource("/img/sino.png")));
+		ImageIcon sino = new ImageIcon(TelaEditarPerfilVendedor.class.getResource("/img/sino.png"));
 		Image imgS = sino.getImage().getScaledInstance(40, 40, Image.SCALE_SMOOTH);
 		imgSino.setIcon(new ImageIcon(imgS));
 
@@ -436,7 +421,7 @@ public class TelaEditarVendedor extends JFrame {
 				dispose();
 			}
 		});
-		lblNewLabel_10.setIcon(new ImageIcon(TelaEditarVendedor.class.getResource("/img/Voltar.png")));
+		lblNewLabel_10.setIcon(new ImageIcon(TelaEditarPerfilVendedor.class.getResource("/img/Voltar.png")));
 		lblNewLabel_10.setBounds(520, 4, 46, 45);
 		panel_2.add(lblNewLabel_10);
 
