@@ -16,12 +16,16 @@ import javax.swing.SwingConstants;
 
 import controle.CarrinhoDAO;
 import modelo.Produto;
+import modelo.Usuario;
 import net.miginfocom.swing.MigLayout;
 
 @SuppressWarnings("serial")
 public class CardProduto extends JPanel {
+	
+	int quantidade;
+	double preco;
 
-	public CardProduto(Produto p) {
+	public CardProduto(Produto p, Usuario u) {
 		setLayout(new MigLayout("", "[20px][100px][20px]", "[][200px][][][][][]"));
 
 		JLabel imgPeixe = new JLabel("");
@@ -53,10 +57,10 @@ public class CardProduto extends JPanel {
 		JLabel imgMenos = new JLabel("");
 		imgMenos.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
-				int quantidade = Integer.parseInt(lblQuantidade.getText());
+				quantidade = Integer.parseInt(lblQuantidade.getText());
 				if (quantidade > 0) {
 					quantidade = quantidade - 1;
-					Double preco = Double.parseDouble(lblPreco.getText());
+					preco = Double.parseDouble(lblPreco.getText());
 					preco = preco - preco;
 					lblQuantidade.setText(Integer.toString(quantidade));
 				} else if (quantidade == 0) {
@@ -75,10 +79,10 @@ public class CardProduto extends JPanel {
 		JLabel imgMais = new JLabel("");
 		imgMais.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
-				int quantidade = Integer.parseInt(lblQuantidade.getText());
+				quantidade = Integer.parseInt(lblQuantidade.getText());
 				quantidade++;
 				lblQuantidade.setText(Integer.toString(quantidade));
-				double preco = Double.parseDouble(lblPreco.getText());
+				preco = Double.parseDouble(lblPreco.getText());
 				preco = preco + preco;
 			}
 		});
@@ -92,7 +96,7 @@ public class CardProduto extends JPanel {
 		btAdicionar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				CarrinhoDAO cdao = new CarrinhoDAO();
-				cdao.inserirProduto(p);
+				cdao.inserirProduto(p, quantidade, preco, u);
 			}
 		});
 		btAdicionar.setForeground(Color.WHITE);

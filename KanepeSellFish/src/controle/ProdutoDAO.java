@@ -37,7 +37,7 @@ public class ProdutoDAO implements IProdutoDAO {
 
 			pstmt.setString(1, produto.getNome());
 			pstmt.setInt(2, produto.getQuantidadeEstoque());
-			pstmt.setFloat(3, produto.getPreco());
+			pstmt.setDouble(3, produto.getPreco());
 			pstmt.setInt(4, u.getIdUsuario());
 			pstmt.setDate(5, (java.sql.Date.valueOf(produto.getValidade())));
 			pstmt.setBoolean(6, produto.getSalinidade());
@@ -196,7 +196,7 @@ public class ProdutoDAO implements IProdutoDAO {
 
 			pstmt.setString(1, produto.getNome());
 			pstmt.setInt(2, produto.getQuantidadeEstoque());
-			pstmt.setFloat(3, produto.getPreco());
+			pstmt.setDouble(3, produto.getPreco());
 			pstmt.setDate(4, (java.sql.Date.valueOf(produto.getValidade())));
 			pstmt.setBoolean(5, produto.getSalinidade());
 			pstmt.setInt(6, id);
