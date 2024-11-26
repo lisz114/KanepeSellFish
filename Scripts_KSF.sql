@@ -60,7 +60,7 @@ CREATE TABLE IF NOT EXISTS Produtos (
     quantidade INT NOT NULL,
     validade DATE NOT NULL,
     nome_Produto VARCHAR(100) NOT NULL,
-    preco DECIMAL(65) NOT NULL,
+    preco DOUBLE NOT NULL,
     Produtores_idProdutores BIGINT NOT NULL,
     salinidade BOOLEAN NOT NULL,
     PRIMARY KEY (idProdutos),
