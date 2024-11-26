@@ -53,14 +53,8 @@ public class CardProduto extends JPanel {
 		JLabel imgMenos = new JLabel("");
 		imgMenos.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
-				int quantidade = Integer.parseInt(lblQuantidade.getText());
-				if (quantidade > 0) {
-					quantidade = quantidade - 1;
-					Double preco = Double.parseDouble(lblPreco.getText());
-					preco = preco - preco;
-					lblQuantidade.setText(Integer.toString(quantidade));
-				} else if (quantidade == 0) {
-					quantidade = 0;
+				if(Integer.parseInt(lblQuantidade.getText())> 0) {
+				lblQuantidade.setText(String.valueOf(Integer.parseInt(lblQuantidade.getText())-1));
 				}
 			}
 		});
@@ -74,12 +68,8 @@ public class CardProduto extends JPanel {
 
 		JLabel imgMais = new JLabel("");
 		imgMais.addMouseListener(new MouseAdapter() {
-			public void mouseClicked(MouseEvent e) {
-				int quantidade = Integer.parseInt(lblQuantidade.getText());
-				quantidade++;
-				lblQuantidade.setText(Integer.toString(quantidade));
-				double preco = Double.parseDouble(lblPreco.getText());
-				preco = preco + preco;
+			public void mouseClicked(MouseEvent e) {		
+				lblQuantidade.setText(String.valueOf(Integer.parseInt(lblQuantidade.getText())+1));
 			}
 		});
 		imgMais.setIcon(new ImageIcon(CardProduto.class.getResource("/img/More.png")));
