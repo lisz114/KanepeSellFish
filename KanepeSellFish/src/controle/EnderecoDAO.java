@@ -58,10 +58,10 @@ public class EnderecoDAO implements IEnderecoDAO {
 	    return -1; // Retorna -1 em caso de erro
 	}
 	
-	public int atualizarEndereco(Endereco endereco) throws SQLException {
-		//String sql = "UPDATE usuarios set Cidade = ?, Bairro = ?, Rua = ?, numero = ? where idEnderecos = ?";
-		Connection conn = ConexaoBD.getConexaoMySQL();
-		PreparedStatement pstmt = conn.prepareStatement("UPDATE enderecos set Cidade = ?, Bairro = ?, Rua = ?, numero = ? where idEnderecos = ?");
+	public int atualizarEndereco(Endereco endereco) {
+		String sql = "UPDATE kanepe.enderecos set Cidade = ?, Bairro = ?, Rua = ?, numero = ? where idEnderecos = ?";
+		try (Connection conn = ConexaoBD.getConexaoMySQL(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
+			
 			pstmt.setString(1, endereco.getCidade());
 			pstmt.setString(2, endereco.getBairro());
 			pstmt.setString(3, endereco.getLogradouro());
@@ -70,6 +70,10 @@ public class EnderecoDAO implements IEnderecoDAO {
 			
 			
 			pstmt.executeUpdate();
+		}catch (SQLException e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
 		
 		return -1;
 	}

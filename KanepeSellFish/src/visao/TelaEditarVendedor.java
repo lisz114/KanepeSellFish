@@ -54,7 +54,7 @@ public class TelaEditarVendedor extends JFrame {
 	private JTextField txtBairro;
 	private JTextField txtLogadouro;
 	private JTextField txtNum;
-	
+
 	private static UsuarioDAO uDAO = UsuarioDAO.getInstancia();
 	private static EnderecoDAO eDAO = EnderecoDAO.getInstancia();
 	private static ProdutorDAO pDAO = ProdutorDAO.getInstancia();
@@ -133,50 +133,32 @@ public class TelaEditarVendedor extends JFrame {
 
 		JLabel imgLapis = new JLabel("");
 		imgLapis.setIcon(new ImageIcon(TelaEditarVendedor.class.getResource("/img/lapis.png")));
-		
+
 		JTextPane txtDesc = new JTextPane();
 		GroupLayout gl_panel_1 = new GroupLayout(panel_1);
-		gl_panel_1.setHorizontalGroup(
-			gl_panel_1.createParallelGroup(Alignment.TRAILING)
+		gl_panel_1.setHorizontalGroup(gl_panel_1.createParallelGroup(Alignment.TRAILING)
 				.addGroup(gl_panel_1.createSequentialGroup()
-					.addGroup(gl_panel_1.createParallelGroup(Alignment.LEADING)
-						.addGroup(gl_panel_1.createSequentialGroup()
-							.addContainerGap()
-							.addComponent(imgBarra))
-						.addGroup(gl_panel_1.createSequentialGroup()
-							.addGap(184)
-							.addGroup(gl_panel_1.createParallelGroup(Alignment.LEADING)
-								.addComponent(txtDesc, GroupLayout.PREFERRED_SIZE, 198, GroupLayout.PREFERRED_SIZE)
-								.addComponent(lblNewLabel_9))))
-					.addContainerGap(193, Short.MAX_VALUE))
-				.addGroup(gl_panel_1.createSequentialGroup()
-					.addContainerGap(241, Short.MAX_VALUE)
-					.addComponent(lblNewLabel_11)
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(imgLapis)
-					.addGap(215))
-				.addGroup(gl_panel_1.createSequentialGroup()
-					.addContainerGap(192, Short.MAX_VALUE)
-					.addComponent(imgAvatar)
-					.addGap(181))
-		);
-		gl_panel_1.setVerticalGroup(
-			gl_panel_1.createParallelGroup(Alignment.TRAILING)
-				.addGroup(gl_panel_1.createSequentialGroup()
-					.addContainerGap()
-					.addComponent(imgBarra)
-					.addGap(30)
-					.addComponent(imgAvatar)
-					.addGap(12)
-					.addGroup(gl_panel_1.createParallelGroup(Alignment.TRAILING)
-						.addComponent(lblNewLabel_11)
-						.addComponent(imgLapis))
-					.addPreferredGap(ComponentPlacement.RELATED, 17, Short.MAX_VALUE)
-					.addComponent(lblNewLabel_9)
-					.addGap(18)
-					.addComponent(txtDesc, GroupLayout.PREFERRED_SIZE, 133, GroupLayout.PREFERRED_SIZE)
-					.addGap(128))
-		);
+						.addGroup(gl_panel_1.createParallelGroup(Alignment.LEADING)
+								.addGroup(gl_panel_1.createSequentialGroup().addContainerGap().addComponent(imgBarra))
+								.addGroup(gl_panel_1.createSequentialGroup().addGap(184)
+										.addGroup(gl_panel_1.createParallelGroup(Alignment.LEADING)
+												.addComponent(txtDesc, GroupLayout.PREFERRED_SIZE, 198,
+														GroupLayout.PREFERRED_SIZE)
+												.addComponent(lblNewLabel_9))))
+						.addContainerGap(193, Short.MAX_VALUE))
+				.addGroup(gl_panel_1.createSequentialGroup().addContainerGap(241, Short.MAX_VALUE)
+						.addComponent(lblNewLabel_11).addPreferredGap(ComponentPlacement.RELATED).addComponent(imgLapis)
+						.addGap(215))
+				.addGroup(gl_panel_1.createSequentialGroup().addContainerGap(192, Short.MAX_VALUE)
+						.addComponent(imgAvatar).addGap(181)));
+		gl_panel_1.setVerticalGroup(gl_panel_1.createParallelGroup(Alignment.TRAILING)
+				.addGroup(gl_panel_1.createSequentialGroup().addContainerGap().addComponent(imgBarra).addGap(30)
+						.addComponent(imgAvatar).addGap(12)
+						.addGroup(gl_panel_1.createParallelGroup(Alignment.TRAILING).addComponent(lblNewLabel_11)
+								.addComponent(imgLapis))
+						.addPreferredGap(ComponentPlacement.RELATED, 17, Short.MAX_VALUE).addComponent(lblNewLabel_9)
+						.addGap(18).addComponent(txtDesc, GroupLayout.PREFERRED_SIZE, 133, GroupLayout.PREFERRED_SIZE)
+						.addGap(128)));
 		ImageIcon barras = new ImageIcon(TelaEditarVendedor.class.getResource("/img/menu-hamburguer.png"));
 		Image imgB = barras.getImage().getScaledInstance(30, 30, Image.SCALE_SMOOTH);
 		imgBarra.setIcon(new ImageIcon(imgB));
@@ -395,46 +377,50 @@ public class TelaEditarVendedor extends JFrame {
 				String log = txtLogadouro.getText();
 				String num = txtNum.getText();
 				int num1 = Integer.parseInt(num);
-				
-				if(desc.isEmpty() || email.isEmpty() || cpf.isEmpty() || cnpj.isEmpty() || city.isEmpty() || bar.isEmpty()
-						|| log.isEmpty() || num.isEmpty()){
-					
+
+				if (desc.isEmpty() || email.isEmpty() || cpf.isEmpty() || cnpj.isEmpty() || city.isEmpty()
+						|| bar.isEmpty() || log.isEmpty() || num.isEmpty()) {
+
 					TelaError erro = new TelaError();
 					erro.setLabelText("Imformações inválidas!");
 					erro.setLocationRelativeTo(null);
 					erro.setVisible(true);
-				}else {
+				} else {
 
-				user.setIdUsuario(u.getIdUsuario());
-				ende.setId(u.getEnd().getId());
-				vend.setIdP(u.getProd().getIdP());
+					System.out.println(desc);
+					System.out.println(email);
+					System.out.println(cpf);
+					System.out.println(cnpj);
+					System.out.println(city);
+					System.out.println(bar);
+					System.out.println(log);
+					System.out.println(num1);
 
-				user.setEmail(email);
-				user.setCpf(cpf);
-				user.setDesc(desc);
-				
-				vend.setCnpj(cnpj);
+					user.setIdUsuario(u.getIdUsuario());
+					ende.setId(u.getEnd().getId());
+					vend.setIdP(u.getProd().getIdP());
+					
 
-				ende.setCidade(city);
-				ende.setBairro(bar);
-				ende.setLogradouro(log);
-				ende.setNumero(num1);
-				
-	
-				
-				try {
+					user.setEmail(email);
+					user.setCpf(cpf);
+					user.setDesc(desc);
+
+					vend.setCnpj(cnpj);
+
+					ende.setCidade(city);
+					ende.setBairro(bar);
+					ende.setLogradouro(log);
+					ende.setNumero(num1);
+					
+
 					eDAO.atualizarEndereco(ende);
-				} catch (Exception e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
-				uDAO.alterarUsuario(user);
-				pDAO.alterarProdutor(vend);
-				
-				TelaPerfilVendedor tpv = new TelaPerfilVendedor(u);
-				tpv.setLocationRelativeTo(null);
-				tpv.setVisible(true);
-				dispose();
+					uDAO.alterarUsuario(user);
+					pDAO.alterarProdutor(vend);
+
+					TelaPerfilVendedor tpv = new TelaPerfilVendedor(u);
+					tpv.setLocationRelativeTo(null);
+					tpv.setVisible(true);
+					dispose();
 
 				}
 			}

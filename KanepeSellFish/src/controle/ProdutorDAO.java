@@ -45,7 +45,7 @@ public class ProdutorDAO implements IProdutorDAO {
 	
 	public int alterarProdutor(Produtor produtor) {
 		// TODO Auto-generated method stub
-		String sql = "UPDATE kanepe.produtores set cnpj = ? where Usuarios_idUsuarios = ?";
+		String sql = "UPDATE kanepe.produtores set cnpj = ? where idProdutores = ?";
 		try (Connection conn = ConexaoBD.getConexaoMySQL(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
 			pstmt.setString(1, produtor.getCnpj());
