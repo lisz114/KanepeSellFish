@@ -26,6 +26,7 @@ import net.miginfocom.swing.MigLayout;
 public class TelaPerfilVendedor extends JFrame {
 
 	private JPanel contentPane;
+	TelaPerfilVendedor estajanela = this; 
 	private ArrayList<Usuario> listaUsuarios;
 	JPanel panelLeft;
 	private ProdutorDAO pDAO = ProdutorDAO.getInstancia();
@@ -51,7 +52,7 @@ public class TelaPerfilVendedor extends JFrame {
 	 * 
 	 * @param u
 	 * 
-	 * @param tela
+	 * @param 
 	 */
 	public TelaPerfilVendedor(Usuario u, boolean isVendedor) {
 
@@ -117,6 +118,13 @@ public class TelaPerfilVendedor extends JFrame {
 		btnSininho.setIcon(new ImageIcon(iconS));
 
 		JButton btnFlecha = new JButton("");
+		btnFlecha.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				TelaDeLogOff telaLogOff = new TelaDeLogOff(); 
+				telaLogOff.setVisible(true); 
+			
+			}
+		});
 		btnFlecha.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnFlecha.setOpaque(false);
 		btnFlecha.setBorder(null);
