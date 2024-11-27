@@ -13,6 +13,8 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
+import javax.swing.SwingConstants;
+import javax.swing.border.LineBorder;
 
 import controle.UsuarioDAO;
 import modelo.Usuario;
@@ -53,22 +55,17 @@ public class TelaEsqueceuSenha extends JFrame {
 
 		PicPanel panel = new PicPanel("src//IMG/Background2.0.png");
 		getContentPane().add(panel, BorderLayout.CENTER);
-		panel.setLayout(new MigLayout("", "[grow][][70px]", "[70px][80px][30px][][30px][][][140px][][][]"));
-		txtSenha = new JTextField();
-		JLabel lblProblemas = new JLabel("Problemas Para Entrar?  ");
-		panel.add(lblProblemas, "cell 1 1");
-		lblProblemas.setForeground(Color.BLACK);
-		lblProblemas.setFont(new Font("Tahoma", Font.BOLD, 30));
+		panel.setLayout(new MigLayout("", "[grow][grow 10][70px,grow 1]", "[70px][80px][30px][][30px][10px][30px][25][10px][30px][60px][][][]"));
+		
+		JLabel lblTitulo = new JLabel("Problemas para entrar? ");
+		lblTitulo.setForeground(new Color(0, 0, 0));
+		lblTitulo.setFont(new Font("Dialog", Font.BOLD, 27));
+		panel.add(lblTitulo, "cell 1 1,alignx center");
 
 		JLabel lblMsgEmail = new JLabel("Vamos criar uma nova senha!");
 		panel.add(lblMsgEmail, "cell 1 3,alignx center");
-		lblMsgEmail.setFont(new Font("Tahoma", Font.PLAIN, 14));
-
-		JLabel lblFeedback = new JLabel("");
-		panel.add(lblFeedback, "cell 1 4,alignx center,aligny bottom");
-
-		JLabel lblNewLabel_1 = new JLabel("Email: ");
-		panel.add(lblNewLabel_1, "flowx,cell 1 5,alignx center");
+		lblMsgEmail.setFont(new Font("Dialog", Font.PLAIN, 14));
+		lblMsgEmail.setForeground(new Color(0, 0, 0));
 
 		JLabel lblCriarConta = new JLabel("Criar nova conta");
 		lblCriarConta.addMouseListener(new MouseAdapter() {
@@ -84,35 +81,41 @@ public class TelaEsqueceuSenha extends JFrame {
 				JButton bntCodigo = new JButton("Enviar");
 				bntCodigo.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
-						Usuario u = new Usuario();
 						String email = txtEmail.getText();
 						String senha = txtSenha.getText();
 						if (email.isEmpty()) {
 							lblFeedback.setText("Por favor, insira um email");
 						} else {
-							udao.alterarSenha(senha, email);
+							udao.alterarSenha( senha,  email);
 							lblFeedback.setText("Senha Alterada com sucesso! Volte ao Login");
 						}
 					}
 				});
+		
+				JLabel lblEmail = new JLabel("Email: ");
+				lblEmail.setForeground(Color.BLACK); // Define a cor do texto principal
+				lblEmail.setFont(new Font("Dialog", Font.BOLD, 12)); // Define a fonte
+				panel.add(lblEmail, "cell 1 5,alignx left");
+		
+		JLabel lblNewLabel = new JLabel("Nova Senha:");
+		lblNewLabel.setForeground(Color.BLACK);
+		lblNewLabel.setFont(new Font("Dialog", Font.BOLD, 12));
+		panel.add(lblNewLabel, "cell 1 8");
+		
+		txtSenha = new JTextField();
+		txtSenha.setOpaque(false);
+		txtSenha.setBorder(new LineBorder(new Color(0, 0, 0), 2));
+		panel.add(txtSenha, "cell 1 9,grow");
 				
-				JLabel lblNewLabel = new JLabel("Nova Senha:");
-				panel.add(lblNewLabel, "flowx,cell 1 6,alignx center");
-				bntCodigo.setBackground(new Color(64, 224, 208));
-				panel.add(bntCodigo, "cell 1 7,alignx center");
 		lblCriarConta.setForeground(new Color(0, 0, 0));
 		lblCriarConta.setBackground(new Color(0, 0, 255));
-		panel.add(lblCriarConta, "cell 1 8,alignx center");
-		lblCriarConta.setFont(new Font("Tahoma", Font.ITALIC, 14));
+		panel.add(lblCriarConta, "cell 1 11,alignx center");
+		lblCriarConta.setFont(new Font("Dialog", Font.ITALIC, 14));
 
 		JLabel lblou = new JLabel("ou");
-		panel.add(lblou, "cell 1 9,alignx center");
-
-		txtEmail = new JTextField();
-		txtEmail.setBackground(new Color(255, 255, 255));
-		panel.add(txtEmail, "cell 1 5,alignx center");
-		txtEmail.setColumns(25);
-
+		lblou.setFont(new Font("Dialog", Font.PLAIN, 11));
+		panel.add(lblou, "cell 1 12,alignx center");
+	
 		JLabel lblVoltarLogin = new JLabel("Voltar ao login");
 		lblVoltarLogin.addMouseListener(new MouseAdapter() {
 			@Override
@@ -125,11 +128,14 @@ public class TelaEsqueceuSenha extends JFrame {
 			}
 		});
 		lblVoltarLogin.setForeground(new Color(0, 0, 0));
-		panel.add(lblVoltarLogin, "cell 1 10,alignx center");
-		lblVoltarLogin.setFont(new Font("Tahoma", Font.ITALIC, 14));
+		panel.add(lblVoltarLogin, "cell 1 13,alignx center");
+		lblVoltarLogin.setFont(new Font("Dialog", Font.ITALIC, 14));
 		
-	
-		panel.add(txtSenha, "cell 1 6,alignx center");
-		txtSenha.setColumns(25);
+				txtEmail = new JTextField();
+				txtEmail.setBorder(new LineBorder(new Color(0, 0, 0), 2));
+				txtEmail.setOpaque(false);
+				panel.add(txtEmail, "cell 1 6,grow");
+				txtEmail.setColumns(10);
+
 	}
 }
