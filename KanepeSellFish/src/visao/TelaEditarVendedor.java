@@ -54,6 +54,7 @@ public class TelaEditarVendedor extends JFrame {
 	private JTextField txtBairro;
 	private JTextField txtLogadouro;
 	private JTextField txtNum;
+	private JTextPane txtDesc;
 
 	private static UsuarioDAO uDAO = UsuarioDAO.getInstancia();
 	private static EnderecoDAO eDAO = EnderecoDAO.getInstancia();
@@ -83,6 +84,14 @@ public class TelaEditarVendedor extends JFrame {
 		setLocationByPlatform(true);
 		setMinimumSize(new Dimension(1176, 664));
 		setMaximumSize(new Dimension(1920, 1080));
+		
+		txtEmail.setText(u.getEmail());
+		txtCPF.setText(u.getCpf());
+		txtCNPJ.setText(u.getProd().getCnpj());
+		txtCidade.setText(u.getEnd().getCidade());
+		txtBairro.setText(u.getEnd().getBairro());
+		txtLogadouro.setText(u.getEnd().getLogradouro());
+		txtNum.setText(String.valueOf(u.getEnd().getNumero()));
 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
@@ -134,7 +143,7 @@ public class TelaEditarVendedor extends JFrame {
 		JLabel imgLapis = new JLabel("");
 		imgLapis.setIcon(new ImageIcon(TelaEditarVendedor.class.getResource("/img/lapis.png")));
 
-		JTextPane txtDesc = new JTextPane();
+		txtDesc = new JTextPane();
 		GroupLayout gl_panel_1 = new GroupLayout(panel_1);
 		gl_panel_1.setHorizontalGroup(gl_panel_1.createParallelGroup(Alignment.TRAILING)
 				.addGroup(gl_panel_1.createSequentialGroup()
@@ -367,7 +376,7 @@ public class TelaEditarVendedor extends JFrame {
 				Usuario user = new Usuario();
 				Produtor vend = new Produtor();
 				Endereco ende = new Endereco();
-
+				
 				String desc = txtDesc.getText();
 				String email = txtEmail.getText();
 				String cpf = txtCPF.getText();

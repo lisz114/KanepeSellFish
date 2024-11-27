@@ -74,6 +74,30 @@ public class UsuarioDAO implements IUsuarioDAO {
 		
 		return -1;
 	}
+	
+//	public Usuario BusqueID() throws SQLException {
+//		String sql = "SELECT * FROM kanepe.usuarios inner join kanepe.produtores as Usuarios_idUsuarios inner join kanepe.enderecos as idEnderecos "
+//				+ "where idUsuarios = ?";
+//		Connection conn = ConexaoBD.getConexaoMySQL();
+//		PreparedStatement stmt = conn.prepareStatement(sql);
+//		stmt.setInt(1);
+//		ResultSet rs = stmt.executeQuery();
+//		
+//		if(rs.next()) {
+//			
+//			Usuario u = new Usuario();
+//			Produtor p = new Produtor();
+//			Endereco e = new Endereco();
+//			
+//			u.setIdUsuario(rs.getInt("idUsuarios"));
+//			p.setIdP(rs.getInt("Usuarios_idUsuarios"));
+//			e.setId(rs.getInt("idEnderecos"));
+//			u.setProd(p);
+//			u.setEnd(e);
+//			
+//			return u;
+//		}
+//	}
 
 	@Override
 	public boolean removerUsuario(String cpf) {
