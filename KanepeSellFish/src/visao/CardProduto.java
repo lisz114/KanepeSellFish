@@ -15,6 +15,7 @@ import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
 import controle.CarrinhoDAO;
+import modelo.CarrinhoCompras;
 import modelo.Produto;
 import modelo.Usuario;
 import net.miginfocom.swing.MigLayout;
@@ -96,7 +97,11 @@ public class CardProduto extends JPanel {
 		btAdicionar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				CarrinhoDAO cdao = new CarrinhoDAO();
-				cdao.inserirProduto(p, quantidade, preco, u);
+				
+				CarrinhoCompras c = cdao.verificarSeExisteCarrinho(u);
+				
+				cdao.inserirProduto(p, quantidade, preco, c);
+				
 			}
 		});
 		btAdicionar.setForeground(Color.WHITE);

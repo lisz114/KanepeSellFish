@@ -132,27 +132,27 @@ public class ProdutoDAO implements IProdutoDAO {
 	}
 
 	public String pegarIdProdutor(Usuario u) {
-
+	
 		PreparedStatement stmt1 = null;
-
+	
 		Connection conn = ConexaoBD.getConexaoMySQL();
-
+	
 		try {
 			stmt1 = conn.prepareStatement("SELECT * FROM kanepe.produtores where Usuarios_idUsuarios = ?;");
 			ResultSet res1 = null;
 			stmt1.setString(1, String.valueOf(u.getIdUsuario()));
-
+	
 			res1 = stmt1.executeQuery();
-
+	
 			while (res1.next()) {
-
+	
 				return res1.getString("idProdutores");
 			}
-
+	
 			res1.close();
 			stmt1.close();
 			conn.close();
-
+	
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

@@ -2,9 +2,11 @@ package controle;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import modelo.CarrinhoCompras;
 import modelo.ICarrinhoDAO;
 import modelo.Pedido;
 import modelo.Produto;
@@ -12,12 +14,13 @@ import modelo.Usuario;
 
 public class CarrinhoDAO implements ICarrinhoDAO {
 
-
 	private static ProdutoDAO instancia;
 	private static ArrayList<Produto> listaProdutos;
 	ProdutoDAO pDAO = new ProdutoDAO();
+	UsuarioDAO uDAO = new UsuarioDAO();
 
-	public CarrinhoDAO() {}
+	public CarrinhoDAO() {
+	}
 
 	public ProdutoDAO instancia() {
 
@@ -29,12 +32,12 @@ public class CarrinhoDAO implements ICarrinhoDAO {
 		return instancia;
 	}
 
-	public boolean inserirProduto(Produto produto, int quantidade, double preco, Usuario u) {
+	public boolean inserirProduto(Produto produto, int quantidade, double preco, CarrinhoCompras c) {
 
 		String sql = "INSERT INTO ItensCarrinho (Carrinho_idCarrinho, Produtos_idProdutos, quantidade, preco) VALUES (?, ?, ?, ?)";
 		try (Connection conn = ConexaoBD.getConexaoMySQL(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
-			pstmt.setString(1, pegarIdCarrinho(u));
+			pstmt.setString(1, c.getCodigoCarrinho());
 			pstmt.setInt(2, Integer.parseInt(pDAO.pegarIdProduto(produto)));
 			pstmt.setInt(3, quantidade);
 			pstmt.setDouble(4, preco);
@@ -61,7 +64,77 @@ public class CarrinhoDAO implements ICarrinhoDAO {
 	public boolean removerProduto(long id) {
 		return false;
 
-		
+	}
+
+	public CarrinhoCompras verificarSeExisteCarrinho(Usuario u) {
+		// Usar try-with-resources para garantir o fechamento adequado dos recursos
+		String sql = "SELECT * FROM kanepe.carrinho WHERE Usuarios_idUsuarios = ?";
+		try (Connection conn = ConexaoBD.getConexaoMySQL(); PreparedStatement stmt1 = conn.prepareStatement(sql)) {
+
+			stmt1.setString(1, String.valueOf(u.getIdUsuario()));
+
+			try (ResultSet res1 = stmt1.executeQuery()) {
+				// Verifica se a consulta retornou resultados
+				if (!res1.next()) {
+					// Caso não exista carrinho, cria um novo
+					return criarCarrinho(u);
+				} else {
+					// Existe um carrinho, cria um objeto CarrinhoCompras
+					CarrinhoCompras c = new CarrinhoCompras();
+					c.setCodigoCarrinho(res1.getString("idCarrinho"));
+					return c;
+				}
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return null; // Retorna null em caso de erro
+	}
+
+	public CarrinhoCompras criarCarrinho(Usuario u) {
+		PreparedStatement stmt1 = null;
+		Connection conn = ConexaoBD.getConexaoMySQL();
+
+		try {
+			// Usando o INSERT para criar um novo carrinho
+			stmt1 = conn.prepareStatement("INSERT INTO carrinho (Usuarios_idUsuarios) VALUES (?)",
+					PreparedStatement.RETURN_GENERATED_KEYS // Habilita a recuperação do ID gerado
+			);
+
+			// Definindo o ID do usuário
+			stmt1.setInt(1, u.getIdUsuario());
+
+			// Executando o INSERT, mas agora usando executeUpdate()
+			int affectedRows = stmt1.executeUpdate(); // Retorna o número de linhas afetadas
+
+			if (affectedRows > 0) {
+				// Recuperando a chave gerada (ID do novo carrinho)
+				ResultSet generatedKeys = stmt1.getGeneratedKeys();
+				if (generatedKeys.next()) {
+					String idCarrinho = generatedKeys.getString(1); // ID gerado pelo banco
+					CarrinhoCompras c = new CarrinhoCompras();
+					c.setCodigoCarrinho(idCarrinho); // Definindo o ID do carrinho
+					return c;
+				}
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+		} finally {
+			// Fechar os recursos
+			try {
+				if (stmt1 != null)
+					stmt1.close();
+				if (conn != null)
+					conn.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+
+		return null; // Se não for possível criar o carrinho, retorna null
 	}
 
 	@Override
