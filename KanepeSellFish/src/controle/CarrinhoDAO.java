@@ -32,15 +32,19 @@ public class CarrinhoDAO implements ICarrinhoDAO {
 		return instancia;
 	}
 
-	public boolean inserirProduto(Produto produto, int quantidade, double preco, CarrinhoCompras c) {
-
+	public boolean inserirProduto(Produto produto, int quantidade, String preco, CarrinhoCompras c) {
 		String sql = "INSERT INTO ItensCarrinho (Carrinho_idCarrinho, Produtos_idProdutos, quantidade, preco) VALUES (?, ?, ?, ?)";
 		try (Connection conn = ConexaoBD.getConexaoMySQL(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
 			pstmt.setString(1, c.getCodigoCarrinho());
 			pstmt.setInt(2, Integer.parseInt(pDAO.pegarIdProduto(produto)));
 			pstmt.setInt(3, quantidade);
-			pstmt.setDouble(4, preco);
+
+			// Converter o preco para double e arredondá-lo para 2 casas decimais
+			double precoDouble = Double.parseDouble(preco);
+			precoDouble = Math.round(precoDouble * 100.0) / 100.0; // Arredondar para 2 casas decimais
+
+			pstmt.setDouble(4, precoDouble);
 
 			int rowsAffected = pstmt.executeUpdate();
 			return rowsAffected > 0;
