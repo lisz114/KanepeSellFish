@@ -7,7 +7,6 @@ public class Usuario {
 	private String email;
 	private String cpf;
 	private String tel;
-	private boolean produtor;
 	private Endereco end;
 	protected int idUsuario;
 
@@ -19,7 +18,6 @@ public class Usuario {
 		this.senha = senha;
 		this.email = email;
 	}
-
 
 	public Endereco getEnd() {
 		return end;
@@ -71,13 +69,6 @@ public class Usuario {
   
   	public void setIdUsuario(int idUsuario) {
 		this.idUsuario = idUsuario;
-	}
-	public boolean isProdutor() {
-		return produtor;
-	}
-
-	public void setProdutor(boolean produtor) {
-		this.produtor = produtor;
 	}
 
 	public boolean equals(Object obj) {

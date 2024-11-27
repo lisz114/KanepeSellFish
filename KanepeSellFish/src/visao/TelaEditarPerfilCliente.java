@@ -3,13 +3,15 @@ package visao;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.ComponentOrientation;
-import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.Image;
+import java.awt.SystemColor;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -20,8 +22,12 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.BevelBorder;
 import javax.swing.border.EmptyBorder;
+import javax.swing.border.LineBorder;
 import javax.swing.border.SoftBevelBorder;
+import javax.swing.border.TitledBorder;
 
+import controle.UsuarioDAO;
+import modelo.Produto;
 import modelo.Usuario;
 import net.miginfocom.swing.MigLayout;
 
@@ -29,6 +35,10 @@ public class TelaEditarPerfilCliente extends JFrame {
 
 	private JPanel contentPane;
 	JTextField txtPesquisar;
+	private JTextField txtCPF;
+	private JTextField txtTel;
+	private JTextField txtEmail;
+	private JLabel lblNome;
 
 	/**
 	 * Launch the application.
@@ -108,7 +118,7 @@ public class TelaEditarPerfilCliente extends JFrame {
 		btPerfil.setBorder(null);
 		panelLeft.add(btPerfil, "cell 0 2,grow");
 
-		if (u.isProdutor()) {
+		if (isVendedor) {
 			JButton btnNewButton_3 = new JButton("Estoque");
 			btnNewButton_3.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
@@ -142,7 +152,7 @@ public class TelaEditarPerfilCliente extends JFrame {
 		JPanel panel = new JPanel();
 		panel.setBackground(new Color(154, 205, 217));
 		contentPane.add(panel, BorderLayout.NORTH);
-		panel.setLayout(new MigLayout("", "[][grow][][grow][][]", "[]"));
+		panel.setLayout(new MigLayout("", "[][grow][][grow][][][]", "[]"));
 		JLabel imgMenu = new JLabel("");
 		imgMenu.addMouseListener(new MouseAdapter() {
 			@Override
@@ -156,12 +166,12 @@ public class TelaEditarPerfilCliente extends JFrame {
 		});
 		imgMenu.setIcon(new ImageIcon(TelaInicio.class.getResource("/IMG/menu-hamburguer.png")));
 		panel.add(imgMenu, "cell 0 0");
-		ImageIcon menu = new ImageIcon(TelaInicio.class.getResource("/IMG/menu-hamburguer.png"));
+		ImageIcon menu = new ImageIcon(TelaEditarPerfilCliente.class.getResource("/IMG/menu-hamburguer.png"));
 		Image iconMenu = menu.getImage().getScaledInstance(30, 30, Image.SCALE_SMOOTH);
 		imgMenu.setIcon(new ImageIcon(iconMenu));
-		ImageIcon carrinho = new ImageIcon(TelaInicio.class.getResource("/IMG/carrinho-de-compras.png"));
+		ImageIcon carrinho = new ImageIcon(TelaEditarPerfilCliente.class.getResource("/IMG/carrinho-de-compras.png"));
 		Image imgC = carrinho.getImage().getScaledInstance(30, 30, Image.SCALE_SMOOTH);
-		ImageIcon notificacao = new ImageIcon(TelaInicio.class.getResource("/IMG/sino.png"));
+		ImageIcon notificacao = new ImageIcon(TelaEditarPerfilCliente.class.getResource("/IMG/sino.png"));
 		Image imgN = notificacao.getImage().getScaledInstance(30, 30, Image.SCALE_SMOOTH);
 
 		txtPesquisar = new JTextField();
@@ -177,60 +187,92 @@ public class TelaEditarPerfilCliente extends JFrame {
 		txtPesquisar.setColumns(50);
 
 		JLabel imgCarrinho = new JLabel("");
-		imgCarrinho.setIcon(new ImageIcon(TelaInicio.class.getResource("/IMG/carrinho-de-compras.png")));
+		imgCarrinho.setIcon(new ImageIcon(TelaEditarPerfilCliente.class.getResource("/IMG/carrinho-de-compras.png")));
 		panel.add(imgCarrinho, "cell 4 0");
 		imgCarrinho.setIcon(new ImageIcon(imgC));
 
 		JLabel imgNotificacao = new JLabel("");
-		imgNotificacao.setIcon(new ImageIcon(TelaInicio.class.getResource("/IMG/sino.png")));
+		imgNotificacao.setIcon(new ImageIcon(TelaEditarPerfilCliente.class.getResource("/IMG/sino.png")));
 		panel.add(imgNotificacao, "cell 5 0");
 		imgNotificacao.setIcon(new ImageIcon(imgN));
+		
+		JLabel imgLogoff = new JLabel("");
+		imgLogoff.setIcon(new ImageIcon(TelaEditarPerfilCliente.class.getResource("/img/saida.png")));
+		panel.add(imgLogoff, "cell 6 0");
+		ImageIcon logoff = new ImageIcon(TelaEditarPerfilCliente.class.getResource("/img/saida.png"));
+		Image iconLogoff = logoff.getImage().getScaledInstance(30, 30, Image.SCALE_SMOOTH);
+		imgLogoff.setIcon(new ImageIcon(iconLogoff));
 
 		JPanel panel_1 = new JPanel();
 		contentPane.add(panel_1, BorderLayout.CENTER);
-		panel_1.setLayout(new MigLayout("", "[][][][grow]", "[][][][][grow]"));
+		panel_1.setLayout(new MigLayout("", "[][25px,grow][25px,grow][25px,grow]", "[][][][][][grow]"));
 
 		JLabel imgPerfil = new JLabel("");
 		imgPerfil.setIcon(new ImageIcon(TelaEditarPerfilCliente.class.getResource("/img/Avatar.png")));
 		panel_1.add(imgPerfil, "cell 0 1");
 
-		JLabel campoCPF = new JLabel("");
-		campoCPF.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		panel_1.add(campoCPF, "flowx,cell 2 1,alignx left,aligny bottom");
-		campoCPF.setText(u.getCpf());
-
-		JLabel lblcpf = new JLabel("CPF:");
-		lblcpf.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		panel_1.add(lblcpf, "flowx,cell 1 1,aligny bottom");
-
-		JLabel lblNome = new JLabel("lalal");
+		lblNome = new JLabel("");
 		lblNome.setFont(new Font("Tahoma", Font.PLAIN, 32));
-		panel_1.add(lblNome, "cell 1 1,alignx center,aligny top");
-
-		JLabel lblEmail = new JLabel("Email:");
-		lblEmail.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		panel_1.add(lblEmail, "cell 1 2");
-
-		JLabel campoEmail = new JLabel("");
-		campoEmail.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		panel_1.add(campoEmail, "cell 2 2");
-		campoEmail.setText(u.getEmail());
-
-		JLabel lblTelefone = new JLabel("New label");
-		lblTelefone.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		panel_1.add(lblTelefone, "cell 1 3");
-
-		JLabel campoTelefone = new JLabel("");
-		campoTelefone.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		panel_1.add(campoTelefone, "cell 2 3");
-		campoTelefone.setText(u.getTel());
+		panel_1.add(lblNome, "cell 1 1 3 1,alignx left,aligny top");
+		lblNome.setText(u.getNome());
+		
+		txtCPF = new JTextField();
+		panel_1.add(txtCPF, "cell 1 2,growx");
+		txtCPF.setColumns(10);
+		txtCPF.setBorder(new LineBorder(new Color(171, 173, 179)));
+		txtCPF.setOpaque(false);
+		txtCPF.setToolTipText("");
+		txtCPF.setBorder(new TitledBorder(new LineBorder(new Color(0, 0, 0), 2),
+				"<html>CPF<span style='color: red;'>*</span></html>", TitledBorder.LEADING, TitledBorder.TOP, null,
+				new Color(0, 0, 0)));
+		txtCPF.setBackground(SystemColor.menu);
+		
+		txtEmail = new JTextField();
+		panel_1.add(txtEmail, "cell 1 3,growx");
+		txtEmail.setColumns(10);
+		txtEmail.setColumns(10);
+		txtEmail.setOpaque(false);
+		txtEmail.setToolTipText("");
+		txtEmail.setBorder(new TitledBorder(new LineBorder(new Color(0, 0, 0), 2),
+				"<html>Email<span style='color: red;'>*</span></html>", TitledBorder.LEADING, TitledBorder.TOP, null,
+				new Color(0, 0, 0)));
+		txtEmail.setBackground(SystemColor.menu);
+		
+		txtTel = new JTextField();
+		panel_1.add(txtTel, "cell 1 4,growx");
+		txtTel.setColumns(10);
+		txtTel.setOpaque(false);
+		txtTel.setToolTipText("Adicionar Telefone");
+		txtTel.setBorder(new TitledBorder(new LineBorder(new Color(0, 0, 0), 2),
+				"<html>Tel</html>", TitledBorder.LEADING, TitledBorder.TOP, null,
+				new Color(0, 0, 0)));
+		txtTel.setBackground(SystemColor.menu);
 		
 		JButton btCancelar = new JButton("Cancelar");
-		panel_1.add(btCancelar, "flowx,cell 3 4,alignx right,aligny bottom");
+		btCancelar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				PopupCancelar cancelar = new PopupCancelar(u, isVendedor);
+				cancelar.setVisible(true);
+				cancelar.setLocationRelativeTo(null);
+			}
+		});
+		panel_1.add(btCancelar, "flowx,cell 3 5,alignx right,aligny bottom");
 		
 		JButton btSalvar = new JButton("Salvar");
+		btSalvar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				UsuarioDAO udao = new UsuarioDAO();
+				udao.alterarUsuario(u);
+			}
+		});
 		btSalvar.setBackground(new Color(64, 128, 128));
-		panel_1.add(btSalvar, "cell 3 4,alignx right,aligny bottom");
+		panel_1.add(btSalvar, "cell 3 5,alignx right,aligny bottom");
 
+	}
+	public void mostrarDados(Usuario usuarioSelecionado) {
+		lblNome.setText(usuarioSelecionado.getNome());
+		txtCPF.setText(String.valueOf(usuarioSelecionado.getCpf()));
+		txtEmail.setText(String.valueOf(usuarioSelecionado.getEmail()));
+		txtTel.setText(String.valueOf(usuarioSelecionado.getTel()));
 	}
 }

@@ -13,18 +13,15 @@ import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
-import controle.ProdutoDAO;
-import modelo.Produto;
 import modelo.Usuario;
 import net.miginfocom.swing.MigLayout;
 
 @SuppressWarnings("serial")
-public class TelaExcluirProduto extends JFrame {
+public class PopupCancelar extends JFrame {
 
 	private JPanel contentPane;
-	private static ProdutoDAO pDAO = ProdutoDAO.getInstancia();
 
-	public TelaExcluirProduto(Produto produtoSelecionado, TelaEstoque tela, Usuario u) {
+	public PopupCancelar (Usuario u, boolean vendedor) {
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 284, 174);
@@ -40,7 +37,7 @@ public class TelaExcluirProduto extends JFrame {
 		contentPane.add(panel_1);
 		panel_1.setLayout(new GridLayout(1, 0, 0, 0));
 
-		JLabel lblExcluirProduto = new JLabel("Tem certeza que deseja excluir?");
+		JLabel lblExcluirProduto = new JLabel("Tem certeza que deseja cancelar?");
 		lblExcluirProduto.setHorizontalAlignment(SwingConstants.CENTER);
 		lblExcluirProduto.setForeground(Color.BLACK);
 		lblExcluirProduto.setFont(new Font("Dialog", Font.BOLD, 15));
@@ -51,22 +48,30 @@ public class TelaExcluirProduto extends JFrame {
 		contentPane.add(panel);
 		panel.setLayout(new MigLayout("", "[100px][50px][50px][100px]", "[20px][30px]"));
 
-		JButton btExcluir = new JButton("Excluir");
+		JButton btExcluir = new JButton("Sim");
 		btExcluir.setBorderPainted(false);
 		btExcluir.setBorder(null);
 		btExcluir.setForeground(new Color(0, 0, 0));
 		btExcluir.setBounds(100, 100, 50, 20);
-		btExcluir.setBackground(new Color(205, 92, 92));
+		btExcluir.setBackground(new Color(8, 127, 140));
 		btExcluir.setFont(new Font("/Fontes/Roboto-Black.ttf", Font.PLAIN, 13));
 		btExcluir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				pDAO.removerProduto(produtoSelecionado);
-				tela.atualizarTabela(u);
-				dispose();
+				if(vendedor == true) {
+					TelaPerfilVendedor v = new TelaPerfilVendedor(u, vendedor);
+					v.setVisible(true);
+					v.setLocationRelativeTo(null);
+					dispose();
+				} else {
+					TelaPerfilCliente c = new TelaPerfilCliente(u, vendedor);
+					c.setVisible(true);
+					c.setLocationRelativeTo(null);
+					dispose();
+				}
 			}
 		});
 
-		JButton btCancelar = new JButton("Cancelar");
+		JButton btCancelar = new JButton("Não");
 		btCancelar.setBorderPainted(false);
 		btCancelar.setBorder(null);
 		btCancelar.addActionListener(new ActionListener() {

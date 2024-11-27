@@ -189,7 +189,7 @@ public class TelaEditarPerfilVendedor extends JFrame {
 		lblNomeEmp.setBounds(20, 108, 254, 25);
 		PanelNome.add(lblNomeEmp);
 //		lblNomeEmp.setText(u.getProd().getNomeComercio());
-
+		
 		JLabel imgKart = new JLabel("");
 		imgKart.setBounds(400, 6, 46, 39);
 		panel_2.add(imgKart);
@@ -360,7 +360,6 @@ public class TelaEditarPerfilVendedor extends JFrame {
 				Produtor vend = new Produtor();
 				Endereco ende = new Endereco();
 
-				String desc = txtDesc.getText();
 				String email = txtEmail.getText();
 				String cpf = txtCPF.getText();
 				String cnpj = txtCNPJ.getText();
@@ -370,7 +369,7 @@ public class TelaEditarPerfilVendedor extends JFrame {
 				String num = txtNum.getText();
 				int num1 = Integer.parseInt(num);
 				
-				if(desc.isEmpty() || email.isEmpty() || cpf.isEmpty() || cnpj.isEmpty() || city.isEmpty() || bar.isEmpty()
+				if (email.isEmpty() || cpf.isEmpty() || cnpj.isEmpty() || city.isEmpty() || bar.isEmpty()
 						|| log.isEmpty() || num.isEmpty()){
 					
 					TelaError erro = new TelaError();
@@ -381,15 +380,11 @@ public class TelaEditarPerfilVendedor extends JFrame {
 
 				user.setEmail(email);
 				user.setCpf(cpf);
-//				user.setDesc(desc);
-
 				vend.setCnpj(cnpj);
-
 				ende.setCidade(city);
 				ende.setBairro(bar);
 				ende.setLogradouro(log);
 				ende.setNumero(num1);
-				
 				eDAO.atualizarEndereco(ende);
 				uDAO.alterarUsuario(user);
 				
