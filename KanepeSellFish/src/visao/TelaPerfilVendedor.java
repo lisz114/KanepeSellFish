@@ -5,13 +5,18 @@ import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.Graphics2D;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Image;
 import java.awt.Insets;
+import java.awt.RenderingHints;
 import java.awt.SystemColor;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.geom.Area;
+import java.awt.geom.Ellipse2D;
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
@@ -49,10 +54,25 @@ public class TelaPerfilVendedor extends JFrame {
 
 	/**
 	 * Create the frame.
-	 * @param u 
+	 * 
+	 * @param u
 	 * 
 	 * @param tela
 	 */
+	
+	public static BufferedImage arredondar(BufferedImage imagemRetangular) {
+        int largura = imagemRetangular.getWidth();
+        int altura = imagemRetangular.getHeight();
+        int raio = largura / (double) altura > 0 ? altura : largura;
+        BufferedImage imagemRedonda = new BufferedImage(largura, altura, BufferedImage.TYPE_INT_ARGB);
+        Graphics2D graphics = imagemRedonda.createGraphics();
+        graphics.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+        graphics.setClip(new Area(new Ellipse2D.Double(0, 0, raio, raio)));
+        graphics.drawImage(imagemRetangular, 0, 0, null);
+        graphics.dispose();
+        return imagemRedonda;
+    }
+	
 	public TelaPerfilVendedor(Usuario u) {
 
 		setResizable(false);
@@ -67,19 +87,19 @@ public class TelaPerfilVendedor extends JFrame {
 
 		setContentPane(contentPane);
 		contentPane.setLayout(new BorderLayout(0, 0));
-		
+
 		JPanel panel = new JPanel();
 		panel.setBackground(new Color(154, 208, 217));
 		contentPane.add(panel, BorderLayout.NORTH);
 		panel.setLayout(new MigLayout("", "[10px][1010px][10px][10px][10px]", "[30px]"));
-		
+
 		JButton btnMenu = new JButton("");
 		btnMenu.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnMenu.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if(panelLeft.isVisible()) {
+				if (panelLeft.isVisible()) {
 					panelLeft.setVisible(false);
-				}else {
+				} else {
 					panelLeft.setVisible(true);
 				}
 			}
@@ -91,7 +111,7 @@ public class TelaPerfilVendedor extends JFrame {
 		ImageIcon iconMenu = new ImageIcon(TelaInicioVendedor.class.getResource("/IMG/menu-hamburguer.png"));
 		Image iconM = iconMenu.getImage().getScaledInstance(26, 26, Image.SCALE_SMOOTH);
 		btnMenu.setIcon(new ImageIcon(iconM));
-		
+
 		JButton btnCarrinho = new JButton("");
 		btnCarrinho.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnCarrinho.setOpaque(false);
@@ -105,7 +125,7 @@ public class TelaPerfilVendedor extends JFrame {
 		ImageIcon iconCarrinho = new ImageIcon(TelaInicioVendedor.class.getResource("/IMG/carrinho-de-compras.png"));
 		Image iconC = iconCarrinho.getImage().getScaledInstance(26, 26, Image.SCALE_SMOOTH);
 		btnCarrinho.setIcon(new ImageIcon(iconC));
-		
+
 		JButton btnSininho = new JButton("");
 		btnSininho.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnSininho.setOpaque(false);
@@ -115,7 +135,7 @@ public class TelaPerfilVendedor extends JFrame {
 		ImageIcon iconSininho = new ImageIcon(TelaInicioVendedor.class.getResource("/IMG/sino.png"));
 		Image iconS = iconSininho.getImage().getScaledInstance(26, 26, Image.SCALE_SMOOTH);
 		btnSininho.setIcon(new ImageIcon(iconS));
-		
+
 		JButton btnFlecha = new JButton("");
 		btnFlecha.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnFlecha.setOpaque(false);
@@ -125,16 +145,16 @@ public class TelaPerfilVendedor extends JFrame {
 		ImageIcon iconFlecha = new ImageIcon(TelaInicioVendedor.class.getResource("/IMG/saida.png"));
 		Image iconF = iconFlecha.getImage().getScaledInstance(26, 26, Image.SCALE_SMOOTH);
 		btnFlecha.setIcon(new ImageIcon(iconF));
-		
+
 		panelLeft = new JPanel();
 		panelLeft.setBackground(new Color(154, 208, 217));
 		contentPane.add(panelLeft, BorderLayout.WEST);
 		panelLeft.setLayout(new MigLayout("", "[100px]", "[50px][50px][50px][50px]"));
-		
+
 		JButton btnNewButton = new JButton("Inicio");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
+
 				TelaInicioVendedor tiv = new TelaInicioVendedor();
 				tiv.setLocationRelativeTo(null);
 				tiv.setVisible(true);
@@ -145,39 +165,39 @@ public class TelaPerfilVendedor extends JFrame {
 		btnNewButton.setBorder(null);
 		btnNewButton.setOpaque(false);
 		panelLeft.add(btnNewButton, "cell 0 0,grow");
-		
+
 		JButton btnNewButton_1 = new JButton("Carrinho");
 		btnNewButton_1.setBackground(new Color(154, 205, 217));
 		btnNewButton_1.setBorder(null);
 		btnNewButton_1.setOpaque(false);
 		panelLeft.add(btnNewButton_1, "cell 0 1,grow");
-		
+
 		JButton btnNewButton_2 = new JButton("Perfil");
 		btnNewButton_2.setBackground(new Color(154, 205, 217));
 		btnNewButton_2.setBorder(null);
 		btnNewButton_2.setOpaque(false);
 		panelLeft.add(btnNewButton_2, "cell 0 2,grow");
-		
+
 		JButton btnNewButton_3 = new JButton("Estoque");
 		btnNewButton_3.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
+
 				TelaEstoque frame = new TelaEstoque(u);
 				frame.setLocationRelativeTo(null);
 				frame.setVisible(true);
 				dispose();
-				
+
 			}
 		});
 		btnNewButton_3.setBackground(new Color(154, 205, 217));
 		btnNewButton_3.setBorder(null);
 		btnNewButton_3.setOpaque(false);
 		panelLeft.add(btnNewButton_3, "cell 0 3,grow");
-		
+
 		JPanel panel_2 = new JPanel();
 		contentPane.add(panel_2, BorderLayout.CENTER);
 		panel_2.setLayout(null);
-		
+
 		JPanel PanelNome = new JPanel();
 		PanelNome.setBounds(315, 0, 721, 133);
 		panel_2.add(PanelNome);
@@ -189,19 +209,19 @@ public class TelaPerfilVendedor extends JFrame {
 		lblNome.setBounds(0, 0, 500, 100);
 		PanelNome.add(lblNome);
 		lblNome.setText(u.getNome());
-		
+
 		JLabel lblNomeEmpresa = new JLabel("");
 		lblNomeEmpresa.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		lblNomeEmpresa.setBounds(10, 83, 250, 50);
 		PanelNome.add(lblNomeEmpresa);
 		lblNomeEmpresa.setText(u.getProd().getNomeComercio());
-		
+
 		JPanel Panelinfo = new JPanel();
 		Panelinfo.setBorder(null);
 		Panelinfo.setBounds(315, 132, 721, 566);
 		panel_2.add(Panelinfo);
 		GridBagLayout gbl_Panelinfo = new GridBagLayout();
-		gbl_Panelinfo.columnWidths = new int[] {46, 46, 300, 0, 30, 46, 30, 30, 0, 0};
+		gbl_Panelinfo.columnWidths = new int[] { 46, 46, 300, 0, 30, 46, 30, 30, 0, 0 };
 		gbl_Panelinfo.rowHeights = new int[] { 39, 14, 14, 0, 14, 0, 1, 14, 14, 0, 0, 0, 0, 14, 1, 0, 14, 14, 0, 0, 0,
 				0, 0, 0, 0, 0 };
 		gbl_Panelinfo.columnWeights = new double[] { 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE };
@@ -228,7 +248,7 @@ public class TelaPerfilVendedor extends JFrame {
 		gbc_lblNewLabel_1.gridy = 4;
 		Panelinfo.add(lblNewLabel_1, gbc_lblNewLabel_1);
 
-		JLabel lblEmail = new JLabel("pp");
+		JLabel lblEmail = new JLabel("ee");
 		lblEmail.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		GridBagConstraints gbc_lblEmail = new GridBagConstraints();
 		gbc_lblEmail.anchor = GridBagConstraints.NORTHWEST;
@@ -265,7 +285,7 @@ public class TelaPerfilVendedor extends JFrame {
 		gbc_lblNewLabel_4.gridy = 8;
 		Panelinfo.add(lblNewLabel_4, gbc_lblNewLabel_4);
 
-		JLabel lblCPF = new JLabel("pp");
+		JLabel lblCPF = new JLabel("tt");
 		lblCPF.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		GridBagConstraints gbc_lblCPF = new GridBagConstraints();
 		gbc_lblCPF.anchor = GridBagConstraints.NORTHWEST;
@@ -353,9 +373,9 @@ public class TelaPerfilVendedor extends JFrame {
 		btnNewButton1.setText("Editar");
 		btnNewButton1.setBackground(new Color(154, 205, 217));
 		btnNewButton1.setFont(new Font("Tahoma", Font.BOLD, 15));
-		
+
 		JPanel panel_21 = new JPanel();
-		panel_21.setBounds(10, 301, 284, 279);
+		panel_21.setBounds(10, 235, 284, 279);
 		panel_2.add(panel_21);
 		panel_21.setLayout(null);
 		panel_21.setOpaque(false);
@@ -366,13 +386,14 @@ public class TelaPerfilVendedor extends JFrame {
 		panel_21.add(lblNewLabel_7);
 
 		JLabel lblDesc = new JLabel("");
-		lblDesc.setBounds(21, 82, 253, 169);
+		lblDesc.setBounds(21, 82, 253, 21);
 		panel_21.add(lblDesc);
 		lblDesc.setText(u.getDesc());
-		
+
 		JLabel lblAvatar = new JLabel("");
-		lblAvatar.setIcon(new ImageIcon(TelaPerfilVendedor.class.getResource("/img/Avatar.png")));
-		lblAvatar.setBounds(48, 52, 202, 202);
+		ImageIcon img = new ImageIcon(u.getImg());
+		lblAvatar.setIcon(img);
+		lblAvatar.setBounds(48, 11, 202, 202);
 		panel_2.add(lblAvatar);
 	}
 }

@@ -45,19 +45,21 @@ public class ProdutorDAO implements IProdutorDAO {
 	
 	public int alterarProdutor(Produtor produtor) {
 		// TODO Auto-generated method stub
+		int r = -1;
 		String sql = "UPDATE kanepe.produtores set cnpj = ? where idProdutores = ?";
 		try (Connection conn = ConexaoBD.getConexaoMySQL(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
 			pstmt.setString(1, produtor.getCnpj());
 			pstmt.setInt(2, produtor.getIdP());
+			System.out.println(pstmt);
 
-			pstmt.executeUpdate();
+			r=pstmt.executeUpdate();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
-		return -1;
+		return r;
 	}
 	
 }

@@ -11,7 +11,9 @@ public class Usuario {
 	private Produtor prod;
 	private Endereco end;
 	protected int idUsuario;
+	private String img;
 
+	
 	public Usuario() {}
 
 	public Usuario(String cpf, String nome, String senha, String email, String desc) {
@@ -22,6 +24,15 @@ public class Usuario {
 		this.desc = desc;
 	}
 
+	public String getImg() {
+		return img;
+	}
+
+	public void setImg(String img) {
+		this.img = img;
+	}
+
+	
 	public Produtor getProd() {
 		return prod;
 	}

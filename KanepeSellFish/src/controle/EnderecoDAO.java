@@ -60,6 +60,7 @@ public class EnderecoDAO implements IEnderecoDAO {
 	
 	public int atualizarEndereco(Endereco endereco) {
 		String sql = "UPDATE kanepe.enderecos set Cidade = ?, Bairro = ?, Rua = ?, numero = ? where idEnderecos = ?";
+		int r = -1;
 		try (Connection conn = ConexaoBD.getConexaoMySQL(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
 			
 			pstmt.setString(1, endereco.getCidade());
@@ -68,14 +69,14 @@ public class EnderecoDAO implements IEnderecoDAO {
 			pstmt.setInt(4, endereco.getNumero());
 			pstmt.setInt(5, endereco.getId());
 			
-			
-			pstmt.executeUpdate();
+			System.out.println(pstmt);
+			r = pstmt.executeUpdate();
 		}catch (SQLException e) {
 			// TODO: handle exception
 			e.printStackTrace();
 		}
 		
-		return -1;
+		return r;
 	}
 
 

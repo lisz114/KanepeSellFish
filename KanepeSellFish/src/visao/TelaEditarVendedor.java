@@ -22,11 +22,15 @@ import java.awt.Image;
 
 import javax.swing.JLabel;
 import java.awt.Font;
+import java.awt.Graphics2D;
+
 import net.miginfocom.swing.MigLayout;
 import javax.swing.JTextField;
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
+import java.awt.RenderingHints;
+
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 
@@ -36,13 +40,25 @@ import javax.swing.GroupLayout.Alignment;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.sql.SQLException;
+import java.util.Date;
 import java.awt.event.ActionEvent;
 import javax.swing.ImageIcon;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.geom.Area;
+import java.awt.geom.Ellipse2D;
+import java.awt.image.BufferedImage;
+
 import javax.swing.JTextPane;
 import javax.swing.JProgressBar;
+import javax.swing.JTextArea;
 
 public class TelaEditarVendedor extends JFrame {
 
@@ -55,6 +71,7 @@ public class TelaEditarVendedor extends JFrame {
 	private JTextField txtLogadouro;
 	private JTextField txtNum;
 	private JTextPane txtDesc;
+	private JLabel imgAvatar;
 
 	private static UsuarioDAO uDAO = UsuarioDAO.getInstancia();
 	private static EnderecoDAO eDAO = EnderecoDAO.getInstancia();
@@ -79,19 +96,25 @@ public class TelaEditarVendedor extends JFrame {
 	/**
 	 * Create the frame.
 	 */
+	
+	public static BufferedImage arredondar(BufferedImage imagemRetangular) {
+        int largura = imagemRetangular.getWidth();
+        int altura = imagemRetangular.getHeight();
+        int raio = largura / (double) altura > 0 ? altura : largura;
+        BufferedImage imagemRedonda = new BufferedImage(largura, altura, BufferedImage.TYPE_INT_ARGB);
+        Graphics2D graphics = imagemRedonda.createGraphics();
+        graphics.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+        graphics.setClip(new Area(new Ellipse2D.Double(0, 0, raio, raio)));
+        graphics.drawImage(imagemRetangular, 0, 0, null);
+        graphics.dispose();
+        return imagemRedonda;
+    }
+	
 	public TelaEditarVendedor(Usuario u) {
 		setResizable(false);
 		setLocationByPlatform(true);
 		setMinimumSize(new Dimension(1176, 664));
 		setMaximumSize(new Dimension(1920, 1080));
-		
-		txtEmail.setText(u.getEmail());
-		txtCPF.setText(u.getCpf());
-		txtCNPJ.setText(u.getProd().getCnpj());
-		txtCidade.setText(u.getEnd().getCidade());
-		txtBairro.setText(u.getEnd().getBairro());
-		txtLogadouro.setText(u.getEnd().getLogradouro());
-		txtNum.setText(String.valueOf(u.getEnd().getNumero()));
 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
@@ -114,7 +137,7 @@ public class TelaEditarVendedor extends JFrame {
 		JLabel imgBarra = new JLabel("");
 		imgBarra.setIcon(new ImageIcon(TelaEditarVendedor.class.getResource("/img/menu-hamburguer.png")));
 
-		JLabel imgAvatar = new JLabel("");
+		imgAvatar = new JLabel("");
 		imgAvatar.setIcon(new ImageIcon(TelaEditarVendedor.class.getResource("/img/Avatar.png")));
 
 		JLabel lblNewLabel_11 = new JLabel("Editar foto de Perfil");
@@ -131,12 +154,37 @@ public class TelaEditarVendedor extends JFrame {
 					File arquivo = file.getSelectedFile();
 					System.out.println(arquivo);
 
-					String destino = arquivo.getAbsolutePath();
-					ImageIcon img = new ImageIcon(destino);
+					String origem = arquivo.getAbsolutePath();
+					ImageIcon img = new ImageIcon(origem);
 					Image png = img.getImage().getScaledInstance(200, 200, Image.SCALE_SMOOTH);
 					imgAvatar.setIcon(new ImageIcon(png));
+					
+					Date name = new Date();
+					String nome = "ImagemPerfil/perfil_"+ name.getTime()+".png"; 
+					
+					Path f = Paths.get(nome);
+					String caminho = f.toAbsolutePath().toString();
+					InputStream si = null;
+					OutputStream ot = null;
+					try {
+						si = new FileInputStream(origem);
+						ot = new FileOutputStream(caminho);
+						byte[] b = new byte[1024];
+						int l;
+						while((l = si.read(b)) > 0) {
+							ot.write(b, 0, l);
+						}
+						si.close();
+						ot.close();
+						u.setImg(caminho);
+					} catch (Exception e2) {
+						// TODO: handle exception
+						e2.printStackTrace();
+						u.setImg(null);
+					}
+					//arredondar();
 				}
-
+				uDAO.alterarUsuarioPNG(u);
 			}
 		});
 
@@ -144,6 +192,7 @@ public class TelaEditarVendedor extends JFrame {
 		imgLapis.setIcon(new ImageIcon(TelaEditarVendedor.class.getResource("/img/lapis.png")));
 
 		txtDesc = new JTextPane();
+		txtDesc.setText(u.getDesc());
 		GroupLayout gl_panel_1 = new GroupLayout(panel_1);
 		gl_panel_1.setHorizontalGroup(gl_panel_1.createParallelGroup(Alignment.TRAILING)
 				.addGroup(gl_panel_1.createSequentialGroup()
@@ -244,6 +293,7 @@ public class TelaEditarVendedor extends JFrame {
 		PanelEditor.add(lblNewLabel_5, gbc_lblNewLabel_5);
 
 		txtEmail = new JTextField();
+		txtEmail.setText(u.getEmail());
 		GridBagConstraints gbc_txtEmail = new GridBagConstraints();
 		gbc_txtEmail.anchor = GridBagConstraints.NORTH;
 		gbc_txtEmail.fill = GridBagConstraints.HORIZONTAL;
@@ -254,6 +304,7 @@ public class TelaEditarVendedor extends JFrame {
 		txtEmail.setColumns(10);
 
 		txtCidade = new JTextField();
+		txtCidade.setText(u.getEnd().getCidade());
 		GridBagConstraints gbc_txtCidade = new GridBagConstraints();
 		gbc_txtCidade.anchor = GridBagConstraints.NORTH;
 		gbc_txtCidade.fill = GridBagConstraints.HORIZONTAL;
@@ -280,6 +331,7 @@ public class TelaEditarVendedor extends JFrame {
 		PanelEditor.add(lblNewLabel_6, gbc_lblNewLabel_6);
 
 		txtCPF = new JTextField();
+		txtCPF.setText(u.getCpf());
 		GridBagConstraints gbc_txtCPF = new GridBagConstraints();
 		gbc_txtCPF.anchor = GridBagConstraints.NORTH;
 		gbc_txtCPF.fill = GridBagConstraints.HORIZONTAL;
@@ -290,6 +342,7 @@ public class TelaEditarVendedor extends JFrame {
 		txtCPF.setColumns(10);
 
 		txtBairro = new JTextField();
+		txtBairro.setText(u.getEnd().getBairro());
 		GridBagConstraints gbc_txtBairro = new GridBagConstraints();
 		gbc_txtBairro.anchor = GridBagConstraints.NORTH;
 		gbc_txtBairro.fill = GridBagConstraints.HORIZONTAL;
@@ -307,7 +360,7 @@ public class TelaEditarVendedor extends JFrame {
 		gbc_lblNewLabel_4.gridy = 7;
 		PanelEditor.add(lblNewLabel_4, gbc_lblNewLabel_4);
 
-		JLabel lblNewLabel_7 = new JLabel("Logadouro:");
+		JLabel lblNewLabel_7 = new JLabel("Logradouro:");
 		GridBagConstraints gbc_lblNewLabel_7 = new GridBagConstraints();
 		gbc_lblNewLabel_7.anchor = GridBagConstraints.NORTHWEST;
 		gbc_lblNewLabel_7.insets = new Insets(0, 0, 5, 5);
@@ -324,6 +377,7 @@ public class TelaEditarVendedor extends JFrame {
 		PanelEditor.add(lblNewLabel_8, gbc_lblNewLabel_8);
 
 		txtCNPJ = new JTextField();
+		txtCNPJ.setText(u.getProd().getCnpj());
 		GridBagConstraints gbc_txtCNPJ = new GridBagConstraints();
 		gbc_txtCNPJ.anchor = GridBagConstraints.NORTH;
 		gbc_txtCNPJ.fill = GridBagConstraints.HORIZONTAL;
@@ -334,6 +388,7 @@ public class TelaEditarVendedor extends JFrame {
 		txtCNPJ.setColumns(10);
 
 		txtLogadouro = new JTextField();
+		txtLogadouro.setText(u.getEnd().getLogradouro());
 		GridBagConstraints gbc_txtLogadouro = new GridBagConstraints();
 		gbc_txtLogadouro.anchor = GridBagConstraints.NORTH;
 		gbc_txtLogadouro.fill = GridBagConstraints.HORIZONTAL;
@@ -344,6 +399,7 @@ public class TelaEditarVendedor extends JFrame {
 		txtLogadouro.setColumns(10);
 
 		txtNum = new JTextField();
+		txtNum.setText(String.valueOf(u.getEnd().getNumero()));
 		GridBagConstraints gbc_txtNum = new GridBagConstraints();
 		gbc_txtNum.insets = new Insets(0, 0, 5, 0);
 		gbc_txtNum.anchor = GridBagConstraints.NORTH;
@@ -376,7 +432,7 @@ public class TelaEditarVendedor extends JFrame {
 				Usuario user = new Usuario();
 				Produtor vend = new Produtor();
 				Endereco ende = new Endereco();
-				
+
 				String desc = txtDesc.getText();
 				String email = txtEmail.getText();
 				String cpf = txtCPF.getText();
@@ -396,19 +452,9 @@ public class TelaEditarVendedor extends JFrame {
 					erro.setVisible(true);
 				} else {
 
-					System.out.println(desc);
-					System.out.println(email);
-					System.out.println(cpf);
-					System.out.println(cnpj);
-					System.out.println(city);
-					System.out.println(bar);
-					System.out.println(log);
-					System.out.println(num1);
-
 					user.setIdUsuario(u.getIdUsuario());
 					ende.setId(u.getEnd().getId());
 					vend.setIdP(u.getProd().getIdP());
-					
 
 					user.setEmail(email);
 					user.setCpf(cpf);
@@ -420,7 +466,6 @@ public class TelaEditarVendedor extends JFrame {
 					ende.setBairro(bar);
 					ende.setLogradouro(log);
 					ende.setNumero(num1);
-					
 
 					eDAO.atualizarEndereco(ende);
 					uDAO.alterarUsuario(user);
@@ -455,4 +500,5 @@ public class TelaEditarVendedor extends JFrame {
 		panel_2.add(lblNewLabel_10);
 
 	}
+	
 }

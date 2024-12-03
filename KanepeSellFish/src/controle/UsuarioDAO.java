@@ -60,45 +60,41 @@ public class UsuarioDAO implements IUsuarioDAO {
 	public int alterarUsuario(Usuario usuario) {
 		// TODO Auto-generated method stub
 		String sql = "UPDATE kanepe.usuarios set email_Usuario = ?, cpf_Usuario = ?, descricao = ? where idUsuarios = ?";
+		int r = -1;
 		try (Connection conn = ConexaoBD.getConexaoMySQL(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
 			pstmt.setString(1, usuario.getEmail());
 			pstmt.setString(2, usuario.getCpf());
 			pstmt.setString(3, usuario.getDesc());
 			pstmt.setInt(4, usuario.getIdUsuario());
-			pstmt.executeUpdate();
+			System.out.println(pstmt);
+			r=pstmt.executeUpdate();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
-		return -1;
+		return r;
+	}
+
+	public int alterarUsuarioPNG(Usuario usuario) {
+		// TODO Auto-generated method stub
+		String sql = "UPDATE kanepe.usuarios set img = ? where idUsuarios = ?";
+		int r = -1;
+		try (Connection conn = ConexaoBD.getConexaoMySQL(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+			pstmt.setString(1, usuario.getImg());
+			pstmt.setInt(2, usuario.getIdUsuario());
+			System.out.println(pstmt);
+			r=pstmt.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return r;
 	}
 	
-//	public Usuario BusqueID() throws SQLException {
-//		String sql = "SELECT * FROM kanepe.usuarios inner join kanepe.produtores as Usuarios_idUsuarios inner join kanepe.enderecos as idEnderecos "
-//				+ "where idUsuarios = ?";
-//		Connection conn = ConexaoBD.getConexaoMySQL();
-//		PreparedStatement stmt = conn.prepareStatement(sql);
-//		stmt.setInt(1);
-//		ResultSet rs = stmt.executeQuery();
-//		
-//		if(rs.next()) {
-//			
-//			Usuario u = new Usuario();
-//			Produtor p = new Produtor();
-//			Endereco e = new Endereco();
-//			
-//			u.setIdUsuario(rs.getInt("idUsuarios"));
-//			p.setIdP(rs.getInt("Usuarios_idUsuarios"));
-//			e.setId(rs.getInt("idEnderecos"));
-//			u.setProd(p);
-//			u.setEnd(e);
-//			
-//			return u;
-//		}
-//	}
-
 	@Override
 	public boolean removerUsuario(String cpf) {
 		for (Usuario usuario : listaUsuarios) {
@@ -172,6 +168,8 @@ public class UsuarioDAO implements IUsuarioDAO {
 				u.setEmail(res1.getString("email_Usuario"));
 				u.setSenha(res1.getString("senha_Usuario"));
 				u.setIdUsuario(res1.getInt("idUsuarios"));
+				u.setDesc(res1.getString("descricao"));
+				u.setImg(res1.getString("img"));
 				u.setTel(res1.getString("telefone"));
 
 				Endereco e = new Endereco();
@@ -179,11 +177,13 @@ public class UsuarioDAO implements IUsuarioDAO {
 				e.setCidade(res1.getString("Cidade"));
 				e.setLogradouro(res1.getString("Rua"));
 				e.setNumero(res1.getInt("Numero"));
+				e.setId(res1.getInt("idEnderecos"));
 				u.setEnd(e);
 
 				Produtor p = new Produtor();
 				p.setCnpj(res1.getString("cnpj"));
 				p.setNomeComercio(res1.getString("nomeNegocio"));
+				p.setIdP(res1.getInt("idProdutores"));
 				u.setProd(p);
 
 				return u;
