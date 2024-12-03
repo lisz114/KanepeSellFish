@@ -117,7 +117,7 @@ public class TelaLogin extends JFrame {
 		panelCpf.setBorder(new EmptyBorder(0, 40, 0, 40));
 		panelCpf.setOpaque(false);
 		panelPrincipal.add(panelCpf, "cell 0 3,grow");
-		panelCpf.setLayout(new MigLayout("", "[grow]", "[10px][40px][10px,top]"));
+		panelCpf.setLayout(new MigLayout("", "[grow]", "[10px][30px][10px,top]"));
 
 		JLabel lblSenha = new JLabel("<html>Senha<span style='color: red;'>*</span></html>");
 		lblSenha.setForeground(Color.BLACK);

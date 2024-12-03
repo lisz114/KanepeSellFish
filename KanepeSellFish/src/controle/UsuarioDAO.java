@@ -16,7 +16,9 @@ public class UsuarioDAO implements IUsuarioDAO {
 
 	private static UsuarioDAO instancia;
 
+
 	UsuarioDAO() {
+
 	}
 
 	public static UsuarioDAO getInstancia() {
@@ -57,11 +59,13 @@ public class UsuarioDAO implements IUsuarioDAO {
 	@Override
 	public int alterarUsuario(Usuario usuario) {
 		// TODO Auto-generated method stub
-		String sql = "UPDATE usuarios set email_Usuario = ?, cpf_Usuario = ? where idUsuario = ?";
+		String sql = "UPDATE usuarios set email_Usuario = ?, cpf_Usuario = ?, nome_Usuario = ?, telefone = ? where idUsuario = ?";
 		try (Connection conn = ConexaoBD.getConexaoMySQL(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
 			pstmt.setString(1, usuario.getEmail());
 			pstmt.setString(2, usuario.getCpf());
+			pstmt.setString(3, usuario.getNome());
+			pstmt.setString(4, usuario.getTel());
 
 			pstmt.executeUpdate();
 		} catch (SQLException e) {
