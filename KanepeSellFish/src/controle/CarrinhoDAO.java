@@ -32,7 +32,7 @@ public class CarrinhoDAO implements ICarrinhoDAO {
 		return instancia;
 	}
 
-	public boolean inserirProduto(Produto produto, int quantidade, String preco, CarrinhoCompras c) {
+	public boolean inserirProduto(Produto produto, int quantidade, Float preco, CarrinhoCompras c) {
 		String sql = "INSERT INTO ItensCarrinho (Carrinho_idCarrinho, Produtos_idProdutos, quantidade, preco) VALUES (?, ?, ?, ?)";
 		try (Connection conn = ConexaoBD.getConexaoMySQL(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
@@ -41,10 +41,7 @@ public class CarrinhoDAO implements ICarrinhoDAO {
 			pstmt.setInt(3, quantidade);
 
 			// Converter o preco para double e arredondá-lo para 2 casas decimais
-			double precoDouble = Double.parseDouble(preco);
-			precoDouble = Math.round(precoDouble * 100.0) / 100.0; // Arredondar para 2 casas decimais
-
-			pstmt.setDouble(4, precoDouble);
+			pstmt.setDouble(4, preco);
 
 			int rowsAffected = pstmt.executeUpdate();
 			return rowsAffected > 0;
@@ -72,7 +69,7 @@ public class CarrinhoDAO implements ICarrinhoDAO {
 
 	public CarrinhoCompras verificarSeExisteCarrinho(Usuario u) {
 		// Usar try-with-resources para garantir o fechamento adequado dos recursos
-		String sql = "SELECT * FROM kanepe.carrinho WHERE Usuarios_idUsuarios = ?";
+		String sql = "SELECT * FROM kanepe.carrinho where Usuarios_idUsuarios = ?";
 		try (Connection conn = ConexaoBD.getConexaoMySQL(); PreparedStatement stmt1 = conn.prepareStatement(sql)) {
 
 			stmt1.setString(1, String.valueOf(u.getIdUsuario()));

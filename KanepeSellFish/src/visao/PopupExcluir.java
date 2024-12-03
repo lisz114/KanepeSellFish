@@ -17,15 +17,14 @@ import controle.ProdutoDAO;
 import modelo.Produto;
 import modelo.Usuario;
 import net.miginfocom.swing.MigLayout;
-import visao.TelaPerfilVendedor;
-
 
 @SuppressWarnings("serial")
-public class TelaDeLogOff extends JFrame {
+public class PopupExcluir extends JFrame {
 
 	private JPanel contentPane;
+	private static ProdutoDAO pDAO = ProdutoDAO.getInstancia();
 
-	public TelaDeLogOff(JFrame telap) {
+	public PopupExcluir(Produto produtoSelecionado, TelaEstoque tela, Usuario u) {
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 284, 174);
@@ -41,18 +40,18 @@ public class TelaDeLogOff extends JFrame {
 		contentPane.add(panel_1);
 		panel_1.setLayout(new GridLayout(1, 0, 0, 0));
 
-		JLabel lblLogOff = new JLabel("Tem certeza que deseja sair?");
-		lblLogOff.setHorizontalAlignment(SwingConstants.CENTER);
-		lblLogOff.setForeground(Color.BLACK);
-		lblLogOff.setFont(new Font("Dialog", Font.BOLD, 15));
-		panel_1.add(lblLogOff);
+		JLabel lblExcluirProduto = new JLabel("Tem certeza que deseja excluir?");
+		lblExcluirProduto.setHorizontalAlignment(SwingConstants.CENTER);
+		lblExcluirProduto.setForeground(Color.BLACK);
+		lblExcluirProduto.setFont(new Font("Dialog", Font.BOLD, 15));
+		panel_1.add(lblExcluirProduto);
 
 		JPanel panel = new JPanel();
 		panel.setOpaque(false);
 		contentPane.add(panel);
 		panel.setLayout(new MigLayout("", "[100px][50px][50px][100px]", "[20px][30px]"));
 
-		JButton btExcluir = new JButton("Sim");
+		JButton btExcluir = new JButton("Excluir");
 		btExcluir.setBorderPainted(false);
 		btExcluir.setBorder(null);
 		btExcluir.setForeground(new Color(0, 0, 0));
@@ -61,11 +60,8 @@ public class TelaDeLogOff extends JFrame {
 		btExcluir.setFont(new Font("/Fontes/Roboto-Black.ttf", Font.PLAIN, 13));
 		btExcluir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				TelaLogin tela = new TelaLogin();
-				tela.setLocationRelativeTo(null);
-                tela.setVisible(true);
-                telap.dispose();
-                
+				pDAO.removerProduto(produtoSelecionado);
+				tela.atualizarTabela(u);
 				dispose();
 			}
 		});
@@ -83,5 +79,4 @@ public class TelaDeLogOff extends JFrame {
 		panel.add(btCancelar, "cell 0 1,grow");
 		panel.add(btExcluir, "cell 3 1,grow");
 	}
-
 }

@@ -1,6 +1,7 @@
 package visao;
 
 import java.awt.Color;
+import java.awt.Cursor;
 import java.awt.EventQueue;
 import java.awt.FlowLayout;
 import java.awt.Font;
@@ -17,7 +18,7 @@ import javax.swing.border.EmptyBorder;
 
 import net.miginfocom.swing.MigLayout;
 
-public class TelaError extends JFrame {
+public class TelaVoltarLogin extends JFrame {
 
 	private JPanel contentPane;
 	JButton btnNewButton;
@@ -25,12 +26,12 @@ public class TelaError extends JFrame {
 	/**
 	 * Launch the application.
 	 */
-	
+
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					TelaError frame = new TelaError();
+					TelaVoltarLogin frame = new TelaVoltarLogin();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -42,10 +43,10 @@ public class TelaError extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	
+
 	private JLabel lblNewLabel;
-	
-	public TelaError() {
+
+	public TelaVoltarLogin() {
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 300, 150);
@@ -55,39 +56,43 @@ public class TelaError extends JFrame {
 
 		setContentPane(contentPane);
 		contentPane.setLayout(new GridLayout(0, 1, 0, 0));
-		
+
 		JPanel panel_1 = new JPanel();
 		panel_1.setOpaque(false);
 		contentPane.add(panel_1);
 		panel_1.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
-		
-		lblNewLabel = new JLabel("Informações inválidas");
+
+		lblNewLabel = new JLabel("Senha alterada com sucesso! ");
 		lblNewLabel.setForeground(new Color(0, 0, 0));
 		lblNewLabel.setFont(new Font("/Fontes/Roboto-Bold.ttf", Font.BOLD, 15));
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		panel_1.add(lblNewLabel);
-		
+
 		JPanel panel = new JPanel();
 		panel.setOpaque(false);
 		contentPane.add(panel);
 		panel.setLayout(new MigLayout("", "[100px][50px][100px]", "[]"));
-		
-		btnNewButton = new JButton("Ok");
+
+		btnNewButton = new JButton("Voltar ao login");
 		btnNewButton.setForeground(new Color(0, 0, 0));
 		btnNewButton.setBounds(100, 100, 50, 20);
 		btnNewButton.setBackground(new Color(8, 127, 140));
+		btnNewButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnNewButton.setFont(new Font("/Fontes/Roboto-Black.ttf", Font.PLAIN, 13));
 		btnNewButton.addActionListener(new ActionListener() {
+			
 			public void actionPerformed(ActionEvent e) {
-				
-				dispose();
-				
+				TelaLogin login = new TelaLogin();
+	            login.setVisible(true);
+	            login.setLocationRelativeTo(null);
+	            dispose();
 			}
 		});
 		panel.add(btnNewButton, "cell 1 0");
 	}
+
 	public void setLabelText(String text) {
 		lblNewLabel.setText(text);
-    }
+	}
 
 }

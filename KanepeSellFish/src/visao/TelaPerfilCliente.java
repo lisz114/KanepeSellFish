@@ -121,11 +121,12 @@ public class TelaPerfilCliente extends JFrame {
 		panel_1.add(panel_4, "cell 1 1,grow");
 		panel_4.setLayout(new MigLayout("", "[grow]", "[grow]"));
 		
-		JButton btnNewButton_4 = new JButton("Alterar Informacoes");
+		JButton btnNewButton_4 = new JButton("Editar Perfil");
 		btnNewButton_4.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
 				TelaEditarPerfilCliente tela = new TelaEditarPerfilCliente(u, isVendedor);
+				tela.mostrarDados(u);
 				tela.setLocationRelativeTo(null);
 				tela.setVisible(true);
 				
@@ -223,7 +224,7 @@ public class TelaPerfilCliente extends JFrame {
 		btnNewButton_2.setBorder(null);
 		panelLeft.add(btnNewButton_2, "cell 0 2,grow");
 
-		if (u.isProdutor()) {
+		if (isVendedor){
 			JButton btnNewButton_3 = new JButton("Estoque");
 			btnNewButton_3.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {

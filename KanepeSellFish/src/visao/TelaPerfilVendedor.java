@@ -72,7 +72,7 @@ public class TelaPerfilVendedor extends JFrame {
 		JPanel panel = new JPanel();
 		panel.setBackground(new Color(154, 208, 217));
 		contentPane.add(panel, BorderLayout.NORTH);
-		panel.setLayout(new MigLayout("", "[10px][1010px][10px][10px][10px]", "[30px]"));
+		panel.setLayout(new MigLayout("", "[10px][grow][10px][10px][10px]", "[30px]"));
 
 		JButton btnMenu = new JButton("");
 		btnMenu.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
@@ -120,7 +120,8 @@ public class TelaPerfilVendedor extends JFrame {
 		JButton btnFlecha = new JButton("");
 		btnFlecha.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				TelaDeLogOff telaLogOff = new TelaDeLogOff(); 
+				TelaDeLogOff telaLogOff = new TelaDeLogOff(estajanela); 
+				telaLogOff.setLocationRelativeTo(null);
 				telaLogOff.setVisible(true); 
 			
 			}

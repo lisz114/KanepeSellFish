@@ -209,7 +209,7 @@ public class TelaEstoque extends JFrame {
 				if (posicaoSelecionada != -1) {
 					Produto produtoSelecionado = ProdutoDAO.listaProdutos.get(posicaoSelecionada);
 
-					TelaExcluirProduto erro = new TelaExcluirProduto(produtoSelecionado, estaJanela, u);
+					PopupExcluir erro = new PopupExcluir(produtoSelecionado, estaJanela, u);
 					erro.setLocationRelativeTo(null);
 					erro.setVisible(true);
 				} else {

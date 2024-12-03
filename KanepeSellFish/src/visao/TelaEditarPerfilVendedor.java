@@ -235,7 +235,6 @@ public class TelaEditarPerfilVendedor extends JFrame {
 		panel_1.add(lblNome, "cell 1 1,alignx left,aligny center");
 		panel_1.add(imgAvatar, "cell 0 1,alignx center,aligny center");
 		lblNome.setText(u.getNome());
-
 		txtCPF = new JTextField();
 		panel_1.add(txtCPF, "cell 1 2");
 		txtCPF.setBorder(new LineBorder(new Color(171, 173, 179)));
@@ -345,32 +344,25 @@ public class TelaEditarPerfilVendedor extends JFrame {
 
 				if (email.isEmpty() || cpf.isEmpty() || cnpj.isEmpty() || city.isEmpty() || bar.isEmpty()
 						|| log.isEmpty() || num.isEmpty()) {
-
 					TelaError erro = new TelaError();
 					erro.setLabelText("Imformações inválidas!");
 					erro.setLocationRelativeTo(null);
 					erro.setVisible(true);
 				} else {
-
-					user.setEmail(email);
-					user.setCpf(cpf);
-//				user.setDesc(desc);
-
-					vend.setCnpj(cnpj);
-
-					ende.setCidade(city);
-					ende.setBairro(bar);
-					ende.setLogradouro(log);
-					ende.setNumero(num1);
-
-					eDAO.atualizarEndereco(ende);
-					uDAO.alterarUsuario(user);
-
-					TelaPerfilVendedor tpv = new TelaPerfilVendedor(u, true);
-					tpv.setLocationRelativeTo(null);
-					tpv.setVisible(true);
-					dispose();
-
+				user.setEmail(email);
+				user.setCpf(cpf);
+				vend.setCnpj(cnpj);
+				ende.setCidade(city);
+				ende.setBairro(bar);
+				ende.setLogradouro(log);
+				ende.setNumero(num1);
+				eDAO.atualizarEndereco(ende);
+				uDAO.alterarUsuario(user);
+				
+				TelaPerfilVendedor tpv = new TelaPerfilVendedor(u, true);
+				tpv.setLocationRelativeTo(null);
+				tpv.setVisible(true);
+				dispose();
 				}
 			}
 		});

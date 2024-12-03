@@ -106,7 +106,7 @@ CREATE TABLE IF NOT EXISTS ItensCarrinho (
 	Carrinho_idCarrinho BIGINT NOT NULL,
 	Produtos_idProdutos BIGINT NOT NULL,
 	quantidade BIGINT NOT NULL,
-	preco BOOLEAN NOT NULL,
+	preco DECIMAL(10,2) NOT NULL,
     PRIMARY KEY(idItensCarrinho),
 	FOREIGN KEY (Produtos_idProdutos) REFERENCES Produtos (idProdutos),
 	FOREIGN KEY (Carrinho_idCarrinho) REFERENCES Carrinho (idCarrinho)
