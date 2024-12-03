@@ -25,7 +25,7 @@ public class TelaDeLogOff extends JFrame {
 
 	private JPanel contentPane;
 
-	public TelaDeLogOff() {
+	public TelaDeLogOff(JFrame telap) {
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 284, 174);
@@ -62,7 +62,9 @@ public class TelaDeLogOff extends JFrame {
 		btExcluir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				TelaLogin tela = new TelaLogin();
+				tela.setLocationRelativeTo(null);
                 tela.setVisible(true);
+                telap.dispose();
                 
 				dispose();
 			}

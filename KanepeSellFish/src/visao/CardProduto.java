@@ -23,8 +23,8 @@ import net.miginfocom.swing.MigLayout;
 @SuppressWarnings("serial")
 public class CardProduto extends JPanel {
 
-	int quantidade;
-	String preco;
+	int quantidade = 1;
+	Float preco;
 
 	public CardProduto(Produto p, Usuario u) {
 		setLayout(new MigLayout("", "[20px][100px][20px]", "[][200px][][][][][]"));
@@ -53,7 +53,8 @@ public class CardProduto extends JPanel {
 
 		JLabel lblPreco = new JLabel("");
 		add(lblPreco, "cell 1 4");
-		lblPreco.setText(Float.toString(p.getPreco()));
+		lblPreco.setText(String.valueOf(p.getPreco()));
+		
 
 		JLabel imgMenos = new JLabel("");
 		imgMenos.addMouseListener(new MouseAdapter() {
@@ -62,8 +63,7 @@ public class CardProduto extends JPanel {
 				if (quantidade > 0) {
 					quantidade--;
 					if (quantidade != 0) {
-						preco = lblPreco.getText();
-						preco = String.valueOf(Float.parseFloat(preco) * quantidade);
+
 						lblQuantidade.setText(Integer.toString(quantidade));
 					} else {
 						lblQuantidade.setText("1");
@@ -88,8 +88,7 @@ public class CardProduto extends JPanel {
 				if (quantidade > 0) {
 					quantidade++;
 					if (quantidade != 0) {
-						preco = lblPreco.getText();
-						preco = String.valueOf(Float.parseFloat(preco) * quantidade);
+
 						lblQuantidade.setText(Integer.toString(quantidade));
 					} else {
 						lblQuantidade.setText("1");
@@ -110,6 +109,8 @@ public class CardProduto extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 				CarrinhoDAO cdao = new CarrinhoDAO();
 				CarrinhoCompras c = cdao.verificarSeExisteCarrinho(u);
+				preco = p.getPreco();
+				preco = preco*quantidade;
 				cdao.inserirProduto(p, quantidade, preco, c);
 				TelaError erro = new TelaError();
 				erro.setLabelText("Produto adicionado ao carrinho");
