@@ -116,7 +116,7 @@ public class TelaInicio extends JFrame {
 					coluna = 0;
 					linha++;
 				}
-				CardProduto panel_8 = new CardProduto(p);
+				CardProduto panel_8 = new CardProduto(p, u);
 				panel_7.add(panel_8, "cell " + coluna + " " + linha + "");
 
 			}
