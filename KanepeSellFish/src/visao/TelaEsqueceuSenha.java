@@ -2,23 +2,23 @@ package visao;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.Font;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
-import javax.swing.SwingConstants;
 import javax.swing.border.LineBorder;
 
 import controle.UsuarioDAO;
 import modelo.Usuario;
 import net.miginfocom.swing.MigLayout;
+import modelo.RoundButton;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class TelaEsqueceuSenha extends JFrame {
 
@@ -78,20 +78,6 @@ public class TelaEsqueceuSenha extends JFrame {
 			}
 		});
 		
-				JButton bntCodigo = new JButton("Enviar");
-				bntCodigo.addActionListener(new ActionListener() {
-					public void actionPerformed(ActionEvent e) {
-						String email = txtEmail.getText();
-						String senha = txtSenha.getText();
-						if (email.isEmpty()) {
-							lblFeedback.setText("Por favor, insira um email");
-						} else {
-							udao.alterarSenha( senha,  email);
-							lblFeedback.setText("Senha Alterada com sucesso! Volte ao Login");
-						}
-					}
-				});
-		
 				JLabel lblEmail = new JLabel("Email: ");
 				lblEmail.setForeground(Color.BLACK); // Define a cor do texto principal
 				lblEmail.setFont(new Font("Dialog", Font.BOLD, 12)); // Define a fonte
@@ -106,6 +92,35 @@ public class TelaEsqueceuSenha extends JFrame {
 		txtSenha.setOpaque(false);
 		txtSenha.setBorder(new LineBorder(new Color(0, 0, 0), 2));
 		panel.add(txtSenha, "cell 1 9,grow");
+		
+		RoundButton rndbtnConfirma = new RoundButton(" Confirmar ");
+		rndbtnConfirma.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String senha = String.valueOf(txtSenha.getText());
+				String email = String.valueOf(txtEmail.getText());
+				
+				if(senha.isEmpty() || email.isEmpty()) {
+					TelaError erro = new TelaError();
+					erro.setVisible(true);
+					erro.setLocationRelativeTo(null);
+					
+				}else {
+					udao.alterarSenha(senha, email);
+					TelaVoltarLogin voltar = new TelaVoltarLogin();
+					voltar.setVisible(true);
+					voltar.setLocationRelativeTo(null);
+				
+				}
+			}
+		});
+		rndbtnConfirma.setText(" Confirmar ");
+		rndbtnConfirma.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		rndbtnConfirma.setForeground(Color.WHITE);
+		rndbtnConfirma.setFont(new Font("Dialog", Font.PLAIN, 22));
+		rndbtnConfirma.setBorderPainted(false);
+		rndbtnConfirma.setBorder(new LineBorder(new Color(0, 0, 0), 1, true));
+		rndbtnConfirma.setBackground(new Color(2, 73, 89));
+		panel.add(rndbtnConfirma, "cell 1 10,alignx center");
 				
 		lblCriarConta.setForeground(new Color(0, 0, 0));
 		lblCriarConta.setBackground(new Color(0, 0, 255));
