@@ -26,6 +26,7 @@ import net.miginfocom.swing.MigLayout;
 public class TelaPerfilVendedor extends JFrame {
 
 	private JPanel contentPane;
+	TelaPerfilVendedor estajanela = this; 
 	private ArrayList<Usuario> listaUsuarios;
 	JPanel panelLeft;
 	private ProdutorDAO pDAO = ProdutorDAO.getInstancia();
@@ -51,7 +52,7 @@ public class TelaPerfilVendedor extends JFrame {
 	 * 
 	 * @param u
 	 * 
-	 * @param tela
+	 * @param 
 	 */
 	public TelaPerfilVendedor(Usuario u, boolean isVendedor) {
 
@@ -71,7 +72,7 @@ public class TelaPerfilVendedor extends JFrame {
 		JPanel panel = new JPanel();
 		panel.setBackground(new Color(154, 208, 217));
 		contentPane.add(panel, BorderLayout.NORTH);
-		panel.setLayout(new MigLayout("", "[10px][1010px][10px][10px][10px]", "[30px]"));
+		panel.setLayout(new MigLayout("", "[10px][grow][10px][10px][10px]", "[30px]"));
 
 		JButton btnMenu = new JButton("");
 		btnMenu.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
@@ -117,6 +118,14 @@ public class TelaPerfilVendedor extends JFrame {
 		btnSininho.setIcon(new ImageIcon(iconS));
 
 		JButton btnFlecha = new JButton("");
+		btnFlecha.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				TelaDeLogOff telaLogOff = new TelaDeLogOff(estajanela); 
+				telaLogOff.setLocationRelativeTo(null);
+				telaLogOff.setVisible(true); 
+			
+			}
+		});
 		btnFlecha.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnFlecha.setOpaque(false);
 		btnFlecha.setBorder(null);

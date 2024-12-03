@@ -48,7 +48,7 @@ public class CardProdCarrinho extends JPanel {
 		JLabel lblQuantidadeCarrinho = new JLabel("0");
 		JLabel imgPeixe = new JLabel("");
 		imgPeixe.setIcon(new ImageIcon(CardProduto.class.getResource("/img/ttilapia.jpg")));
-		getRootPane().add(imgPeixe, "cell 0 0");
+//		getRootPane().add(imgPeixe, "cell 0 0");
 		imgPeixe.setIcon(new ImageIcon(foto));
 		ImageIcon imgm = new ImageIcon(CardProdCarrinho.class.getResource("/img/More.png"));
 		Image a = imgm.getImage().getScaledInstance(20, 20, Image.SCALE_SMOOTH);
@@ -103,7 +103,7 @@ public class CardProdCarrinho extends JPanel {
 		imgMais.setIcon(new ImageIcon(CardProdCarrinho.class.getResource("/img/More.png")));
 		contentPane.add(imgMais, "cell 2 3");
 		imgMais.setIcon(new ImageIcon(CardProdCarrinho.class.getResource("/img/More.png")));
-		getRootPane().add(imgMais, "cell 1 2");
+//		getRootPane().add(imgMais, "cell 1 2");
 		imgMais.setIcon(new ImageIcon(a));
 
 		JButton btAdicionar = new JButton("Adicionar");

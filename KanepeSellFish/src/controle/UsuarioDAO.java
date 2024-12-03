@@ -16,7 +16,9 @@ public class UsuarioDAO implements IUsuarioDAO {
 
 	private static UsuarioDAO instancia;
 
-	public UsuarioDAO() {
+
+	UsuarioDAO() {
+
 	}
 
 	public static UsuarioDAO getInstancia() {
@@ -93,7 +95,7 @@ public class UsuarioDAO implements IUsuarioDAO {
 
 		try {
 			stmt1 = conn
-					.prepareStatement("SELECT * FROM kanepe.usuarios where email_Usuario = ? and senha_Usuario = ?;");
+					.prepareStatement("SELECT * FROM kanepe.usuarios where email_Usuario = ? and senha_Usuario = ?");
 			ResultSet res1 = null;
 			stmt1.setString(1, email);
 			stmt1.setString(2, senha);
@@ -155,7 +157,7 @@ public class UsuarioDAO implements IUsuarioDAO {
 		Connection conn = ConexaoBD.getConexaoMySQL();
 
 		try {
-			stmt1 = conn.prepareStatement("SELECT * FROM kanepe.usuarios where cpf_Usuario = ? OR email_Usuario=?;");
+			stmt1 = conn.prepareStatement("SELECT * FROM kanepe.usuarios where cpf_Usuario = ? OR email_Usuario=?");
 			ResultSet res1 = null;
 			stmt1.setString(1, cpf);
 			stmt1.setString(2, email);
