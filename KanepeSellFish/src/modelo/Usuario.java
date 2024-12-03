@@ -1,24 +1,30 @@
 package modelo;
 
 public class Usuario {
+
 	private String nome;
 	private String senha;
 	private String email;
 	private String cpf;
 	private String tel;
-//	private String nempresa;
-//	private String cidade;
-//	private String rua;
-//	private String bairro;
+	private Endereco end;
+	protected int idUsuario;
 
-	public Usuario() {
-	}
+	public Usuario() {}
 
 	public Usuario(String cpf, String nome, String senha, String email) {
+		this.cpf = cpf;
 		this.nome = nome;
 		this.senha = senha;
 		this.email = email;
-		this.cpf = cpf;
+	}
+
+	public Endereco getEnd() {
+		return end;
+	}
+
+	public void setEnd(Endereco end) {
+		this.end = end;
 	}
 
 	public String getNome() {
@@ -59,5 +65,21 @@ public class Usuario {
 
 	public void setTel(String tel) {
 		this.tel = tel;
+	}
+  
+  	public void setIdUsuario(int idUsuario) {
+		this.idUsuario = idUsuario;
+	}
+
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null || getClass() != obj.getClass())
+			return false;
+		Usuario usuario = (Usuario) obj;
+		return cpf == usuario.cpf;
+	}
+	public int getIdUsuario() {
+		return this.idUsuario;
 	}
 }

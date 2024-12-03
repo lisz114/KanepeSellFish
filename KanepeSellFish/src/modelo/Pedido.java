@@ -5,7 +5,7 @@ import java.util.ArrayList;
 
 public class Pedido {
 
-	private String idPedido;
+	private String id;
 	private Produtor produtoPedido;
 	private Cliente cliente;
 	private LocalDate data;
@@ -15,8 +15,8 @@ public class Pedido {
 	
 	public Pedido() {}
 	
-	public Pedido(String idPedido, Produtor produtoPedido, Cliente cliente,  LocalDate data, Float valorTotal, CarrinhoCompras carrinhoPedido, ArrayList<Pedido> produtoPedidos) {
-		this.idPedido = idPedido;
+	public Pedido(String id, Produtor produtoPedido, Cliente cliente,  LocalDate data, Float valorTotal, CarrinhoCompras carrinhoPedido, ArrayList<Pedido> produtoPedidos) {
+		this.id = id;
 		this.produtoPedido = produtoPedido;
 		this.cliente = cliente;
 		this.data = data;
@@ -25,12 +25,12 @@ public class Pedido {
 		this.produtoPedidos = produtoPedidos;
 	}
 
-	public String getIdPedido() {
-		return idPedido;
+	public String getId() {
+		return id;
 	}
 
-	public void setIdPedido(String idPedido) {
-		this.idPedido = idPedido;
+	public void setId(String id) {
+		this.id = id;
 	}
 
 	public Produtor getprodutoPedido() {
@@ -80,8 +80,4 @@ public class Pedido {
 	public void setprodutoPedidos(ArrayList<Pedido> produtoPedidos) {
 		this.produtoPedidos = produtoPedidos;
 	}
-	
-	
-	
-	
 }

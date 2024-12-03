@@ -1,93 +1,156 @@
 package visao;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Cursor;
 import java.awt.Dimension;
-import java.awt.EventQueue;
-import java.awt.GridLayout;
+import java.awt.Font;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 import javax.swing.JFrame;
-import javax.swing.JPanel;
-import net.miginfocom.swing.MigLayout;
 import javax.swing.JLabel;
-import java.awt.Color;
-import java.awt.Font;
 import javax.swing.JTextField;
-import javax.swing.JButton;
+import javax.swing.border.LineBorder;
+
+import controle.UsuarioDAO;
+import modelo.Usuario;
+import net.miginfocom.swing.MigLayout;
+import modelo.RoundButton;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class TelaEsqueceuSenha extends JFrame {
 
 	private static final long serialVersionUID = 1L;
-	private JPanel contentPane;
 	private JTextField txtEmail;
+	private JTextField txtSenha;
+	UsuarioDAO udao = UsuarioDAO.getInstancia();
 
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					 TelaEsqueceuSenha frame = new TelaEsqueceuSenha();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
-
-	public TelaEsqueceuSenha() {
+//	public static void main(String[] args) {
+//		EventQueue.invokeLater(new Runnable() {
+//			public void run() {
+//				try {
+//					 TelaEsqueceuSenha frame = new TelaEsqueceuSenha(null);
+//					frame.setVisible(true);
+//				} catch (Exception e) {
+//					e.printStackTrace();
+//				}
+//			}
+//		});
+//	}
+	public TelaEsqueceuSenha(Usuario u) {
 		setResizable(false);
 		setLocationByPlatform(true);
 		setMinimumSize(new Dimension(1176, 664));
 		setMaximumSize(new Dimension(1920, 1080));
-		
+
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 632, 487);
 		getContentPane().setLayout(new BorderLayout(0, 0));
 		getContentPane().setLayout(new BorderLayout(0, 0));
-		
+
 		PicPanel panel = new PicPanel("src//IMG/Background2.0.png");
 		getContentPane().add(panel, BorderLayout.CENTER);
-		panel.setLayout(new GridLayout(1, 0, 0, 0));
+		panel.setLayout(new MigLayout("", "[grow][grow 10][70px,grow 1]", "[70px][80px][30px][][30px][10px][30px][25][10px][30px][60px][][][]"));
 		
-		JPanel panel_1 = new JPanel();
-		panel.add(panel_1);
-		
-		JPanel panel_2 = new JPanel();
-		panel.add(panel_2);
-		panel_2.setLayout(new MigLayout("", "[][][][][][][][][][][grow][]", "[][][][][][][][][][][][][][][][][][][][][]"));
-		
-		JLabel lblProblemas = new JLabel("Problemas Para Entrar?  ");
-		lblProblemas.setFont(new Font("Tahoma", Font.BOLD, 30));
-		lblProblemas.setForeground(Color.BLACK);
-		panel_2.add(lblProblemas, "cell 10 2,alignx center");
-		
-		JLabel lblMsgEmail = new JLabel("Insira seu email e enviaremos um código para acessar sua conta.");
-		lblMsgEmail.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		panel_2.add(lblMsgEmail, "cell 10 6,alignx center");
-		
-		JLabel lblNewLabel_1 = new JLabel("Email: ");
-		panel_2.add(lblNewLabel_1, "cell 10 9");
-		
-		txtEmail = new JTextField();
-		panel_2.add(txtEmail, "cell 10 10,growx");
-		txtEmail.setColumns(10);
-		
-		JButton bntCodigo = new JButton("Enviar código para login ");
-		panel_2.add(bntCodigo, "cell 10 12,alignx center");
-		
+		JLabel lblTitulo = new JLabel("Problemas para entrar? ");
+		lblTitulo.setForeground(new Color(0, 0, 0));
+		lblTitulo.setFont(new Font("Dialog", Font.BOLD, 27));
+		panel.add(lblTitulo, "cell 1 1,alignx center");
+
+		JLabel lblMsgEmail = new JLabel("Vamos criar uma nova senha!");
+		panel.add(lblMsgEmail, "cell 1 3,alignx center");
+		lblMsgEmail.setFont(new Font("Dialog", Font.PLAIN, 14));
+		lblMsgEmail.setForeground(new Color(0, 0, 0));
+
 		JLabel lblCriarConta = new JLabel("Criar nova conta");
-		lblCriarConta.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		panel_2.add(lblCriarConta, "cell 10 15,alignx center");
+		lblCriarConta.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				TelaCadastro cadastro = new TelaCadastro();
+				cadastro.setVisible(true);
+				cadastro.setLocationRelativeTo(null);
+				dispose();
+			}
+		});
 		
+				JLabel lblEmail = new JLabel("Email: ");
+				lblEmail.setForeground(Color.BLACK); // Define a cor do texto principal
+				lblEmail.setFont(new Font("Dialog", Font.BOLD, 12)); // Define a fonte
+				panel.add(lblEmail, "cell 1 5,alignx left");
+		
+		JLabel lblNewLabel = new JLabel("Nova Senha:");
+		lblNewLabel.setForeground(Color.BLACK);
+		lblNewLabel.setFont(new Font("Dialog", Font.BOLD, 12));
+		panel.add(lblNewLabel, "cell 1 8");
+		
+		txtSenha = new JTextField();
+		txtSenha.setOpaque(false);
+		txtSenha.setBorder(new LineBorder(new Color(0, 0, 0), 2));
+		panel.add(txtSenha, "cell 1 9,grow");
+		
+		RoundButton rndbtnConfirma = new RoundButton(" Confirmar ");
+		rndbtnConfirma.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String senha = String.valueOf(txtSenha.getText());
+				String email = String.valueOf(txtEmail.getText());
+				
+				if(senha.isEmpty() || email.isEmpty()) {
+					TelaError erro = new TelaError();
+					erro.setVisible(true);
+					erro.setLocationRelativeTo(null);
+					
+				}else {
+					udao.alterarSenha(senha, email);
+					TelaVoltarLogin voltar = new TelaVoltarLogin();
+					voltar.setVisible(true);
+					voltar.setLocationRelativeTo(null);
+				
+				}
+			}
+		});
+		rndbtnConfirma.setText(" Confirmar ");
+		rndbtnConfirma.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		rndbtnConfirma.setForeground(Color.WHITE);
+		rndbtnConfirma.setFont(new Font("Dialog", Font.PLAIN, 22));
+		rndbtnConfirma.setBorderPainted(false);
+		rndbtnConfirma.setBorder(new LineBorder(new Color(0, 0, 0), 1, true));
+		rndbtnConfirma.setBackground(new Color(2, 73, 89));
+		panel.add(rndbtnConfirma, "cell 1 10,alignx center");
+				
+		lblCriarConta.setForeground(new Color(0, 0, 0));
+		lblCriarConta.setBackground(new Color(0, 0, 255));
+		panel.add(lblCriarConta, "cell 1 11,alignx center");
+		lblCriarConta.setFont(new Font("Dialog", Font.ITALIC, 14));
+
 		JLabel lblou = new JLabel("ou");
-		panel_2.add(lblou, "cell 10 17,alignx center");
-		
+		lblou.setFont(new Font("Dialog", Font.PLAIN, 11));
+		panel.add(lblou, "cell 1 12,alignx center");
+	
 		JLabel lblVoltarLogin = new JLabel("Voltar ao login");
-		lblVoltarLogin.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		panel_2.add(lblVoltarLogin, "cell 10 19,alignx center");
+		lblVoltarLogin.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				TelaLogin login = new TelaLogin();
+
+				login.setVisible(true);
+				login.setLocationRelativeTo(null);
+				dispose();
+			}
+		});
+		lblVoltarLogin.setForeground(new Color(0, 0, 0));
+		panel.add(lblVoltarLogin, "cell 1 13,alignx center");
+		lblVoltarLogin.setFont(new Font("Dialog", Font.ITALIC, 14));
+		
+				txtEmail = new JTextField();
+				txtEmail.setBorder(new LineBorder(new Color(0, 0, 0), 2));
+				txtEmail.setOpaque(false);
+				panel.add(txtEmail, "cell 1 6,grow");
+				txtEmail.setColumns(10);
+
 	}
 }
-		

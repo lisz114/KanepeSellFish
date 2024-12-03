@@ -18,24 +18,29 @@ import javax.swing.JCheckBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.SpringLayout;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 
+import Atxy2k.CustomTextField.RestrictedTextField;
 import controle.UsuarioDAO;
+import modelo.RoundButton;
 import modelo.Usuario;
 import net.miginfocom.swing.MigLayout;
 
+@SuppressWarnings("serial")
 public class TelaCadastro extends JFrame {
 
+	@SuppressWarnings("unused")
 	private JPanel contentPane;
 	private JTextField txtNome;
 	private JTextField txtCPF;
 	private JTextField txtEmail;
-	private JTextField txtSenha;
 	private static UsuarioDAO uDAO = UsuarioDAO.getInstancia();
+	private JPasswordField txtSenha;
 
 	/**
 	 * Launch the application.
@@ -159,10 +164,9 @@ public class TelaCadastro extends JFrame {
 		lblSenha.setFont(new Font("Tahoma", Font.BOLD, 12));
 		panelSenha.add(lblSenha, "cell 0 0");
 
-		txtSenha = new JTextField();
+		txtSenha = new JPasswordField();
 		txtSenha.setBorder(new LineBorder(new Color(0, 0, 0), 2));
 		txtSenha.setOpaque(false);
-		txtSenha.setColumns(10);
 		panelSenha.add(txtSenha, "cell 0 1,grow");
 
 		JPanel panelCheck = new JPanel();
@@ -208,19 +212,19 @@ public class TelaCadastro extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				String cpf = txtCPF.getText();
 				String email = txtEmail.getText();
-				String senha = txtSenha.getText();
+				String senha = new String(txtSenha.getPassword());
 				String nome = txtNome.getText();
 
 				// Consulta o usuário
-				Usuario u = uDAO.consultaUsuarioCPF(cpf);
+				Usuario u = uDAO.consultaUsuarioCadastrado(cpf, email);
 
 				if (u != null) {
-						System.out.println("Nao du bom");
-						TelaError erro = new TelaError();
-						erro.setLabelText("CPF já cadastrado");
-						erro.setLocationRelativeTo(null);
-						erro.setVisible(true);
-					
+					System.out.println("CPF ou Email já cadastrado");
+					TelaError erro = new TelaError();
+					erro.setLabelText("CPF ou Email já cadastrado");
+					erro.setLocationRelativeTo(null);
+					erro.setVisible(true);
+
 				} else {
 					Usuario novoUsuario = new Usuario();
 					if (email.isEmpty() || senha.isEmpty() || cpf.isEmpty() || nome.isEmpty()) {
@@ -230,17 +234,35 @@ public class TelaCadastro extends JFrame {
 						erro.setLocationRelativeTo(null);
 						erro.setVisible(true);
 					} else {
+						if(uDAO.validarCPF(cpf)) {
+							
+						
 						novoUsuario.setNome(nome);
 						novoUsuario.setCpf(cpf);
 						novoUsuario.setEmail(email);
 						novoUsuario.setSenha(senha);
+						if (!chckboxVendedor.isSelected()) {
+							uDAO.inserirUsuario(novoUsuario);
+							TelaLogin tela = new TelaLogin();
+							tela.setLocationRelativeTo(null);
+							tela.setVisible(true);
 
-						uDAO.inserirUsuario(novoUsuario);
-						TelaLogin tela = new TelaLogin();
-						tela.setLocationRelativeTo(null);
-						tela.setVisible(true);
+							dispose();
+						} else {
 
-						dispose();
+							TelaCadastroComercio tela = new TelaCadastroComercio(novoUsuario);
+							tela.setLocationRelativeTo(null);
+							tela.setVisible(true);
+
+							dispose();
+
+						}
+					}else {
+						TelaError erro = new TelaError();
+						erro.setLabelText("CPF Invalido	");
+						erro.setLocationRelativeTo(null);
+						erro.setVisible(true);
+					}
 					}
 				}
 			}
@@ -282,5 +304,9 @@ public class TelaCadastro extends JFrame {
 		JPanel panel_3 = new JPanel();
 		panel_3.setOpaque(false);
 		panel.add(panel_3);
+
+		RestrictedTextField validarcpf = new RestrictedTextField(txtCPF);
+		validarcpf.setOnlyNums(true);
+		validarcpf.setLimit(11);
 	}
 }
