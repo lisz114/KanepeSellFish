@@ -359,8 +359,6 @@ public class TelaEditarPerfilVendedor extends JFrame {
 				Usuario user = new Usuario();
 				Produtor vend = new Produtor();
 				Endereco ende = new Endereco();
-
-				String desc = txtDesc.getText();
 				String email = txtEmail.getText();
 				String cpf = txtCPF.getText();
 				String cnpj = txtCNPJ.getText();
@@ -370,7 +368,7 @@ public class TelaEditarPerfilVendedor extends JFrame {
 				String num = txtNum.getText();
 				int num1 = Integer.parseInt(num);
 				
-				if(desc.isEmpty() || email.isEmpty() || cpf.isEmpty() || cnpj.isEmpty() || city.isEmpty() || bar.isEmpty()
+				if(email.isEmpty() || cpf.isEmpty() || cnpj.isEmpty() || city.isEmpty() || bar.isEmpty()
 						|| log.isEmpty() || num.isEmpty()){
 					
 					TelaError erro = new TelaError();
@@ -381,10 +379,7 @@ public class TelaEditarPerfilVendedor extends JFrame {
 
 				user.setEmail(email);
 				user.setCpf(cpf);
-//				user.setDesc(desc);
-
 				vend.setCnpj(cnpj);
-
 				ende.setCidade(city);
 				ende.setBairro(bar);
 				ende.setLogradouro(log);

@@ -2,6 +2,7 @@ package visao;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Image;
@@ -18,10 +19,12 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
+import javax.swing.border.LineBorder;
 
 import modelo.Produto;
 import modelo.Usuario;
 import net.miginfocom.swing.MigLayout;
+import java.awt.SystemColor;
 
 public class TelaPerfilCliente extends JFrame {
 
@@ -82,8 +85,8 @@ public class TelaPerfilCliente extends JFrame {
 		panel_3.add(lblImagemCliente, "flowy,cell 0 0,alignx center,aligny bottom");
 		
 		JLabel lblNewLabel = new JLabel("Alterar foto");
-		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		lblNewLabel.setForeground(new Color(0, 0, 255));
+		lblNewLabel.setFont(new Font("Dialog", Font.ITALIC, 13));
+		lblNewLabel.setForeground(SystemColor.textHighlight);
 		panel_3.add(lblNewLabel, "cell 0 0,alignx center,aligny center");
 
 		JPanel panel_2 = new JPanel();
@@ -92,46 +95,57 @@ public class TelaPerfilCliente extends JFrame {
 		
 		JLabel lblNomeCliente = new JLabel(u.getNome());
 		panel_2.add(lblNomeCliente, "cell 0 1 2 1");
-		lblNomeCliente.setFont(new Font("Tahoma", Font.PLAIN, 30));
+		lblNomeCliente.setFont(new Font("Dialog", Font.PLAIN, 30));
 		
 		JLabel lblCPF = new JLabel("CPF: ");
 		lblCPF.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblCPF.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		lblCPF.setFont(new Font("Dialog", Font.PLAIN, 15));
 		panel_2.add(lblCPF, "cell 0 3");
 		
 		JLabel lblDynamicCPF = new JLabel(u.getCpf());
-		lblDynamicCPF.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		lblDynamicCPF.setFont(new Font("Dialog", Font.PLAIN, 15));
 		panel_2.add(lblDynamicCPF, "cell 1 3,alignx left,aligny center");
 		
 		JLabel lblEmail = new JLabel("Email: ");
 		lblEmail.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblEmail.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		lblEmail.setFont(new Font("Dialog", Font.PLAIN, 15));
 		panel_2.add(lblEmail, "cell 0 5");
 		
 		JLabel lblDynamicEmail = new JLabel(u.getEmail());
-		lblDynamicEmail.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		lblDynamicEmail.setFont(new Font("Dialog", Font.PLAIN, 15));
 		panel_2.add(lblDynamicEmail, "cell 1 5,alignx left,aligny center");
 		
 		JLabel lblTelefone = new JLabel("Telefone: ");
 		lblTelefone.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblTelefone.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		lblTelefone.setFont(new Font("Dialog", Font.PLAIN, 15));
 		panel_2.add(lblTelefone, "cell 0 7");
 		
 		JPanel panel_4 = new JPanel();
-		panel_1.add(panel_4, "cell 1 1,grow");
+		panel_1.add(panel_4, "cell 1 1,alignx right,aligny bottom");
 		panel_4.setLayout(new MigLayout("", "[grow]", "[grow]"));
 		
-		JButton btnNewButton_4 = new JButton("Alterar Informacoes");
-		btnNewButton_4.addActionListener(new ActionListener() {
+		JButton bntEditar = new JButton(" Alterar informações ");
+		bntEditar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
-				TelaEditarPerfilCliente tela = new TelaEditarPerfilCliente(u, isVendedor);
-				tela.setLocationRelativeTo(null);
-				tela.setVisible(true);
-				
 			}
 		});
-		panel_4.add(btnNewButton_4, "cell 0 0,alignx right,aligny bottom");
+		bntEditar.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				
+				TelaEditarPerfilCliente editar = new TelaEditarPerfilCliente(u, isVendedor);
+				editar.setVisible(true);
+				editar.setLocationRelativeTo(null);
+				dispose();
+			}
+		});
+		bntEditar.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		bntEditar.setFont(new Font("Dialog", Font.PLAIN, 13));
+		bntEditar.setBackground(new Color(2, 73, 89));
+		bntEditar.setBackground(new Color(96, 154, 168));
+		bntEditar.setBorderPainted(false);
+		bntEditar.setBorder(new LineBorder(new Color(0, 0, 0), 2, true));
+		panel_4.add(bntEditar, "cell 4 7,alignx center");
 		
 		String telefone = u.getTel();
 		JLabel lblDynamicTelefone;
@@ -184,6 +198,7 @@ public class TelaPerfilCliente extends JFrame {
 		panelLeft.setLayout(new MigLayout("", "[100px]", "[50px][50px][50px][50px]"));
 
 		JButton btnNewButton = new JButton("Inicio");
+		btnNewButton.setFont(new Font("Dialog", Font.PLAIN, 13));
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
@@ -199,6 +214,7 @@ public class TelaPerfilCliente extends JFrame {
 		panelLeft.add(btnNewButton, "cell 0 0,grow");
 
 		JButton btnNewButton_1 = new JButton("Carrinho");
+		btnNewButton_1.setFont(new Font("Dialog", Font.PLAIN, 13));
 		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 //				TelaCarrinho carrinho = new TelaCarrinho();
@@ -213,6 +229,7 @@ public class TelaPerfilCliente extends JFrame {
 		panelLeft.add(btnNewButton_1, "cell 0 1,grow");
 
 		JButton btnNewButton_2 = new JButton("Perfil");
+		btnNewButton_2.setFont(new Font("Dialog", Font.PLAIN, 13));
 		btnNewButton_2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
