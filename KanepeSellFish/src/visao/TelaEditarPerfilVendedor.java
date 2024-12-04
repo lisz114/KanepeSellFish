@@ -3,6 +3,7 @@ package visao;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.ComponentOrientation;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
@@ -27,7 +28,9 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.JTextPane;
+import javax.swing.SwingConstants;
 import javax.swing.LayoutStyle.ComponentPlacement;
+import javax.swing.border.BevelBorder;
 import javax.swing.border.EmptyBorder;
 
 import controle.EnderecoDAO;
@@ -38,10 +41,16 @@ import modelo.Produtor;
 import modelo.RoundButton;
 import modelo.Usuario;
 import javax.swing.border.LineBorder;
+import javax.swing.border.SoftBevelBorder;
 import javax.swing.border.TitledBorder;
+import net.miginfocom.swing.MigLayout;
 
 public class TelaEditarPerfilVendedor extends JFrame {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JTextField txtEmail;
 	private JTextField txtCPF;
@@ -50,7 +59,8 @@ public class TelaEditarPerfilVendedor extends JFrame {
 	private JTextField txtBairro;
 	private JTextField txtLogadouro;
 	private JTextField txtNum;
-	
+	JTextField txtPesquisar;
+
 	private static UsuarioDAO uDAO = UsuarioDAO.getInstancia();
 	private static EnderecoDAO eDAO = EnderecoDAO.getInstancia();
 	private static ProdutorDAO pDAO = ProdutorDAO.getInstancia();
@@ -74,7 +84,7 @@ public class TelaEditarPerfilVendedor extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public TelaEditarPerfilVendedor(Usuario u) {
+	public TelaEditarPerfilVendedor(Usuario u, boolean isVendedor) {
 		setResizable(false);
 		setLocationByPlatform(true);
 		setMinimumSize(new Dimension(1176, 664));
@@ -88,170 +98,145 @@ public class TelaEditarPerfilVendedor extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(new BorderLayout(0, 0));
 
-		PicPanel panel = new PicPanel("src//IMG/EdicaoPerfilVendedor.png");
-		contentPane.add(panel, BorderLayout.CENTER);
-		panel.setLayout(new GridLayout(1, 0, 0, 0));
+		ImageIcon lapis = new ImageIcon(TelaEditarPerfilVendedor.class.getResource("/img/lapis.png"));
+		Image imgL = lapis.getImage().getScaledInstance(20, 20, Image.SCALE_SMOOTH);
 
-		JPanel panel_1 = new JPanel();
-		panel.add(panel_1);
-		panel_1.setOpaque(false);
+		JPanel panelLeft = new JPanel();
+		panelLeft.setBackground(new Color(154, 208, 217));
+		contentPane.add(panelLeft, BorderLayout.WEST);
+		panelLeft.setLayout(new MigLayout("", "[100px]", "[50px][50px][50px][50px]"));
 
-		JLabel imgBarra = new JLabel("");
-		imgBarra.setIcon(new ImageIcon(TelaEditarPerfilVendedor.class.getResource("/img/menu-hamburguer.png")));
+		JButton btInicio = new JButton("Inicio");
+		btInicio.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		btInicio.setBackground(new Color(154, 205, 217));
+		btInicio.setBorder(null);
+		panelLeft.add(btInicio, "cell 0 0,grow");
 
-		JLabel imgAvatar = new JLabel("");
-		imgAvatar.setIcon(new ImageIcon(TelaEditarPerfilVendedor.class.getResource("/img/Avatar.png")));
+		JButton btCarrinho = new JButton("Carrinho");
+		btCarrinho.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				TelaCarrinho carrinho = new TelaCarrinho(u, null, isVendedor);
+				carrinho.setLocationRelativeTo(null);
+				carrinho.setVisible(true);
+				dispose();
+			}
+		});
+		btCarrinho.setBackground(new Color(154, 205, 217));
+		btCarrinho.setBorder(null);
+		btCarrinho.setOpaque(false);
+		panelLeft.add(btCarrinho, "cell 0 1,grow");
 
-		JLabel lblEditarFoto = new JLabel("Editar foto de Perfil");
-		lblEditarFoto.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
+		JButton btPerfil = new JButton("Perfil");
+		btPerfil.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
 
-				JFileChooser file = new JFileChooser();
-				file.setFileSelectionMode(JFileChooser.FILES_ONLY);
-				int i = file.showSaveDialog(null);
-				if (i == 1) {
-					System.out.println(i);
+				if (isVendedor) {
+					TelaPerfilVendedor v = new TelaPerfilVendedor(u, isVendedor);
+					v.setLocationRelativeTo(null);
+					v.setVisible(true);
+					dispose();
 				} else {
-					File arquivo = file.getSelectedFile();
-					System.out.println(arquivo);
-
-					String destino = arquivo.getAbsolutePath();
-					ImageIcon img = new ImageIcon(destino);
-					Image png = img.getImage().getScaledInstance(200, 200, Image.SCALE_SMOOTH);
-					imgAvatar.setIcon(new ImageIcon(png));
+					TelaPerfilCliente telaPerfil = new TelaPerfilCliente(u, isVendedor);
+					telaPerfil.setLocationRelativeTo(null);
+					telaPerfil.setVisible(true);
+					dispose();
 				}
-
 			}
 		});
 
-		JLabel imgLapis = new JLabel("");
-		imgLapis.setIcon(new ImageIcon(TelaEditarPerfilVendedor.class.getResource("/img/lapis.png")));
-		GroupLayout gl_panel_1 = new GroupLayout(panel_1);
-		gl_panel_1.setHorizontalGroup(
-			gl_panel_1.createParallelGroup(Alignment.TRAILING)
-				.addGroup(gl_panel_1.createSequentialGroup()
-					.addContainerGap()
-					.addComponent(imgBarra)
-					.addContainerGap(193, Short.MAX_VALUE))
-				.addGroup(gl_panel_1.createSequentialGroup()
-					.addContainerGap(241, Short.MAX_VALUE)
-					.addComponent(lblEditarFoto)
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(imgLapis)
-					.addGap(215))
-				.addGroup(gl_panel_1.createSequentialGroup()
-					.addContainerGap(192, Short.MAX_VALUE)
-					.addComponent(imgAvatar)
-					.addGap(181))
-		);
-		gl_panel_1.setVerticalGroup(
-			gl_panel_1.createParallelGroup(Alignment.TRAILING)
-				.addGroup(Alignment.LEADING, gl_panel_1.createSequentialGroup()
-					.addContainerGap()
-					.addComponent(imgBarra)
-					.addGap(30)
-					.addComponent(imgAvatar)
-					.addGap(12)
-					.addGroup(gl_panel_1.createParallelGroup(Alignment.TRAILING)
-						.addComponent(lblEditarFoto)
-						.addComponent(imgLapis))
-					.addContainerGap(310, Short.MAX_VALUE))
-		);
-		ImageIcon barras = new ImageIcon(TelaEditarPerfilVendedor.class.getResource("/img/menu-hamburguer.png"));
-		Image imgB = barras.getImage().getScaledInstance(30, 30, Image.SCALE_SMOOTH);
-		imgBarra.setIcon(new ImageIcon(imgB));
-		panel_1.setLayout(gl_panel_1);
+		btPerfil.setBackground(new Color(64, 128, 128));
+		btPerfil.setBorder(null);
+		panelLeft.add(btPerfil, "cell 0 2,grow");
 
-		ImageIcon lapis = new ImageIcon(TelaEditarPerfilVendedor.class.getResource("/img/lapis.png"));
-		Image imgL = lapis.getImage().getScaledInstance(20, 20, Image.SCALE_SMOOTH);
-		imgLapis.setIcon(new ImageIcon(imgL));
+		if (u.isProdutor()) {
+			JButton btnNewButton_3 = new JButton("Estoque");
+			btnNewButton_3.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					TelaEstoque frame = new TelaEstoque(u);
+					frame.setLocationRelativeTo(null);
+					frame.setVisible(true);
+					dispose();
 
-		JPanel panel_2 = new JPanel();
-		panel.add(panel_2);
-		panel_2.setOpaque(false);
-		panel_2.setLayout(null);
+				}
+			});
 
-		JPanel PanelNome = new JPanel();
-		PanelNome.setBounds(10, 11, 555, 144);
-		panel_2.add(PanelNome);
-		PanelNome.setLayout(null);
-		PanelNome.setOpaque(false);
+			btnNewButton_3.setBackground(new Color(154, 205, 217));
+			btnNewButton_3.setBorder(null);
+			btnNewButton_3.setOpaque(false);
+			panelLeft.add(btnNewButton_3, "cell 0 3,grow");
+		}
+		JButton btEstoque = new JButton("Estoque");
+		btEstoque.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				TelaEstoque frame = new TelaEstoque(u);
+				frame.setLocationRelativeTo(null);
+				frame.setVisible(true);
+				dispose();
+			}
+		});
+		btEstoque.setOpaque(false);
+		btEstoque.setBorder(null);
+		btEstoque.setBackground(new Color(154, 205, 217));
+		panelLeft.add(btEstoque, "cell 0 3,alignx center,aligny center");
+
+		JPanel panel = new JPanel();
+		panel.setBackground(new Color(154, 205, 217));
+		contentPane.add(panel, BorderLayout.NORTH);
+		panel.setLayout(new MigLayout("", "[][grow][][grow][][]", "[]"));
+		JLabel imgMenu = new JLabel("");
+		imgMenu.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				if (panelLeft.isVisible()) {
+					panelLeft.setVisible(false);
+				} else {
+					panelLeft.setVisible(true);
+				}
+			}
+		});
+		imgMenu.setIcon(new ImageIcon(TelaInicio.class.getResource("/IMG/menu-hamburguer.png")));
+		panel.add(imgMenu, "cell 0 0");
+		ImageIcon menu = new ImageIcon(TelaInicio.class.getResource("/IMG/menu-hamburguer.png"));
+		Image iconMenu = menu.getImage().getScaledInstance(30, 30, Image.SCALE_SMOOTH);
+		imgMenu.setIcon(new ImageIcon(iconMenu));
+		ImageIcon carrinho = new ImageIcon(TelaInicio.class.getResource("/IMG/carrinho-de-compras.png"));
+		Image imgCarro = carrinho.getImage().getScaledInstance(30, 30, Image.SCALE_SMOOTH);
+
+		txtPesquisar = new JTextField();
+		txtPesquisar.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		txtPesquisar.setBorder(new SoftBevelBorder(BevelBorder.LOWERED, null, null, null, null));
+		txtPesquisar.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
+		txtPesquisar.setDisabledTextColor(new Color(192, 192, 192));
+		txtPesquisar.setForeground(new Color(0, 0, 0));
+		txtPesquisar.setToolTipText("");
+		panel.add(txtPesquisar, "cell 2 0,alignx center");
+		txtPesquisar.setHorizontalAlignment(SwingConstants.LEFT);
+		txtPesquisar.setBackground(new Color(245, 245, 245));
+		txtPesquisar.setColumns(50);
+
+		JLabel imgCarrinho = new JLabel("");
+		imgCarrinho.setIcon(new ImageIcon(TelaInicio.class.getResource("/IMG/carrinho-de-compras.png")));
+		panel.add(imgCarrinho, "flowx,cell 4 0");
+		imgCarrinho.setIcon(new ImageIcon(imgCarro));
+
+		JPanel panel_1 = new JPanel();
+		contentPane.add(panel_1, BorderLayout.CENTER);
+		panel_1.setOpaque(false);
+
+		JLabel imgAvatar = new JLabel("");
+		imgAvatar.setIcon(new ImageIcon(TelaEditarPerfilVendedor.class.getResource("/img/Avatar.png")));
+		panel_1.setLayout(new MigLayout("", "[250][400px][grow]", "[60px][202px][][][][grow]"));
 
 		JLabel lblNome = new JLabel("");
-		lblNome.setFont(new Font("Tahoma", Font.PLAIN, 35));
-		lblNome.setBounds(10, 41, 331, 56);
-		PanelNome.add(lblNome);
+		lblNome.setFont(new Font("Tahoma", Font.PLAIN, 24));
+		panel_1.add(lblNome, "cell 1 1,alignx left,aligny center");
+		panel_1.add(imgAvatar, "cell 0 1,alignx center,aligny center");
 		lblNome.setText(u.getNome());
-
-		JLabel lblNomeEmp = new JLabel("New label");
-		lblNomeEmp.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		lblNomeEmp.setBounds(20, 108, 254, 25);
-		PanelNome.add(lblNomeEmp);
-//		lblNomeEmp.setText(u.getProd().getNomeComercio());
-
-		JLabel imgKart = new JLabel("");
-		imgKart.setBounds(400, 6, 46, 39);
-		panel_2.add(imgKart);
-		imgKart.setIcon(new ImageIcon(TelaEditarPerfilVendedor.class.getResource("/img/carrinho-de-compras.png")));
-		ImageIcon car = new ImageIcon(TelaEditarPerfilVendedor.class.getResource("/img/carrinho-de-compras.png"));
-		Image imgC = car.getImage().getScaledInstance(40, 40, Image.SCALE_SMOOTH);
-		imgKart.setIcon(new ImageIcon(imgC));
-		JLabel imgSino = new JLabel("");
-		imgSino.setBounds(460, 4, 46, 45);
-		panel_2.add(imgSino);
-		imgSino.setIcon(new ImageIcon(TelaEditarPerfilVendedor.class.getResource("/img/sino.png")));
-		ImageIcon sino = new ImageIcon(TelaEditarPerfilVendedor.class.getResource("/img/sino.png"));
-		Image imgS = sino.getImage().getScaledInstance(40, 40, Image.SCALE_SMOOTH);
-		imgSino.setIcon(new ImageIcon(imgS));
-
-		JPanel PanelEditor = new JPanel();
-		PanelEditor.setBounds(20, 166, 555, 438);
-		panel_2.add(PanelEditor);
-		PanelEditor.setOpaque(false);
-		GridBagLayout gbl_PanelEditor = new GridBagLayout();
-		gbl_PanelEditor.columnWidths = new int[] { 40, 118, 62, 119, 33, 118, 0 };
-		gbl_PanelEditor.rowHeights = new int[] { 36, 14, 20, 91, 14, 20, 120, 14, 20, 0, 0, 0 };
-		gbl_PanelEditor.columnWeights = new double[] { 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE };
-		gbl_PanelEditor.rowWeights = new double[] { 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
-				Double.MIN_VALUE };
-		PanelEditor.setLayout(gbl_PanelEditor);
-
-		txtEmail = new JTextField();
-		txtEmail.setBorder(new LineBorder(new Color(171, 173, 179)));
-		txtEmail.setOpaque(false);
-		txtEmail.setToolTipText("");
-		txtEmail.setBorder(new TitledBorder(new LineBorder(new Color(0, 0, 0), 2),
-				"<html>Email<span style='color: red;'>*</span></html>", TitledBorder.LEADING, TitledBorder.TOP, null,
-				new Color(0, 0, 0)));
-		txtEmail.setBackground(SystemColor.menu);
-		GridBagConstraints gbc_txtEmail = new GridBagConstraints();
-		gbc_txtEmail.anchor = GridBagConstraints.NORTH;
-		gbc_txtEmail.fill = GridBagConstraints.HORIZONTAL;
-		gbc_txtEmail.insets = new Insets(0, 0, 5, 5);
-		gbc_txtEmail.gridx = 1;
-		gbc_txtEmail.gridy = 2;
-		PanelEditor.add(txtEmail, gbc_txtEmail);
-		txtEmail.setColumns(10);
-
-		txtCidade = new JTextField();
-		txtCidade.setBorder(new LineBorder(new Color(171, 173, 179)));
-		txtCidade.setOpaque(false);
-		txtCidade.setToolTipText("");
-		txtCidade.setBorder(new TitledBorder(new LineBorder(new Color(0, 0, 0), 2),
-				"<html>Cidade<span style='color: red;'>*</span></html>", TitledBorder.LEADING, TitledBorder.TOP, null,
-				new Color(0, 0, 0)));
-		txtCidade.setBackground(SystemColor.menu);
-		GridBagConstraints gbc_txtCidade = new GridBagConstraints();
-		gbc_txtCidade.anchor = GridBagConstraints.NORTH;
-		gbc_txtCidade.fill = GridBagConstraints.HORIZONTAL;
-		gbc_txtCidade.insets = new Insets(0, 0, 5, 5);
-		gbc_txtCidade.gridx = 3;
-		gbc_txtCidade.gridy = 2;
-		PanelEditor.add(txtCidade, gbc_txtCidade);
-		txtCidade.setColumns(10);
-
 		txtCPF = new JTextField();
+		panel_1.add(txtCPF, "cell 1 2");
 		txtCPF.setBorder(new LineBorder(new Color(171, 173, 179)));
 		txtCPF.setOpaque(false);
 		txtCPF.setToolTipText("");
@@ -259,16 +244,21 @@ public class TelaEditarPerfilVendedor extends JFrame {
 				"<html>CPF<span style='color: red;'>*</span></html>", TitledBorder.LEADING, TitledBorder.TOP, null,
 				new Color(0, 0, 0)));
 		txtCPF.setBackground(SystemColor.menu);
-		GridBagConstraints gbc_txtCPF = new GridBagConstraints();
-		gbc_txtCPF.anchor = GridBagConstraints.NORTH;
-		gbc_txtCPF.fill = GridBagConstraints.HORIZONTAL;
-		gbc_txtCPF.insets = new Insets(0, 0, 5, 5);
-		gbc_txtCPF.gridx = 1;
-		gbc_txtCPF.gridy = 5;
-		PanelEditor.add(txtCPF, gbc_txtCPF);
 		txtCPF.setColumns(10);
 
+		txtCidade = new JTextField();
+		panel_1.add(txtCidade, "flowx,cell 2 2");
+		txtCidade.setBorder(new LineBorder(new Color(171, 173, 179)));
+		txtCidade.setOpaque(false);
+		txtCidade.setToolTipText("");
+		txtCidade.setBorder(new TitledBorder(new LineBorder(new Color(0, 0, 0), 2),
+				"<html>Cidade<span style='color: red;'>*</span></html>", TitledBorder.LEADING, TitledBorder.TOP, null,
+				new Color(0, 0, 0)));
+		txtCidade.setBackground(SystemColor.menu);
+		txtCidade.setColumns(10);
+
 		txtBairro = new JTextField();
+		panel_1.add(txtBairro, "cell 2 2");
 		txtBairro.setBorder(new LineBorder(new Color(171, 173, 179)));
 		txtBairro.setOpaque(false);
 		txtBairro.setToolTipText("");
@@ -276,16 +266,32 @@ public class TelaEditarPerfilVendedor extends JFrame {
 				"<html>Bairro<span style='color: red;'>*</span></html>", TitledBorder.LEADING, TitledBorder.TOP, null,
 				new Color(0, 0, 0)));
 		txtBairro.setBackground(SystemColor.menu);
-		GridBagConstraints gbc_txtBairro = new GridBagConstraints();
-		gbc_txtBairro.anchor = GridBagConstraints.NORTH;
-		gbc_txtBairro.fill = GridBagConstraints.HORIZONTAL;
-		gbc_txtBairro.insets = new Insets(0, 0, 5, 5);
-		gbc_txtBairro.gridx = 3;
-		gbc_txtBairro.gridy = 5;
-		PanelEditor.add(txtBairro, gbc_txtBairro);
 		txtBairro.setColumns(10);
 
+		txtEmail = new JTextField();
+		panel_1.add(txtEmail, "cell 1 3");
+		txtEmail.setBorder(new LineBorder(new Color(171, 173, 179)));
+		txtEmail.setOpaque(false);
+		txtEmail.setToolTipText("");
+		txtEmail.setBorder(new TitledBorder(new LineBorder(new Color(0, 0, 0), 2),
+				"<html>Email<span style='color: red;'>*</span></html>", TitledBorder.LEADING, TitledBorder.TOP, null,
+				new Color(0, 0, 0)));
+		txtEmail.setBackground(SystemColor.menu);
+		txtEmail.setColumns(10);
+
+		txtLogadouro = new JTextField();
+		panel_1.add(txtLogadouro, "flowx,cell 2 3");
+		txtLogadouro.setBorder(new LineBorder(new Color(171, 173, 179)));
+		txtLogadouro.setOpaque(false);
+		txtLogadouro.setToolTipText("");
+		txtLogadouro.setBorder(new TitledBorder(new LineBorder(new Color(0, 0, 0), 2),
+				"<html>Logadouro<span style='color: red;'>*</span></html>", TitledBorder.LEADING, TitledBorder.TOP,
+				null, new Color(0, 0, 0)));
+		txtLogadouro.setBackground(SystemColor.menu);
+		txtLogadouro.setColumns(10);
+
 		txtCNPJ = new JTextField();
+		panel_1.add(txtCNPJ, "cell 1 4");
 		txtCNPJ.setBorder(new LineBorder(new Color(171, 173, 179)));
 		txtCNPJ.setOpaque(false);
 		txtCNPJ.setToolTipText("");
@@ -293,33 +299,10 @@ public class TelaEditarPerfilVendedor extends JFrame {
 				"<html>CNPJ<span style='color: red;'>*</span></html>", TitledBorder.LEADING, TitledBorder.TOP, null,
 				new Color(0, 0, 0)));
 		txtCNPJ.setBackground(SystemColor.menu);
-		GridBagConstraints gbc_txtCNPJ = new GridBagConstraints();
-		gbc_txtCNPJ.anchor = GridBagConstraints.NORTH;
-		gbc_txtCNPJ.fill = GridBagConstraints.HORIZONTAL;
-		gbc_txtCNPJ.insets = new Insets(0, 0, 5, 5);
-		gbc_txtCNPJ.gridx = 1;
-		gbc_txtCNPJ.gridy = 8;
-		PanelEditor.add(txtCNPJ, gbc_txtCNPJ);
 		txtCNPJ.setColumns(10);
 
-		txtLogadouro = new JTextField();
-		txtLogadouro.setBorder(new LineBorder(new Color(171, 173, 179)));
-		txtLogadouro.setOpaque(false);
-		txtLogadouro.setToolTipText("");
-		txtLogadouro.setBorder(new TitledBorder(new LineBorder(new Color(0, 0, 0), 2),
-				"<html>Logadouro<span style='color: red;'>*</span></html>", TitledBorder.LEADING, TitledBorder.TOP, null,
-				new Color(0, 0, 0)));
-		txtLogadouro.setBackground(SystemColor.menu);
-		GridBagConstraints gbc_txtLogadouro = new GridBagConstraints();
-		gbc_txtLogadouro.anchor = GridBagConstraints.NORTH;
-		gbc_txtLogadouro.fill = GridBagConstraints.HORIZONTAL;
-		gbc_txtLogadouro.insets = new Insets(0, 0, 5, 5);
-		gbc_txtLogadouro.gridx = 3;
-		gbc_txtLogadouro.gridy = 8;
-		PanelEditor.add(txtLogadouro, gbc_txtLogadouro);
-		txtLogadouro.setColumns(10);
-
 		txtNum = new JTextField();
+		panel_1.add(txtNum, "cell 2 3");
 		txtNum.setBorder(new LineBorder(new Color(171, 173, 179)));
 		txtNum.setOpaque(false);
 		txtNum.setToolTipText("");
@@ -327,16 +310,10 @@ public class TelaEditarPerfilVendedor extends JFrame {
 				"<html>Num<span style='color: red;'>*</span></html>", TitledBorder.LEADING, TitledBorder.TOP, null,
 				new Color(0, 0, 0)));
 		txtNum.setBackground(SystemColor.menu);
-		GridBagConstraints gbc_txtNum = new GridBagConstraints();
-		gbc_txtNum.insets = new Insets(0, 0, 5, 0);
-		gbc_txtNum.anchor = GridBagConstraints.NORTH;
-		gbc_txtNum.fill = GridBagConstraints.HORIZONTAL;
-		gbc_txtNum.gridx = 5;
-		gbc_txtNum.gridy = 8;
-		PanelEditor.add(txtNum, gbc_txtNum);
 		txtNum.setColumns(10);
 
 		JButton btnNewButton = new RoundButton("Cancelar");
+		panel_1.add(btnNewButton, "flowx,cell 2 5,alignx right,aligny bottom");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				TelaPerfilVendedor frame = new TelaPerfilVendedor(u, true);
@@ -346,13 +323,9 @@ public class TelaEditarPerfilVendedor extends JFrame {
 		});
 		btnNewButton.setForeground(new Color(255, 255, 255));
 		btnNewButton.setBackground(new Color(255, 0, 0));
-		GridBagConstraints gbc_btnNewButton = new GridBagConstraints();
-		gbc_btnNewButton.insets = new Insets(0, 0, 0, 5);
-		gbc_btnNewButton.gridx = 3;
-		gbc_btnNewButton.gridy = 10;
-		PanelEditor.add(btnNewButton, gbc_btnNewButton);
 
 		JButton btnNewButton_1 = new RoundButton("Salvar");
+		panel_1.add(btnNewButton_1, "cell 2 5,alignx right,aligny bottom");
 		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
@@ -375,8 +348,7 @@ public class TelaEditarPerfilVendedor extends JFrame {
 					erro.setLabelText("Imformações inválidas!");
 					erro.setLocationRelativeTo(null);
 					erro.setVisible(true);
-				}else {
-
+				} else {
 				user.setEmail(email);
 				user.setCpf(cpf);
 				vend.setCnpj(cnpj);
@@ -384,7 +356,6 @@ public class TelaEditarPerfilVendedor extends JFrame {
 				ende.setBairro(bar);
 				ende.setLogradouro(log);
 				ende.setNumero(num1);
-				
 				eDAO.atualizarEndereco(ende);
 				uDAO.alterarUsuario(user);
 				
@@ -392,29 +363,18 @@ public class TelaEditarPerfilVendedor extends JFrame {
 				tpv.setLocationRelativeTo(null);
 				tpv.setVisible(true);
 				dispose();
-
 				}
 			}
 		});
 		btnNewButton_1.setForeground(new Color(255, 255, 255));
 		btnNewButton_1.setBackground(new Color(96, 154, 168));
-		GridBagConstraints gbc_btnNewButton_1 = new GridBagConstraints();
-		gbc_btnNewButton_1.gridx = 5;
-		gbc_btnNewButton_1.gridy = 10;
-		PanelEditor.add(btnNewButton_1, gbc_btnNewButton_1);
+		ImageIcon conta = new ImageIcon(TelaInicio.class.getResource("/IMG/do-utilizador.png"));
+		Image iconConta = conta.getImage().getScaledInstance(30, 30, Image.SCALE_SMOOTH);
 
-		JLabel lblNewLabel_10 = new JLabel("");
-		lblNewLabel_10.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				TelaPerfilVendedor frame = new TelaPerfilVendedor(u, true);
-				frame.setVisible(true);
-				dispose();
-			}
-		});
-		lblNewLabel_10.setIcon(new ImageIcon(TelaEditarPerfilVendedor.class.getResource("/img/Voltar.png")));
-		lblNewLabel_10.setBounds(520, 4, 46, 45);
-		panel_2.add(lblNewLabel_10);
+		JLabel imgConta = new JLabel("");
+		imgConta.setIcon(new ImageIcon(TelaInicio.class.getResource("/IMG/do-utilizador.png")));
+		panel.add(imgConta, "cell 5 0");
+		imgConta.setIcon(new ImageIcon(iconConta));
 
 	}
 }

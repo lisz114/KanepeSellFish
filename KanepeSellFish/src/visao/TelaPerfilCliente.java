@@ -240,7 +240,7 @@ public class TelaPerfilCliente extends JFrame {
 		btnNewButton_2.setBorder(null);
 		panelLeft.add(btnNewButton_2, "cell 0 2,grow");
 
-		if (u.isProdutor()) {
+		if (isVendedor){
 			JButton btnNewButton_3 = new JButton("Estoque");
 			btnNewButton_3.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {

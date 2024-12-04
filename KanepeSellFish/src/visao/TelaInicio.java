@@ -116,7 +116,7 @@ public class TelaInicio extends JFrame {
 					coluna = 0;
 					linha++;
 				}
-				CardProduto panel_8 = new CardProduto(p);
+				CardProduto panel_8 = new CardProduto(p, u);
 				panel_7.add(panel_8, "cell " + coluna + " " + linha + "");
 
 			}
@@ -304,7 +304,7 @@ public class TelaInicio extends JFrame {
 		btPerfil.setOpaque(false);
 		panelLeft.add(btPerfil, "cell 0 2,grow");
 
-		if (u.isProdutor()) {
+		if (isVendedor) {
 			JButton btnNewButton_3 = new JButton("Estoque");
 			btnNewButton_3.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
@@ -387,7 +387,7 @@ public class TelaInicio extends JFrame {
 		lblAdicionarProduto = new JLabel("Adicionar Produto");
 		panel_2.add(lblAdicionarProduto, "cell 0 9,alignx center,aligny center");
 		lblAdicionarProduto.setFont(new Font("/Fontes/Roboto-Black.ttf", Font.PLAIN, 12));
-		if (u.isProdutor()) {
+		if (isVendedor) {
 
 			JLabel imgMore = new JLabel("");
 			imgMore.addMouseListener(new MouseAdapter() {

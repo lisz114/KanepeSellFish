@@ -29,6 +29,7 @@ import net.miginfocom.swing.MigLayout;
 public class TelaPerfilVendedor extends JFrame {
 
 	private JPanel contentPane;
+	TelaPerfilVendedor estajanela = this; 
 	private ArrayList<Usuario> listaUsuarios;
 	JPanel panelLeft;
 	private ProdutorDAO pDAO = ProdutorDAO.getInstancia();
@@ -54,7 +55,7 @@ public class TelaPerfilVendedor extends JFrame {
 	 * 
 	 * @param u
 	 * 
-	 * @param tela
+	 * @param 
 	 */
 	public TelaPerfilVendedor(Usuario u, boolean isVendedor) {
 
