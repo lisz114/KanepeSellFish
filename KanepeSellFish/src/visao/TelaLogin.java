@@ -16,6 +16,7 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.SpringLayout;
 import javax.swing.SwingConstants;
@@ -23,6 +24,7 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 
 import controle.UsuarioDAO;
+import modelo.RoundButton;
 import modelo.Usuario;
 import net.miginfocom.swing.MigLayout;
 
@@ -30,8 +32,8 @@ public class TelaLogin extends JFrame {
 
 	private JPanel contentPane;
 	private JTextField txtEmail;
-	private JTextField txtSenha;
 	private static UsuarioDAO uDAO = UsuarioDAO.getInstancia();
+	private JPasswordField txtSenha;
 
 	/**
 	 * Launch the application.
@@ -76,7 +78,7 @@ public class TelaLogin extends JFrame {
 		JPanel panelPrincipal = new JPanel();
 		panelPrincipal.setOpaque(false);
 		panel.add(panelPrincipal);
-		panelPrincipal.setLayout(new MigLayout("", "[grow]", "[150px][95px][70px][81px][65px][grow]"));
+		panelPrincipal.setLayout(new MigLayout("", "[grow]", "[150px][95px][70px][88px][65px][grow]"));
 
 		JPanel panel_2 = new JPanel();
 		panel_2.setOpaque(false);
@@ -115,32 +117,30 @@ public class TelaLogin extends JFrame {
 		panelCpf.setBorder(new EmptyBorder(0, 40, 0, 40));
 		panelCpf.setOpaque(false);
 		panelPrincipal.add(panelCpf, "cell 0 3,grow");
-		panelCpf.setLayout(new MigLayout("", "[grow]", "[10px][40px][10px,top]"));
+		panelCpf.setLayout(new MigLayout("", "[grow]", "[10px][30px][10px,top]"));
 
 		JLabel lblSenha = new JLabel("<html>Senha<span style='color: red;'>*</span></html>");
 		lblSenha.setForeground(Color.BLACK);
 		lblSenha.setFont(new Font("Tahoma", Font.BOLD, 12));
 		panelCpf.add(lblSenha, "cell 0 0");
 
-		txtSenha = new JTextField();
-		txtSenha.setBorder(new LineBorder(new Color(0, 0, 0), 2));
-		txtSenha.setOpaque(false);
-		txtSenha.setColumns(10);
-		panelCpf.add(txtSenha, "cell 0 1,grow");
-		
 		JLabel lblEsqueceu = new JLabel("Esqueceu a senha? ");
 		lblEsqueceu.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		lblEsqueceu.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				TelaEsqueceuSenha esqueceu = new TelaEsqueceuSenha();
-				
+				TelaEsqueceuSenha esqueceu = new TelaEsqueceuSenha(null);
 				esqueceu.setLocationRelativeTo(null);
 				esqueceu.setVisible(true);
-				
-				
+				dispose();
+
 			}
 		});
+
+		txtSenha = new JPasswordField();
+		txtSenha.setOpaque(false);
+		txtSenha.setBorder(new LineBorder(new Color(0, 0, 0), 2));
+		panelCpf.add(txtSenha, "cell 0 1,grow");
 		lblEsqueceu.setForeground(new Color(0, 92, 214));
 		lblEsqueceu.setFont(new Font("Tahoma", Font.ITALIC, 12));
 		lblEsqueceu.setHorizontalTextPosition(SwingConstants.RIGHT);
@@ -173,31 +173,31 @@ public class TelaLogin extends JFrame {
 		btnEntrar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Usuario u = new Usuario();
-				
-				String email = txtEmail.getText();
-				String senha = txtSenha.getText();
-				
-				uDAO.consultarUsuarioLoginSenha(email, senha);
-				
-				u = uDAO.consultarUsuarioLoginSenha(email, senha);
-				
-				if(u!=null) {
-					
-					TelaPerfilVendedor tela = new TelaPerfilVendedor();
-					tela.setLocationRelativeTo(null);
-					tela.setVisible(true);
-					
 
-					dispose();
-					
-					System.out.println("Usuario encontrado");
-				}else {
+				String email = txtEmail.getText();
+				String senha = String.valueOf(txtSenha.getPassword());
+				u = uDAO.consultarUsuarioLoginSenha(email, senha);
+
+				if (u != null) {
+					if (uDAO.consultarUsuarioVendedor(u)) {
+						TelaInicio tela = new TelaInicio(u, true);
+						tela.setLocationRelativeTo(null);
+						tela.setVisible(true);
+
+						dispose();
+					} else {
+						TelaInicio tela = new TelaInicio(u, false);
+						tela.setLocationRelativeTo(null);
+						tela.setVisible(true);
+
+						dispose();
+					}
+				} else {
 					TelaError tela = new TelaError();
 					tela.setLabelText("Usuario não encontrado");
 					tela.setLocationRelativeTo(null);
 					tela.setVisible(true);
-				
-					
+
 					System.out.println("Nao achou");
 				}
 			}
@@ -212,7 +212,7 @@ public class TelaLogin extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				TelaCadastro frame = new TelaCadastro();
-				
+
 				frame.setLocationRelativeTo(null);
 				frame.setVisible(true);
 				dispose();

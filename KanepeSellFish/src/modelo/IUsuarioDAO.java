@@ -1,14 +1,18 @@
 package modelo;
 
 public interface IUsuarioDAO {
-	public boolean inserirUsuario(Usuario usuario);
+	public int inserirUsuario(Usuario usuario);
 
-	public boolean alterarUsuario(Usuario usuario);
+	public int alterarUsuario(Usuario usuario);
 
 	public boolean removerUsuario(String cpf);
 	
-	public Usuario consultarUsuarioLoginSenha(String email, String senha);
+	public boolean consultarUsuarioVendedor(Usuario usuario);
 	
-	public Usuario consultaUsuarioCPF(String cpf);
+	public Usuario consultaUsuarioCadastrado(String cpf, String email);
+	
+    public boolean validarCPF(String cpf);
 
+	Usuario consultarUsuarioLoginSenha(String email, String senha);
+    
 }

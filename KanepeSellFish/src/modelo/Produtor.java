@@ -3,30 +3,22 @@ package modelo;
 import java.util.ArrayList;
 
 public class Produtor extends Usuario {
-	private String idProdutor;
 	private String nomeComercio;
-	private Endereco endereco;
+	private int IdEndereco;
 	private ArrayList<Pedido> pedido;
 	private String cnpj;
 
-	
-	public Produtor(){}
-	
-	public Produtor(String idProdutor,String nomeComercio, Endereco endereco, ArrayList<Pedido> pedido, String cnpj) {
-		this.idProdutor = idProdutor;
+	public Produtor() {
+	}
+
+	public Produtor(int idUsuario, String nomeComercio, int IdEndereco, ArrayList<Pedido> pedido, String cnpj) {
+		this.idUsuario = idUsuario;
 		this.nomeComercio = nomeComercio;
-		this.endereco = endereco;
-		this.pedido = pedido ;
+		this.IdEndereco = IdEndereco;
+		this.pedido = pedido;
 		this.cnpj = cnpj;
-		}
-
-	public String getIdProdutor() {
-		return idProdutor;
 	}
 
-	public void setIdProdutor(String idProdutor) {
-		this.idProdutor = idProdutor;
-	}
 
 	public String getNomeComercio() {
 		return nomeComercio;
@@ -36,12 +28,12 @@ public class Produtor extends Usuario {
 		this.nomeComercio = nomeComercio;
 	}
 
-	public Endereco getEndereco() {
-		return endereco;
+	public int getEndereco() {
+		return IdEndereco;
 	}
 
-	public void setEndereco(Endereco endereco) {
-		this.endereco = endereco;
+	public void setEndereco(int IdEndereco) {
+		this.IdEndereco = IdEndereco;
 	}
 
 	public ArrayList<Pedido> getPedido() {
@@ -59,6 +51,5 @@ public class Produtor extends Usuario {
 	public void setCnpj(String cnpj) {
 		this.cnpj = cnpj;
 	}
-	
-	
-}		
+
+}

@@ -20,6 +20,7 @@ import net.miginfocom.swing.MigLayout;
 public class TelaError extends JFrame {
 
 	private JPanel contentPane;
+	JButton btnNewButton;
 
 	/**
 	 * Launch the application.
@@ -71,7 +72,7 @@ public class TelaError extends JFrame {
 		contentPane.add(panel);
 		panel.setLayout(new MigLayout("", "[100px][50px][100px]", "[]"));
 		
-		JButton btnNewButton = new JButton("Ok");
+		btnNewButton = new JButton("Ok");
 		btnNewButton.setForeground(new Color(0, 0, 0));
 		btnNewButton.setBounds(100, 100, 50, 20);
 		btnNewButton.setBackground(new Color(8, 127, 140));
