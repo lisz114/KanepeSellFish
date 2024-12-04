@@ -164,20 +164,10 @@ public class TelaPerfilCliente extends JFrame {
 		ImageIcon menu = new ImageIcon(TelaInicio.class.getResource("/IMG/menu-hamburguer.png"));
 		Image iconMenu = menu.getImage().getScaledInstance(30, 30, Image.SCALE_SMOOTH);
 		imgMenu.setIcon(new ImageIcon(iconMenu));
-
-		JLabel imgCarrinho = new JLabel("");
-		imgCarrinho.setIcon(new ImageIcon(TelaInicio.class.getResource("/IMG/carrinho-de-compras.png")));
-		panel.add(imgCarrinho, "cell 2 0");
 		ImageIcon carrinho = new ImageIcon(TelaInicio.class.getResource("/IMG/carrinho-de-compras.png"));
 		Image imgC = carrinho.getImage().getScaledInstance(30, 30, Image.SCALE_SMOOTH);
-		imgCarrinho.setIcon(new ImageIcon(imgC));
-
-		JLabel imgNotificacao = new JLabel("");
-		imgNotificacao.setIcon(new ImageIcon(TelaInicio.class.getResource("/IMG/sino.png")));
-		panel.add(imgNotificacao, "cell 3 0");
 		ImageIcon notificacao = new ImageIcon(TelaInicio.class.getResource("/IMG/sino.png"));
 		Image imgN = notificacao.getImage().getScaledInstance(30, 30, Image.SCALE_SMOOTH);
-		imgNotificacao.setIcon(new ImageIcon(imgN));
 
 		panelLeft = new JPanel();
 		panelLeft.setBackground(new Color(154, 208, 217));
@@ -202,10 +192,10 @@ public class TelaPerfilCliente extends JFrame {
 		JButton btnNewButton_1 = new JButton("Carrinho");
 		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-//				TelaCarrinho carrinho = new TelaCarrinho();
-//				carrinho.setLocationRelativeTo(null);
-//				carrinho.setVisible(true);
-//				dispose();
+				TelaCarrinho carrinho = new TelaCarrinho(u, null, isVendedor);
+				carrinho.setLocationRelativeTo(null);
+				carrinho.setVisible(true);
+				dispose();
 			}
 		});
 		btnNewButton_1.setBackground(new Color(154, 205, 217));
@@ -252,6 +242,11 @@ public class TelaPerfilCliente extends JFrame {
 				dispose();
 			}
 		});
+		
+				JLabel imgCarrinho = new JLabel("");
+				imgCarrinho.setIcon(new ImageIcon(TelaInicio.class.getResource("/IMG/carrinho-de-compras.png")));
+				panel.add(imgCarrinho, "cell 3 0");
+				imgCarrinho.setIcon(new ImageIcon(imgC));
 		imgSair.setIcon(new ImageIcon(TelaPerfilCliente.class.getResource("/img/saida.png")));
 		panel.add(imgSair, "cell 4 0");
 		ImageIcon conta = new ImageIcon(TelaInicio.class.getResource("/img/saida.png"));

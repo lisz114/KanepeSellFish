@@ -43,7 +43,6 @@ public class TelaInicio extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
-	private JTextField txtPesquisar;
 	JPanel panelLeft;
 	List<Produto> produtos;
 	JButton btEstoque;
@@ -124,91 +123,18 @@ public class TelaInicio extends JFrame {
 		JPanel panel_2 = new JPanel();
 		panel_1.add(panel_2, "cell 0 0 1 2,grow");
 		panel_2.setLayout(new MigLayout("", "[][][]", "[60px][100px][60px][50px][][][][190px,grow][][]"));
-
-		JLabel lblOrdenar = new JLabel("ORDENAR");
-		panel_2.add(lblOrdenar, "cell 1 1,alignx center");
-		lblOrdenar.setFont(new Font("/Fontes/Roboto-Black.ttf", Font.PLAIN, 14));
 		ImageIcon iconUp = new ImageIcon(TelaInicio.class.getResource("/IMG/imgUp.png"));
 		Image imgU = iconUp.getImage().getScaledInstance(40, 40, Image.SCALE_SMOOTH);
-
-		JLabel imgDown = new JLabel("");
-		imgDown.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				boolean crescente = true;
-				ProdutoDAO dao = new ProdutoDAO();
-				dao.ordenarPorPreco(crescente, produtos);
-			}
-		});
-
-		JLabel imgUp = new JLabel("");
-		imgUp.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				boolean crescente = false;
-				ProdutoDAO dao = new ProdutoDAO();
-				dao.ordenarPorPreco(crescente, produtos);
-			}
-		});
-		imgUp.setIcon(new ImageIcon(TelaInicio.class.getResource("/IMG/imgUp.png")));
-		panel_2.add(imgUp, "cell 0 2,alignx center");
-		imgUp.setIcon(new ImageIcon(imgU));
-		imgDown.setIcon(new ImageIcon(TelaInicio.class.getResource("/IMG/imgDown.png")));
-		panel_2.add(imgDown, "cell 2 2,alignx center");
 		ImageIcon iconDown = new ImageIcon(TelaInicio.class.getResource("/IMG/imgDown.png"));
 		Image imgD = iconDown.getImage().getScaledInstance(40, 40, Image.SCALE_SMOOTH);
-		imgDown.setIcon(new ImageIcon(imgD));
-
-		JLabel lblMaiorValor = new JLabel("Maior Valor");
-		panel_2.add(lblMaiorValor, "cell 0 3,alignx center");
-		lblMaiorValor.setFont(new Font("Dialog", Font.PLAIN, 12));
 		ImageIcon iconAZ = new ImageIcon(TelaInicio.class.getResource("/IMG/imgA.png"));
 		Image ordemAZ = iconAZ.getImage().getScaledInstance(40, 40, Image.SCALE_SMOOTH);
-
-		JLabel imgAZ = new JLabel("");
-		imgAZ.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				boolean crescente = false;
-				ProdutoDAO dao = new ProdutoDAO();
-				dao.ordenarNome(crescente, produtos);
-			}
-		});
-		imgAZ.setIcon(new ImageIcon(TelaInicio.class.getResource("/IMG/imgA.png")));
-		panel_2.add(imgAZ, "cell 0 5,alignx center");
-		imgAZ.setIcon(new ImageIcon(ordemAZ));
-
-		JLabel imgZA = new JLabel("");
-		imgZA.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				boolean crescente = true;
-				ProdutoDAO dao = new ProdutoDAO();
-				dao.ordenarNome(crescente, produtos);
-			}
-		});
-		imgZA.setIcon(new ImageIcon(TelaInicio.class.getResource("/IMG/imgZ.png")));
-		panel_2.add(imgZA, "cell 2 5,alignx center");
 		ImageIcon iconZA = new ImageIcon(TelaInicio.class.getResource("/IMG/imgZ.png"));
 		Image ordemZA = iconZA.getImage().getScaledInstance(40, 40, Image.SCALE_SMOOTH);
-		imgZA.setIcon(new ImageIcon(ordemZA));
-
-		JLabel lblAaZ = new JLabel("De A a Z");
-		panel_2.add(lblAaZ, "cell 0 6,alignx center");
-		lblAaZ.setFont(new Font("/Fontes/Roboto-Black.ttf", Font.PLAIN, 12));
 		ImageIcon iconMore = new ImageIcon(TelaInicio.class.getResource("/IMG/iconMore.png"));
 		Image more = iconMore.getImage().getScaledInstance(40, 40, Image.SCALE_SMOOTH);
 
-		JRadioButton btDoce = new JRadioButton("Água Doce");
-		panel_2.add(btDoce, "cell 0 7");
-
-		JRadioButton btSalgada = new JRadioButton("Água Salgada");
-		panel_2.add(btSalgada, "cell 2 7");
-
 		ButtonGroup grupo = new ButtonGroup();
-
-		grupo.add(btSalgada);
-		grupo.add(btDoce);
 
 		JLabel imgMenu = new JLabel("");
 		imgMenu.addMouseListener(new MouseAdapter() {
@@ -226,32 +152,10 @@ public class TelaInicio extends JFrame {
 		ImageIcon menu = new ImageIcon(TelaInicio.class.getResource("/IMG/menu-hamburguer.png"));
 		Image iconMenu = menu.getImage().getScaledInstance(30, 30, Image.SCALE_SMOOTH);
 		imgMenu.setIcon(new ImageIcon(iconMenu));
-
-		txtPesquisar = new JTextField();
-		txtPesquisar.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		txtPesquisar.setBorder(new SoftBevelBorder(BevelBorder.LOWERED, null, null, null, null));
-		txtPesquisar.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
-		txtPesquisar.setDisabledTextColor(new Color(192, 192, 192));
-		txtPesquisar.setForeground(new Color(0, 0, 0));
-		txtPesquisar.setToolTipText("");
-		panel.add(txtPesquisar, "cell 1 0,alignx center");
-		txtPesquisar.setHorizontalAlignment(SwingConstants.LEFT);
-		txtPesquisar.setBackground(new Color(245, 245, 245));
-		txtPesquisar.setColumns(50);
-
-		JLabel imgCarrinho = new JLabel("");
-		imgCarrinho.setIcon(new ImageIcon(TelaInicio.class.getResource("/IMG/carrinho-de-compras.png")));
-		panel.add(imgCarrinho, "cell 2 0");
 		ImageIcon carrinho = new ImageIcon(TelaInicio.class.getResource("/IMG/carrinho-de-compras.png"));
 		Image imgC = carrinho.getImage().getScaledInstance(30, 30, Image.SCALE_SMOOTH);
-		imgCarrinho.setIcon(new ImageIcon(imgC));
-
-		JLabel imgNotificacao = new JLabel("");
-		imgNotificacao.setIcon(new ImageIcon(TelaInicio.class.getResource("/IMG/sino.png")));
-		panel.add(imgNotificacao, "cell 3 0");
 		ImageIcon notificacao = new ImageIcon(TelaInicio.class.getResource("/IMG/sino.png"));
 		Image imgN = notificacao.getImage().getScaledInstance(30, 30, Image.SCALE_SMOOTH);
-		imgNotificacao.setIcon(new ImageIcon(imgN));
 
 		panelLeft = new JPanel();
 		panelLeft.setBackground(new Color(154, 208, 217));
@@ -304,23 +208,23 @@ public class TelaInicio extends JFrame {
 		btPerfil.setOpaque(false);
 		panelLeft.add(btPerfil, "cell 0 2,grow");
 
-		if (isVendedor) {
-			JButton btnNewButton_3 = new JButton("Estoque");
-			btnNewButton_3.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent e) {
-					TelaEstoque frame = new TelaEstoque(u);
-					frame.setLocationRelativeTo(null);
-					frame.setVisible(true);
-					dispose();
-
-				}
-			});
-
-			btnNewButton_3.setBackground(new Color(154, 205, 217));
-			btnNewButton_3.setBorder(null);
-			btnNewButton_3.setOpaque(false);
-			panelLeft.add(btnNewButton_3, "cell 0 3,grow");
-		}
+//		if (isVendedor) {
+//			JButton btnNewButton_3 = new JButton("Estoque");
+//			btnNewButton_3.addActionListener(new ActionListener() {
+//				public void actionPerformed(ActionEvent e) {
+//					TelaEstoque frame = new TelaEstoque(u);
+//					frame.setLocationRelativeTo(null);
+//					frame.setVisible(true);
+//					dispose();
+//
+//				}
+//			});
+//
+//			btnNewButton_3.setBackground(new Color(154, 205, 217));
+//			btnNewButton_3.setBorder(null);
+//			btnNewButton_3.setOpaque(false);
+//			panelLeft.add(btnNewButton_3, "cell 0 3,grow");
+//		}
 		JLabel imgConta = new JLabel("");
 		imgConta.addMouseListener(new MouseAdapter() {
 			@Override
@@ -338,19 +242,16 @@ public class TelaInicio extends JFrame {
 				}
 			}
 		});
+		
+				JLabel imgCarrinho = new JLabel("");
+				imgCarrinho.setIcon(new ImageIcon(TelaInicio.class.getResource("/IMG/carrinho-de-compras.png")));
+				panel.add(imgCarrinho, "cell 3 0");
+				imgCarrinho.setIcon(new ImageIcon(imgC));
 		imgConta.setIcon(new ImageIcon(TelaInicio.class.getResource("/IMG/do-utilizador.png")));
 		panel.add(imgConta, "cell 4 0");
 		ImageIcon conta = new ImageIcon(TelaInicio.class.getResource("/IMG/do-utilizador.png"));
 		Image iconConta = conta.getImage().getScaledInstance(30, 30, Image.SCALE_SMOOTH);
 		imgConta.setIcon(new ImageIcon(iconConta));
-
-		JLabel lblMenorValor = new JLabel("Menor Valor");
-		panel_2.add(lblMenorValor, "cell 2 3,alignx center");
-		lblMenorValor.setFont(new Font("/Fontes/Roboto-Black.ttf", Font.PLAIN, 12));
-
-		JLabel lblZaA = new JLabel("De Z a A");
-		panel_2.add(lblZaA, "cell 2 6,alignx center");
-		lblZaA.setFont(new Font("/Fontes/Roboto-Black.ttf", Font.PLAIN, 12));
 
 		btEstoque = new JButton("Estoque");
 		btEstoque.addActionListener(new ActionListener() {
@@ -366,7 +267,8 @@ public class TelaInicio extends JFrame {
 		btEstoque.setOpaque(false);
 		btEstoque.setBorder(null);
 		btEstoque.setBackground(new Color(154, 205, 217));
-		panelLeft.add(btEstoque, "cell 0 3,alignx center,aligny center");
+		btEstoque.setVisible(isVendedor);
+		panelLeft.add(btEstoque, "cell 0 3, grow");
 
 		lblAddProduto = new JLabel("");
 		lblAddProduto.addMouseListener(new MouseAdapter() {
@@ -381,34 +283,38 @@ public class TelaInicio extends JFrame {
 		ImageIcon imgM = new ImageIcon(TelaInicio.class.getResource("/img/More.png"));
 		Image m = imgM.getImage().getScaledInstance(40, 40, Image.SCALE_SMOOTH);
 		lblAddProduto.setIcon(new ImageIcon(m));
+		lblAddProduto.setVisible(isVendedor);
+		
 
 		panel_2.add(lblAddProduto, "cell 0 8,alignx center,aligny center");
 
 		lblAdicionarProduto = new JLabel("Adicionar Produto");
 		panel_2.add(lblAdicionarProduto, "cell 0 9,alignx center,aligny center");
 		lblAdicionarProduto.setFont(new Font("/Fontes/Roboto-Black.ttf", Font.PLAIN, 12));
-		if (isVendedor) {
-
-			JLabel imgMore = new JLabel("");
-			imgMore.addMouseListener(new MouseAdapter() {
-				@Override
-				public void mouseClicked(MouseEvent e) {
-					TelaEstoque estoque = new TelaEstoque(u);
-
-					TelaCadastroProduto cadastrar = new TelaCadastroProduto(estoque, u);
-					cadastrar.setVisible(true);
-					cadastrar.setLocationRelativeTo(null);
-				}
-			});
-
-			imgMore.setIcon(new ImageIcon(TelaInicio.class.getResource("/IMG/iconMore.png")));
-			panel_2.add(imgMore, "cell 0 8,alignx center");
-			imgMore.setIcon(new ImageIcon(more));
-		} else {
-			btEstoque.setVisible(isVendedor);
-			lblAddProduto.setVisible(isVendedor);
-			lblAdicionarProduto.setVisible(isVendedor);
-		}
+		
+		lblAdicionarProduto.setVisible(isVendedor);
+//		if (isVendedor) {
+//
+//			JLabel imgMore = new JLabel("");
+//			imgMore.addMouseListener(new MouseAdapter() {
+//				@Override
+//				public void mouseClicked(MouseEvent e) {
+//					TelaEstoque estoque = new TelaEstoque(u);
+//
+//					TelaCadastroProduto cadastrar = new TelaCadastroProduto(estoque, u);
+//					cadastrar.setVisible(true);
+//					cadastrar.setLocationRelativeTo(null);
+//				}
+//			});
+//
+//			imgMore.setIcon(new ImageIcon(TelaInicio.class.getResource("/IMG/iconMore.png")));
+//			panel_2.add(imgMore, "cell 0 8,alignx center");
+//			imgMore.setIcon(new ImageIcon(more));
+//		} else {
+//			btEstoque.setVisible(isVendedor);
+//			lblAddProduto.setVisible(isVendedor);
+//			lblAdicionarProduto.setVisible(isVendedor);
+//		}
 
 		String[] colunas = { "Nome", "Quantidade", "Preço" };
 		DefaultTableModel modelo = new DefaultTableModel(colunas, 0);

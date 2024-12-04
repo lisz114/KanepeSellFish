@@ -102,20 +102,12 @@ public class TelaPerfilVendedor extends JFrame {
 		});
 		btnCarrinho.setBorder(null);
 		btnCarrinho.setBackground(SystemColor.control);
-		panel.add(btnCarrinho, "cell 2 0,grow");
+		panel.add(btnCarrinho, "cell 3 0,grow");
 		ImageIcon iconCarrinho = new ImageIcon(TelaPerfilVendedor.class.getResource("/IMG/carrinho-de-compras.png"));
 		Image iconC = iconCarrinho.getImage().getScaledInstance(26, 26, Image.SCALE_SMOOTH);
 		btnCarrinho.setIcon(new ImageIcon(iconC));
-
-		JButton btnSininho = new JButton("");
-		btnSininho.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		btnSininho.setOpaque(false);
-		btnSininho.setBorder(null);
-		btnSininho.setBackground(SystemColor.control);
-		panel.add(btnSininho, "cell 3 0,grow");
 		ImageIcon iconSininho = new ImageIcon(TelaPerfilVendedor.class.getResource("/IMG/sino.png"));
 		Image iconS = iconSininho.getImage().getScaledInstance(26, 26, Image.SCALE_SMOOTH);
-		btnSininho.setIcon(new ImageIcon(iconS));
 
 		JButton btnFlecha = new JButton("");
 		btnFlecha.addActionListener(new ActionListener() {
@@ -156,6 +148,12 @@ public class TelaPerfilVendedor extends JFrame {
 		panelLeft.add(btnNewButton, "cell 0 0,grow");
 
 		JButton btnNewButton_1 = new JButton("Carrinho");
+		btnNewButton_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				TelaCarrinho tela = new TelaCarrinho(u, null, isVendedor); 
+			}
+		});
 		btnNewButton_1.setBackground(new Color(154, 205, 217));
 		btnNewButton_1.setBorder(null);
 		btnNewButton_1.setOpaque(false);

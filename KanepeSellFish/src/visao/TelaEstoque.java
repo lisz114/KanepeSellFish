@@ -267,6 +267,14 @@ public class TelaEstoque extends JFrame {
 		panelMenu.add(btnNewButton, "cell 0 0,grow");
 
 		JButton btnNewButton_1 = new JButton("Carrinho");
+		btnNewButton_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				TelaCarrinho carrinho = new TelaCarrinho(u, null, true);
+				carrinho.setLocationRelativeTo(null);
+				carrinho.setVisible(true);
+				dispose();
+			}
+		});
 		btnNewButton_1.setBackground(new Color(154, 205, 217));
 		btnNewButton_1.setBorder(null);
 		btnNewButton_1.setOpaque(false);

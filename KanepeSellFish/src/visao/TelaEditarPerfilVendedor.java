@@ -151,7 +151,7 @@ public class TelaEditarPerfilVendedor extends JFrame {
 		btPerfil.setBorder(null);
 		panelLeft.add(btPerfil, "cell 0 2,grow");
 
-		if (u.isProdutor()) {
+		if (isVendedor) {
 			JButton btnNewButton_3 = new JButton("Estoque");
 			btnNewButton_3.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {

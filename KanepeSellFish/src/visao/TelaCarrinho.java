@@ -79,14 +79,30 @@ public class TelaCarrinho extends JFrame {
 		panelLeft.add(btnNewButton, "cell 0 0,grow");
 
 		JButton btnNewButton_1 = new JButton("Carrinho");
-		btnNewButton_1.setBackground(new Color(154, 205, 217));
+		btnNewButton_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		btnNewButton_1.setBackground(new Color(96, 154, 168));
 		btnNewButton_1.setBorder(null);
-		btnNewButton_1.setOpaque(false);
 		panelLeft.add(btnNewButton_1, "cell 0 1,grow");
 
 		JButton btnNewButton_2 = new JButton("Perfil");
 		btnNewButton_2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				
+				if (isVendedor) {
+					TelaPerfilVendedor v = new TelaPerfilVendedor(u, isVendedor);
+					v.setLocationRelativeTo(null);
+					v.setVisible(true);
+					dispose();
+				} else {
+					TelaPerfilCliente telaPerfil = new TelaPerfilCliente(u, isVendedor);
+					telaPerfil.setLocationRelativeTo(null);
+					telaPerfil.setVisible(true);
+					dispose();
+				}
+				
 			}
 		});
 		btnNewButton_2.setBackground(new Color(154, 205, 217));
@@ -105,7 +121,7 @@ public class TelaCarrinho extends JFrame {
 
 			}
 		});
-		btnNewButton_3.setBackground(new Color(96, 154, 168));
+		btnNewButton_3.setBackground(new Color(154, 205, 217));
 		btnNewButton_3.setBorder(null);
 		panelLeft.add(btnNewButton_3, "cell 0 3,grow");
 
