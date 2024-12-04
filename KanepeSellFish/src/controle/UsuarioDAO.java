@@ -222,7 +222,6 @@ public class UsuarioDAO implements IUsuarioDAO {
 	}
 
 	public void alterarSenha(String senha, String email) {
-		
 		String sql = "UPDATE usuarios set senha_Usuario = ? where email_Usuario = ?";
 		try (Connection conn = ConexaoBD.getConexaoMySQL(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
@@ -235,4 +234,4 @@ public class UsuarioDAO implements IUsuarioDAO {
 			e.printStackTrace();
 		}
 	}
-	}
+}
