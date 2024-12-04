@@ -392,6 +392,7 @@ public class TelaPerfilVendedor extends JFrame {
 
 		JLabel lblAvatar = new JLabel("");
 		ImageIcon img = new ImageIcon(u.getImg());
+//		Image png = img.getImage
 		lblAvatar.setIcon(img);
 		lblAvatar.setBounds(48, 11, 202, 202);
 		panel_2.add(lblAvatar);

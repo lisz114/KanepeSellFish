@@ -35,6 +35,8 @@ import javax.swing.JButton;
 import javax.swing.JFileChooser;
 
 import java.awt.Color;
+
+import javax.imageio.ImageIO;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.LayoutStyle.ComponentPlacement;
@@ -42,6 +44,7 @@ import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.nio.file.Path;
@@ -96,20 +99,20 @@ public class TelaEditarVendedor extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	
+
 	public static BufferedImage arredondar(BufferedImage imagemRetangular) {
-        int largura = imagemRetangular.getWidth();
-        int altura = imagemRetangular.getHeight();
-        int raio = largura / (double) altura > 0 ? altura : largura;
-        BufferedImage imagemRedonda = new BufferedImage(largura, altura, BufferedImage.TYPE_INT_ARGB);
-        Graphics2D graphics = imagemRedonda.createGraphics();
-        graphics.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-        graphics.setClip(new Area(new Ellipse2D.Double(0, 0, raio, raio)));
-        graphics.drawImage(imagemRetangular, 0, 0, null);
-        graphics.dispose();
-        return imagemRedonda;
-    }
-	
+		int largura = imagemRetangular.getWidth();
+		int altura = imagemRetangular.getHeight();
+		int raio = largura / (double) altura > 0 ? altura : largura;
+		BufferedImage imagemRedonda = new BufferedImage(largura, altura, BufferedImage.TYPE_INT_ARGB);
+		Graphics2D graphics = imagemRedonda.createGraphics();
+		graphics.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+		graphics.setClip(new Area(new Ellipse2D.Double(0, 0, raio, raio)));
+		graphics.drawImage(imagemRetangular, 0, 0, null);
+		graphics.dispose();
+		return imagemRedonda;
+	}
+
 	public TelaEditarVendedor(Usuario u) {
 		setResizable(false);
 		setLocationByPlatform(true);
@@ -119,12 +122,14 @@ public class TelaEditarVendedor extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
+		contentPane.setBackground(new Color(255, 255, 255));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
 		setContentPane(contentPane);
 		contentPane.setLayout(new BorderLayout(0, 0));
 
 		PicPanel panel = new PicPanel("src//IMG/EdicaoPerfilVendedor.png");
+		panel.setBackground(new Color(255, 255, 255));
 		contentPane.add(panel, BorderLayout.CENTER);
 		panel.setLayout(new GridLayout(1, 0, 0, 0));
 
@@ -155,13 +160,36 @@ public class TelaEditarVendedor extends JFrame {
 					System.out.println(arquivo);
 
 					String origem = arquivo.getAbsolutePath();
-					ImageIcon img = new ImageIcon(origem);
-					Image png = img.getImage().getScaledInstance(200, 200, Image.SCALE_SMOOTH);
-					imgAvatar.setIcon(new ImageIcon(png));
-					
+
+					InputStream arquivoIS;
+					BufferedImage imagemRetangular;
+					try {
+
+						arquivoIS = new FileInputStream(arquivo);
+						imagemRetangular = ImageIO.read(arquivoIS);
+
+						ImageIcon img = new ImageIcon(imagemRetangular);
+						Image png = img.getImage().getScaledInstance(200, 200, Image.SCALE_SMOOTH);
+
+						BufferedImage bufferedImage = new BufferedImage(png.getWidth(null), png.getHeight(null),
+								BufferedImage.TYPE_INT_ARGB);
+						Graphics2D g2d = bufferedImage.createGraphics();
+
+						g2d.drawImage(png, 0, 0, null);
+
+						g2d.dispose();
+
+						BufferedImage imagemRedonda = arredondar(bufferedImage);
+
+						imgAvatar.setIcon(new ImageIcon(imagemRedonda));
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+
 					Date name = new Date();
-					String nome = "ImagemPerfil/perfil_"+ name.getTime()+".png"; 
-					
+					String nome = "ImagemPerfil/perfil_" + name.getTime() + ".png";
+
 					Path f = Paths.get(nome);
 					String caminho = f.toAbsolutePath().toString();
 					InputStream si = null;
@@ -171,7 +199,7 @@ public class TelaEditarVendedor extends JFrame {
 						ot = new FileOutputStream(caminho);
 						byte[] b = new byte[1024];
 						int l;
-						while((l = si.read(b)) > 0) {
+						while ((l = si.read(b)) > 0) {
 							ot.write(b, 0, l);
 						}
 						si.close();
@@ -182,7 +210,6 @@ public class TelaEditarVendedor extends JFrame {
 						e2.printStackTrace();
 						u.setImg(null);
 					}
-					//arredondar();
 				}
 				uDAO.alterarUsuarioPNG(u);
 			}
@@ -250,6 +277,11 @@ public class TelaEditarVendedor extends JFrame {
 		lblNomeEmp.setText(u.getProd().getNomeComercio());
 
 		JLabel imgKart = new JLabel("");
+		imgKart.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+			}
+		});
 		imgKart.setBounds(400, 6, 46, 39);
 		panel_2.add(imgKart);
 		imgKart.setIcon(new ImageIcon(TelaEditarVendedor.class.getResource("/img/carrinho-de-compras.png")));
@@ -500,5 +532,5 @@ public class TelaEditarVendedor extends JFrame {
 		panel_2.add(lblNewLabel_10);
 
 	}
-	
+
 }
