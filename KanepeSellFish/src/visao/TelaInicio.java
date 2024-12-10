@@ -291,7 +291,7 @@ public class TelaInicio extends JFrame {
 					v.setVisible(true);
 					dispose();
 				} else {
-					TelaPerfilCliente telaPerfil = new TelaPerfilCliente(u, isVendedor);
+					TelaPerfilCliente telaPerfil = new TelaPerfilCliente( u, isVendedor);
 					telaPerfil.setLocationRelativeTo(null);
 					telaPerfil.setVisible(true);
 					dispose();
