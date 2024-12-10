@@ -1,6 +1,5 @@
 package visao;
 
-import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
@@ -17,20 +16,6 @@ import modelo.Produto;
 import net.miginfocom.swing.MigLayout;
 
 public class CardProdCarrinho extends JPanel {
-
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					CardProdCarrinho frame = new CardProdCarrinho(null);
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 
