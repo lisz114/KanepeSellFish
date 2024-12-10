@@ -332,7 +332,6 @@ public class TelaEditarPerfilVendedor extends JFrame {
 				Usuario user = new Usuario();
 				Produtor vend = new Produtor();
 				Endereco ende = new Endereco();
-
 				String email = txtEmail.getText();
 				String cpf = txtCPF.getText();
 				String cnpj = txtCNPJ.getText();
@@ -341,9 +340,10 @@ public class TelaEditarPerfilVendedor extends JFrame {
 				String log = txtLogadouro.getText();
 				String num = txtNum.getText();
 				int num1 = Integer.parseInt(num);
-
-				if (email.isEmpty() || cpf.isEmpty() || cnpj.isEmpty() || city.isEmpty() || bar.isEmpty()
-						|| log.isEmpty() || num.isEmpty()) {
+				
+				if(email.isEmpty() || cpf.isEmpty() || cnpj.isEmpty() || city.isEmpty() || bar.isEmpty()
+						|| log.isEmpty() || num.isEmpty()){
+					
 					TelaError erro = new TelaError();
 					erro.setLabelText("Imformações inválidas!");
 					erro.setLocationRelativeTo(null);
