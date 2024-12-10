@@ -1,6 +1,8 @@
 package visao;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Cursor;
 import java.awt.Font;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
@@ -22,14 +24,13 @@ import javax.swing.border.EmptyBorder;
 import controle.ProdutoDAO;
 import modelo.Produto;
 import modelo.Usuario;
-import net.miginfocom.swing.MigLayout;
-import java.awt.BorderLayout;
 
 public class TelaCarrinho extends JFrame {
 
 	private JPanel contentPane;
 	ProdutoDAO pDAO = new ProdutoDAO();
 	JPanel panelLeft;
+	JButton btnEstoque;
 
 //	public static void main(String[] args) {
 //		EventQueue.invokeLater(new Runnable() {
@@ -63,8 +64,9 @@ public class TelaCarrinho extends JFrame {
 		contentPane.add(panelLeft, BorderLayout.WEST);
 		panelLeft.setLayout(new MigLayout("", "[100px]", "[50px][50px][50px][50px]"));
 
-		JButton btnNewButton = new JButton("Inicio");
-		btnNewButton.addActionListener(new ActionListener() {
+		JButton btnInicio = new JButton("Inicio");
+		btnInicio.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		btnInicio.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
 				TelaInicio tiv = new TelaInicio(u, isVendedor);
@@ -73,22 +75,24 @@ public class TelaCarrinho extends JFrame {
 				dispose();
 			}
 		});
-		btnNewButton.setBackground(new Color(154, 205, 217));
-		btnNewButton.setBorder(null);
-		btnNewButton.setOpaque(false);
-		panelLeft.add(btnNewButton, "cell 0 0,grow");
+		btnInicio.setBackground(new Color(154, 205, 217));
+		btnInicio.setBorder(null);
+		btnInicio.setOpaque(false);
+		panelLeft.add(btnInicio, "cell 0 0,grow");
 
-		JButton btnNewButton_1 = new JButton("Carrinho");
-		btnNewButton_1.addActionListener(new ActionListener() {
+		JButton btnCarrinho = new JButton("Carrinho");
+		btnCarrinho.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		btnCarrinho.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			}
 		});
-		btnNewButton_1.setBackground(new Color(96, 154, 168));
-		btnNewButton_1.setBorder(null);
-		panelLeft.add(btnNewButton_1, "cell 0 1,grow");
+		btnCarrinho.setBackground(new Color(96, 154, 168));
+		btnCarrinho.setBorder(null);
+		panelLeft.add(btnCarrinho, "cell 0 1,grow");
 
-		JButton btnNewButton_2 = new JButton("Perfil");
-		btnNewButton_2.addActionListener(new ActionListener() {
+		JButton btnPerfil = new JButton("Perfil");
+		btnPerfil.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		btnPerfil.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
 				if (isVendedor) {
@@ -105,13 +109,14 @@ public class TelaCarrinho extends JFrame {
 				
 			}
 		});
-		btnNewButton_2.setBackground(new Color(154, 205, 217));
-		btnNewButton_2.setBorder(null);
-		btnNewButton_2.setOpaque(true);
-		panelLeft.add(btnNewButton_2, "cell 0 2,grow");
+		btnPerfil.setBackground(new Color(154, 205, 217));
+		btnPerfil.setBorder(null);
+		btnPerfil.setOpaque(true);
+		panelLeft.add(btnPerfil, "cell 0 2,grow");
 
-		JButton btnNewButton_3 = new JButton("Estoque");
-		btnNewButton_3.addActionListener(new ActionListener() {
+		btnEstoque = new JButton("Estoque");
+		btnEstoque.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		btnEstoque.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
 				TelaEstoque frame = new TelaEstoque(u);
@@ -121,11 +126,25 @@ public class TelaCarrinho extends JFrame {
 
 			}
 		});
-		btnNewButton_3.setBackground(new Color(154, 205, 217));
-		btnNewButton_3.setBorder(null);
-		panelLeft.add(btnNewButton_3, "cell 0 3,grow");
+		btnEstoque.setBackground(new Color(154, 205, 217));
+		btnEstoque.setBorder(null);
+		btnEstoque.setVisible(isVendedor);
+		panelLeft.add(btnEstoque, "cell 0 3,grow");
 
 		JLabel imgMenu = new JLabel("");
+		imgMenu.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				
+				if (panelLeft.isVisible()) {
+					panelLeft.setVisible(false);
+				} else {
+					panelLeft.setVisible(true);
+				}
+				
+			}
+		});
+		imgMenu.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		panel.add(imgMenu, "cell 0 0,alignx left,aligny top");
 		imgMenu.setIcon(new ImageIcon(TelaCarrinho.class.getResource("/IMG/menu-hamburguer.png")));
 		ImageIcon menu = new ImageIcon(TelaCarrinho.class.getResource("/IMG/menu-hamburguer.png"));

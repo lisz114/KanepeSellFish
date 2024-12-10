@@ -38,6 +38,7 @@ import controle.ProdutoDAO;
 import modelo.Produto;
 import modelo.Usuario;
 import net.miginfocom.swing.MigLayout;
+import java.awt.Cursor;
 
 public class TelaInicio extends JFrame {
 
@@ -137,6 +138,7 @@ public class TelaInicio extends JFrame {
 		ButtonGroup grupo = new ButtonGroup();
 
 		JLabel imgMenu = new JLabel("");
+		imgMenu.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		imgMenu.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -163,6 +165,7 @@ public class TelaInicio extends JFrame {
 		panelLeft.setLayout(new MigLayout("", "[100px]", "[50px][50px][50px][50px]"));
 
 		JButton btInicio = new JButton("Inicio");
+		btInicio.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btInicio.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			}
@@ -172,6 +175,7 @@ public class TelaInicio extends JFrame {
 		panelLeft.add(btInicio, "cell 0 0,grow");
 
 		JButton btCarrinho = new JButton("Carrinho");
+		btCarrinho.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btCarrinho.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				TelaCarrinho carrinho = new TelaCarrinho(u, produtos, isVendedor);
@@ -186,6 +190,7 @@ public class TelaInicio extends JFrame {
 		panelLeft.add(btCarrinho, "cell 0 1,grow");
 
 		JButton btPerfil = new JButton("Perfil");
+		btPerfil.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btPerfil.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
@@ -254,6 +259,7 @@ public class TelaInicio extends JFrame {
 		imgConta.setIcon(new ImageIcon(iconConta));
 
 		btEstoque = new JButton("Estoque");
+		btEstoque.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btEstoque.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
@@ -274,9 +280,13 @@ public class TelaInicio extends JFrame {
 		lblAddProduto.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				TelaCadastroProduto cadastro = new TelaCadastroProduto(null, u);
+				TelaEstoque estoque = new TelaEstoque(u);
+				estoque.setLocationRelativeTo(null);
+				estoque.setVisible(true);
+				TelaCadastroProduto cadastro = new TelaCadastroProduto(estoque, u);
 				cadastro.setLocationRelativeTo(null);
 				cadastro.setVisible(true);
+				dispose();
 			}
 		});
 		lblAddProduto.setIcon(new ImageIcon(TelaInicio.class.getResource("/img/More.png")));
