@@ -23,6 +23,7 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 
 import controle.ProdutorDAO;
+import modelo.Produtor;
 import modelo.Usuario;
 import net.miginfocom.swing.MigLayout;
 
@@ -32,6 +33,7 @@ public class TelaPerfilVendedor extends JFrame {
 	TelaPerfilVendedor estajanela = this; 
 	private ArrayList<Usuario> listaUsuarios;
 	JPanel panelLeft;
+	Produtor produtor;
 	private ProdutorDAO pDAO = ProdutorDAO.getInstancia();
 
 	/**
@@ -58,7 +60,7 @@ public class TelaPerfilVendedor extends JFrame {
 	 * @param 
 	 */
 	public TelaPerfilVendedor(Usuario u, boolean isVendedor) {
-
+		produtor = pDAO.consultaProdutor(u);
 		setResizable(false);
 		setLocationByPlatform(true);
 		setMinimumSize(new Dimension(1176, 664));
@@ -229,7 +231,7 @@ public class TelaPerfilVendedor extends JFrame {
 		
 		JLabel lblEndereco = new JLabel("Endereço:");
 		lblEndereco.setFont(new Font("Dialog", Font.PLAIN, 15));
-		panel_1.add(lblEndereco, "cell 3 2,aligny bottom");
+		panel_1.add(lblEndereco, "flowx,cell 3 2,aligny bottom");
 		
 		JLabel lblEditarFt = new JLabel("Editar Foto de Perfil");
 		lblEditarFt.setFont(new Font("Dialog", Font.ITALIC, 13));
@@ -250,6 +252,11 @@ public class TelaPerfilVendedor extends JFrame {
 		panel_1.add(txtEmail, "cell 1 3,alignx center,aligny bottom");
 		txtEmail.setText(u.getEmail());
 		
+		JLabel txtCidade = new JLabel("cidade");
+		txtCidade.setFont(new Font("Dialog", Font.PLAIN, 15));
+		panel_1.add(txtCidade, "flowx,cell 3 3");
+		txtCidade.setText(produtor.getEnd().getCidade());
+		
 		JLabel lblCpf = new JLabel("Cpf:");
 		lblCpf.setFont(new Font("Dialog", Font.PLAIN, 15));
 		panel_1.add(lblCpf, "flowx,cell 1 4");
@@ -263,13 +270,19 @@ public class TelaPerfilVendedor extends JFrame {
 		lblInfoComercio.setFont(new Font("Dialog", Font.PLAIN, 15));
 		panel_1.add(lblInfoComercio, "cell 1 2,alignx left,aligny center");
 		
+		JLabel txtLogradouro = new JLabel("logra");
+		txtLogradouro.setFont(new Font("Dialog", Font.PLAIN, 15));
+		panel_1.add(txtLogradouro, "flowx,cell 3 4,alignx left");
+		txtLogradouro.setText(produtor.getEnd().getLogradouro());
+		
 		JLabel lblTelefone = new JLabel("Telefone:");
 		lblTelefone.setFont(new Font("Dialog", Font.PLAIN, 15));
 		panel_1.add(lblTelefone, "flowx,cell 1 5");
 		
-		JLabel txtTelefone = new JLabel("Adicionar Telefone");
+		JLabel txtTelefone = new JLabel("");
 		txtTelefone.setFont(new Font("Dialog", Font.PLAIN, 15));
 		panel_1.add(txtTelefone, "cell 1 5");
+		txtTelefone.setText(u.getTel());
 		
 		JLabel lblNomeC = new JLabel("Nome do Comércio:");
 		lblNomeC.setFont(new Font("Dialog", Font.PLAIN, 15));
@@ -311,6 +324,25 @@ public class TelaPerfilVendedor extends JFrame {
 		bntEditar.setBorderPainted(false);
 		bntEditar.setBorder(new LineBorder(new Color(0, 0, 0), 2, true));
 		panel_1.add(bntEditar, "cell 4 7,alignx center");
+		
+		JLabel txtCep = new JLabel("cep");
+		txtCep.setFont(new Font("Dialog", Font.PLAIN, 15));
+		panel_1.add(txtCep, "cell 3 2,aligny bottom");
+		txtCep.setText(produtor.getEnd().getCep());
+
+		JLabel txtBairro = new JLabel("bairro");
+		txtBairro.setFont(new Font("Dialog", Font.PLAIN, 15));
+		panel_1.add(txtBairro, "cell 3 3,alignx right");
+		txtBairro.setText(produtor.getEnd().getBairro());
+		
+		JLabel lblNumero = new JLabel("Número: ");
+		lblNumero.setFont(new Font("Dialog", Font.PLAIN, 15));
+		panel_1.add(lblNumero, "cell 3 4,alignx right");
+		
+		JLabel txtNum = new JLabel("num");
+		txtNum.setFont(new Font("Dialog", Font.PLAIN, 15));
+		panel_1.add(txtNum, "cell 3 4,alignx right");
+		txtNum.setText(" "+ produtor.getEnd().getNumero());
 
 	}
 }

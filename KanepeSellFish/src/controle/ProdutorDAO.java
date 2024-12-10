@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import modelo.Endereco;
 import modelo.IProdutorDAO;
 import modelo.Produtor;
 import modelo.Usuario;
@@ -12,6 +13,7 @@ import modelo.Usuario;
 public class ProdutorDAO implements IProdutorDAO {
 	
 	private static ProdutorDAO instancia;
+	EnderecoDAO eDAO;
 
 	private ProdutorDAO() {
 	}
@@ -59,11 +61,13 @@ public class ProdutorDAO implements IProdutorDAO {
 			while (res1.next()) {
 
 			Produtor p = new Produtor();
+			Endereco e = new Endereco();
 			
 			
 			p.setNomeComercio(res1.getString("nomeNegocio"));
 			p.setCnpj(res1.getString("cnpj"));
-			
+			e = eDAO.buscarendereco(Integer.parseInt(res1.getString("Enderecos_idEnderecos")));
+			p.setEnd(e);
 			return p;
 			
 			}
