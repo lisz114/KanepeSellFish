@@ -22,6 +22,8 @@ import net.miginfocom.swing.MigLayout;
 
 @SuppressWarnings("serial")
 public class CardProdCarrinho extends JPanel {
+	private static final long serialVersionUID = 1L;
+	private JPanel contentPane;
 
 	int quantidade = 1;
 	Float preco;

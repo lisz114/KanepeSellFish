@@ -4,6 +4,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 import modelo.CarrinhoCompras;
@@ -50,21 +52,6 @@ public class CarrinhoDAO implements ICarrinhoDAO {
 			e.printStackTrace();
 			return false;
 		}
-	}
-
-	private String pegarIdCarrinho(Usuario u) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	public boolean alterarQuantidade(Produto produto) {
-
-		return false;
-	}
-
-	public boolean removerProduto(long id) {
-		return false;
-
 	}
 
 	public CarrinhoCompras verificarSeExisteCarrinho(Usuario u) {
@@ -139,8 +126,59 @@ public class CarrinhoDAO implements ICarrinhoDAO {
 	}
 
 	@Override
+	public boolean removerProduto(long id) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
 	public boolean alterarQuantidade(Pedido pedido) {
 		// TODO Auto-generated method stub
 		return false;
 	}
+	
+	public ArrayList<Produto> addProdCarrinho(CarrinhoCompras c) {
+		ArrayList<Produto> listaDeProdutos = new ArrayList<Produto>();
+		
+		PreparedStatement stmt1 = null;
+
+		Connection conn = ConexaoBD.getConexaoMySQL();
+
+		try {
+			stmt1 = conn.prepareStatement("SELECT * FROM kanepe.itenscarrinho where Carrinho_idCarrinho = ?;");
+			ResultSet res1 = null;
+			
+			stmt1.setString(1, c.getCodigoCarrinho());
+
+
+			res1 = stmt1.executeQuery();
+
+//			listaProdutos = null;
+
+			while (res1.next()) {
+				
+				pDAO.pegarIdProduto(null);
+				
+				Produto prod = new Produto();
+
+				prod.setNome(res1.getString("nome_Produto"));
+				prod.setQuantidadeEstoque(Integer.parseInt(res1.getString("quantidade")));
+				prod.setPreco(Float.parseFloat(res1.getString("preco")));
+				prod.setIdProdutor(Integer.parseInt(res1.getString("Produtores_idProdutores")));
+				prod.setValidade(
+						LocalDate.parse(res1.getString("validade"), DateTimeFormatter.ofPattern("yyyy-MM-dd")));
+				prod.setSalinidade(res1.getBoolean("salinidade"));
+				listaDeProdutos.add(prod);
+			}
+
+			res1.close();
+			stmt1.close();
+			conn.close();
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+
+		return listaDeProdutos;
+	}
+
 }
