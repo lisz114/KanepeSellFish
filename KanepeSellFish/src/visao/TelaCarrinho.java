@@ -209,7 +209,7 @@ public class TelaCarrinho extends JFrame {
 					coluna = 0;
 					linha++;
 				}
-				CardProduto panel_8 = new CardProduto(p, u);
+				CardProdutoCarrinho panel_8 = new CardProdutoCarrinho(p);
 				panelProd.add(panel_8, "cell " + coluna + " " + linha + "");
 
 			}
