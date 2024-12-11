@@ -244,6 +244,7 @@ public class TelaEstoque extends JFrame {
 		panelMenu.setLayout(new MigLayout("", "[100px]", "[50px][50px][50px][50px]"));
 		
 		JButton btnNewButton = new JButton("Inicio");
+		btnNewButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if(uDAO.consultarUsuarioVendedor(u)) {
@@ -267,12 +268,22 @@ public class TelaEstoque extends JFrame {
 		panelMenu.add(btnNewButton, "cell 0 0,grow");
 
 		JButton btnNewButton_1 = new JButton("Carrinho");
+		btnNewButton_1.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		btnNewButton_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				TelaCarrinho carrinho = new TelaCarrinho(u, null, true);
+				carrinho.setLocationRelativeTo(null);
+				carrinho.setVisible(true);
+				dispose();
+			}
+		});
 		btnNewButton_1.setBackground(new Color(154, 205, 217));
 		btnNewButton_1.setBorder(null);
 		btnNewButton_1.setOpaque(false);
 		panelMenu.add(btnNewButton_1, "cell 0 1,grow");
 
 		JButton btnNewButton_2 = new JButton("Perfil");
+		btnNewButton_2.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnNewButton_2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
@@ -289,6 +300,7 @@ public class TelaEstoque extends JFrame {
 		panelMenu.add(btnNewButton_2, "cell 0 2,grow");
 
 		JButton btnNewButton_3 = new JButton("Estoque");
+		btnNewButton_3.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnNewButton_3.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
