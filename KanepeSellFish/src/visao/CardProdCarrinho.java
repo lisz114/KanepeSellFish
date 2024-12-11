@@ -1,22 +1,15 @@
 package visao;
 
-import java.awt.Color;
 import java.awt.Font;
 import java.awt.Image;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 import javax.swing.ImageIcon;
-import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.SwingConstants;
 
-import controle.CarrinhoDAO;
-import modelo.CarrinhoCompras;
-import modelo.Produto;
+import modelo.ItemCarrinho;
 import modelo.Usuario;
 import net.miginfocom.swing.MigLayout;
 
@@ -26,7 +19,7 @@ public class CardProdCarrinho extends JPanel {
 	int quantidade = 1;
 	Float preco;
 
-	public CardProdCarrinho(Produto p, Usuario u) {
+	public CardProdCarrinho(ItemCarrinho p, Usuario u) {
 		setLayout(new MigLayout("", "[20px][100px][20px]", "[][][]"));
 
 
@@ -35,6 +28,7 @@ public class CardProdCarrinho extends JPanel {
 		lblNome.setText(p.getNome());
 
 		JLabel lblQuantidade = new JLabel("1");
+//		lblQuantidade.setText();
 
 		JLabel lblCifra = new JLabel("R$");
 		add(lblCifra, "flowx,cell 1 1");

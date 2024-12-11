@@ -1,18 +1,16 @@
 package modelo;
 
-public class ItemCarrinho {
+public class ItemCarrinho extends Produto {
 	private Produto produtoItemCarrinho;
 	private Integer quantidade;
-	private Float preco;
-	private CarrinhoCompras carrinhoItemCarrinho;
+	private Float precoTotal;
 	
 	public ItemCarrinho(){}
 	
-	public ItemCarrinho(Produto produtoItemCarrinho, Integer quantidade,  Float preco, CarrinhoCompras carrinhoItemCarrinho) {
+	public ItemCarrinho(Produto produtoItemCarrinho, Integer quantidade,  Float precoTotal ) {
 		this.produtoItemCarrinho = produtoItemCarrinho;
 		this.quantidade = quantidade;
-		this.preco = preco;
-		this.carrinhoItemCarrinho = carrinhoItemCarrinho;
+		this.precoTotal = precoTotal;
 	}
 
 	public Produto getProdutoItemCarrinho() {
@@ -31,20 +29,13 @@ public class ItemCarrinho {
 		this.quantidade = quantidade;
 	}
 
-	public Float getPreco() {
-		return preco;
+	public Float getPrecoTotal() {
+		return precoTotal;
 	}
 
-	public void setPreco(Float preco) {
-		this.preco = preco;
+	public void setPrecoTotal(Float precoTotal) {
+		this.precoTotal = precoTotal;
 	}
 
-	public CarrinhoCompras getCarrinhoItemCarrinho() {
-		return carrinhoItemCarrinho;
-	}
-
-	public void setCarrinhoItemCarrinho(CarrinhoCompras carrinhoItemCarrinho) {
-		this.carrinhoItemCarrinho = carrinhoItemCarrinho;
-	}
 
 }
