@@ -78,7 +78,7 @@ public class TelaLogin extends JFrame {
 		JPanel panelPrincipal = new JPanel();
 		panelPrincipal.setOpaque(false);
 		panel.add(panelPrincipal);
-		panelPrincipal.setLayout(new MigLayout("", "[grow]", "[150px][95px][70px][81px][65px][grow]"));
+		panelPrincipal.setLayout(new MigLayout("", "[grow]", "[150px][95px][70px][88px][65px][grow]"));
 
 		JPanel panel_2 = new JPanel();
 		panel_2.setOpaque(false);
@@ -117,7 +117,7 @@ public class TelaLogin extends JFrame {
 		panelCpf.setBorder(new EmptyBorder(0, 40, 0, 40));
 		panelCpf.setOpaque(false);
 		panelPrincipal.add(panelCpf, "cell 0 3,grow");
-		panelCpf.setLayout(new MigLayout("", "[grow]", "[10px][40px][10px,top]"));
+		panelCpf.setLayout(new MigLayout("", "[grow]", "[10px][30px][10px,top]"));
 
 		JLabel lblSenha = new JLabel("<html>Senha<span style='color: red;'>*</span></html>");
 		lblSenha.setForeground(Color.BLACK);
@@ -129,10 +129,10 @@ public class TelaLogin extends JFrame {
 		lblEsqueceu.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				TelaEsqueceuSenha esqueceu = new TelaEsqueceuSenha();
-
+				TelaEsqueceuSenha esqueceu = new TelaEsqueceuSenha(null);
 				esqueceu.setLocationRelativeTo(null);
 				esqueceu.setVisible(true);
+				dispose();
 
 			}
 		});
@@ -175,19 +175,23 @@ public class TelaLogin extends JFrame {
 				Usuario u = new Usuario();
 
 				String email = txtEmail.getText();
-				String senha = new String(txtSenha.getPassword());
-
+				String senha = String.valueOf(txtSenha.getPassword());
 				u = uDAO.consultarUsuarioLoginSenha(email, senha);
 
 				if (u != null) {
+					if (uDAO.consultarUsuarioVendedor(u)) {
+						TelaInicio tela = new TelaInicio(u, true);
+						tela.setLocationRelativeTo(null);
+						tela.setVisible(true);
 
-					TelaPerfilVendedor tela = new TelaPerfilVendedor(u);
-					tela.setLocationRelativeTo(null);
-					tela.setVisible(true);
+						dispose();
+					} else {
+						TelaInicio tela = new TelaInicio(u, false);
+						tela.setLocationRelativeTo(null);
+						tela.setVisible(true);
 
-					dispose();
-
-					System.out.println("Usuario encontrado");
+						dispose();
+					}
 				} else {
 					TelaError tela = new TelaError();
 					tela.setLabelText("Usuario não encontrado");

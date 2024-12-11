@@ -2,6 +2,7 @@ package controle;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import modelo.IProdutorDAO;
@@ -62,4 +63,40 @@ public class ProdutorDAO implements IProdutorDAO {
 		return r;
 	}
 	
+	public Produtor consultaProdutor(Usuario usuario) {
+		PreparedStatement stmt1 = null;
+
+		Connection conn = ConexaoBD.getConexaoMySQL();
+
+		try {
+			stmt1 = conn.prepareStatement("SELECT * FROM kanepe.produtores WHERE Usuarios_idUsuarios = ?");
+			ResultSet res1 = null;
+			stmt1.setLong(1, usuario.getIdUsuario());
+
+			res1 = stmt1.executeQuery();
+
+			while (res1.next()) {
+
+			Produtor p = new Produtor();
+			
+			
+			p.setNomeComercio(res1.getString("nomeNegocio"));
+			p.setCnpj(res1.getString("cnpj"));
+			
+			return p;
+			
+			}
+
+			res1.close();
+			stmt1.close();
+			conn.close();
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+
 }
+

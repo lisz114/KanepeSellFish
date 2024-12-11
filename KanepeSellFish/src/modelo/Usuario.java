@@ -7,8 +7,6 @@ public class Usuario {
 	private String email;
 	private String cpf;
 	private String tel;
-	private String desc;
-	private Produtor prod;
 	private Endereco end;
 	protected int idUsuario;
 	private String img;
@@ -47,14 +45,6 @@ public class Usuario {
 
 	public void setEnd(Endereco end) {
 		this.end = end;
-	}
-	
-	public String getDesc() {
-		return desc;
-	}
-
-	public void setDesc(String desc) {
-		this.desc = desc;
 	}
 
 	public String getNome() {
@@ -111,5 +101,10 @@ public class Usuario {
 	}
 	public int getIdUsuario() {
 		return this.idUsuario;
+	}
+
+	public boolean isProdutor() {
+		// TODO Auto-generated method stub
+		return false;
 	}
 }

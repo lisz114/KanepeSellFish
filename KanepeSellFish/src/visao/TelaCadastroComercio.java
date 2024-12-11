@@ -4,7 +4,6 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Dimension;
-import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.Image;
@@ -52,19 +51,6 @@ public class TelaCadastroComercio extends JFrame {
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					TelaCadastroComercio frame = new TelaCadastroComercio(null);
-					frame.setLocationRelativeTo(null);
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
 
 	/**
 	 * Create the frame.
@@ -186,7 +172,7 @@ public class TelaCadastroComercio extends JFrame {
 		lblImagem.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		lblImagem.setIcon(new ImageIcon(TelaCadastroComercio.class.getResource("/img/procurar.png")));
 		panelEmail.add(lblImagem, "cell 1 1,alignx trailing");
-		ImageIcon iconProcurar = new ImageIcon(TelaInicioVendedor.class.getResource("/IMG/procurar.png"));
+		ImageIcon iconProcurar = new ImageIcon(TelaCadastroComercio.class.getResource("/IMG/procurar.png"));
 		Image iconP = iconProcurar.getImage().getScaledInstance(26, 26, Image.SCALE_SMOOTH);
 		lblImagem.setIcon(new ImageIcon(iconP));
 
@@ -305,7 +291,7 @@ public class TelaCadastroComercio extends JFrame {
 						System.out.println(idUsuario);
 						
 						pDAO.inserirProdutor(produtor);
-						TelaLoginVendedor tela = new TelaLoginVendedor();
+						TelaLogin tela = new TelaLogin();
 						tela.setLocationRelativeTo(null);
 						tela.setVisible(true);
 

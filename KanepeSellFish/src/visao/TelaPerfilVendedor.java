@@ -24,17 +24,21 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
+import javax.swing.border.LineBorder;
 
+import controle.ProdutorDAO;
 import modelo.Usuario;
-import modelo.RoundButton;
 import net.miginfocom.swing.MigLayout;
 
 public class TelaPerfilVendedor extends JFrame {
 
 	private JPanel contentPane;
+	TelaPerfilVendedor estajanela = this; 
 	private ArrayList<Usuario> listaUsuarios;
 	JPanel panelLeft;
+	private ProdutorDAO pDAO = ProdutorDAO.getInstancia();
 
 	/**
 	 * Launch the application.
@@ -43,7 +47,7 @@ public class TelaPerfilVendedor extends JFrame {
 //		EventQueue.invokeLater(new Runnable() {
 //			public void run() {
 //				try {
-//					TelaPerfilVendedor frame = new TelaPerfilVendedor();
+//					TelaPerfilVendedor frame = new TelaPerfilVendedor(null);
 //					frame.setVisible(true);
 //				} catch (Exception e) {
 //					e.printStackTrace();
@@ -81,7 +85,7 @@ public class TelaPerfilVendedor extends JFrame {
 		setMaximumSize(new Dimension(1920, 1080));
 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 750, 603);
+		setBounds(100, 100, 1280, 768);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(1, 0, 0, 0));
 
@@ -108,7 +112,7 @@ public class TelaPerfilVendedor extends JFrame {
 		btnMenu.setBackground(SystemColor.control);
 		btnMenu.setOpaque(false);
 		panel.add(btnMenu, "cell 0 0,grow");
-		ImageIcon iconMenu = new ImageIcon(TelaInicioVendedor.class.getResource("/IMG/menu-hamburguer.png"));
+		ImageIcon iconMenu = new ImageIcon(TelaPerfilVendedor.class.getResource("/IMG/menu-hamburguer.png"));
 		Image iconM = iconMenu.getImage().getScaledInstance(26, 26, Image.SCALE_SMOOTH);
 		btnMenu.setIcon(new ImageIcon(iconM));
 
@@ -117,12 +121,17 @@ public class TelaPerfilVendedor extends JFrame {
 		btnCarrinho.setOpaque(false);
 		btnCarrinho.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				
+				TelaCarrinho carrinho = new TelaCarrinho(u, null,  isVendedor);
+				carrinho.setLocationRelativeTo(null);
+				carrinho.setVisible(true);
+				dispose();
 			}
 		});
 		btnCarrinho.setBorder(null);
 		btnCarrinho.setBackground(SystemColor.control);
-		panel.add(btnCarrinho, "cell 2 0,grow");
-		ImageIcon iconCarrinho = new ImageIcon(TelaInicioVendedor.class.getResource("/IMG/carrinho-de-compras.png"));
+		panel.add(btnCarrinho, "cell 3 0,grow");
+		ImageIcon iconCarrinho = new ImageIcon(TelaPerfilVendedor.class.getResource("/IMG/carrinho-de-compras.png"));
 		Image iconC = iconCarrinho.getImage().getScaledInstance(26, 26, Image.SCALE_SMOOTH);
 		btnCarrinho.setIcon(new ImageIcon(iconC));
 
@@ -137,12 +146,22 @@ public class TelaPerfilVendedor extends JFrame {
 		btnSininho.setIcon(new ImageIcon(iconS));
 
 		JButton btnFlecha = new JButton("");
+		btnFlecha.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				
+				TelaInicio inicio = new TelaInicio(u, isVendedor);
+				inicio.setLocationRelativeTo(null);
+				inicio.setVisible(true);
+				dispose();
+			}
+		});
 		btnFlecha.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnFlecha.setOpaque(false);
 		btnFlecha.setBorder(null);
 		btnFlecha.setBackground(SystemColor.control);
 		panel.add(btnFlecha, "cell 4 0,grow");
-		ImageIcon iconFlecha = new ImageIcon(TelaInicioVendedor.class.getResource("/IMG/saida.png"));
+		ImageIcon iconFlecha = new ImageIcon(TelaPerfilVendedor.class.getResource("/IMG/saida.png"));
 		Image iconF = iconFlecha.getImage().getScaledInstance(26, 26, Image.SCALE_SMOOTH);
 		btnFlecha.setIcon(new ImageIcon(iconF));
 
@@ -152,6 +171,7 @@ public class TelaPerfilVendedor extends JFrame {
 		panelLeft.setLayout(new MigLayout("", "[100px]", "[50px][50px][50px][50px]"));
 
 		JButton btnNewButton = new JButton("Inicio");
+		btnNewButton.setFont(new Font("Dialog", Font.PLAIN, 13));
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
@@ -167,18 +187,34 @@ public class TelaPerfilVendedor extends JFrame {
 		panelLeft.add(btnNewButton, "cell 0 0,grow");
 
 		JButton btnNewButton_1 = new JButton("Carrinho");
+		btnNewButton_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				TelaCarrinho carrinho = new TelaCarrinho(u, null,  isVendedor);
+				carrinho.setLocationRelativeTo(null);
+				carrinho.setVisible(true);
+				dispose();
+			}
+		});
+		btnNewButton_1.setFont(new Font("Dialog", Font.PLAIN, 13));
 		btnNewButton_1.setBackground(new Color(154, 205, 217));
 		btnNewButton_1.setBorder(null);
 		btnNewButton_1.setOpaque(false);
 		panelLeft.add(btnNewButton_1, "cell 0 1,grow");
 
 		JButton btnNewButton_2 = new JButton("Perfil");
-		btnNewButton_2.setBackground(new Color(154, 205, 217));
+		btnNewButton_2.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		btnNewButton_2.setFont(new Font("Dialog", Font.PLAIN, 13));
+		btnNewButton_2.setBackground(new Color(96, 154, 168));
 		btnNewButton_2.setBorder(null);
-		btnNewButton_2.setOpaque(false);
+		btnNewButton_2.setOpaque(true);
 		panelLeft.add(btnNewButton_2, "cell 0 2,grow");
 
 		JButton btnNewButton_3 = new JButton("Estoque");
+		btnNewButton_3.setFont(new Font("Dialog", Font.PLAIN, 13));
 		btnNewButton_3.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
@@ -191,7 +227,6 @@ public class TelaPerfilVendedor extends JFrame {
 		});
 		btnNewButton_3.setBackground(new Color(154, 205, 217));
 		btnNewButton_3.setBorder(null);
-		btnNewButton_3.setOpaque(false);
 		panelLeft.add(btnNewButton_3, "cell 0 3,grow");
 
 		JPanel panel_2 = new JPanel();
@@ -360,8 +395,15 @@ public class TelaPerfilVendedor extends JFrame {
 		RoundButton btnNewButton1 = new RoundButton("Editar");
 		btnNewButton1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				TelaEditarVendedor editVen = new TelaEditarVendedor(u);
-				editVen.setVisible(true);
+			}
+		});
+		bntEditar.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				
+				TelaEditarPerfilVendedor editar = new TelaEditarPerfilVendedor(u, isVendedor);
+				editar.setVisible(true);
+				editar.setLocationRelativeTo(null);
 				dispose();
 			}
 		});

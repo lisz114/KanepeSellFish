@@ -7,9 +7,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
-import modelo.Endereco;
 import modelo.IUsuarioDAO;
-import modelo.Produtor;
 import modelo.Usuario;
 
 public class UsuarioDAO implements IUsuarioDAO {
@@ -18,7 +16,9 @@ public class UsuarioDAO implements IUsuarioDAO {
 
 	private static UsuarioDAO instancia;
 
-	private UsuarioDAO() {
+
+	public UsuarioDAO() {
+
 	}
 
 	public static UsuarioDAO getInstancia() {
@@ -114,7 +114,7 @@ public class UsuarioDAO implements IUsuarioDAO {
 
 		try {
 			stmt1 = conn
-					.prepareStatement("SELECT * FROM kanepe.usuarios where email_Usuario = ? and senha_Usuario = ?;");
+					.prepareStatement("SELECT * FROM kanepe.usuarios where email_Usuario = ? and senha_Usuario = ?");
 			ResultSet res1 = null;
 			stmt1.setString(1, email);
 			stmt1.setString(2, senha);
@@ -145,17 +145,15 @@ public class UsuarioDAO implements IUsuarioDAO {
 		return null;
 	}
 
-	public Usuario consultarVendedorLoginSenha(String email, String senha) {
+	public boolean consultarUsuarioVendedor(Usuario usuario) {
 		PreparedStatement stmt1 = null;
 
 		Connection conn = ConexaoBD.getConexaoMySQL();
 
 		try {
-			stmt1 = conn.prepareStatement(
-					"SELECT * FROM kanepe.usuarios inner join kanepe.produtores as Usuarios_idUsuarios inner join kanepe.enderecos as idEnderecos where email_Usuario = ? and senha_Usuario = ?;");
+			stmt1 = conn.prepareStatement("SELECT * FROM kanepe.produtores WHERE Usuarios_idUsuarios = ?");
 			ResultSet res1 = null;
-			stmt1.setString(1, email);
-			stmt1.setString(2, senha);
+			stmt1.setLong(1, usuario.getIdUsuario());
 
 			res1 = stmt1.executeQuery();
 
@@ -187,17 +185,17 @@ public class UsuarioDAO implements IUsuarioDAO {
 				u.setProd(p);
 
 				return u;
+			if (res1.next()) {
+				return true;
+			}else {
+				return false;
 			}
-
-			res1.close();
-			stmt1.close();
-			conn.close();
 
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		return null;
-	}
+		return false;
+}
 
 	@Override
 	public Usuario consultaUsuarioCadastrado(String cpf, String email) {
@@ -206,7 +204,7 @@ public class UsuarioDAO implements IUsuarioDAO {
 		Connection conn = ConexaoBD.getConexaoMySQL();
 
 		try {
-			stmt1 = conn.prepareStatement("SELECT * FROM kanepe.usuarios where cpf_Usuario = ? OR email_Usuario=?;");
+			stmt1 = conn.prepareStatement("SELECT * FROM kanepe.usuarios where cpf_Usuario = ? OR email_Usuario=?");
 			ResultSet res1 = null;
 			stmt1.setString(1, cpf);
 			stmt1.setString(2, email);
@@ -270,4 +268,17 @@ public class UsuarioDAO implements IUsuarioDAO {
 		return Character.getNumericValue(cpf.charAt(10)) == segundoDigito;
 	}
 
+	public void alterarSenha(String senha, String email) {
+		String sql = "UPDATE usuarios set senha_Usuario = ? where email_Usuario = ?";
+		try (Connection conn = ConexaoBD.getConexaoMySQL(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+			pstmt.setString(1, senha);
+			pstmt.setString(2, email);
+
+			pstmt.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 }

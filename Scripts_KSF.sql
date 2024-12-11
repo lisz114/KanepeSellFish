@@ -22,8 +22,6 @@ CREATE TABLE IF NOT EXISTS Usuarios (
     senha_Usuario VARCHAR(100) NOT NULL,
     email_Usuario VARCHAR(100) NOT NULL UNIQUE,
     telefone BIGINT UNIQUE,
-    img VARCHAR(150),
-    descricao varchar(360),
     PRIMARY KEY (idUsuarios)
 );
 
@@ -98,20 +96,12 @@ CREATE TABLE IF NOT EXISTS Vendas (
 -- Table Carrinho
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS Carrinho (
-	idCarrinho BIGINT NOT NULL AUTO_INCREMENT,
-    Usuarios_idUsuarios BIGINT NOT NULL,
-	PRIMARY KEY (idCarrinho),
-    FOREIGN KEY (Usuarios_idUsuarios) REFERENCES Usuarios (idUsuarios)
-);
-CREATE TABLE IF NOT EXISTS ItensCarrinho (
-	idItensCarrinho BIGINT NOT NULL AUTO_INCREMENT,
-	Carrinho_idCarrinho BIGINT NOT NULL,
-	Produtos_idProdutos BIGINT NOT NULL,
-	quantidade BIGINT NOT NULL,
-	preco DECIMAL(10,2) NOT NULL,
-    PRIMARY KEY(idItensCarrinho),
-	FOREIGN KEY (Produtos_idProdutos) REFERENCES Produtos (idProdutos),
-	FOREIGN KEY (Carrinho_idCarrinho) REFERENCES Carrinho (idCarrinho)
+    Vendas_idVendas BIGINT NOT NULL,
+    Produtos_idProdutos BIGINT NOT NULL,
+    idCarrinho BIGINT NOT NULL AUTO_INCREMENT,
+    PRIMARY KEY (idCarrinho),
+    FOREIGN KEY (Vendas_idVendas) REFERENCES Vendas (idVendas),
+    FOREIGN KEY (Produtos_idProdutos) REFERENCES Produtos (idProdutos)
 );
 
 INSERT INTO `kanepe`.`usuarios` (`cpf_Usuario`, `nome_Usuario`, `senha_Usuario`, `email_Usuario`) VALUES ('85318806961', 'vini', 'vini', 'vini');
