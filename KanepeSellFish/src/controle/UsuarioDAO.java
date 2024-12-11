@@ -7,7 +7,9 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
+import modelo.Endereco;
 import modelo.IUsuarioDAO;
+import modelo.Produtor;
 import modelo.Usuario;
 
 public class UsuarioDAO implements IUsuarioDAO {
@@ -184,13 +186,14 @@ public class UsuarioDAO implements IUsuarioDAO {
 				p.setIdP(res1.getInt("idProdutores"));
 				u.setProd(p);
 
-				return u;
+				//return u;
+			
 			if (res1.next()) {
 				return true;
 			}else {
 				return false;
 			}
-
+			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

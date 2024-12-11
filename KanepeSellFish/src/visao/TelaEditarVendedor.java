@@ -113,7 +113,7 @@ public class TelaEditarVendedor extends JFrame {
 		return imagemRedonda;
 	}
 
-	public TelaEditarVendedor(Usuario u) {
+	public TelaEditarVendedor(Usuario u, boolean isVendedor) {
 		setResizable(false);
 		setLocationByPlatform(true);
 		setMinimumSize(new Dimension(1176, 664));
@@ -444,7 +444,7 @@ public class TelaEditarVendedor extends JFrame {
 		JButton btnNewButton = new RoundButton("Cancelar");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				TelaPerfilVendedor frame = new TelaPerfilVendedor(u);
+				TelaPerfilVendedor frame = new TelaPerfilVendedor(u, isVendedor);
 				frame.setVisible(true);
 				dispose();
 			}
@@ -503,7 +503,7 @@ public class TelaEditarVendedor extends JFrame {
 					uDAO.alterarUsuario(user);
 					pDAO.alterarProdutor(vend);
 
-					TelaPerfilVendedor tpv = new TelaPerfilVendedor(u);
+					TelaPerfilVendedor tpv = new TelaPerfilVendedor(u, isVendedor);
 					tpv.setLocationRelativeTo(null);
 					tpv.setVisible(true);
 					dispose();
@@ -522,7 +522,7 @@ public class TelaEditarVendedor extends JFrame {
 		lblNewLabel_10.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				TelaPerfilVendedor frame = new TelaPerfilVendedor(u);
+				TelaPerfilVendedor frame = new TelaPerfilVendedor(u, isVendedor);
 				frame.setVisible(true);
 				dispose();
 			}

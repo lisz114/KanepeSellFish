@@ -3,10 +3,12 @@ package modelo;
 public class Usuario {
 
 	private String nome;
+	private String desc;
 	private String senha;
 	private String email;
 	private String cpf;
 	private String tel;
+	private Produtor prod;
 	private Endereco end;
 	protected int idUsuario;
 	private String img;
@@ -19,7 +21,7 @@ public class Usuario {
 		this.nome = nome;
 		this.senha = senha;
 		this.email = email;
-		this.desc = desc;
+		this.setDesc(desc);
 	}
 
 	public String getImg() {
@@ -106,5 +108,13 @@ public class Usuario {
 	public boolean isProdutor() {
 		// TODO Auto-generated method stub
 		return false;
+	}
+
+	public String getDesc() {
+		return desc;
+	}
+
+	public void setDesc(String desc) {
+		this.desc = desc;
 	}
 }

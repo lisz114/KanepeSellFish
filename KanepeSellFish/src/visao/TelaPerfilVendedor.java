@@ -14,6 +14,8 @@ import java.awt.RenderingHints;
 import java.awt.SystemColor;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.awt.geom.Area;
 import java.awt.geom.Ellipse2D;
 import java.awt.image.BufferedImage;
@@ -35,7 +37,7 @@ import net.miginfocom.swing.MigLayout;
 public class TelaPerfilVendedor extends JFrame {
 
 	private JPanel contentPane;
-	TelaPerfilVendedor estajanela = this; 
+	TelaPerfilVendedor estajanela = this;
 	private ArrayList<Usuario> listaUsuarios;
 	JPanel panelLeft;
 	private ProdutorDAO pDAO = ProdutorDAO.getInstancia();
@@ -63,21 +65,21 @@ public class TelaPerfilVendedor extends JFrame {
 	 * 
 	 * @param tela
 	 */
-	
+
 	public static BufferedImage arredondar(BufferedImage imagemRetangular) {
-        int largura = imagemRetangular.getWidth();
-        int altura = imagemRetangular.getHeight();
-        int raio = largura / (double) altura > 0 ? altura : largura;
-        BufferedImage imagemRedonda = new BufferedImage(largura, altura, BufferedImage.TYPE_INT_ARGB);
-        Graphics2D graphics = imagemRedonda.createGraphics();
-        graphics.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-        graphics.setClip(new Area(new Ellipse2D.Double(0, 0, raio, raio)));
-        graphics.drawImage(imagemRetangular, 0, 0, null);
-        graphics.dispose();
-        return imagemRedonda;
-    }
-	
-	public TelaPerfilVendedor(Usuario u) {
+		int largura = imagemRetangular.getWidth();
+		int altura = imagemRetangular.getHeight();
+		int raio = largura / (double) altura > 0 ? altura : largura;
+		BufferedImage imagemRedonda = new BufferedImage(largura, altura, BufferedImage.TYPE_INT_ARGB);
+		Graphics2D graphics = imagemRedonda.createGraphics();
+		graphics.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+		graphics.setClip(new Area(new Ellipse2D.Double(0, 0, raio, raio)));
+		graphics.drawImage(imagemRetangular, 0, 0, null);
+		graphics.dispose();
+		return imagemRedonda;
+	}
+
+	public TelaPerfilVendedor(Usuario u, boolean isVendedor) {
 
 		setResizable(false);
 		setLocationByPlatform(true);
@@ -121,8 +123,8 @@ public class TelaPerfilVendedor extends JFrame {
 		btnCarrinho.setOpaque(false);
 		btnCarrinho.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
-				TelaCarrinho carrinho = new TelaCarrinho(u, null,  isVendedor);
+
+				TelaCarrinho carrinho = new TelaCarrinho(u, null, isVendedor);
 				carrinho.setLocationRelativeTo(null);
 				carrinho.setVisible(true);
 				dispose();
@@ -141,7 +143,7 @@ public class TelaPerfilVendedor extends JFrame {
 		btnSininho.setBorder(null);
 		btnSininho.setBackground(SystemColor.control);
 		panel.add(btnSininho, "cell 3 0,grow");
-		ImageIcon iconSininho = new ImageIcon(TelaInicioVendedor.class.getResource("/IMG/sino.png"));
+		ImageIcon iconSininho = new ImageIcon(TelaInicio.class.getResource("/IMG/sino.png"));
 		Image iconS = iconSininho.getImage().getScaledInstance(26, 26, Image.SCALE_SMOOTH);
 		btnSininho.setIcon(new ImageIcon(iconS));
 
@@ -149,7 +151,7 @@ public class TelaPerfilVendedor extends JFrame {
 		btnFlecha.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				
+
 				TelaInicio inicio = new TelaInicio(u, isVendedor);
 				inicio.setLocationRelativeTo(null);
 				inicio.setVisible(true);
@@ -175,7 +177,7 @@ public class TelaPerfilVendedor extends JFrame {
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
-				TelaInicioVendedor tiv = new TelaInicioVendedor();
+				TelaInicio tiv = new TelaInicio(u, isVendedor);
 				tiv.setLocationRelativeTo(null);
 				tiv.setVisible(true);
 				dispose();
@@ -189,8 +191,8 @@ public class TelaPerfilVendedor extends JFrame {
 		JButton btnNewButton_1 = new JButton("Carrinho");
 		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
-				TelaCarrinho carrinho = new TelaCarrinho(u, null,  isVendedor);
+
+				TelaCarrinho carrinho = new TelaCarrinho(u, null, isVendedor);
 				carrinho.setLocationRelativeTo(null);
 				carrinho.setVisible(true);
 				dispose();
@@ -392,29 +394,32 @@ public class TelaPerfilVendedor extends JFrame {
 		String num = String.valueOf(u.getEnd().getNumero());
 		lblNum.setText(num);
 
-		RoundButton btnNewButton1 = new RoundButton("Editar");
-		btnNewButton1.addActionListener(new ActionListener() {
+		RoundButton btnEditar = new RoundButton("Editar");
+		btnEditar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-			}
-		});
-		bntEditar.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				
 				TelaEditarPerfilVendedor editar = new TelaEditarPerfilVendedor(u, isVendedor);
 				editar.setVisible(true);
 				editar.setLocationRelativeTo(null);
 				dispose();
 			}
 		});
+//		bntEditar.addMouseListener(new MouseAdapter() {
+//			@Override
+//			public void mouseClicked(MouseEvent e) {
+//				TelaEditarPerfilVendedor editar = new TelaEditarPerfilVendedor(u, isVendedor);
+//				editar.setVisible(true);
+//				editar.setLocationRelativeTo(null);
+//				dispose();
+//			}
+//		});
 		GridBagConstraints gbc_btnNewButton = new GridBagConstraints();
 		gbc_btnNewButton.insets = new Insets(0, 0, 5, 5);
 		gbc_btnNewButton.gridx = 5;
 		gbc_btnNewButton.gridy = 18;
-		Panelinfo.add(btnNewButton1, gbc_btnNewButton);
-		btnNewButton1.setText("Editar");
-		btnNewButton1.setBackground(new Color(154, 205, 217));
-		btnNewButton1.setFont(new Font("Tahoma", Font.BOLD, 15));
+		Panelinfo.add(btnEditar, gbc_btnNewButton);
+		btnEditar.setText("Editar");
+		btnEditar.setBackground(new Color(154, 205, 217));
+		btnEditar.setFont(new Font("Tahoma", Font.BOLD, 15));
 
 		JPanel panel_21 = new JPanel();
 		panel_21.setBounds(10, 235, 284, 279);
