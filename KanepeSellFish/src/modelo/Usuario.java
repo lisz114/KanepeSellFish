@@ -82,4 +82,9 @@ public class Usuario {
 	public int getIdUsuario() {
 		return this.idUsuario;
 	}
+
+	public boolean isProdutor() {
+		// TODO Auto-generated method stub
+		return false;
+	}
 }
