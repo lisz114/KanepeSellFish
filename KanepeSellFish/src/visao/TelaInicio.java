@@ -38,6 +38,7 @@ import controle.ProdutoDAO;
 import modelo.Produto;
 import modelo.Usuario;
 import net.miginfocom.swing.MigLayout;
+import java.awt.Cursor;
 
 public class TelaInicio extends JFrame {
 
@@ -90,15 +91,15 @@ public class TelaInicio extends JFrame {
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBorder(new EmptyBorder(0, 0, 0, 0));
 		scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-		JPanel panel_7 = new JPanel();
-		panel_7.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		panel_7.setForeground(Color.WHITE);
-		panel_7.setBorder(new TitledBorder(
+		JPanel panelProd = new JPanel();
+		panelProd.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		panelProd.setForeground(Color.WHITE);
+		panelProd.setBorder(new TitledBorder(
 				new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)),
 				"Peixes Dispon\u00EDveis", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
-		scrollPane.setViewportView(panel_7);
+		scrollPane.setViewportView(panelProd);
 		panel_1.add(scrollPane, "cell 1 0 3 2,grow");
-		panel_7.setLayout(new MigLayout("", "[][][][]", "[][][][]"));
+		panelProd.setLayout(new MigLayout("", "[][][][]", "[][][][]"));
 
 		ArrayList<Produto> lista = pDAO.addTodosProd();
 
@@ -116,7 +117,7 @@ public class TelaInicio extends JFrame {
 					linha++;
 				}
 				CardProduto panel_8 = new CardProduto(p, u);
-				panel_7.add(panel_8, "cell " + coluna + " " + linha + "");
+				panelProd.add(panel_8, "cell " + coluna + " " + linha + "");
 
 			}
 		}
@@ -137,6 +138,7 @@ public class TelaInicio extends JFrame {
 		ButtonGroup grupo = new ButtonGroup();
 
 		JLabel imgMenu = new JLabel("");
+		imgMenu.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		imgMenu.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -163,6 +165,7 @@ public class TelaInicio extends JFrame {
 		panelLeft.setLayout(new MigLayout("", "[100px]", "[50px][50px][50px][50px]"));
 
 		JButton btInicio = new JButton("Inicio");
+		btInicio.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btInicio.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			}
@@ -172,6 +175,7 @@ public class TelaInicio extends JFrame {
 		panelLeft.add(btInicio, "cell 0 0,grow");
 
 		JButton btCarrinho = new JButton("Carrinho");
+		btCarrinho.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btCarrinho.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				TelaCarrinho carrinho = new TelaCarrinho(u, produtos, isVendedor);
@@ -186,6 +190,7 @@ public class TelaInicio extends JFrame {
 		panelLeft.add(btCarrinho, "cell 0 1,grow");
 
 		JButton btPerfil = new JButton("Perfil");
+		btPerfil.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btPerfil.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
@@ -254,6 +259,7 @@ public class TelaInicio extends JFrame {
 		imgConta.setIcon(new ImageIcon(iconConta));
 
 		btEstoque = new JButton("Estoque");
+		btEstoque.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btEstoque.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
@@ -274,9 +280,13 @@ public class TelaInicio extends JFrame {
 		lblAddProduto.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				TelaCadastroProduto cadastro = new TelaCadastroProduto(null, u);
+				TelaEstoque estoque = new TelaEstoque(u);
+				estoque.setLocationRelativeTo(null);
+				estoque.setVisible(true);
+				TelaCadastroProduto cadastro = new TelaCadastroProduto(estoque, u);
 				cadastro.setLocationRelativeTo(null);
 				cadastro.setVisible(true);
+				dispose();
 			}
 		});
 		lblAddProduto.setIcon(new ImageIcon(TelaInicio.class.getResource("/img/More.png")));

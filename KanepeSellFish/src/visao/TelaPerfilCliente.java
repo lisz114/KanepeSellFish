@@ -6,6 +6,7 @@ import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Image;
+import java.awt.SystemColor;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -24,7 +25,7 @@ import javax.swing.border.LineBorder;
 import modelo.Produto;
 import modelo.Usuario;
 import net.miginfocom.swing.MigLayout;
-import java.awt.SystemColor;
+import java.awt.Cursor;
 
 public class TelaPerfilCliente extends JFrame {
 
@@ -162,6 +163,7 @@ public class TelaPerfilCliente extends JFrame {
 		
 
 		JLabel imgMenu = new JLabel("");
+		imgMenu.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		imgMenu.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -188,7 +190,7 @@ public class TelaPerfilCliente extends JFrame {
 		panelLeft.setLayout(new MigLayout("", "[100px]", "[50px][50px][50px][50px]"));
 
 		JButton btnNewButton = new JButton("Inicio");
-		btnNewButton.setFont(new Font("Dialog", Font.PLAIN, 13));
+		btnNewButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
@@ -204,7 +206,7 @@ public class TelaPerfilCliente extends JFrame {
 		panelLeft.add(btnNewButton, "cell 0 0,grow");
 
 		JButton btnNewButton_1 = new JButton("Carrinho");
-		btnNewButton_1.setFont(new Font("Dialog", Font.PLAIN, 13));
+		btnNewButton_1.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				TelaCarrinho carrinho = new TelaCarrinho(u, null, isVendedor);
@@ -219,7 +221,7 @@ public class TelaPerfilCliente extends JFrame {
 		panelLeft.add(btnNewButton_1, "cell 0 1,grow");
 
 		JButton btnNewButton_2 = new JButton("Perfil");
-		btnNewButton_2.setFont(new Font("Dialog", Font.PLAIN, 13));
+		btnNewButton_2.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnNewButton_2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
