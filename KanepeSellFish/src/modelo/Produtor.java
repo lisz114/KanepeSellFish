@@ -7,7 +7,8 @@ public class Produtor extends Usuario {
 	private int IdEndereco;
 	private ArrayList<Pedido> pedido;
 	private String cnpj;
-
+	private Endereco end;
+	
 	public Produtor() {
 	}
 
@@ -17,6 +18,13 @@ public class Produtor extends Usuario {
 		this.IdEndereco = IdEndereco;
 		this.pedido = pedido;
 		this.cnpj = cnpj;
+	}
+	public Endereco getEnd() {
+		return end;
+	}
+
+	public void setEnd(Endereco end) {
+		this.end = end;
 	}
 
 

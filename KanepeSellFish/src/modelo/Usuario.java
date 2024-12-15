@@ -7,7 +7,6 @@ public class Usuario {
 	private String email;
 	private String cpf;
 	private String tel;
-	private Endereco end;
 	protected int idUsuario;
 
 	public Usuario() {}
@@ -19,14 +18,7 @@ public class Usuario {
 		this.email = email;
 	}
 
-	public Endereco getEnd() {
-		return end;
-	}
-
-	public void setEnd(Endereco end) {
-		this.end = end;
-	}
-
+	
 	public String getNome() {
 		return nome;
 	}

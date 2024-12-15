@@ -14,6 +14,7 @@ import org.dom4j.io.SAXReader;
 
 import modelo.Endereco;
 import modelo.IEnderecoDAO;
+import modelo.Usuario;
 
 public class EnderecoDAO implements IEnderecoDAO {
 
@@ -112,6 +113,42 @@ public class EnderecoDAO implements IEnderecoDAO {
 			System.out.println(e);
 		}
 
+		return null;
+	}
+
+	public Endereco buscarendereco(int i) {
+		PreparedStatement stmt1 = null;
+
+		Connection conn = ConexaoBD.getConexaoMySQL();
+
+		try {
+			stmt1 = conn.prepareStatement("SELECT * FROM kanepe.enderecos where idEnderecos = ? ");
+			ResultSet res1 = null;
+			stmt1.setInt(1, i);
+			
+
+			res1 = stmt1.executeQuery();
+
+			while (res1.next()) {
+
+				Endereco e = new Endereco();
+				
+				e.setBairro(res1.getString("Bairro"));
+				e.setCep(res1.getNString("cep"));
+				e.setCidade(res1.getNString("Cidade"));
+				e.setLogradouro(res1.getNString("Rua"));
+				e.setNumero((Integer.parseInt(res1.getString("numero"))));
+
+				return e;
+			}
+
+			res1.close();
+			stmt1.close();
+			conn.close();
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 		return null;
 	}
 }
