@@ -1,30 +1,32 @@
 package modelo;
 
 import java.sql.Date;
+import java.time.LocalDate;
 
 public class Cartao {
 
-	private long numdoCartão;
-	private Date validade;
+	private long numdoCartao;
+	private LocalDate validade;
 	private int CVV;
 	private Usuario idUsuario;
-	private Object TipodoCartão;
+	private int idC;
+	private Object TipodoCartao;
 	private String apelido;
 
-	public long getNumdoCartão() {
-		return numdoCartão;
+	public long getNumdoCartao() {
+		return numdoCartao;
 	}
 
-	public void setNumdoCartão(long numdoCartão) {
-		this.numdoCartão = numdoCartão;
+	public void setNumdoCartao(long numdoCartao) {
+		this.numdoCartao = numdoCartao;
 	}
 
-	public Date getValidade() {
+	public LocalDate getValidade() {
 		return validade;
 	}
 
-	public void setValidade(Date validade) {
-		this.validade = validade;
+	public void setValidade(LocalDate validade2) {
+		this.validade = validade2;
 	}
 
 	public int getCVV() {
@@ -43,12 +45,12 @@ public class Cartao {
 		this.idUsuario = idUsuario;
 	}
 
-	public Object getTipodoCartão() {
-		return TipodoCartão;
+	public Object getTipodoCartao() {
+		return TipodoCartao;
 	}
 
-	public void setTipodoCartão(Object tipodoCartão) {
-		TipodoCartão = tipodoCartão;
+	public void setTipodoCartao(Object tipodoCartao) {
+		TipodoCartao = tipodoCartao;
 	}
 
 	public String getApelido() {
@@ -57,6 +59,14 @@ public class Cartao {
 
 	public void setApelido(String apelido) {
 		this.apelido = apelido;
+	}
+
+	public int getIdC() {
+		return idC;
+	}
+
+	public void setIdC(int idC) {
+		this.idC = idC;
 	}
 
 }

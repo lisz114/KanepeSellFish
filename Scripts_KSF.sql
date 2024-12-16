@@ -104,15 +104,15 @@ CREATE TABLE IF NOT EXISTS Carrinho (
     FOREIGN KEY (Produtos_idProdutos) REFERENCES Produtos (idProdutos)
 );
 
-Create Table if not exists Cartão(
-	idCartão bigint not null auto_increment primary key,
-    TipodoCartão varchar(7) not null,
-    NumerodoCarão int not null,
+Create Table if not exists Cartao(
+	idCartao bigint not null auto_increment primary key,
+    TipodoCartao varchar(7) not null,
+    NumerodoCartao bigint(24) not null,
     validade date not null,
-    CVV int not null,
+    CVV int(3) not null,
+    apelido varchar(30) not null,
 	Usuarios_idUsuarios bigint not null,
-    Foreign key (Usuarios_idUsuarios) references Usuarios (idUsuarios),
-    apelido varchar(30) not null
+    Foreign key (Usuarios_idUsuarios) references Usuarios (idUsuarios)
 );
 
 INSERT INTO `kanepe`.`usuarios` (`cpf_Usuario`, `nome_Usuario`, `senha_Usuario`, `email_Usuario`) VALUES ('85318806961', 'vini', 'vini', 'vini');

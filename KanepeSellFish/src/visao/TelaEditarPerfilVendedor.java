@@ -359,7 +359,7 @@ public class TelaEditarPerfilVendedor extends JFrame {
 				eDAO.atualizarEndereco(ende);
 				uDAO.alterarUsuario(user);
 				
-				TelaPerfilVendedor tpv = new TelaPerfilVendedor(u, true);
+				TelaPerfilVendedor tpv = new TelaPerfilVendedor(u, isVendedor);
 				tpv.setLocationRelativeTo(null);
 				tpv.setVisible(true);
 				dispose();
