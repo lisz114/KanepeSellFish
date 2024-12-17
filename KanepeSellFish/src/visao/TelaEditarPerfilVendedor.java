@@ -64,6 +64,7 @@ public class TelaEditarPerfilVendedor extends JFrame {
 	private static UsuarioDAO uDAO = UsuarioDAO.getInstancia();
 	private static EnderecoDAO eDAO = EnderecoDAO.getInstancia();
 	private static ProdutorDAO pDAO = ProdutorDAO.getInstancia();
+	private JTextField txtCelular;
 
 	/**
 	 * Launch the application.
@@ -139,7 +140,7 @@ public class TelaEditarPerfilVendedor extends JFrame {
 					v.setVisible(true);
 					dispose();
 				} else {
-					TelaPerfilCliente telaPerfil = new TelaPerfilCliente(u, isVendedor);
+					TelaPerfilCliente telaPerfil = new TelaPerfilCliente( u, isVendedor);
 					telaPerfil.setLocationRelativeTo(null);
 					telaPerfil.setVisible(true);
 					dispose();
@@ -236,7 +237,7 @@ public class TelaEditarPerfilVendedor extends JFrame {
 		panel_1.add(imgAvatar, "cell 0 1,alignx center,aligny center");
 		lblNome.setText(u.getNome());
 		txtCPF = new JTextField();
-		panel_1.add(txtCPF, "cell 1 2");
+		panel_1.add(txtCPF, "flowx,cell 1 2");
 		txtCPF.setBorder(new LineBorder(new Color(171, 173, 179)));
 		txtCPF.setOpaque(false);
 		txtCPF.setToolTipText("");
@@ -269,7 +270,7 @@ public class TelaEditarPerfilVendedor extends JFrame {
 		txtBairro.setColumns(10);
 
 		txtEmail = new JTextField();
-		panel_1.add(txtEmail, "cell 1 3");
+		panel_1.add(txtEmail, "flowx,cell 1 3");
 		txtEmail.setBorder(new LineBorder(new Color(171, 173, 179)));
 		txtEmail.setOpaque(false);
 		txtEmail.setToolTipText("");
@@ -290,17 +291,6 @@ public class TelaEditarPerfilVendedor extends JFrame {
 		txtLogadouro.setBackground(SystemColor.menu);
 		txtLogadouro.setColumns(10);
 
-		txtCNPJ = new JTextField();
-		panel_1.add(txtCNPJ, "cell 1 4");
-		txtCNPJ.setBorder(new LineBorder(new Color(171, 173, 179)));
-		txtCNPJ.setOpaque(false);
-		txtCNPJ.setToolTipText("");
-		txtCNPJ.setBorder(new TitledBorder(new LineBorder(new Color(0, 0, 0), 2),
-				"<html>CNPJ<span style='color: red;'>*</span></html>", TitledBorder.LEADING, TitledBorder.TOP, null,
-				new Color(0, 0, 0)));
-		txtCNPJ.setBackground(SystemColor.menu);
-		txtCNPJ.setColumns(10);
-
 		txtNum = new JTextField();
 		panel_1.add(txtNum, "cell 2 3");
 		txtNum.setBorder(new LineBorder(new Color(171, 173, 179)));
@@ -311,6 +301,32 @@ public class TelaEditarPerfilVendedor extends JFrame {
 				new Color(0, 0, 0)));
 		txtNum.setBackground(SystemColor.menu);
 		txtNum.setColumns(10);
+
+
+		txtCNPJ = new JTextField();
+		panel_1.add(txtCNPJ, "cell 1 2");
+		txtCNPJ.setBorder(new LineBorder(new Color(171, 173, 179)));
+		txtCNPJ.setOpaque(false);
+		txtCNPJ.setToolTipText("");
+		txtCNPJ.setBorder(new TitledBorder(new LineBorder(new Color(0, 0, 0), 2),
+				"<html>CNPJ<span style='color: red;'>*</span></html>", TitledBorder.LEADING, TitledBorder.TOP, null,
+				new Color(0, 0, 0)));
+		txtCNPJ.setBackground(SystemColor.menu);
+		txtCNPJ.setColumns(10);
+		
+		txtCelular = new JTextField();
+		txtCelular.setToolTipText("");
+		txtCelular.setOpaque(false);
+		txtCelular.setColumns(10);
+		txtCelular.setBorder(new LineBorder(new Color(171, 173, 179)));
+		txtCelular.setOpaque(false);
+		txtCelular.setToolTipText("");
+		txtCelular.setBorder(new TitledBorder(new LineBorder(new Color(0, 0, 0), 2),
+				"<html>Celular<span style='color: red;'>*</span></html>", TitledBorder.LEADING, TitledBorder.TOP, null,
+				new Color(0, 0, 0)));
+		txtCelular.setBackground(SystemColor.menu);
+		
+		panel_1.add(txtCelular, "cell 1 3");
 
 		JButton btnNewButton = new RoundButton("Cancelar");
 		panel_1.add(btnNewButton, "flowx,cell 2 5,alignx right,aligny bottom");
@@ -368,6 +384,8 @@ public class TelaEditarPerfilVendedor extends JFrame {
 		});
 		btnNewButton_1.setForeground(new Color(255, 255, 255));
 		btnNewButton_1.setBackground(new Color(96, 154, 168));
+		
+			
 		ImageIcon conta = new ImageIcon(TelaInicio.class.getResource("/IMG/do-utilizador.png"));
 		Image iconConta = conta.getImage().getScaledInstance(30, 30, Image.SCALE_SMOOTH);
 

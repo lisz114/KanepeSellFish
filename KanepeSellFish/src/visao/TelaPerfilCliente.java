@@ -31,9 +31,9 @@ public class TelaPerfilCliente extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
+	TelaPerfilCliente estajanela = this; 
 	JPanel panelLeft;
 	List<Produto> produtos;
-	
 
 	/**
 	 * Launch the application.
@@ -80,11 +80,11 @@ public class TelaPerfilCliente extends JFrame {
 		JPanel panel_3 = new JPanel();
 		panel_1.add(panel_3, "cell 0 0,grow");
 		panel_3.setLayout(new MigLayout("", "[grow]", "[280px][grow]"));
-		
+
 		JLabel lblImagemCliente = new JLabel("");
 		lblImagemCliente.setIcon(new ImageIcon(TelaPerfilCliente.class.getResource("/img/Avatar.png")));
 		panel_3.add(lblImagemCliente, "flowy,cell 0 0,alignx center,aligny bottom");
-		
+
 		JLabel lblNewLabel = new JLabel("Alterar foto");
 		lblNewLabel.setFont(new Font("Dialog", Font.ITALIC, 13));
 		lblNewLabel.setForeground(SystemColor.textHighlight);
@@ -93,7 +93,7 @@ public class TelaPerfilCliente extends JFrame {
 		JPanel panel_2 = new JPanel();
 		panel_1.add(panel_2, "cell 1 0,grow");
 		panel_2.setLayout(new MigLayout("", "[][]", "[50px][][20px][][20px][][20px][][][][]"));
-		
+
 		JLabel lblNomeCliente = new JLabel(u.getNome());
 		panel_2.add(lblNomeCliente, "cell 0 1 2 1");
 		lblNomeCliente.setFont(new Font("Dialog", Font.PLAIN, 30));
@@ -102,25 +102,25 @@ public class TelaPerfilCliente extends JFrame {
 		lblCPF.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblCPF.setFont(new Font("Dialog", Font.PLAIN, 15));
 		panel_2.add(lblCPF, "cell 0 3");
-		
+
 		JLabel lblDynamicCPF = new JLabel(u.getCpf());
 		lblDynamicCPF.setFont(new Font("Dialog", Font.PLAIN, 15));
 		panel_2.add(lblDynamicCPF, "cell 1 3,alignx left,aligny center");
-		
+
 		JLabel lblEmail = new JLabel("Email: ");
 		lblEmail.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblEmail.setFont(new Font("Dialog", Font.PLAIN, 15));
 		panel_2.add(lblEmail, "cell 0 5");
-		
+
 		JLabel lblDynamicEmail = new JLabel(u.getEmail());
 		lblDynamicEmail.setFont(new Font("Dialog", Font.PLAIN, 15));
 		panel_2.add(lblDynamicEmail, "cell 1 5,alignx left,aligny center");
-		
+
 		JLabel lblTelefone = new JLabel("Telefone: ");
 		lblTelefone.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblTelefone.setFont(new Font("Dialog", Font.PLAIN, 15));
 		panel_2.add(lblTelefone, "cell 0 7");
-		
+
 		JPanel panel_4 = new JPanel();
 		panel_1.add(panel_4, "cell 1 1,alignx right,aligny bottom");
 		panel_4.setLayout(new MigLayout("", "[grow]", "[grow]"));
@@ -150,17 +150,16 @@ public class TelaPerfilCliente extends JFrame {
 		
 		String telefone = u.getTel();
 		JLabel lblDynamicTelefone;
-		
-		if(telefone==null) {
+
+		if (telefone == null) {
 			lblDynamicTelefone = new JLabel("Nenhum telefone cadastrado");
 			lblDynamicTelefone.setFont(new Font("Tahoma", Font.PLAIN, 16));
 			panel_2.add(lblDynamicTelefone, "cell 1 7,alignx left,aligny center");
-		}else {
+		} else {
 			lblDynamicTelefone = new JLabel(telefone);
 			lblDynamicTelefone.setFont(new Font("Tahoma", Font.PLAIN, 16));
 			panel_2.add(lblDynamicTelefone, "cell 1 7,alignx left,aligny center");
 		}
-		
 
 		JLabel imgMenu = new JLabel("");
 		imgMenu.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
@@ -193,11 +192,11 @@ public class TelaPerfilCliente extends JFrame {
 		btnNewButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
+
 				TelaInicio tela = new TelaInicio(u, isVendedor);
 				tela.setLocationRelativeTo(null);
 				tela.setVisible(true);
-				
+
 				dispose();
 			}
 		});
@@ -232,7 +231,7 @@ public class TelaPerfilCliente extends JFrame {
 		btnNewButton_2.setBorder(null);
 		panelLeft.add(btnNewButton_2, "cell 0 2,grow");
 
-		if (isVendedor){
+		if (isVendedor) {
 			JButton btnNewButton_3 = new JButton("Estoque");
 			btnNewButton_3.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
@@ -253,11 +252,9 @@ public class TelaPerfilCliente extends JFrame {
 		imgSair.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				TelaLogin tela = new TelaLogin();
-				tela.setLocationRelativeTo(null);
-				tela.setVisible(true);
-
-				dispose();
+				TelaDeLogOff telaLogOff = new TelaDeLogOff(estajanela, u, isVendedor);
+				telaLogOff.setLocationRelativeTo(null);
+				telaLogOff.setVisible(true);
 			}
 		});
 		

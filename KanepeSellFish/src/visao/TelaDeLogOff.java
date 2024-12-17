@@ -25,9 +25,9 @@ public class TelaDeLogOff extends JFrame {
 
 	private JPanel contentPane;
 
-	public TelaDeLogOff(JFrame telap) {
+	public TelaDeLogOff(JFrame telap, Usuario u, boolean isVendedor) {
 		setResizable(false);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 284, 174);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
