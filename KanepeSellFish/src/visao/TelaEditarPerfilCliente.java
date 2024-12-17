@@ -39,7 +39,7 @@ public class TelaEditarPerfilCliente extends JFrame {
 	private JTextField txtTel;
 	private JTextField txtEmail;
 	private JLabel lblNome;
-
+	UsuarioDAO udao = UsuarioDAO.getInstancia();
 	/**
 	 * Launch the application.
 	 */
@@ -261,7 +261,7 @@ public class TelaEditarPerfilCliente extends JFrame {
 		JButton btSalvar = new JButton("Salvar");
 		btSalvar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				UsuarioDAO udao = new UsuarioDAO();
+				
 				udao.alterarUsuario(u);
 			}
 		});

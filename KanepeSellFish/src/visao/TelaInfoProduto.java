@@ -3,7 +3,7 @@ package visao;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
-import java.awt.ComponentOrientation;
+import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Image;
@@ -11,7 +11,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,15 +21,10 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
-import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
-import javax.swing.JTextField;
 import javax.swing.ScrollPaneConstants;
-import javax.swing.SwingConstants;
-import javax.swing.border.BevelBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.EtchedBorder;
-import javax.swing.border.SoftBevelBorder;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
 
@@ -38,17 +32,14 @@ import controle.ProdutoDAO;
 import modelo.Produto;
 import modelo.Usuario;
 import net.miginfocom.swing.MigLayout;
-import java.awt.Cursor;
 
-public class TelaInicio extends JFrame {
+public class TelaInfoProduto extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	JPanel panelLeft;
 	List<Produto> produtos;
 	JButton btEstoque;
-	JLabel lblAddProduto;
-	JLabel lblAdicionarProduto;
 	ProdutoDAO pDAO = new ProdutoDAO();
 
 //	public static void main(String[] args) {
@@ -65,7 +56,7 @@ public class TelaInicio extends JFrame {
 //		});
 //	}
 
-	public TelaInicio(Usuario u, boolean isVendedor) {
+	public TelaInfoProduto(Usuario u, boolean isVendedor) {
 		setResizable(false);
 		setLocationByPlatform(true);
 		setMinimumSize(new Dimension(1176, 664));
@@ -87,55 +78,6 @@ public class TelaInicio extends JFrame {
 		JPanel panel_1 = new JPanel();
 		contentPane.add(panel_1, BorderLayout.CENTER);
 		panel_1.setLayout(new MigLayout("", "[10px][300px][grow][grow]", "[160px,grow][150px,grow]"));
-
-		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBorder(new EmptyBorder(0, 0, 0, 0));
-		scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-		JPanel panelProd = new JPanel();
-		panelProd.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		panelProd.setForeground(Color.WHITE);
-		panelProd.setBorder(new TitledBorder(
-				new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)),
-				"Peixes Dispon\u00EDveis", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
-		scrollPane.setViewportView(panelProd);
-		panel_1.add(scrollPane, "cell 1 0 3 2,grow");
-		panelProd.setLayout(new MigLayout("", "[][][][]", "[][][][]"));
-
-		ArrayList<Produto> lista = pDAO.addTodosProd();
-
-		int linha = 0;
-		int coluna = -1;
-		if (lista == null) {
-			System.out.println("lista ta Vazia");
-		} else {
-
-			for (Produto p : lista) {
-
-				coluna++;
-				if (coluna > 3) {
-					coluna = 0;
-					linha++;
-				}
-				CardProduto panel_8 = new CardProduto(p, u);
-				panelProd.add(panel_8, "cell " + coluna + " " + linha + "");
-
-			}
-		}
-		JPanel panel_2 = new JPanel();
-		panel_1.add(panel_2, "cell 0 0 1 2,grow");
-		panel_2.setLayout(new MigLayout("", "[][][]", "[60px][100px][60px][50px][][][][190px,grow][][]"));
-		ImageIcon iconUp = new ImageIcon(TelaInicio.class.getResource("/IMG/imgUp.png"));
-		Image imgU = iconUp.getImage().getScaledInstance(40, 40, Image.SCALE_SMOOTH);
-		ImageIcon iconDown = new ImageIcon(TelaInicio.class.getResource("/IMG/imgDown.png"));
-		Image imgD = iconDown.getImage().getScaledInstance(40, 40, Image.SCALE_SMOOTH);
-		ImageIcon iconAZ = new ImageIcon(TelaInicio.class.getResource("/IMG/imgA.png"));
-		Image ordemAZ = iconAZ.getImage().getScaledInstance(40, 40, Image.SCALE_SMOOTH);
-		ImageIcon iconZA = new ImageIcon(TelaInicio.class.getResource("/IMG/imgZ.png"));
-		Image ordemZA = iconZA.getImage().getScaledInstance(40, 40, Image.SCALE_SMOOTH);
-		ImageIcon iconMore = new ImageIcon(TelaInicio.class.getResource("/IMG/iconMore.png"));
-		Image more = iconMore.getImage().getScaledInstance(40, 40, Image.SCALE_SMOOTH);
-
-		ButtonGroup grupo = new ButtonGroup();
 
 		JLabel imgMenu = new JLabel("");
 		imgMenu.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
@@ -256,34 +198,8 @@ public class TelaInicio extends JFrame {
 		btEstoque.setBackground(new Color(154, 205, 217));
 		btEstoque.setVisible(isVendedor);
 		panelLeft.add(btEstoque, "cell 0 3, grow");
-
-		lblAddProduto = new JLabel("");
-		lblAddProduto.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				TelaEstoque estoque = new TelaEstoque(u);
-				estoque.setLocationRelativeTo(null);
-				estoque.setVisible(true);
-				TelaCadastroProduto cadastro = new TelaCadastroProduto(estoque, u);
-				cadastro.setLocationRelativeTo(null);
-				cadastro.setVisible(true);
-				dispose();
-			}
-		});
-		lblAddProduto.setIcon(new ImageIcon(TelaInicio.class.getResource("/img/More.png")));
 		ImageIcon imgM = new ImageIcon(TelaInicio.class.getResource("/img/More.png"));
 		Image m = imgM.getImage().getScaledInstance(40, 40, Image.SCALE_SMOOTH);
-		lblAddProduto.setIcon(new ImageIcon(m));
-		lblAddProduto.setVisible(isVendedor);
-		
-
-		panel_2.add(lblAddProduto, "cell 0 8,alignx center,aligny center");
-
-		lblAdicionarProduto = new JLabel("Adicionar Produto");
-		panel_2.add(lblAdicionarProduto, "cell 0 9,alignx center,aligny center");
-		lblAdicionarProduto.setFont(new Font("/Fontes/Roboto-Black.ttf", Font.PLAIN, 12));
-		
-		lblAdicionarProduto.setVisible(isVendedor);
 //		if (isVendedor) {
 //
 //			JLabel imgMore = new JLabel("");

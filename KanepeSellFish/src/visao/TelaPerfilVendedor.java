@@ -337,7 +337,11 @@ public class TelaPerfilVendedor extends JFrame {
 		JLabel lblponto = new JLabel(".");
 		panel_1.add(lblponto, "cell 3 4");
 		
-		RoundButton rndbtnAlterarInformaes = new RoundButton("Cancelar");
+		RoundButton rndbtnAlterarInformaes = new RoundButton("Alterar Informações");
+		rndbtnAlterarInformaes.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
 		rndbtnAlterarInformaes.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -349,8 +353,6 @@ public class TelaPerfilVendedor extends JFrame {
 				
 			}
 		});
-		rndbtnAlterarInformaes.setText("Alterar Informações");
-		rndbtnAlterarInformaes.setForeground(Color.WHITE);
 		rndbtnAlterarInformaes.setBackground(new Color(96, 154, 168));
 		panel_1.add(rndbtnAlterarInformaes, "cell 4 7,alignx center,aligny center");
 
