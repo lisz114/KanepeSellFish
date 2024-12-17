@@ -17,7 +17,7 @@ public class UsuarioDAO implements IUsuarioDAO {
 	private static UsuarioDAO instancia;
 
 
-	public UsuarioDAO() {
+	private UsuarioDAO() {
 
 	}
 
