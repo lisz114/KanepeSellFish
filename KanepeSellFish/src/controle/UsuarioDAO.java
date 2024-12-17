@@ -159,41 +159,41 @@ public class UsuarioDAO implements IUsuarioDAO {
 
 			res1 = stmt1.executeQuery();
 
-			while (res1.next()) {
+//			while (res1.next()) {
 
-				Usuario u = new Usuario();
-
-				u.setNome(res1.getString("nome_Usuario"));
-				u.setCpf(res1.getString("cpf_Usuario"));
-				u.setEmail(res1.getString("email_Usuario"));
-				u.setSenha(res1.getString("senha_Usuario"));
-				u.setIdUsuario(res1.getInt("idUsuarios"));
-				u.setDesc(res1.getString("descricao"));
-				u.setImg(res1.getString("img"));
-				u.setTel(res1.getString("telefone"));
-
-				Endereco e = new Endereco();
-				e.setBairro(res1.getString("Bairro"));
-				e.setCidade(res1.getString("Cidade"));
-				e.setLogradouro(res1.getString("Rua"));
-				e.setNumero(res1.getInt("Numero"));
-				e.setId(res1.getInt("idEnderecos"));
-				u.setEnd(e);
-
-				Produtor p = new Produtor();
-				p.setCnpj(res1.getString("cnpj"));
-				p.setNomeComercio(res1.getString("nomeNegocio"));
-				p.setIdP(res1.getInt("idProdutores"));
-				u.setProd(p);
-
-				//return u;
+//				Usuario u = new Usuario();
+//
+//				u.setNome(res1.getString("nome_Usuario"));
+//				u.setCpf(res1.getString("cpf_Usuario"));
+//				u.setEmail(res1.getString("email_Usuario"));
+//				u.setSenha(res1.getString("senha_Usuario"));
+//				u.setIdUsuario(res1.getInt("idUsuarios"));
+//				u.setDesc(res1.getString("descricao"));
+//				u.setImg(res1.getString("img"));
+//				u.setTel(res1.getString("telefone"));
+//
+//				Endereco e = new Endereco();
+//				e.setBairro(res1.getString("Bairro"));
+//				e.setCidade(res1.getString("Cidade"));
+//				e.setLogradouro(res1.getString("Rua"));
+//				e.setNumero(res1.getInt("Numero"));
+//				e.setId(res1.getInt("idEnderecos"));
+//				u.setEnd(e);
+//
+//				Produtor p = new Produtor();
+//				p.setCnpj(res1.getString("cnpj"));
+//				p.setNomeComercio(res1.getString("nomeNegocio"));
+//				p.setIdP(res1.getInt("idProdutores"));
+//				u.setProd(p);
+//
+//				return u;
 			
 			if (res1.next()) {
 				return true;
 			}else {
 				return false;
 			}
-			}
+//			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

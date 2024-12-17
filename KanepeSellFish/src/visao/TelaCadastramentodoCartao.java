@@ -18,7 +18,6 @@ import net.miginfocom.swing.MigLayout;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
-import javax.swing.JCheckBox;
 import javax.swing.border.TitledBorder;
 
 import controle.CartaoDAO;
@@ -159,6 +158,10 @@ public class TelaCadastramentodoCartao extends JFrame {
 				c.setCVV(CVV);
 				c.setApelido(apelido);
 				cDAO.inserirCartao(c);
+				PopUpPagar pup = new PopUpPagar();
+				pup.setLocationRelativeTo(null);
+				pup.setVisible(true);
+				dispose();
 				
 			}
 		});
