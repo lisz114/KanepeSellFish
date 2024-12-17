@@ -259,6 +259,17 @@ public class TelaPerfilCliente extends JFrame {
 		});
 		
 				JLabel imgCarrinho = new JLabel("");
+				imgCarrinho.addMouseListener(new MouseAdapter() {
+					@Override
+					public void mouseClicked(MouseEvent e) {
+						
+						TelaCarrinho carrinho = new TelaCarrinho(u, produtos, isVendedor);
+						carrinho.setLocationRelativeTo(null);
+						carrinho.setVisible(true);
+						dispose();
+						
+					}
+				});
 				imgCarrinho.setIcon(new ImageIcon(TelaInicio.class.getResource("/IMG/carrinho-de-compras.png")));
 				panel.add(imgCarrinho, "cell 3 0");
 				imgCarrinho.setIcon(new ImageIcon(imgC));

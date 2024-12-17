@@ -110,10 +110,9 @@ public class TelaPerfilVendedor extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				
-				TelaInicio inicio = new TelaInicio(u, isVendedor);
-				inicio.setLocationRelativeTo(null);
-				inicio.setVisible(true);
-				dispose();
+				TelaDeLogOff telaLogOff = new TelaDeLogOff(estajanela, u, isVendedor);
+				telaLogOff.setLocationRelativeTo(null);
+				telaLogOff.setVisible(true);
 			}
 		});
 		
@@ -303,7 +302,7 @@ public class TelaPerfilVendedor extends JFrame {
 		JLabel txtNum = new JLabel("num");
 		txtNum.setFont(new Font("Dialog", Font.PLAIN, 15));
 		panel_1.add(txtNum, "cell 3 3,alignx left");
-		txtNum.setText("0");
+		txtNum.setText(String.valueOf(produtor.getEnd().getNumero()));
 		
 		JLabel lblnada2 = new JLabel(",     ");
 		panel_1.add(lblnada2, "cell 3 3");

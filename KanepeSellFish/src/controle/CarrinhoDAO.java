@@ -10,6 +10,7 @@ import java.util.ArrayList;
 
 import modelo.CarrinhoCompras;
 import modelo.ICarrinhoDAO;
+import modelo.ItemCarrinho;
 import modelo.Pedido;
 import modelo.Produto;
 import modelo.Usuario;
@@ -136,10 +137,10 @@ public class CarrinhoDAO implements ICarrinhoDAO {
 		// TODO Auto-generated method stub
 		return false;
 	}
-	
-	public ArrayList<Produto> addProdCarrinho(CarrinhoCompras c) {
-		ArrayList<Produto> listaDeProdutos = new ArrayList<Produto>();
-		
+
+	public ArrayList<ItemCarrinho> addProdCarrinho(CarrinhoCompras c) {
+		ArrayList<ItemCarrinho> listaDeProdutos = new ArrayList<ItemCarrinho>();
+
 		PreparedStatement stmt1 = null;
 
 		Connection conn = ConexaoBD.getConexaoMySQL();
@@ -147,27 +148,23 @@ public class CarrinhoDAO implements ICarrinhoDAO {
 		try {
 			stmt1 = conn.prepareStatement("SELECT * FROM kanepe.itenscarrinho where Carrinho_idCarrinho = ?;");
 			ResultSet res1 = null;
-			
-			stmt1.setString(1, c.getCodigoCarrinho());
 
+			stmt1.setString(1, c.getCodigoCarrinho());
 
 			res1 = stmt1.executeQuery();
 
 //			listaProdutos = null;
 
 			while (res1.next()) {
-				
-				pDAO.pegarIdProduto(null);
-				
-				Produto prod = new Produto();
 
-				prod.setNome(res1.getString("nome_Produto"));
-				prod.setQuantidadeEstoque(Integer.parseInt(res1.getString("quantidade")));
-				prod.setPreco(Float.parseFloat(res1.getString("preco")));
-				prod.setIdProdutor(Integer.parseInt(res1.getString("Produtores_idProdutores")));
-				prod.setValidade(
-						LocalDate.parse(res1.getString("validade"), DateTimeFormatter.ofPattern("yyyy-MM-dd")));
-				prod.setSalinidade(res1.getBoolean("salinidade"));
+				pDAO.pegarIdProduto(null);
+
+				ItemCarrinho prod = new ItemCarrinho();
+				
+				
+				prod.setProdutoItemCarrinho(Integer.parseInt(res1.getString("Produtos_idProdutos")));
+				prod.setPrecoTotal(Float.parseFloat(res1.getString("preco")));
+				prod.setQuantidade(Integer.parseInt(res1.getString("quantidade")));
 				listaDeProdutos.add(prod);
 			}
 

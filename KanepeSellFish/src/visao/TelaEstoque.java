@@ -13,6 +13,7 @@ import java.awt.event.MouseEvent;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -44,7 +45,6 @@ public class TelaEstoque extends JFrame {
 	private static UsuarioDAO uDAO = UsuarioDAO.getInstancia();
 	private JPanel panelTop;
 	private JLabel imgMenu;
-	private JTextField textField;
 	private JPanel panelTabelaProdutos;
 	private JScrollPane scrollPane_1;
 	private JTable table;
@@ -54,6 +54,7 @@ public class TelaEstoque extends JFrame {
 	private JButton btnEditar;
 	private JPanel panelMenu;
 	private JLabel lblNewLabel;
+	List<Produto> produtos;
 
 //	public static void main(String[] args) {
 //		EventQueue.invokeLater(new Runnable() {
@@ -116,13 +117,18 @@ public class TelaEstoque extends JFrame {
 		Image iconMenu = menu.getImage().getScaledInstance(30, 30, Image.SCALE_SMOOTH);
 		imgMenu.setIcon(new ImageIcon(iconMenu));
 
-		textField = new JTextField();
-		panelTop.add(textField, "cell 1 0,alignx center");
-		textField.setHorizontalAlignment(SwingConstants.CENTER);
-		textField.setBackground(new Color(245, 245, 245));
-		textField.setColumns(50);
-
 		JLabel imgCarrinho = new JLabel("");
+		imgCarrinho.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				
+				TelaCarrinho carrinho = new TelaCarrinho(u, produtos, true);
+				carrinho.setLocationRelativeTo(null);
+				carrinho.setVisible(true);
+				dispose();
+				
+			}
+		});
 		imgCarrinho.setIcon(new ImageIcon(TelaInicio.class.getResource("/IMG/carrinho-de-compras.png")));
 		panelTop.add(imgCarrinho, "cell 2 0");
 		ImageIcon carrinho = new ImageIcon(TelaInicio.class.getResource("/IMG/carrinho-de-compras.png"));
@@ -140,9 +146,11 @@ public class TelaEstoque extends JFrame {
 		imgConta.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-//				TelaPerfil telaPerfil = new TelaPerfil();
-//				telaPerfil.setVisible(true);
-//				dispose();
+					TelaPerfilVendedor v = new TelaPerfilVendedor(u, true);
+					v.setLocationRelativeTo(null);
+					v.setVisible(true);
+					dispose();
+				
 			}
 		});
 		imgConta.setIcon(new ImageIcon(TelaInicio.class.getResource("/IMG/do-utilizador.png")));

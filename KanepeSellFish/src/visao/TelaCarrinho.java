@@ -26,6 +26,7 @@ import javax.swing.border.TitledBorder;
 import controle.CarrinhoDAO;
 import controle.ProdutoDAO;
 import modelo.CarrinhoCompras;
+import modelo.ItemCarrinho;
 import modelo.Produto;
 import modelo.Usuario;
 import net.miginfocom.swing.MigLayout;
@@ -160,20 +161,26 @@ public class TelaCarrinho extends JFrame {
 		ImageIcon perfil = new ImageIcon(TelaCarrinho.class.getResource("/img/do-utilizador.png"));
 		Image imgp = perfil.getImage().getScaledInstance(30, 30, Image.SCALE_SMOOTH);
 
-		JLabel imgLogoff = new JLabel("");
-		imgLogoff.addMouseListener(new MouseAdapter() {
+		JLabel imgPerfil = new JLabel("");
+		imgPerfil.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				TelaCadastro tela = new TelaCadastro();
-				tela.setLocationRelativeTo(null);
-				tela.setVisible(true);
-
-				dispose();
+				if (isVendedor) {
+					TelaPerfilVendedor v = new TelaPerfilVendedor(u, isVendedor);
+					v.setLocationRelativeTo(null);
+					v.setVisible(true);
+					dispose();
+				} else {
+					TelaPerfilCliente telaPerfil = new TelaPerfilCliente(u, isVendedor);
+					telaPerfil.setLocationRelativeTo(null);
+					telaPerfil.setVisible(true);
+					dispose();
+				}
 			}
 		});
-		imgLogoff.setIcon(new ImageIcon(TelaCarrinho.class.getResource("/img/do-utilizador.png")));
-		panel.add(imgLogoff, "cell 2 0,alignx right");
-		imgLogoff.setIcon(new ImageIcon(imgp));
+		imgPerfil.setIcon(new ImageIcon(TelaCarrinho.class.getResource("/img/do-utilizador.png")));
+		panel.add(imgPerfil, "cell 2 0,alignx right");
+		imgPerfil.setIcon(new ImageIcon(imgp));
 
 		JPanel panel_1 = new JPanel();
 		contentPane.add(panel_1, BorderLayout.CENTER);
@@ -193,7 +200,7 @@ public class TelaCarrinho extends JFrame {
 		panelProd.setLayout(new MigLayout("", "[][][][]", "[][][][]"));
 
 		CarrinhoCompras c = cDAO.verificarSeExisteCarrinho(u);
-		ArrayList<Produto> lista = cDAO.addProdCarrinho(c);
+		ArrayList<ItemCarrinho> lista = cDAO.addProdCarrinho(c);
 		
 
 		int linha = 0;
@@ -202,7 +209,7 @@ public class TelaCarrinho extends JFrame {
 			System.out.println("lista ta Vazia");
 		} else {
 
-			for (Produto p : lista) {
+			for (ItemCarrinho p : lista) {
 
 				coluna++;
 				if (coluna > 3) {
@@ -210,7 +217,7 @@ public class TelaCarrinho extends JFrame {
 					linha++;
 				}
 
-				CardProdutoCarrinho panel_8 = new CardProdutoCarrinho(p);
+				CardProdCarrinho panel_8 = new CardProdCarrinho(p, u);
 				panelProd.add(panel_8, "cell " + coluna + " " + linha + "");
 
 			}
