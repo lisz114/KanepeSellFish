@@ -32,7 +32,7 @@ public class CartaoDAO implements ICartaoDAO{
 	}
 	
 	public int inserirCartao(Cartao c) {
-		String sql = "INSERT INTO cartao (TipodoCartao, NumerodoCarao, validade, CVV, apelido) VALUES (?,?,?,?,?)";
+		String sql = "INSERT INTO cartao (TipodoCartao, NumerodoCartao, validade, CVV, apelido, Usuarios_idUsuarios) VALUES (?,?,?,?,?,?)";
 		try(Connection conn = ConexaoBD.getConexaoMySQL(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
 			
 			pstmt.setObject(1, c.getTipodoCartao());
@@ -40,6 +40,7 @@ public class CartaoDAO implements ICartaoDAO{
 			pstmt.setDate(3, java.sql.Date.valueOf(c.getValidade()));
 			pstmt.setInt(4, c.getCVV());
 			pstmt.setString(5, c.getApelido());
+			pstmt.setInt(6, c.getIdUsuario());
 			
 			pstmt.executeUpdate();
 			
@@ -55,25 +56,24 @@ public class CartaoDAO implements ICartaoDAO{
 		return -1;
 	}
 	
-	public Cartao UsuarioTemCartao(Cartao c) {
-		String sql = "SELECT * FROM kanepe.cartao inner join kanepe.usuarios as idUsuarios where idCartao = ?";
+	public boolean UsuarioTemCartao(boolean b) {
+		String sql = "SELECT * FROM kanepe.cartao where Usuarios_idUsuarios = ?";
 		try(Connection conn = ConexaoBD.getConexaoMySQL(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
 			
+			Cartao c = new Cartao();
 			ResultSet resl = null;
 			pstmt.setInt(1, c.getIdC());
 			resl = pstmt.executeQuery();
 			
-			while (resl.next()) {
-				
-				c.setTipodoCartao(resl.getObject("TipodoCartao"));
-				c.setNumdoCartao(resl.getInt("NumerodoCartao"));
-//				c.setValidade(resl.getDate("validade"));
-				c.setCVV(resl.getInt("CVV"));
-				c.setApelido(resl.getString("apelido"));
+			if (resl.next()) {
+				return true;
+			}else {
+				return false;
 			}
-		} catch (Exception e) {
+		} catch (SQLException e) {
 			// TODO: handle exception
+			e.printStackTrace();
+			return false;
 		}
-		return c;
 	}
 }

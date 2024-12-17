@@ -19,6 +19,7 @@ import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.border.EmptyBorder;
 
+import controle.CartaoDAO;
 import controle.ProdutoDAO;
 import modelo.Produto;
 import modelo.Usuario;
@@ -216,18 +217,31 @@ public class TelaCarrinho extends JFrame {
 		JButton btnPagamento = new JButton("Concluir compra");
 		btnPagamento.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+//				CartaoDAO cDAO = new CartaoDAO();
+//				if(u.setCartaoid(cDAO.UsuarioTemCartao(false))) {
+//					TelaCadastramentodoCartao tela = new TelaCadastramentodoCartao(u, produtos, isVendedor);
+//					tela.setLocationRelativeTo(null);
+//					tela.setVisible(true);
+//					dispose();
+//				}else{
+//					PopUpPagar pup = new PopUpPagar(u, produtos, isVendedor);
+//					pup.setLocationRelativeTo(null);
+//					pup.setVisible(true);
+//					dispose();
+//				}
+				TelaCadastramentodoCartao tela = new TelaCadastramentodoCartao(u, produtos, isVendedor);
+				tela.setLocationRelativeTo(null);
+				tela.setVisible(true);
+				dispose();
+//				System.out.println(cDAO.UsuarioTemCartao(isVendedor));
 			}
 		});
-		btnPagamento.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-//				TelaPagamento tela = new TelaPagamento();
-//				tela.setLocationRelativeTo(null);
-//				tela.setVisible(true);
-//
-//				dispose();
-			}
-		});
+//		btnPagamento.addMouseListener(new MouseAdapter() {
+//			@Override
+//			public void mouseClicked(MouseEvent e) {
+//				
+//			}
+//		});
 		btnPagamento.setFont(new Font("Dialog", Font.PLAIN, 11));
 		btnPagamento.setBackground(new Color(154, 205, 217));
 		panel_1.add(btnPagamento, "cell 4 4,alignx center");

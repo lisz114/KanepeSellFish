@@ -12,6 +12,7 @@ public class Usuario {
 	private Endereco end;
 	protected int idUsuario;
 	private String img;
+	private boolean Cartaoid;
 
 	
 	public Usuario() {}
@@ -116,5 +117,13 @@ public class Usuario {
 
 	public void setDesc(String desc) {
 		this.desc = desc;
+	}
+
+	public boolean getCartaoid(boolean b) {
+		return Cartaoid;
+	}
+
+	public boolean setCartaoid(boolean b) {
+		return Cartaoid = b;
 	}
 }

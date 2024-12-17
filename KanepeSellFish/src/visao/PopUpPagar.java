@@ -10,11 +10,15 @@ import java.awt.GridLayout;
 import java.awt.Color;
 import javax.swing.JButton;
 
+import modelo.Produto;
 import modelo.RoundButton;
+import modelo.Usuario;
+
 import java.awt.FlowLayout;
 import net.miginfocom.swing.MigLayout;
 import javax.swing.JLabel;
 import java.awt.event.ActionListener;
+import java.util.List;
 import java.awt.event.ActionEvent;
 
 public class PopUpPagar extends JFrame {
@@ -25,23 +29,23 @@ public class PopUpPagar extends JFrame {
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					PopUpPagar frame = new PopUpPagar();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+//	public static void main(String[] args) {
+//		EventQueue.invokeLater(new Runnable() {
+//			public void run() {
+//				try {
+//					PopUpPagar frame = new PopUpPagar();
+//					frame.setVisible(true);
+//				} catch (Exception e) {
+//					e.printStackTrace();
+//				}
+//			}
+//		});
+//	}
 
 	/**
 	 * Create the frame.
 	 */
-	public PopUpPagar() {
+	public PopUpPagar(Usuario u,List<Produto>produto ,boolean isVendedor) {
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 300, 350);
@@ -76,13 +80,18 @@ public class PopUpPagar extends JFrame {
 		contentPane.add(panel);
 		
 		JButton btnComprar = new RoundButton("Comprar");
+		btnComprar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+			}
+		});
 		btnComprar.setBackground(new Color(8, 127, 144));
 		panel.add(btnComprar);
 		
 		JButton btncancelar = new RoundButton("Cancelar");
 		btncancelar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				TelaCarrinho tc = new TelaCarrinho(null, null, rootPaneCheckingEnabled);
+				TelaCarrinho tc = new TelaCarrinho(u, produto, isVendedor);
 				tc.setLocationRelativeTo(null);
 				tc.setVisible(true);
 				dispose();

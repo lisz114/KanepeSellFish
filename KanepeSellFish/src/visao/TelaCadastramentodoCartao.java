@@ -4,7 +4,10 @@ import java.awt.Dimension;
 import java.awt.EventQueue;
 
 import modelo.Cartao;
+import modelo.Produto;
 import modelo.RoundButton;
+import modelo.TipodeCartao;
+import modelo.Usuario;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -31,6 +34,7 @@ import java.awt.event.ActionListener;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
+import java.util.List;
 import java.awt.event.ActionEvent;
 
 public class TelaCadastramentodoCartao extends JFrame {
@@ -49,23 +53,23 @@ public class TelaCadastramentodoCartao extends JFrame {
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					TelaCadastramentodoCartao frame = new TelaCadastramentodoCartao();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+//	public static void main(String[] args) {
+//		EventQueue.invokeLater(new Runnable() {
+//			public void run() {
+//				try {
+//					TelaCadastramentodoCartao frame = new TelaCadastramentodoCartao();
+//					frame.setVisible(true);
+//				} catch (Exception e) {
+//					e.printStackTrace();
+//				}
+//			}
+//		});
+//	}
 
 	/**
 	 * Create the frame.
 	 */
-	public TelaCadastramentodoCartao() {
+	public TelaCadastramentodoCartao(Usuario u,List<Produto>produto ,boolean isVendedor) {
 		
 		setResizable(false);
 		setLocationByPlatform(true);
@@ -92,7 +96,8 @@ public class TelaCadastramentodoCartao extends JFrame {
 		contentPane.add(panel_1, BorderLayout.CENTER);
 		
 		comboBox = new JComboBox();
-		comboBox.setModel(new DefaultComboBoxModel(new String[] {"", "Débito", "Crédito"}));
+		comboBox.addItem(TipodeCartao.DEBITO);
+		comboBox.addItem(TipodeCartao.CREDITO);
 		
 		txtNumC = new JTextField();
 		txtNumC.setUI(new HintTextFieldUI("Número do Cartão"));
@@ -116,26 +121,17 @@ public class TelaCadastramentodoCartao extends JFrame {
 				
 				Cartao c = new Cartao();
 				TelaError erro = new TelaError();
-				String obj = null;
+				String obj;
 				String numCartao = txtNumC.getText();
-				int numC = Integer.parseInt(numCartao);
+				Long numC = Long.parseLong(numCartao);
 				String val = txtValidade.getText();
 				String cvv = txtCVV.getText();
 				int CVV = Integer.parseInt(cvv);
-				String apelido = txtValidade.getText();
+				String apelido = txtApelido.getText();
 				
-				if(comboBox.getSelectedItem().equals("Débito")) {
-					String opCartao = "Débito";
-					opCartao = obj;
-				}else if (comboBox.getSelectedItem().equals("Crédito")) {
-					String opCartao = "Crédito";
-					opCartao = obj;
-				}else if(comboBox.getSelectedItem().equals("")) {
-					
-					erro.setLabelText("Tipo de Cartão não selecionado!");
-					erro.setLocationRelativeTo(null);
-					erro.setVisible(true);
-				}
+				TipodeCartao cartaoselecionado = (TipodeCartao) comboBox.getSelectedItem();
+				obj = cartaoselecionado.getTipo();
+				
 				if(numCartao.isEmpty() || cvv.isEmpty() || apelido.isEmpty()) {
 					erro.setLabelText("Informações Inválidas!");
 					erro.setLocationRelativeTo(null);
@@ -152,13 +148,21 @@ public class TelaCadastramentodoCartao extends JFrame {
 					erro.setVisible(true);
 					return;
 				}
+				System.out.println(obj);
+				System.out.println(numC);
+				System.out.println(validade);
+				System.out.println(CVV);
+				System.out.println(apelido);
+
+				
 				c.setTipodoCartao(obj);
 				c.setNumdoCartao(numC);
 				c.setValidade(validade);
 				c.setCVV(CVV);
 				c.setApelido(apelido);
+				System.out.println(c);
 				cDAO.inserirCartao(c);
-				PopUpPagar pup = new PopUpPagar();
+				PopUpPagar pup = new PopUpPagar(u, produto, isVendedor);
 				pup.setLocationRelativeTo(null);
 				pup.setVisible(true);
 				dispose();
@@ -170,7 +174,7 @@ public class TelaCadastramentodoCartao extends JFrame {
 		btnCancelar = new RoundButton("Cancelar");
 		btnCancelar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				TelaCarrinho tela = new TelaCarrinho(null, null, rootPaneCheckingEnabled);
+				TelaCarrinho tela = new TelaCarrinho(u, produto, isVendedor);
 				tela.setLocationRelativeTo(null);
 				tela.setVisible(true);
 				dispose();

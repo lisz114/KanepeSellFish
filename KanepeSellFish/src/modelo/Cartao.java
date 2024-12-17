@@ -8,7 +8,7 @@ public class Cartao {
 	private long numdoCartao;
 	private LocalDate validade;
 	private int CVV;
-	private Usuario idUsuario;
+	private int idUsuario;
 	private int idC;
 	private Object TipodoCartao;
 	private String apelido;
@@ -37,11 +37,11 @@ public class Cartao {
 		CVV = cVV;
 	}
 
-	public Usuario getIdUsuario() {
+	public int getIdUsuario() {
 		return idUsuario;
 	}
 
-	public void setIdUsuario(Usuario idUsuario) {
+	public void setIdUsuario(int idUsuario) {
 		this.idUsuario = idUsuario;
 	}
 
