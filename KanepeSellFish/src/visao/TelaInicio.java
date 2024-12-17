@@ -160,9 +160,11 @@ public class TelaInicio extends JFrame {
 		Image imgN = notificacao.getImage().getScaledInstance(30, 30, Image.SCALE_SMOOTH);
 
 		panelLeft = new JPanel();
+		panelLeft.addMouseListener(new MouseAdapter() {
+		});
 		panelLeft.setBackground(new Color(154, 208, 217));
 		contentPane.add(panelLeft, BorderLayout.WEST);
-		panelLeft.setLayout(new MigLayout("", "[100px]", "[50px][50px][50px][50px]"));
+		panelLeft.setLayout(new MigLayout("", "[100px]", "[50px][50px][50px][50px][50px]"));
 
 		JButton btInicio = new JButton("Inicio");
 		btInicio.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
@@ -262,12 +264,10 @@ public class TelaInicio extends JFrame {
 		btEstoque.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btEstoque.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-
 				TelaEstoque frame = new TelaEstoque(u);
 				frame.setLocationRelativeTo(null);
 				frame.setVisible(true);
 				dispose();
-
 			}
 		});
 		btEstoque.setOpaque(false);

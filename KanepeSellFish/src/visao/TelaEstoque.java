@@ -130,6 +130,15 @@ public class TelaEstoque extends JFrame {
 		imgCarrinho.setIcon(new ImageIcon(imgC));
 
 		JLabel imgNotificacao = new JLabel("");
+		imgNotificacao.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				TelaSolicitacoes solicita = new TelaSolicitacoes();
+				solicita.setLocationRelativeTo(null);
+				solicita.setVisible(true);
+				dispose();
+			}
+		});
 		imgNotificacao.setIcon(new ImageIcon(TelaInicio.class.getResource("/IMG/sino.png")));
 		panelTop.add(imgNotificacao, "cell 3 0");
 		ImageIcon notificacao = new ImageIcon(TelaInicio.class.getResource("/IMG/sino.png"));
@@ -303,9 +312,6 @@ public class TelaEstoque extends JFrame {
 		btnNewButton_3.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnNewButton_3.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-
-				
-
 			}
 		});
 		btnNewButton_3.setBackground(new Color(96, 154, 168));
