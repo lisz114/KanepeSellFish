@@ -10,6 +10,7 @@ public class Usuario {
 	private String tel;
 	private Produtor prod;
 	private Endereco end;
+	private Cartao cartao;
 	protected int idUsuario;
 	private String img;
 	private boolean Cartaoid;
@@ -125,5 +126,13 @@ public class Usuario {
 
 	public boolean setCartaoid(boolean b) {
 		return Cartaoid = b;
+	}
+
+	public Cartao getCartao() {
+		return cartao;
+	}
+
+	public void setCartao(Cartao cartao) {
+		this.cartao = cartao;
 	}
 }

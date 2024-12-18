@@ -4,7 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-
+import java.sql.Statement;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -13,6 +13,7 @@ import com.mysql.cj.protocol.Resultset;
 
 import modelo.Cartao;
 import modelo.ICartaoDAO;
+import modelo.Usuario;
 
 public class CartaoDAO implements ICartaoDAO{
 	
@@ -31,16 +32,16 @@ public class CartaoDAO implements ICartaoDAO{
 		return instancia;
 	}
 	
-	public int inserirCartao(Cartao c) {
-		String sql = "INSERT INTO cartao (TipodoCartao, NumerodoCartao, validade, CVV, apelido, Usuarios_idUsuarios) VALUES (?,?,?,?,?,?)";
-		try(Connection conn = ConexaoBD.getConexaoMySQL(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
+	public int inserirCartao(Cartao c, Usuario u) {
+		String sql = "INSERT INTO kanepe.cartao (TipodoCartao, NumerodoCartao, validade, CVV, apelido, Usuarios_idUsuarios) VALUES (?,?,?,?,?,?)";
+		try(Connection conn = ConexaoBD.getConexaoMySQL(); PreparedStatement pstmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
 			
 			pstmt.setObject(1, c.getTipodoCartao());
 			pstmt.setLong(2, c.getNumdoCartao());
 			pstmt.setDate(3, java.sql.Date.valueOf(c.getValidade()));
 			pstmt.setInt(4, c.getCVV());
 			pstmt.setString(5, c.getApelido());
-			pstmt.setInt(6, c.getIdUsuario());
+			pstmt.setInt(6, u.getIdUsuario());
 			
 			pstmt.executeUpdate();
 			
@@ -56,13 +57,12 @@ public class CartaoDAO implements ICartaoDAO{
 		return -1;
 	}
 	
-	public boolean UsuarioTemCartao(boolean b) {
+	public boolean UsuarioTemCartao(Usuario u) {
 		String sql = "SELECT * FROM kanepe.cartao where Usuarios_idUsuarios = ?";
 		try(Connection conn = ConexaoBD.getConexaoMySQL(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
 			
-			Cartao c = new Cartao();
 			ResultSet resl = null;
-			pstmt.setInt(1, c.getIdC());
+			pstmt.setInt(1, u.getIdUsuario());
 			resl = pstmt.executeQuery();
 			
 			if (resl.next()) {

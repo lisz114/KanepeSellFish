@@ -2,5 +2,5 @@ package modelo;
 
 public interface ICartaoDAO {
 
-	public int inserirCartao(Cartao c);
+	public int inserirCartao(Cartao c, Usuario u);
 }

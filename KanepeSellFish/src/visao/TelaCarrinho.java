@@ -21,6 +21,7 @@ import javax.swing.border.EmptyBorder;
 
 import controle.CartaoDAO;
 import controle.ProdutoDAO;
+import controle.UsuarioDAO;
 import modelo.Produto;
 import modelo.Usuario;
 import net.miginfocom.swing.MigLayout;
@@ -30,7 +31,9 @@ public class TelaCarrinho extends JFrame {
 
 	private JPanel contentPane;
 	ProdutoDAO pDAO = new ProdutoDAO();
+	CartaoDAO cDAO = new CartaoDAO();
 	JPanel panelLeft;
+	public static UsuarioDAO uDAO = UsuarioDAO.getInstancia();
 
 //	public static void main(String[] args) {
 //		EventQueue.invokeLater(new Runnable() {
@@ -91,7 +94,7 @@ public class TelaCarrinho extends JFrame {
 		JButton btnNewButton_2 = new JButton("Perfil");
 		btnNewButton_2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
+
 				if (isVendedor) {
 					TelaPerfilVendedor v = new TelaPerfilVendedor(u, isVendedor);
 					v.setLocationRelativeTo(null);
@@ -103,7 +106,7 @@ public class TelaCarrinho extends JFrame {
 					telaPerfil.setVisible(true);
 					dispose();
 				}
-				
+
 			}
 		});
 		btnNewButton_2.setBackground(new Color(154, 205, 217));
@@ -217,23 +220,28 @@ public class TelaCarrinho extends JFrame {
 		JButton btnPagamento = new JButton("Concluir compra");
 		btnPagamento.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-//				CartaoDAO cDAO = new CartaoDAO();
-//				if(u.setCartaoid(cDAO.UsuarioTemCartao(false))) {
-//					TelaCadastramentodoCartao tela = new TelaCadastramentodoCartao(u, produtos, isVendedor);
-//					tela.setLocationRelativeTo(null);
-//					tela.setVisible(true);
-//					dispose();
-//				}else{
-//					PopUpPagar pup = new PopUpPagar(u, produtos, isVendedor);
-//					pup.setLocationRelativeTo(null);
-//					pup.setVisible(true);
-//					dispose();
-//				}
-				TelaCadastramentodoCartao tela = new TelaCadastramentodoCartao(u, produtos, isVendedor);
-				tela.setLocationRelativeTo(null);
-				tela.setVisible(true);
-				dispose();
-//				System.out.println(cDAO.UsuarioTemCartao(isVendedor));
+				
+				Usuario user = new Usuario();
+				user= uDAO.consultaUserCartao(u);
+				
+				if (user != null) {
+					if (cDAO.UsuarioTemCartao(user)) {
+						TelaCadastramentodoCartao tela = new TelaCadastramentodoCartao(u, produtos, isVendedor);
+						tela.setLocationRelativeTo(null);
+						tela.setVisible(true);
+						dispose();
+					} else {
+						PopUpPagar pup = new PopUpPagar(u, produtos, isVendedor);
+						pup.setLocationRelativeTo(null);
+						pup.setVisible(true);
+						dispose();
+					}
+					TelaCadastramentodoCartao tela = new TelaCadastramentodoCartao(u, produtos, isVendedor);
+					tela.setLocationRelativeTo(null);
+					tela.setVisible(true);
+					dispose();
+					// System.out.println(cDAO.UsuarioTemCartao(isVendedor));
+				}
 			}
 		});
 //		btnPagamento.addMouseListener(new MouseAdapter() {

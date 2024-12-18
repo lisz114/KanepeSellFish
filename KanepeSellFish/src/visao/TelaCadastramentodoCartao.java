@@ -161,7 +161,7 @@ public class TelaCadastramentodoCartao extends JFrame {
 				c.setCVV(CVV);
 				c.setApelido(apelido);
 				System.out.println(c);
-				cDAO.inserirCartao(c);
+				cDAO.inserirCartao(c, u);
 				PopUpPagar pup = new PopUpPagar(u, produto, isVendedor);
 				pup.setLocationRelativeTo(null);
 				pup.setVisible(true);

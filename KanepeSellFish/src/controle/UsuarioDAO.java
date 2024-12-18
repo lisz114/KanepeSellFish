@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
+import modelo.Cartao;
 import modelo.Endereco;
 import modelo.IUsuarioDAO;
 import modelo.Produtor;
@@ -17,7 +18,6 @@ public class UsuarioDAO implements IUsuarioDAO {
 	private static ArrayList<Usuario> listaUsuarios;
 
 	private static UsuarioDAO instancia;
-
 
 	public UsuarioDAO() {
 
@@ -70,12 +70,12 @@ public class UsuarioDAO implements IUsuarioDAO {
 			pstmt.setString(3, usuario.getDesc());
 			pstmt.setInt(4, usuario.getIdUsuario());
 			System.out.println(pstmt);
-			r=pstmt.executeUpdate();
+			r = pstmt.executeUpdate();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 		return r;
 	}
 
@@ -88,15 +88,15 @@ public class UsuarioDAO implements IUsuarioDAO {
 			pstmt.setString(1, usuario.getImg());
 			pstmt.setInt(2, usuario.getIdUsuario());
 			System.out.println(pstmt);
-			r=pstmt.executeUpdate();
+			r = pstmt.executeUpdate();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 		return r;
 	}
-	
+
 	@Override
 	public boolean removerUsuario(String cpf) {
 		for (Usuario usuario : listaUsuarios) {
@@ -187,10 +187,10 @@ public class UsuarioDAO implements IUsuarioDAO {
 //				u.setProd(p);
 //
 //				return u;
-			
+
 			if (res1.next()) {
 				return true;
-			}else {
+			} else {
 				return false;
 			}
 //			}
@@ -198,7 +198,7 @@ public class UsuarioDAO implements IUsuarioDAO {
 			e.printStackTrace();
 		}
 		return false;
-}
+	}
 
 	@Override
 	public Usuario consultaUsuarioCadastrado(String cpf, String email) {
@@ -234,6 +234,37 @@ public class UsuarioDAO implements IUsuarioDAO {
 			e.printStackTrace();
 		}
 		return null;
+	}
+
+	public Usuario consultaUserCartao(Usuario u) {
+		
+		String sql = "SELECT * FROM kanepe.usuarios inner join kanepe.cartao as Usuarios_idUsuarios where idUsuarios = ?";
+		
+		try (Connection conn = ConexaoBD.getConexaoMySQL(); PreparedStatement stmt = conn.prepareStatement(sql);) {
+
+			ResultSet res = null;
+			stmt.setInt(1, u.getIdUsuario());
+			res = stmt.executeQuery();
+			while (res.next()) {
+				
+				Usuario user = new Usuario();
+				user.setNome(res.getString("nome_Usuario"));
+				
+				Cartao c = new Cartao();
+				c.setTipodoCartao(res.getString("TipodoCartao"));
+				c.setNumdoCartao(res.getLong("NumerodoCartao"));
+				//c.setValidade(java.sql.Date.valueOf(res.getDate("validade")));
+				c.setApelido(res.getString("apelido"));
+				user.setCartao(c);
+				
+				return user;
+			}
+			
+		} catch (SQLException e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+		return u;
 	}
 
 	// Método para validar CPF

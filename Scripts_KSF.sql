@@ -107,7 +107,7 @@ CREATE TABLE IF NOT EXISTS Carrinho (
 Create Table if not exists Cartao(
 	idCartao bigint not null auto_increment primary key,
     TipodoCartao varchar(7) not null,
-    NumerodoCartao bigint(24) not null,
+    NumerodoCartao bigint not null,
     validade date not null,
     CVV int(3) not null,
     apelido varchar(30) not null,
