@@ -27,7 +27,9 @@ public class CardProdCarrinho extends JPanel {
 
 		JLabel lblNome = new JLabel("Nome");
 		add(lblNome, "flowx,cell 1 0,alignx left");
+					
 		lblNome.setText(p.getNome());
+		
 
 		JLabel lblQuantidade = new JLabel("1");
 //		lblQuantidade.setText();

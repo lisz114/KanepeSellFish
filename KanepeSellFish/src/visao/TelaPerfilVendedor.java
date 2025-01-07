@@ -110,10 +110,9 @@ public class TelaPerfilVendedor extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				
-				TelaInicio inicio = new TelaInicio(u, isVendedor);
-				inicio.setLocationRelativeTo(null);
-				inicio.setVisible(true);
-				dispose();
+				TelaDeLogOff telaLogOff = new TelaDeLogOff(estajanela, u, isVendedor);
+				telaLogOff.setLocationRelativeTo(null);
+				telaLogOff.setVisible(true);
 			}
 		});
 		
@@ -148,7 +147,7 @@ public class TelaPerfilVendedor extends JFrame {
 		panelLeft.setLayout(new MigLayout("", "[100px]", "[50px][50px][50px][50px]"));
 
 		JButton btnNewButton = new JButton("Inicio");
-		btnNewButton.setFont(new Font("Dialog", Font.PLAIN, 13));
+		btnNewButton.setForeground(new Color(0, 0, 0));
 		btnNewButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -165,6 +164,7 @@ public class TelaPerfilVendedor extends JFrame {
 		panelLeft.add(btnNewButton, "cell 0 0,grow");
 
 		JButton btnNewButton_1 = new JButton("Carrinho");
+		btnNewButton_1.setForeground(new Color(0, 0, 0));
 		btnNewButton_1.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -175,27 +175,26 @@ public class TelaPerfilVendedor extends JFrame {
 				dispose();
 			}
 		});
-		btnNewButton_1.setFont(new Font("Dialog", Font.PLAIN, 13));
 		btnNewButton_1.setBackground(new Color(154, 205, 217));
 		btnNewButton_1.setBorder(null);
 		btnNewButton_1.setOpaque(false);
 		panelLeft.add(btnNewButton_1, "cell 0 1,grow");
 
 		JButton btnNewButton_2 = new JButton("Perfil");
+		btnNewButton_2.setForeground(new Color(0, 0, 0));
 		btnNewButton_2.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnNewButton_2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			}
 		});
-		btnNewButton_2.setFont(new Font("Dialog", Font.PLAIN, 13));
 		btnNewButton_2.setBackground(new Color(96, 154, 168));
 		btnNewButton_2.setBorder(null);
 		btnNewButton_2.setOpaque(true);
 		panelLeft.add(btnNewButton_2, "cell 0 2,grow");
 
 		JButton btnNewButton_3 = new JButton("Estoque");
+		btnNewButton_3.setForeground(new Color(0, 0, 0));
 		btnNewButton_3.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		btnNewButton_3.setFont(new Font("Dialog", Font.PLAIN, 13));
 		btnNewButton_3.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
@@ -303,7 +302,7 @@ public class TelaPerfilVendedor extends JFrame {
 		JLabel txtNum = new JLabel("num");
 		txtNum.setFont(new Font("Dialog", Font.PLAIN, 15));
 		panel_1.add(txtNum, "cell 3 3,alignx left");
-		txtNum.setText("0");
+		txtNum.setText(String.valueOf(produtor.getEnd().getNumero()));
 		
 		JLabel lblnada2 = new JLabel(",     ");
 		panel_1.add(lblnada2, "cell 3 3");
@@ -337,7 +336,7 @@ public class TelaPerfilVendedor extends JFrame {
 		JLabel lblponto = new JLabel(".");
 		panel_1.add(lblponto, "cell 3 4");
 		
-		RoundButton rndbtnAlterarInformaes = new RoundButton("Alterar Informações");
+		JButton rndbtnAlterarInformaes = new JButton("Cancelar");
 		rndbtnAlterarInformaes.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			}
@@ -353,8 +352,12 @@ public class TelaPerfilVendedor extends JFrame {
 				
 			}
 		});
-		rndbtnAlterarInformaes.setBackground(new Color(96, 154, 168));
+		rndbtnAlterarInformaes.setText("Alterar Informações");
+		rndbtnAlterarInformaes.setFont(new Font("Dialog", Font.PLAIN, 11));
+		rndbtnAlterarInformaes.setBackground(new Color(154, 205, 217));
+		rndbtnAlterarInformaes.setForeground(new Color(0, 0, 0));
 		panel_1.add(rndbtnAlterarInformaes, "cell 4 7,alignx center,aligny center");
+		
 
 	}
 }

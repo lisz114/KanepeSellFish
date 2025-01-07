@@ -13,7 +13,7 @@ import modelo.Usuario;
 public class ProdutorDAO implements IProdutorDAO {
 	
 	private static ProdutorDAO instancia;
-	EnderecoDAO eDAO;
+	EnderecoDAO eDAO = EnderecoDAO.getInstancia();
 
 	private ProdutorDAO() {
 	}
@@ -68,8 +68,8 @@ public class ProdutorDAO implements IProdutorDAO {
 			p.setCnpj(res1.getString("cnpj"));
 			e = eDAO.buscarendereco(Integer.parseInt(res1.getString("Enderecos_idEnderecos")));
 			p.setEnd(e);
-			return p;
 			
+			return p;
 			}
 
 			res1.close();

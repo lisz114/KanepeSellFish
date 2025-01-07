@@ -8,6 +8,6 @@ public interface ICarrinhoDAO {
 	boolean alterarQuantidade(Pedido pedido);
 	public boolean inserirProduto(Produto produto, int quantidade, Float preco, CarrinhoCompras c);
 	public CarrinhoCompras criarCarrinho(Usuario u);
-	public ArrayList<Produto> addProdCarrinho(CarrinhoCompras c);
+	public ArrayList<ItemCarrinho> addProdCarrinho(CarrinhoCompras c);
 
 }
