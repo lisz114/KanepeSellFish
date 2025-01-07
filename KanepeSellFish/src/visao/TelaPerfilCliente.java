@@ -26,6 +26,7 @@ import modelo.Produto;
 import modelo.Usuario;
 import net.miginfocom.swing.MigLayout;
 import java.awt.Cursor;
+import java.awt.Component;
 
 public class TelaPerfilCliente extends JFrame {
 
@@ -120,33 +121,19 @@ public class TelaPerfilCliente extends JFrame {
 		lblTelefone.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblTelefone.setFont(new Font("Dialog", Font.PLAIN, 15));
 		panel_2.add(lblTelefone, "cell 0 7");
-
+		
 		JPanel panel_4 = new JPanel();
-		panel_1.add(panel_4, "cell 1 1,alignx right,aligny bottom");
-		panel_4.setLayout(new MigLayout("", "[grow]", "[grow]"));
+		panel_1.add(panel_4, "flowx,cell 1 1,growy");
 		
 		JButton bntEditar = new JButton(" Alterar informações ");
-		bntEditar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
-		bntEditar.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				
-				TelaEditarPerfilCliente editar = new TelaEditarPerfilCliente(u, isVendedor);
-				editar.setVisible(true);
-				editar.setLocationRelativeTo(null);
-				dispose();
-			}
-		});
-		bntEditar.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		bntEditar.setFont(new Font("Dialog", Font.PLAIN, 13));
-		bntEditar.setBackground(new Color(2, 73, 89));
-		bntEditar.setBackground(new Color(96, 154, 168));
+		bntEditar.setForeground(Color.BLACK);
+		bntEditar.setFont(new Font("Dialog", Font.PLAIN, 11));
 		bntEditar.setBorderPainted(false);
 		bntEditar.setBorder(new LineBorder(new Color(0, 0, 0), 2, true));
-		panel_4.add(bntEditar, "cell 4 7,alignx center");
+		bntEditar.setBackground(new Color(154, 205, 217));
+		bntEditar.setAlignmentY(1.0f);
+		bntEditar.setAlignmentX(1.0f);
+		panel_4.add(bntEditar);
 		
 		String telefone = u.getTel();
 		JLabel lblDynamicTelefone;
@@ -189,6 +176,7 @@ public class TelaPerfilCliente extends JFrame {
 		panelLeft.setLayout(new MigLayout("", "[100px]", "[50px][50px][50px][50px]"));
 
 		JButton btnNewButton = new JButton("Inicio");
+		btnNewButton.setForeground(new Color(0, 0, 0));
 		btnNewButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -205,6 +193,7 @@ public class TelaPerfilCliente extends JFrame {
 		panelLeft.add(btnNewButton, "cell 0 0,grow");
 
 		JButton btnNewButton_1 = new JButton("Carrinho");
+		btnNewButton_1.setForeground(new Color(0, 0, 0));
 		btnNewButton_1.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -220,6 +209,7 @@ public class TelaPerfilCliente extends JFrame {
 		panelLeft.add(btnNewButton_1, "cell 0 1,grow");
 
 		JButton btnNewButton_2 = new JButton("Perfil");
+		btnNewButton_2.setForeground(new Color(0, 0, 0));
 		btnNewButton_2.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnNewButton_2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -227,7 +217,7 @@ public class TelaPerfilCliente extends JFrame {
 			}
 		});
 
-		btnNewButton_2.setBackground(new Color(64, 128, 128));
+		btnNewButton_2.setBackground(new Color(96, 154, 168));
 		btnNewButton_2.setBorder(null);
 		panelLeft.add(btnNewButton_2, "cell 0 2,grow");
 
@@ -249,6 +239,7 @@ public class TelaPerfilCliente extends JFrame {
 			panelLeft.add(btnNewButton_3, "cell 0 3,grow");
 		}
 		JLabel imgSair = new JLabel("");
+		imgSair.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		imgSair.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -259,6 +250,7 @@ public class TelaPerfilCliente extends JFrame {
 		});
 		
 				JLabel imgCarrinho = new JLabel("");
+				imgCarrinho.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 				imgCarrinho.addMouseListener(new MouseAdapter() {
 					@Override
 					public void mouseClicked(MouseEvent e) {

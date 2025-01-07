@@ -118,6 +118,7 @@ public class TelaEstoque extends JFrame {
 		imgMenu.setIcon(new ImageIcon(iconMenu));
 
 		JLabel imgCarrinho = new JLabel("");
+		imgCarrinho.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		imgCarrinho.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -136,6 +137,7 @@ public class TelaEstoque extends JFrame {
 		imgCarrinho.setIcon(new ImageIcon(imgC));
 
 		JLabel imgNotificacao = new JLabel("");
+		imgNotificacao.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		imgNotificacao.setIcon(new ImageIcon(TelaInicio.class.getResource("/IMG/sino.png")));
 		panelTop.add(imgNotificacao, "cell 3 0");
 		ImageIcon notificacao = new ImageIcon(TelaInicio.class.getResource("/IMG/sino.png"));
@@ -143,6 +145,7 @@ public class TelaEstoque extends JFrame {
 		imgNotificacao.setIcon(new ImageIcon(imgN));
 
 		JLabel imgConta = new JLabel("");
+		imgConta.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		imgConta.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -160,6 +163,7 @@ public class TelaEstoque extends JFrame {
 		imgConta.setIcon(new ImageIcon(iconConta));
 
 		panelTabelaProdutos = new JPanel();
+		panelTabelaProdutos.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		panelTabelaProdutos.setOpaque(false);
 		contentPane.add(panelTabelaProdutos, BorderLayout.CENTER);
 		panelTabelaProdutos.setLayout(new MigLayout("", "[grow]", "[center][grow][]"));
@@ -208,6 +212,10 @@ public class TelaEstoque extends JFrame {
 
 			}
 		});
+		
+		btnEditar.setFont(new Font("Dialog", Font.PLAIN, 11));
+		btnEditar.setBackground(new Color(154, 205, 217));
+		btnEditar.setForeground(new Color(0, 0, 0));
 
 		btnNewButton = new JButton("Excluir Produto");
 		btnNewButton.addActionListener(new ActionListener() {
@@ -231,6 +239,9 @@ public class TelaEstoque extends JFrame {
 			}
 		});
 		panel_3.add(btnNewButton, "flowx,cell 0 8,alignx right");
+		btnNewButton.setFont(new Font("Dialog", Font.PLAIN, 11));
+		btnNewButton.setBackground(new Color(154, 205, 217));
+		btnNewButton.setForeground(new Color(0, 0, 0));
 
 		panel_3.add(btnEditar, "cell 0 8,alignx right");
 
@@ -245,6 +256,10 @@ public class TelaEstoque extends JFrame {
 			}
 		});
 		panel_3.add(btnAdicionar, "cell 0 8,alignx trailing");
+		
+		btnAdicionar.setFont(new Font("Dialog", Font.PLAIN, 11));
+		btnAdicionar.setBackground(new Color(154, 205, 217));
+		btnAdicionar.setForeground(new Color(0, 0, 0));
 
 		panelMenu = new JPanel();
 		panelMenu.setBackground(new Color(154, 208, 217));
@@ -252,6 +267,7 @@ public class TelaEstoque extends JFrame {
 		panelMenu.setLayout(new MigLayout("", "[100px]", "[50px][50px][50px][50px]"));
 		
 		JButton btnNewButton = new JButton("Inicio");
+		btnNewButton.setForeground(new Color(0, 0, 0));
 		btnNewButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -276,6 +292,7 @@ public class TelaEstoque extends JFrame {
 		panelMenu.add(btnNewButton, "cell 0 0,grow");
 
 		JButton btnNewButton_1 = new JButton("Carrinho");
+		btnNewButton_1.setForeground(new Color(0, 0, 0));
 		btnNewButton_1.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -291,6 +308,7 @@ public class TelaEstoque extends JFrame {
 		panelMenu.add(btnNewButton_1, "cell 0 1,grow");
 
 		JButton btnNewButton_2 = new JButton("Perfil");
+		btnNewButton_2.setForeground(new Color(0, 0, 0));
 		btnNewButton_2.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnNewButton_2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -308,6 +326,7 @@ public class TelaEstoque extends JFrame {
 		panelMenu.add(btnNewButton_2, "cell 0 2,grow");
 
 		JButton btnNewButton_3 = new JButton("Estoque");
+		btnNewButton_3.setForeground(new Color(0, 0, 0));
 		btnNewButton_3.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnNewButton_3.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {

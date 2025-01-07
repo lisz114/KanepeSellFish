@@ -73,6 +73,7 @@ public class TelaCarrinho extends JFrame {
 		panelLeft.setLayout(new MigLayout("", "[100px]", "[50px][50px][50px][50px]"));
 
 		JButton btnInicio = new JButton("Inicio");
+		btnInicio.setForeground(new Color(0, 0, 0));
 		btnInicio.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnInicio.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -89,6 +90,7 @@ public class TelaCarrinho extends JFrame {
 		panelLeft.add(btnInicio, "cell 0 0,grow");
 
 		JButton btnCarrinho = new JButton("Carrinho");
+		btnCarrinho.setForeground(new Color(0, 0, 0));
 		btnCarrinho.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnCarrinho.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -99,6 +101,7 @@ public class TelaCarrinho extends JFrame {
 		panelLeft.add(btnCarrinho, "cell 0 1,grow");
 
 		JButton btnPerfil = new JButton("Perfil");
+		btnPerfil.setForeground(new Color(0, 0, 0));
 		btnPerfil.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnPerfil.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -123,6 +126,7 @@ public class TelaCarrinho extends JFrame {
 		panelLeft.add(btnPerfil, "cell 0 2,grow");
 
 		btnEstoque = new JButton("Estoque");
+		btnEstoque.setForeground(new Color(0, 0, 0));
 		btnEstoque.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnEstoque.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -162,6 +166,7 @@ public class TelaCarrinho extends JFrame {
 		Image imgp = perfil.getImage().getScaledInstance(30, 30, Image.SCALE_SMOOTH);
 
 		JLabel imgPerfil = new JLabel("");
+		imgPerfil.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		imgPerfil.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -228,6 +233,10 @@ public class TelaCarrinho extends JFrame {
 		panelBotoes.setLayout(new MigLayout("", "[][]", "[]"));
 		
 				JButton btnVoltaTela = new JButton("Continuar comprando");
+				btnVoltaTela.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+					}
+				});
 				panelBotoes.add(btnVoltaTela, "cell 0 0");
 				btnVoltaTela.addMouseListener(new MouseAdapter() {
 					@Override
@@ -240,6 +249,7 @@ public class TelaCarrinho extends JFrame {
 				});
 				btnVoltaTela.setFont(new Font("Dialog", Font.PLAIN, 11));
 				btnVoltaTela.setBackground(new Color(154, 205, 217));
+				btnVoltaTela.setForeground(new Color(0, 0, 0));
 				
 						JButton btnPagamento = new JButton("Concluir compra");
 						panelBotoes.add(btnPagamento, "cell 1 0");
@@ -259,6 +269,6 @@ public class TelaCarrinho extends JFrame {
 						});
 						btnPagamento.setFont(new Font("Dialog", Font.PLAIN, 11));
 						btnPagamento.setBackground(new Color(154, 205, 217));
-
+						btnPagamento.setForeground(new Color(0, 0, 0));
 	}
 }

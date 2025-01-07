@@ -165,16 +165,18 @@ public class TelaInicio extends JFrame {
 		panelLeft.setLayout(new MigLayout("", "[100px]", "[50px][50px][50px][50px]"));
 
 		JButton btInicio = new JButton("Inicio");
+		btInicio.setForeground(new Color(0, 0, 0));
 		btInicio.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btInicio.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			}
 		});
-		btInicio.setBackground(new Color(64, 128, 128));
+		btInicio.setBackground(new Color(96, 154, 168));
 		btInicio.setBorder(null);
 		panelLeft.add(btInicio, "cell 0 0,grow");
 
 		JButton btCarrinho = new JButton("Carrinho");
+		btCarrinho.setForeground(new Color(0, 0, 0));
 		btCarrinho.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btCarrinho.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -190,6 +192,7 @@ public class TelaInicio extends JFrame {
 		panelLeft.add(btCarrinho, "cell 0 1,grow");
 
 		JButton btPerfil = new JButton("Perfil");
+		btPerfil.setForeground(new Color(0, 0, 0));
 		btPerfil.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btPerfil.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -231,6 +234,7 @@ public class TelaInicio extends JFrame {
 //			panelLeft.add(btnNewButton_3, "cell 0 3,grow");
 //		}
 		JLabel imgConta = new JLabel("");
+		imgConta.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		imgConta.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -249,6 +253,7 @@ public class TelaInicio extends JFrame {
 		});
 		
 				JLabel imgCarrinho = new JLabel("");
+				imgCarrinho.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 				imgCarrinho.addMouseListener(new MouseAdapter() {
 					@Override
 					public void mouseClicked(MouseEvent e) {
@@ -270,6 +275,7 @@ public class TelaInicio extends JFrame {
 		imgConta.setIcon(new ImageIcon(iconConta));
 
 		btEstoque = new JButton("Estoque");
+		btEstoque.setForeground(new Color(0, 0, 0));
 		btEstoque.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btEstoque.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
