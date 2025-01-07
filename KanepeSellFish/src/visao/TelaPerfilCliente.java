@@ -123,17 +123,25 @@ public class TelaPerfilCliente extends JFrame {
 		panel_2.add(lblTelefone, "cell 0 7");
 		
 		JPanel panel_4 = new JPanel();
-		panel_1.add(panel_4, "flowx,cell 1 1,growy");
+		panel_4.setLayout(new MigLayout("", "[grow]", "[grow]"));
+		panel_1.add(panel_4, "cell 1 1,grow");
 		
-		JButton bntEditar = new JButton(" Alterar informações ");
-		bntEditar.setForeground(Color.BLACK);
-		bntEditar.setFont(new Font("Dialog", Font.PLAIN, 11));
-		bntEditar.setBorderPainted(false);
-		bntEditar.setBorder(new LineBorder(new Color(0, 0, 0), 2, true));
-		bntEditar.setBackground(new Color(154, 205, 217));
-		bntEditar.setAlignmentY(1.0f);
-		bntEditar.setAlignmentX(1.0f);
-		panel_4.add(bntEditar);
+		JButton btnNewButton_4 = new JButton("Editar Perfil");
+		btnNewButton_4.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				TelaEditarPerfilCliente editar = new TelaEditarPerfilCliente(u, isVendedor);
+				editar.setLocationRelativeTo(null);
+				editar.setVisible(true);
+				dispose();
+				
+			}
+		});
+		panel_4.add(btnNewButton_4, "cell 0 0,alignx right,aligny bottom");
+		
+		btnNewButton_4.setFont(new Font("Dialog", Font.PLAIN, 11));
+		btnNewButton_4.setBackground(new Color(154, 205, 217));
+		btnNewButton_4.setForeground(new Color(0, 0, 0));
 		
 		String telefone = u.getTel();
 		JLabel lblDynamicTelefone;

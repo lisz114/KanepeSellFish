@@ -336,7 +336,7 @@ public class TelaPerfilVendedor extends JFrame {
 		JLabel lblponto = new JLabel(".");
 		panel_1.add(lblponto, "cell 3 4");
 		
-		JButton rndbtnAlterarInformaes = new JButton("Cancelar");
+		JButton rndbtnAlterarInformaes = new JButton("");
 		rndbtnAlterarInformaes.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			}

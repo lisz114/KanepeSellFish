@@ -20,7 +20,6 @@ public class CarrinhoDAO implements ICarrinhoDAO {
 	private static ProdutoDAO instancia;
 	private static ArrayList<Produto> listaProdutos;
 	ProdutoDAO pDAO = new ProdutoDAO();
-	UsuarioDAO uDAO = new UsuarioDAO();
 
 	public CarrinhoDAO() {
 	}
