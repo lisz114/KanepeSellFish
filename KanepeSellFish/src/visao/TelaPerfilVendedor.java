@@ -345,7 +345,7 @@ public class TelaPerfilVendedor extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				
-				TelaEditarPerfilVendedor editar = new TelaEditarPerfilVendedor(u, isVendedor);
+				TelaEditarPerfilVendedor editar = new TelaEditarPerfilVendedor(u);
 				editar.setLocationRelativeTo(null);
 				editar.setVisible(true);
 				dispose();

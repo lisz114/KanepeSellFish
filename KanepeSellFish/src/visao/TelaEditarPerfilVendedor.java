@@ -17,6 +17,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
+import java.time.format.DateTimeParseException;
 
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
@@ -133,10 +134,10 @@ public class TelaEditarPerfilVendedor extends JFrame {
 		btPerfil.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
-					TelaPerfilVendedor v = new TelaPerfilVendedor(u, true);
-					v.setLocationRelativeTo(null);
-					v.setVisible(true);
-					dispose();
+				TelaPerfilVendedor v = new TelaPerfilVendedor(u, true);
+				v.setLocationRelativeTo(null);
+				v.setVisible(true);
+				dispose();
 			}
 		});
 
@@ -144,22 +145,22 @@ public class TelaEditarPerfilVendedor extends JFrame {
 		btPerfil.setBorder(null);
 		panelLeft.add(btPerfil, "cell 0 2,grow");
 
-			JButton btnNewButton_3 = new JButton("Estoque");
-			btnNewButton_3.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent e) {
-					TelaEstoque frame = new TelaEstoque(u);
-					frame.setLocationRelativeTo(null);
-					frame.setVisible(true);
-					dispose();
+		JButton btnNewButton_3 = new JButton("Estoque");
+		btnNewButton_3.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				TelaEstoque frame = new TelaEstoque(u);
+				frame.setLocationRelativeTo(null);
+				frame.setVisible(true);
+				dispose();
 
-				}
-			});
+			}
+		});
 
-			btnNewButton_3.setBackground(new Color(154, 205, 217));
-			btnNewButton_3.setBorder(null);
-			btnNewButton_3.setOpaque(false);
-			panelLeft.add(btnNewButton_3, "cell 0 3,grow");
-		
+		btnNewButton_3.setBackground(new Color(154, 205, 217));
+		btnNewButton_3.setBorder(null);
+		btnNewButton_3.setOpaque(false);
+		panelLeft.add(btnNewButton_3, "cell 0 3,grow");
+
 		JButton btEstoque = new JButton("Estoque");
 		btEstoque.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -262,7 +263,7 @@ public class TelaEditarPerfilVendedor extends JFrame {
 		txtEmail.setBackground(SystemColor.menu);
 		txtEmail.setColumns(10);
 		txtEmail.setText(u.getEmail());
-		
+
 		txtLogradouro = new JTextField();
 		panel_1.add(txtLogradouro, "flowx,cell 2 3");
 		txtLogradouro.setBorder(new LineBorder(new Color(171, 173, 179)));
@@ -274,7 +275,6 @@ public class TelaEditarPerfilVendedor extends JFrame {
 		txtLogradouro.setBackground(SystemColor.menu);
 		txtLogradouro.setColumns(10);
 		txtLogradouro.setText(pDAO.consultaProdutor(u).getEnd().getLogradouro());
-		
 
 		txtNum = new JTextField();
 		panel_1.add(txtNum, "cell 2 3");
@@ -288,7 +288,6 @@ public class TelaEditarPerfilVendedor extends JFrame {
 		txtNum.setColumns(10);
 		txtNum.setText(String.valueOf(pDAO.consultaProdutor(u).getEnd().getNumero()));
 
-
 		txtCNPJ = new JTextField();
 		panel_1.add(txtCNPJ, "cell 1 2");
 		txtCNPJ.setBorder(new LineBorder(new Color(171, 173, 179)));
@@ -300,7 +299,7 @@ public class TelaEditarPerfilVendedor extends JFrame {
 		txtCNPJ.setBackground(SystemColor.menu);
 		txtCNPJ.setColumns(10);
 		txtCNPJ.setText(pDAO.consultaProdutor(u).getCnpj());
-		
+
 		txtCelular = new JTextField();
 		txtCelular.setToolTipText("");
 		txtCelular.setOpaque(false);
@@ -313,7 +312,7 @@ public class TelaEditarPerfilVendedor extends JFrame {
 				new Color(0, 0, 0)));
 		txtCelular.setBackground(SystemColor.menu);
 		txtCelular.setText(u.getTel());
-		
+
 		panel_1.add(txtCelular, "cell 1 3");
 
 		JButton btnNewButton = new RoundButton("Cancelar");
@@ -333,41 +332,62 @@ public class TelaEditarPerfilVendedor extends JFrame {
 		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
-				Usuario user = new Usuario();
 				Produtor vend = new Produtor();
+				Produtor origVend = new Produtor();
 				Endereco ende = new Endereco();
+
+				origVend = (Produtor) u;
+
 				String email = txtEmail.getText();
 				String cpf = txtCPF.getText();
 				String cnpj = txtCNPJ.getText();
-				String city = txtCidade.getText();
-				String bar = txtBairro.getText();
-				String log = txtLogradouro.getText();
-				String num = txtNum.getText();
-				int num1 = Integer.parseInt(num);
-				
-				if(email.isEmpty() || cpf.isEmpty() || cnpj.isEmpty() || city.isEmpty() || bar.isEmpty()
-						|| log.isEmpty() || num.isEmpty()){
-					
+				String cidade = txtCidade.getText();
+				String bairro = txtBairro.getText();
+				String logradouro = txtLogradouro.getText();
+				int num;
+
+				try {
+					num = Integer.parseInt(txtNum.getText());
+
+				} catch (NumberFormatException ex) {
+					TelaError erro = new TelaError();
+					erro.setLabelText("Número inválido");
+					erro.setLocationRelativeTo(null);
+					erro.setVisible(true);
+					return;
+				}
+
+				if (email.isEmpty() || cpf.isEmpty() || cnpj.isEmpty() || cidade.isEmpty() || bairro.isEmpty()
+						|| logradouro.isEmpty()) {
+
 					TelaError erro = new TelaError();
 					erro.setLabelText("Imformações inválidas!");
 					erro.setLocationRelativeTo(null);
 					erro.setVisible(true);
-				} else {
-				user.setEmail(email);
-				user.setCpf(cpf);
-				vend.setCnpj(cnpj);
-				ende.setCidade(city);
-				ende.setBairro(bar);
-				ende.setLogradouro(log);
-				ende.setNumero(num1);
-				eDAO.atualizarEndereco(ende);
-				uDAO.alterarUsuario(user);
+				}
+
+				if (num < 0) {
+					TelaError erro = new TelaError();
+					erro.setLabelText("O número deve ser positivo");
+					erro.setLocationRelativeTo(null);
+					erro.setVisible(true);
+					return;
+				}
 				
+				vend.setEmail(email);
+				vend.setCpf(cpf);
+				vend.setCnpj(cnpj);
+				ende.setCidade(cidade);
+				ende.setBairro(bairro);
+				ende.setLogradouro(logradouro);
+				ende.setNumero(num);
+				eDAO.atualizarEndereco(ende);
+				uDAO.alterarUsuario(origVend);
+
 				TelaPerfilVendedor tpv = new TelaPerfilVendedor(u, true);
 				tpv.setLocationRelativeTo(null);
 				tpv.setVisible(true);
 				dispose();
-				}
 			}
 		});
 		btnNewButton_1.setForeground(new Color(255, 255, 255));
