@@ -82,6 +82,26 @@ public class ProdutorDAO implements IProdutorDAO {
 		return null;
 	}
 
+	public int alterarProdutor(Produtor produtor) {
+		// TODO Auto-generated method stub
+		String sql = "UPDATE usuarios set nomeNegocio = ?, email_Usuario = ?, cpf_Usuario = ?, cnpj = ?, nome_Usuario = ?, telefone = ? WHERE Usuarios_idUsuario = ?";
+		try (Connection conn = ConexaoBD.getConexaoMySQL(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+			pstmt.setString(1, produtor.getNomeComercio());
+			pstmt.setString(1, produtor.getEmail());
+			pstmt.setString(2, produtor.getCpf());
+			pstmt.setString(1, produtor.getCnpj());
+			pstmt.setString(3, produtor.getNome());
+			pstmt.setString(4, produtor.getTel());
+
+			pstmt.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return -1;
+	}
 
 }
 
