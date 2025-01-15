@@ -13,6 +13,7 @@ import com.mysql.cj.protocol.Resultset;
 
 import modelo.Cartao;
 import modelo.ICartaoDAO;
+import modelo.Produto;
 import modelo.Usuario;
 
 public class CartaoDAO implements ICartaoDAO{
@@ -57,23 +58,87 @@ public class CartaoDAO implements ICartaoDAO{
 		return -1;
 	}
 	
-	public boolean UsuarioTemCartao(Usuario u) {
-		String sql = "SELECT * FROM kanepe.cartao where Usuarios_idUsuarios = ?";
-		try(Connection conn = ConexaoBD.getConexaoMySQL(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
+	public  boolean deletaCartao(Cartao c) {
+		int id = Integer.parseInt(pegarIdCartao(c));
+		String sql = "DELETE FROM kanepe.cartao where idCarto = ?";
+		try(Connection conn = ConexaoBD.getConexaoMySQL(); PreparedStatement pstmt = conn.prepareStatement(sql)){
 			
-			ResultSet resl = null;
-			pstmt.setInt(1, u.getIdUsuario());
-			resl = pstmt.executeQuery();
+			pstmt.setInt(1, id);
+			int row = pstmt.executeUpdate();
+			return row > 0;
 			
-			if (resl.next()) {
-				return true;
-			}else {
-				return false;
-			}
 		} catch (SQLException e) {
-			// TODO: handle exception
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 			return false;
 		}
+		
+	}
+	
+	public ArrayList<Cartao> listarCartao () throws SQLException{
+		ArrayList<Cartao> cartao = new ArrayList<>();
+		String sql = "Select idCartao, TipodoCartao, NumerodoCartao, apelido from kanepe.cartao;";
+		Connection conn = ConexaoBD.getConexaoMySQL();
+		PreparedStatement pstmt = conn.prepareStatement(sql);
+		ResultSet rs = pstmt.executeQuery();
+		while (rs.next()) {
+			Cartao cartoes = new Cartao();
+			cartoes.setIdC(rs.getInt("idCartao"));
+			cartoes.setTipodoCartao(rs.getObject("TipodoCartao"));
+			cartoes.setNumdoCartao(rs.getLong("NumerodoCartao"));
+			cartoes.setApelido(rs.getString("apelido"));
+			cartao.add(cartoes);
+		}
+		rs.close();
+		pstmt.close();
+		return cartao;
+	}
+	
+//	public boolean UsuarioTemCartao(Usuario u) {
+//		String sql = "SELECT * FROM kanepe.cartao where Usuarios_idUsuarios = ?";
+//		try(Connection conn = ConexaoBD.getConexaoMySQL(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
+//			
+//			ResultSet resl = null;
+//			pstmt.setInt(1, u.getIdUsuario());
+//			resl = pstmt.executeQuery();
+//			
+//			if (resl.next()) {
+//				return true;
+//			}else {
+//				return false;
+//			}
+//		} catch (SQLException e) {
+//			// TODO: handle exception
+//			e.printStackTrace();
+//			return false;
+//		}
+//	}
+	public String pegarIdCartao(Cartao c) {
+
+		PreparedStatement stmt1 = null;
+
+		Connection conn = ConexaoBD.getConexaoMySQL();
+
+		try {
+			stmt1 = conn.prepareStatement("SELECT * FROM kanepe.cartao where apelido = ?");
+			ResultSet res1 = null;
+
+			stmt1.setString(1, String.valueOf(c.getApelido()));
+
+			res1 = stmt1.executeQuery();
+
+			while (res1.next()) {
+
+				return res1.getString("apelido");
+			}
+
+			res1.close();
+			stmt1.close();
+			conn.close();
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
 	}
 }

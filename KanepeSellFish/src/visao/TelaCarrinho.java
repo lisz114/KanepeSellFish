@@ -221,27 +221,10 @@ public class TelaCarrinho extends JFrame {
 		btnPagamento.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
-				Usuario user = new Usuario();
-				user= uDAO.consultaUserCartao(u);
-				
-				if (user != null) {
-					if (cDAO.UsuarioTemCartao(user)) {
-						TelaCadastramentodoCartao tela = new TelaCadastramentodoCartao(u, produtos, isVendedor);
-						tela.setLocationRelativeTo(null);
-						tela.setVisible(true);
-						dispose();
-					} else {
-						PopUpPagar pup = new PopUpPagar(u, produtos, isVendedor);
-						pup.setLocationRelativeTo(null);
-						pup.setVisible(true);
-						dispose();
-					}
-					TelaCadastramentodoCartao tela = new TelaCadastramentodoCartao(u, produtos, isVendedor);
-					tela.setLocationRelativeTo(null);
-					tela.setVisible(true);
-					dispose();
-					// System.out.println(cDAO.UsuarioTemCartao(isVendedor));
-				}
+				TelaListaCartao listaC = new TelaListaCartao();
+				listaC.setLocationRelativeTo(null);
+				listaC.setVisible(true);
+				dispose();
 			}
 		});
 //		btnPagamento.addMouseListener(new MouseAdapter() {
