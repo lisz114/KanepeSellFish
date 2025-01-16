@@ -19,7 +19,7 @@ import modelo.Usuario;
 public class CartaoDAO implements ICartaoDAO{
 	
 	private static CartaoDAO instancia;
-	private static ArrayList<Cartao> listaCartao;
+	public static ArrayList<Cartao> listaCartao;
 
 	UsuarioDAO uDAO = new UsuarioDAO();
 	
@@ -113,6 +113,45 @@ public class CartaoDAO implements ICartaoDAO{
 //			return false;
 //		}
 //	}
+	
+	
+	public ArrayList<Cartao> addListaCartao(Cartao c) {
+		listaCartao.clear();
+
+		PreparedStatement stmt1 = null;
+
+		Connection conn = ConexaoBD.getConexaoMySQL();
+
+		try {
+			stmt1 = conn.prepareStatement("SELECT idCartao, TipodoCartao, NumerodoCartao, apelido FROM kanepe.cartao "
+					+ "where idCartao = ?;");
+			ResultSet res1 = null;
+
+			stmt1.setString(1, pegarIdCartao(c));
+
+			res1 = stmt1.executeQuery();
+
+//			listaProdutos = null;
+
+			while (res1.next()) {
+
+				Cartao ct = new Cartao();
+
+				ct.setIdC(res1.getInt("idCartao"));
+				ct.setTipodoCartao(res1.getString("TipodoCartao"));
+				ct.setNumdoCartao(res1.getLong("NumerodoCartao"));
+				ct.setApelido(res1.getString("apelido"));
+				listaCartao.add(ct);
+			}
+
+			res1.close();
+			stmt1.close();
+			conn.close();
+		} catch (Exception e) {
+		}
+
+		return listaCartao;
+	}
 	public String pegarIdCartao(Cartao c) {
 
 		PreparedStatement stmt1 = null;

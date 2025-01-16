@@ -48,6 +48,7 @@ public class TelaCadastramentodoCartao extends JFrame {
 	private JButton btnCancelar;
 	private JComboBox comboBox;
 	
+	private TelaListaCartao tlc;
 	private static CartaoDAO cDAO = CartaoDAO.getInstancia();
 
 	/**
@@ -162,6 +163,7 @@ public class TelaCadastramentodoCartao extends JFrame {
 				c.setApelido(apelido);
 				System.out.println(c);
 				cDAO.inserirCartao(c, u);
+				tlc.atualizarTabela(c);
 				PopUpPagar pup = new PopUpPagar(u, produto, isVendedor);
 				pup.setLocationRelativeTo(null);
 				pup.setVisible(true);
@@ -174,7 +176,7 @@ public class TelaCadastramentodoCartao extends JFrame {
 		btnCancelar = new RoundButton("Cancelar");
 		btnCancelar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				TelaCarrinho tela = new TelaCarrinho(u, produto, isVendedor);
+				TelaListaCartao tela = new TelaListaCartao(u, produto, isVendedor);
 				tela.setLocationRelativeTo(null);
 				tela.setVisible(true);
 				dispose();

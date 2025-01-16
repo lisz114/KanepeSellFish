@@ -221,7 +221,7 @@ public class TelaCarrinho extends JFrame {
 		btnPagamento.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
-				TelaListaCartao listaC = new TelaListaCartao();
+				TelaListaCartao listaC = new TelaListaCartao(u, produtos, isVendedor);
 				listaC.setLocationRelativeTo(null);
 				listaC.setVisible(true);
 				dispose();
