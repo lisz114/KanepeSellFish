@@ -36,7 +36,7 @@ public class TelaListaCartao extends JFrame {
 	private JScrollPane scrollPane;
 	private JTable table;
 	private JButton btnDeletar;
-	private Cartao c;
+	//private Cartao c;
 	
 	public static ArrayList<Cartao> listaCartao;
 	private static CartaoDAO cDAO = CartaoDAO.getInstancia();
@@ -62,7 +62,7 @@ public class TelaListaCartao extends JFrame {
 	 * Create the frame.
 	 * @throws SQLException 
 	 */
-	public TelaListaCartao(Usuario u, List<Produto>produto ,boolean isVendedor){
+	public TelaListaCartao(Usuario u, List<Produto>produto ,boolean isVendedor, Cartao c){
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
@@ -89,7 +89,7 @@ public class TelaListaCartao extends JFrame {
 		btnAdicionar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
-				TelaCadastramentodoCartao tcc = new TelaCadastramentodoCartao(u, produto, isVendedor);
+				TelaCadastramentodoCartao tcc = new TelaCadastramentodoCartao(u, produto, isVendedor, c);
 				tcc.setLocationRelativeTo(null);
 				tcc.setVisible(true);
 				dispose();
@@ -117,7 +117,7 @@ public class TelaListaCartao extends JFrame {
 					erro.setLocationRelativeTo(null);
 					erro.setVisible(true);
 				}
-
+				atualizarTabela(c);
 			}
 		});
 		contentPane.add(btnDeletar, "cell 1 1,alignx center,aligny center");
@@ -128,7 +128,7 @@ public class TelaListaCartao extends JFrame {
 				int posicaoSelecionado = -1;
 				posicaoSelecionado = table.getSelectedRow();
 				if(posicaoSelecionado != -1) {
-					PopUpPagar pop = new PopUpPagar(u, produto, isVendedor);
+					PopUpPagar pop = new PopUpPagar(u, produto, isVendedor, c);
 					pop.setLocationRelativeTo(null);
 					pop.setVisible(true);
 				}else {

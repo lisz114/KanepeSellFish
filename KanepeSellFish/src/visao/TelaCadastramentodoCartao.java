@@ -70,7 +70,7 @@ public class TelaCadastramentodoCartao extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public TelaCadastramentodoCartao(Usuario u,List<Produto>produto ,boolean isVendedor) {
+	public TelaCadastramentodoCartao(Usuario u,List<Produto>produto ,boolean isVendedor, Cartao c) {
 		
 		setResizable(false);
 		setLocationByPlatform(true);
@@ -164,7 +164,7 @@ public class TelaCadastramentodoCartao extends JFrame {
 				System.out.println(c);
 				cDAO.inserirCartao(c, u);
 				tlc.atualizarTabela(c);
-				PopUpPagar pup = new PopUpPagar(u, produto, isVendedor);
+				PopUpPagar pup = new PopUpPagar(u, produto, isVendedor, c);
 				pup.setLocationRelativeTo(null);
 				pup.setVisible(true);
 				dispose();
@@ -176,7 +176,7 @@ public class TelaCadastramentodoCartao extends JFrame {
 		btnCancelar = new RoundButton("Cancelar");
 		btnCancelar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				TelaListaCartao tela = new TelaListaCartao(u, produto, isVendedor);
+				TelaListaCartao tela = new TelaListaCartao(u, produto, isVendedor,c);
 				tela.setLocationRelativeTo(null);
 				tela.setVisible(true);
 				dispose();

@@ -120,7 +120,7 @@ public class Usuario {
 		this.desc = desc;
 	}
 
-	public boolean getCartaoid(boolean b) {
+	public boolean getCartaoid(String string) {
 		return Cartaoid;
 	}
 

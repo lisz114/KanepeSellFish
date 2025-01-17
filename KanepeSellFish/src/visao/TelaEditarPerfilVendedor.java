@@ -118,7 +118,7 @@ public class TelaEditarPerfilVendedor extends JFrame {
 		JButton btCarrinho = new JButton("Carrinho");
 		btCarrinho.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				TelaCarrinho carrinho = new TelaCarrinho(u, null, isVendedor);
+				TelaCarrinho carrinho = new TelaCarrinho(u, null, isVendedor, null);
 				carrinho.setLocationRelativeTo(null);
 				carrinho.setVisible(true);
 				dispose();
@@ -155,7 +155,7 @@ public class TelaEditarPerfilVendedor extends JFrame {
 			JButton btnNewButton_3 = new JButton("Estoque");
 			btnNewButton_3.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					TelaEstoque frame = new TelaEstoque(u);
+					TelaEstoque frame = new TelaEstoque(u, null);
 					frame.setLocationRelativeTo(null);
 					frame.setVisible(true);
 					dispose();
@@ -171,7 +171,7 @@ public class TelaEditarPerfilVendedor extends JFrame {
 		JButton btEstoque = new JButton("Estoque");
 		btEstoque.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				TelaEstoque frame = new TelaEstoque(u);
+				TelaEstoque frame = new TelaEstoque(u, null);
 				frame.setLocationRelativeTo(null);
 				frame.setVisible(true);
 				dispose();

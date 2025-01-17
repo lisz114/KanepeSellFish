@@ -22,6 +22,7 @@ import javax.swing.border.EmptyBorder;
 import controle.CartaoDAO;
 import controle.ProdutoDAO;
 import controle.UsuarioDAO;
+import modelo.Cartao;
 import modelo.Produto;
 import modelo.Usuario;
 import net.miginfocom.swing.MigLayout;
@@ -48,7 +49,7 @@ public class TelaCarrinho extends JFrame {
 //		});
 //	}
 
-	public TelaCarrinho(Usuario u, List<Produto> produtos, boolean isVendedor) {
+	public TelaCarrinho(Usuario u, List<Produto> produtos, boolean isVendedor, Cartao c) {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1280, 768);
 		contentPane = new JPanel();
@@ -118,7 +119,7 @@ public class TelaCarrinho extends JFrame {
 		btnNewButton_3.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
-				TelaEstoque frame = new TelaEstoque(u);
+				TelaEstoque frame = new TelaEstoque(u, c);
 				frame.setLocationRelativeTo(null);
 				frame.setVisible(true);
 				dispose();
@@ -221,7 +222,7 @@ public class TelaCarrinho extends JFrame {
 		btnPagamento.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
-				TelaListaCartao listaC = new TelaListaCartao(u, produtos, isVendedor);
+				TelaListaCartao listaC = new TelaListaCartao(u, produtos, isVendedor, c);
 				listaC.setLocationRelativeTo(null);
 				listaC.setVisible(true);
 				dispose();

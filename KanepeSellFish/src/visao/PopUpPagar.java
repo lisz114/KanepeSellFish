@@ -10,6 +10,7 @@ import java.awt.GridLayout;
 import java.awt.Color;
 import javax.swing.JButton;
 
+import modelo.Cartao;
 import modelo.Produto;
 import modelo.RoundButton;
 import modelo.Usuario;
@@ -45,7 +46,7 @@ public class PopUpPagar extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public PopUpPagar(Usuario u,List<Produto>produto ,boolean isVendedor) {
+	public PopUpPagar(Usuario u,List<Produto>produto ,boolean isVendedor, Cartao c) {
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 300, 350);
@@ -91,7 +92,7 @@ public class PopUpPagar extends JFrame {
 		JButton btncancelar = new RoundButton("Cancelar");
 		btncancelar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				TelaCarrinho tc = new TelaCarrinho(u, produto, isVendedor);
+				TelaCarrinho tc = new TelaCarrinho(u, produto, isVendedor, c);
 				tc.setLocationRelativeTo(null);
 				tc.setVisible(true);
 				dispose();
