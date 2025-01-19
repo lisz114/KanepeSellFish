@@ -65,6 +65,8 @@ public class TelaEditarPerfilVendedor extends JFrame {
 	private static EnderecoDAO eDAO = EnderecoDAO.getInstancia();
 	private static ProdutorDAO pDAO = ProdutorDAO.getInstancia();
 	private JTextField txtCelular;
+	private JTextField txtCEP;
+	private JTextField txtNomeComercio;
 
 	/**
 	 * Launch the application.
@@ -101,107 +103,10 @@ public class TelaEditarPerfilVendedor extends JFrame {
 
 		ImageIcon lapis = new ImageIcon(TelaEditarPerfilVendedor.class.getResource("/img/lapis.png"));
 		Image imgL = lapis.getImage().getScaledInstance(20, 20, Image.SCALE_SMOOTH);
-
-		JPanel panelLeft = new JPanel();
-		panelLeft.setBackground(new Color(154, 208, 217));
-		contentPane.add(panelLeft, BorderLayout.WEST);
-		panelLeft.setLayout(new MigLayout("", "[100px]", "[50px][50px][50px][50px]"));
-
-		JButton btInicio = new JButton("Inicio");
-		btInicio.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
-		btInicio.setBackground(new Color(154, 205, 217));
-		btInicio.setBorder(null);
-		panelLeft.add(btInicio, "cell 0 0,grow");
-
-		JButton btCarrinho = new JButton("Carrinho");
-		btCarrinho.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				TelaCarrinho carrinho = new TelaCarrinho(u, null, true);
-				carrinho.setLocationRelativeTo(null);
-				carrinho.setVisible(true);
-				dispose();
-			}
-		});
-		btCarrinho.setBackground(new Color(154, 205, 217));
-		btCarrinho.setBorder(null);
-		btCarrinho.setOpaque(false);
-		panelLeft.add(btCarrinho, "cell 0 1,grow");
-
-		JButton btPerfil = new JButton("Perfil");
-		btPerfil.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-
-				TelaPerfilVendedor v = new TelaPerfilVendedor(u, true);
-				v.setLocationRelativeTo(null);
-				v.setVisible(true);
-				dispose();
-			}
-		});
-
-		btPerfil.setBackground(new Color(64, 128, 128));
-		btPerfil.setBorder(null);
-		panelLeft.add(btPerfil, "cell 0 2,grow");
-
-		JButton btnNewButton_3 = new JButton("Estoque");
-		btnNewButton_3.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				TelaEstoque frame = new TelaEstoque(u);
-				frame.setLocationRelativeTo(null);
-				frame.setVisible(true);
-				dispose();
-
-			}
-		});
-
-		btnNewButton_3.setBackground(new Color(154, 205, 217));
-		btnNewButton_3.setBorder(null);
-		btnNewButton_3.setOpaque(false);
-		panelLeft.add(btnNewButton_3, "cell 0 3,grow");
-
-		JButton btEstoque = new JButton("Estoque");
-		btEstoque.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				TelaEstoque frame = new TelaEstoque(u);
-				frame.setLocationRelativeTo(null);
-				frame.setVisible(true);
-				dispose();
-			}
-		});
-		btEstoque.setOpaque(false);
-		btEstoque.setBorder(null);
-		btEstoque.setBackground(new Color(154, 205, 217));
-		panelLeft.add(btEstoque, "cell 0 3,alignx center,aligny center");
-
-		JPanel panel = new JPanel();
-		panel.setBackground(new Color(154, 205, 217));
-		contentPane.add(panel, BorderLayout.NORTH);
-		panel.setLayout(new MigLayout("", "[][grow][][grow][][]", "[]"));
-		JLabel imgMenu = new JLabel("");
-		imgMenu.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				if (panelLeft.isVisible()) {
-					panelLeft.setVisible(false);
-				} else {
-					panelLeft.setVisible(true);
-				}
-			}
-		});
-		imgMenu.setIcon(new ImageIcon(TelaInicio.class.getResource("/IMG/menu-hamburguer.png")));
-		panel.add(imgMenu, "cell 0 0");
 		ImageIcon menu = new ImageIcon(TelaInicio.class.getResource("/IMG/menu-hamburguer.png"));
 		Image iconMenu = menu.getImage().getScaledInstance(30, 30, Image.SCALE_SMOOTH);
-		imgMenu.setIcon(new ImageIcon(iconMenu));
 		ImageIcon carrinho = new ImageIcon(TelaInicio.class.getResource("/IMG/carrinho-de-compras.png"));
 		Image imgCarro = carrinho.getImage().getScaledInstance(30, 30, Image.SCALE_SMOOTH);
-
-		JLabel imgCarrinho = new JLabel("");
-		imgCarrinho.setIcon(new ImageIcon(TelaInicio.class.getResource("/IMG/carrinho-de-compras.png")));
-		panel.add(imgCarrinho, "flowx,cell 4 0");
-		imgCarrinho.setIcon(new ImageIcon(imgCarro));
 
 		JPanel panel_1 = new JPanel();
 		contentPane.add(panel_1, BorderLayout.CENTER);
@@ -216,17 +121,18 @@ public class TelaEditarPerfilVendedor extends JFrame {
 		panel_1.add(lblNome, "cell 1 1,alignx left,aligny center");
 		panel_1.add(imgAvatar, "cell 0 1,alignx center,aligny center");
 		lblNome.setText(u.getNome());
-		txtCPF = new JTextField();
-		panel_1.add(txtCPF, "flowx,cell 1 2");
-		txtCPF.setBorder(new LineBorder(new Color(171, 173, 179)));
-		txtCPF.setOpaque(false);
-		txtCPF.setToolTipText("");
-		txtCPF.setBorder(new TitledBorder(new LineBorder(new Color(0, 0, 0), 2),
-				"<html>CPF<span style='color: red;'>*</span></html>", TitledBorder.LEADING, TitledBorder.TOP, null,
-				new Color(0, 0, 0)));
-		txtCPF.setBackground(SystemColor.menu);
-		txtCPF.setColumns(10);
-		txtCPF.setText(u.getCpf());
+
+		txtNomeComercio = new JTextField();
+		txtNomeComercio.setToolTipText("");
+		txtNomeComercio.setText((String) null);
+		txtNomeComercio.setOpaque(false);
+		txtNomeComercio.setColumns(10);
+		txtNomeComercio.setBorder(new TitledBorder(new LineBorder(new Color(0, 0, 0), 2),
+				"<html>Nome do comercio<span style='color: red;'>*</span></html>", TitledBorder.LEADING,
+				TitledBorder.TOP, null, new Color(0, 0, 0)));
+		txtNomeComercio.setBackground(SystemColor.menu);
+		txtNomeComercio.setText(pDAO.consultaProdutor(u).getNomeComercio());
+		panel_1.add(txtNomeComercio, "cell 1 2,grow");
 
 		txtCidade = new JTextField();
 		panel_1.add(txtCidade, "flowx,cell 2 2");
@@ -251,30 +157,29 @@ public class TelaEditarPerfilVendedor extends JFrame {
 		txtBairro.setBackground(SystemColor.menu);
 		txtBairro.setColumns(10);
 		txtBairro.setText(pDAO.consultaProdutor(u).getEnd().getBairro());
-
-		txtEmail = new JTextField();
-		panel_1.add(txtEmail, "flowx,cell 1 3");
-		txtEmail.setBorder(new LineBorder(new Color(171, 173, 179)));
-		txtEmail.setOpaque(false);
-		txtEmail.setToolTipText("");
-		txtEmail.setBorder(new TitledBorder(new LineBorder(new Color(0, 0, 0), 2),
-				"<html>Email<span style='color: red;'>*</span></html>", TitledBorder.LEADING, TitledBorder.TOP, null,
+		txtCPF = new JTextField();
+		panel_1.add(txtCPF, "flowx,cell 1 3");
+		txtCPF.setBorder(new LineBorder(new Color(171, 173, 179)));
+		txtCPF.setOpaque(false);
+		txtCPF.setToolTipText("");
+		txtCPF.setBorder(new TitledBorder(new LineBorder(new Color(0, 0, 0), 2),
+				"<html>CPF<span style='color: red;'>*</span></html>", TitledBorder.LEADING, TitledBorder.TOP, null,
 				new Color(0, 0, 0)));
-		txtEmail.setBackground(SystemColor.menu);
-		txtEmail.setColumns(10);
-		txtEmail.setText(u.getEmail());
+		txtCPF.setBackground(SystemColor.menu);
+		txtCPF.setColumns(10);
+		txtCPF.setText(u.getCpf());
 
-		txtLogradouro = new JTextField();
-		panel_1.add(txtLogradouro, "flowx,cell 2 3");
-		txtLogradouro.setBorder(new LineBorder(new Color(171, 173, 179)));
-		txtLogradouro.setOpaque(false);
-		txtLogradouro.setToolTipText("");
-		txtLogradouro.setBorder(new TitledBorder(new LineBorder(new Color(0, 0, 0), 2),
-				"<html>Logadouro<span style='color: red;'>*</span></html>", TitledBorder.LEADING, TitledBorder.TOP,
-				null, new Color(0, 0, 0)));
-		txtLogradouro.setBackground(SystemColor.menu);
-		txtLogradouro.setColumns(10);
-		txtLogradouro.setText(pDAO.consultaProdutor(u).getEnd().getLogradouro());
+		txtCEP = new JTextField();
+		txtCEP.setToolTipText("");
+		txtCEP.setText("0");
+		txtCEP.setOpaque(false);
+		txtCEP.setColumns(10);
+		txtCEP.setBorder(new TitledBorder(new LineBorder(new Color(0, 0, 0), 2),
+				"<html>CEP<span style='color: red;'>*</span></html>", TitledBorder.LEADING, TitledBorder.TOP, null,
+				new Color(0, 0, 0)));
+		txtCEP.setBackground(SystemColor.menu);
+		txtCEP.setText(pDAO.consultaProdutor(u).getEnd().getCep());
+		panel_1.add(txtCEP, "flowx,cell 2 3,growy");
 
 		txtNum = new JTextField();
 		panel_1.add(txtNum, "cell 2 3");
@@ -288,32 +193,29 @@ public class TelaEditarPerfilVendedor extends JFrame {
 		txtNum.setColumns(10);
 		txtNum.setText(String.valueOf(pDAO.consultaProdutor(u).getEnd().getNumero()));
 
-		txtCNPJ = new JTextField();
-		panel_1.add(txtCNPJ, "cell 1 2");
-		txtCNPJ.setBorder(new LineBorder(new Color(171, 173, 179)));
-		txtCNPJ.setOpaque(false);
-		txtCNPJ.setToolTipText("");
-		txtCNPJ.setBorder(new TitledBorder(new LineBorder(new Color(0, 0, 0), 2),
-				"<html>CNPJ<span style='color: red;'>*</span></html>", TitledBorder.LEADING, TitledBorder.TOP, null,
+		txtEmail = new JTextField();
+		panel_1.add(txtEmail, "flowx,cell 1 4,growy");
+		txtEmail.setBorder(new LineBorder(new Color(171, 173, 179)));
+		txtEmail.setOpaque(false);
+		txtEmail.setToolTipText("");
+		txtEmail.setBorder(new TitledBorder(new LineBorder(new Color(0, 0, 0), 2),
+				"<html>Email<span style='color: red;'>*</span></html>", TitledBorder.LEADING, TitledBorder.TOP, null,
 				new Color(0, 0, 0)));
-		txtCNPJ.setBackground(SystemColor.menu);
-		txtCNPJ.setColumns(10);
-		txtCNPJ.setText(pDAO.consultaProdutor(u).getCnpj());
+		txtEmail.setBackground(SystemColor.menu);
+		txtEmail.setColumns(10);
+		txtEmail.setText(u.getEmail());
 
-		txtCelular = new JTextField();
-		txtCelular.setToolTipText("");
-		txtCelular.setOpaque(false);
-		txtCelular.setColumns(10);
-		txtCelular.setBorder(new LineBorder(new Color(171, 173, 179)));
-		txtCelular.setOpaque(false);
-		txtCelular.setToolTipText("");
-		txtCelular.setBorder(new TitledBorder(new LineBorder(new Color(0, 0, 0), 2),
-				"<html>Celular<span style='color: red;'>*</span></html>", TitledBorder.LEADING, TitledBorder.TOP, null,
-				new Color(0, 0, 0)));
-		txtCelular.setBackground(SystemColor.menu);
-		txtCelular.setText(u.getTel());
-
-		panel_1.add(txtCelular, "cell 1 3");
+		txtLogradouro = new JTextField();
+		panel_1.add(txtLogradouro, "cell 2 4");
+		txtLogradouro.setBorder(new LineBorder(new Color(171, 173, 179)));
+		txtLogradouro.setOpaque(false);
+		txtLogradouro.setToolTipText("");
+		txtLogradouro.setBorder(new TitledBorder(new LineBorder(new Color(0, 0, 0), 2),
+				"<html>Logadouro<span style='color: red;'>*</span></html>", TitledBorder.LEADING, TitledBorder.TOP,
+				null, new Color(0, 0, 0)));
+		txtLogradouro.setBackground(SystemColor.menu);
+		txtLogradouro.setColumns(10);
+		txtLogradouro.setText(pDAO.consultaProdutor(u).getEnd().getLogradouro());
 
 		JButton btnNewButton = new RoundButton("Cancelar");
 		panel_1.add(btnNewButton, "flowx,cell 2 5,alignx right,aligny bottom");
@@ -331,75 +233,90 @@ public class TelaEditarPerfilVendedor extends JFrame {
 		panel_1.add(btnNewButton_1, "cell 2 5,alignx right,aligny bottom");
 		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-
-				Produtor vend = new Produtor();
-				Produtor origVend = new Produtor();
-				Endereco ende = new Endereco();
-
-				origVend = (Produtor) u;
-
-				String email = txtEmail.getText();
-				String cpf = txtCPF.getText();
-				String cnpj = txtCNPJ.getText();
-				String cidade = txtCidade.getText();
-				String bairro = txtBairro.getText();
-				String logradouro = txtLogradouro.getText();
-				int num;
-
-				try {
-					num = Integer.parseInt(txtNum.getText());
-
-				} catch (NumberFormatException ex) {
-					TelaError erro = new TelaError();
-					erro.setLabelText("Número inválido");
-					erro.setLocationRelativeTo(null);
-					erro.setVisible(true);
-					return;
-				}
-
-				if (email.isEmpty() || cpf.isEmpty() || cnpj.isEmpty() || cidade.isEmpty() || bairro.isEmpty()
-						|| logradouro.isEmpty()) {
-
-					TelaError erro = new TelaError();
-					erro.setLabelText("Imformações inválidas!");
-					erro.setLocationRelativeTo(null);
-					erro.setVisible(true);
-				}
-
-				if (num < 0) {
-					TelaError erro = new TelaError();
-					erro.setLabelText("O número deve ser positivo");
-					erro.setLocationRelativeTo(null);
-					erro.setVisible(true);
-					return;
-				}
+				Produtor produtorNovo = new Produtor();
+				Produtor produtorAntigo = new Produtor();
+				Endereco enderecoNovo = new Endereco();
 				
-				vend.setEmail(email);
-				vend.setCpf(cpf);
-				vend.setCnpj(cnpj);
-				ende.setCidade(cidade);
-				ende.setBairro(bairro);
-				ende.setLogradouro(logradouro);
-				ende.setNumero(num);
-				eDAO.atualizarEndereco(ende);
-				uDAO.alterarUsuario(origVend);
+				produtorAntigo = pDAO.consultaProdutor(u);
 
-				TelaPerfilVendedor tpv = new TelaPerfilVendedor(u, true);
-				tpv.setLocationRelativeTo(null);
-				tpv.setVisible(true);
-				dispose();
+				if (txtCNPJ.getText().isEmpty() || txtCPF.getText().isEmpty() || txtEmail.getText().isEmpty()
+						|| txtNomeComercio.getText().isEmpty() || txtBairro.getText().isEmpty()
+						|| txtCEP.getText().isEmpty() || txtCidade.getText().isEmpty()
+						|| txtLogradouro.getText().isEmpty() || txtNum.getText().isEmpty()) {
+
+					
+
+					String CNPJ = txtCNPJ.getText();
+					String CPF = txtCPF.getText();
+					String Email = txtEmail.getText();
+					String NomeComercio = txtNomeComercio.getText();
+					String Telefone = txtCelular.getText();
+
+					String Bairro = txtBairro.getText();
+					String CEP = txtCEP.getText();
+					String Cidade = txtCidade.getText();
+					String Logradouro = txtLogradouro.getText();
+					Integer Numero = Integer.valueOf(txtNum.getText());
+
+					enderecoNovo.setBairro(Bairro);
+					enderecoNovo.setCep(CEP);
+					enderecoNovo.setCidade(Cidade);
+					enderecoNovo.setLogradouro(Logradouro);
+					enderecoNovo.setNumero(Numero);
+
+					produtorNovo.setCnpj(CNPJ);
+					produtorNovo.setCpf(CPF);
+					produtorNovo.setEmail(Email);
+					produtorNovo.setEnd(enderecoNovo);
+					produtorNovo.setNomeComercio(NomeComercio);
+					produtorNovo.setTel(Telefone);
+					
+					if(1==1) {
+						
+						//alterar produtor no banco de dados
+						
+					}
+					else {
+						
+						//menssagem de erro de preenchimento
+						
+					}
+
+				}
+
 			}
 		});
 		btnNewButton_1.setForeground(new Color(255, 255, 255));
 		btnNewButton_1.setBackground(new Color(96, 154, 168));
 
+		txtCelular = new JTextField();
+		txtCelular.setToolTipText("");
+		txtCelular.setOpaque(false);
+		txtCelular.setColumns(10);
+		txtCelular.setBorder(new LineBorder(new Color(171, 173, 179)));
+		txtCelular.setOpaque(false);
+		txtCelular.setToolTipText("");
+		txtCelular.setBorder(new TitledBorder(new LineBorder(new Color(0, 0, 0), 2), "Celular", TitledBorder.LEADING,
+				TitledBorder.TOP, null, new Color(0, 0, 0)));
+		txtCelular.setBackground(SystemColor.menu);
+		txtCelular.setText(u.getTel());
+
+		panel_1.add(txtCelular, "cell 1 4");
+
+		txtCNPJ = new JTextField();
+		panel_1.add(txtCNPJ, "cell 1 3");
+		txtCNPJ.setBorder(new LineBorder(new Color(171, 173, 179)));
+		txtCNPJ.setOpaque(false);
+		txtCNPJ.setToolTipText("");
+		txtCNPJ.setBorder(new TitledBorder(new LineBorder(new Color(0, 0, 0), 2),
+				"<html>CNPJ<span style='color: red;'>*</span></html>", TitledBorder.LEADING, TitledBorder.TOP, null,
+				new Color(0, 0, 0)));
+		txtCNPJ.setBackground(SystemColor.menu);
+		txtCNPJ.setColumns(10);
+		txtCNPJ.setText(pDAO.consultaProdutor(u).getCnpj());
+
 		ImageIcon conta = new ImageIcon(TelaInicio.class.getResource("/IMG/do-utilizador.png"));
 		Image iconConta = conta.getImage().getScaledInstance(30, 30, Image.SCALE_SMOOTH);
-
-		JLabel imgConta = new JLabel("");
-		imgConta.setIcon(new ImageIcon(TelaInicio.class.getResource("/IMG/do-utilizador.png")));
-		panel.add(imgConta, "cell 5 0");
-		imgConta.setIcon(new ImageIcon(iconConta));
 
 	}
 }
