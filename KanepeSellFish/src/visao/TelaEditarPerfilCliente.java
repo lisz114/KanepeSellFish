@@ -30,11 +30,11 @@ import controle.UsuarioDAO;
 import modelo.Produto;
 import modelo.Usuario;
 import net.miginfocom.swing.MigLayout;
+import javax.swing.JPasswordField;
 
 public class TelaEditarPerfilCliente extends JFrame {
 
 	private JPanel contentPane;
-	JTextField txtPesquisar;
 	private JTextField txtCPF;
 	private JTextField txtTel;
 	private JTextField txtEmail;
@@ -106,7 +106,7 @@ public class TelaEditarPerfilCliente extends JFrame {
 					v.setVisible(true);
 					dispose();
 				} else {
-					TelaPerfilCliente telaPerfil = new TelaPerfilCliente( u, isVendedor);
+					TelaPerfilCliente telaPerfil = new TelaPerfilCliente(u, isVendedor);
 					telaPerfil.setLocationRelativeTo(null);
 					telaPerfil.setVisible(true);
 					dispose();
@@ -174,28 +174,11 @@ public class TelaEditarPerfilCliente extends JFrame {
 		ImageIcon notificacao = new ImageIcon(TelaEditarPerfilCliente.class.getResource("/IMG/sino.png"));
 		Image imgN = notificacao.getImage().getScaledInstance(30, 30, Image.SCALE_SMOOTH);
 
-		txtPesquisar = new JTextField();
-		txtPesquisar.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		txtPesquisar.setBorder(new SoftBevelBorder(BevelBorder.LOWERED, null, null, null, null));
-		txtPesquisar.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
-		txtPesquisar.setDisabledTextColor(new Color(192, 192, 192));
-		txtPesquisar.setForeground(new Color(0, 0, 0));
-		txtPesquisar.setToolTipText("");
-		panel.add(txtPesquisar, "cell 2 0,alignx center");
-		txtPesquisar.setHorizontalAlignment(SwingConstants.LEFT);
-		txtPesquisar.setBackground(new Color(245, 245, 245));
-		txtPesquisar.setColumns(50);
-
 		JLabel imgCarrinho = new JLabel("");
 		imgCarrinho.setIcon(new ImageIcon(TelaEditarPerfilCliente.class.getResource("/IMG/carrinho-de-compras.png")));
-		panel.add(imgCarrinho, "cell 4 0");
+		panel.add(imgCarrinho, "cell 5 0");
 		imgCarrinho.setIcon(new ImageIcon(imgC));
 
-		JLabel imgNotificacao = new JLabel("");
-		imgNotificacao.setIcon(new ImageIcon(TelaEditarPerfilCliente.class.getResource("/IMG/sino.png")));
-		panel.add(imgNotificacao, "cell 5 0");
-		imgNotificacao.setIcon(new ImageIcon(imgN));
-		
 		JLabel imgLogoff = new JLabel("");
 		imgLogoff.setIcon(new ImageIcon(TelaEditarPerfilCliente.class.getResource("/img/saida.png")));
 		panel.add(imgLogoff, "cell 6 0");
@@ -215,7 +198,7 @@ public class TelaEditarPerfilCliente extends JFrame {
 		lblNome.setFont(new Font("Tahoma", Font.PLAIN, 32));
 		panel_1.add(lblNome, "cell 1 1 3 1,alignx left,aligny top");
 		lblNome.setText(u.getNome());
-		
+
 		txtCPF = new JTextField();
 		panel_1.add(txtCPF, "cell 1 2,growx");
 		txtCPF.setColumns(10);
@@ -226,28 +209,34 @@ public class TelaEditarPerfilCliente extends JFrame {
 				"<html>CPF<span style='color: red;'>*</span></html>", TitledBorder.LEADING, TitledBorder.TOP, null,
 				new Color(0, 0, 0)));
 		txtCPF.setBackground(SystemColor.menu);
+		txtCPF.setText(u.getCpf());
 		
-		txtEmail = new JTextField();
-		panel_1.add(txtEmail, "cell 1 3,growx");
-		txtEmail.setColumns(10);
-		txtEmail.setColumns(10);
-		txtEmail.setOpaque(false);
-		txtEmail.setToolTipText("");
-		txtEmail.setBorder(new TitledBorder(new LineBorder(new Color(0, 0, 0), 2),
-				"<html>Email<span style='color: red;'>*</span></html>", TitledBorder.LEADING, TitledBorder.TOP, null,
-				new Color(0, 0, 0)));
-		txtEmail.setBackground(SystemColor.menu);
-		
+				txtEmail = new JTextField();
+				panel_1.add(txtEmail, "cell 2 2,growx");
+				txtEmail.setColumns(10);
+				txtEmail.setColumns(10);
+				txtEmail.setOpaque(false);
+				txtEmail.setToolTipText("");
+				txtEmail.setBorder(new TitledBorder(new LineBorder(new Color(0, 0, 0), 2),
+						"<html>Email<span style='color: red;'>*</span></html>", TitledBorder.LEADING, TitledBorder.TOP, null,
+						new Color(0, 0, 0)));
+				txtEmail.setBackground(SystemColor.menu);
+				txtEmail.setText(u.getEmail());
+
 		txtTel = new JTextField();
 		panel_1.add(txtTel, "cell 1 4,growx");
 		txtTel.setColumns(10);
 		txtTel.setOpaque(false);
 		txtTel.setToolTipText("Adicionar Telefone");
-		txtTel.setBorder(new TitledBorder(new LineBorder(new Color(0, 0, 0), 2),
-				"<html>Tel</html>", TitledBorder.LEADING, TitledBorder.TOP, null,
-				new Color(0, 0, 0)));
+		txtTel.setBorder(new TitledBorder(new LineBorder(new Color(0, 0, 0), 2), "<html>Tel</html>",
+				TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
 		txtTel.setBackground(SystemColor.menu);
-		
+		if (u.getTel() == null) {
+			txtTel.setText("Adicionar Telefone");
+		} else {
+			txtTel.setText(u.getTel());
+		}
+
 		JButton btCancelar = new JButton("Cancelar");
 		btCancelar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -257,11 +246,11 @@ public class TelaEditarPerfilCliente extends JFrame {
 			}
 		});
 		panel_1.add(btCancelar, "flowx,cell 3 5,alignx right,aligny bottom");
-		
+
 		JButton btSalvar = new JButton("Salvar");
 		btSalvar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
+
 				udao.alterarUsuario(u);
 			}
 		});
@@ -269,6 +258,7 @@ public class TelaEditarPerfilCliente extends JFrame {
 		panel_1.add(btSalvar, "cell 3 5,alignx right,aligny bottom");
 
 	}
+
 	public void mostrarDados(Usuario usuarioSelecionado) {
 		lblNome.setText(usuarioSelecionado.getNome());
 		txtCPF.setText(String.valueOf(usuarioSelecionado.getCpf()));

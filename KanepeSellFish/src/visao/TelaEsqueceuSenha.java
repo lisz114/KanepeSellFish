@@ -5,47 +5,63 @@ import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.EventQueue;
+import java.awt.FlowLayout;
 import java.awt.Font;
+import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JPasswordField;
 import javax.swing.JTextField;
+import javax.swing.SpringLayout;
+import javax.swing.SwingConstants;
+import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 
+import Atxy2k.CustomTextField.RestrictedTextField;
 import controle.UsuarioDAO;
+import modelo.RoundButton;
 import modelo.Usuario;
 import net.miginfocom.swing.MigLayout;
-import modelo.RoundButton;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-import java.awt.SystemColor;
 
+@SuppressWarnings("serial")
 public class TelaEsqueceuSenha extends JFrame {
 
-	private static final long serialVersionUID = 1L;
+	@SuppressWarnings("unused")
+	private JPanel contentPane;
 	private JTextField txtEmail;
-	private JTextField txtSenha;
-	UsuarioDAO udao = UsuarioDAO.getInstancia();
+	private static UsuarioDAO uDAO = UsuarioDAO.getInstancia();
+	private JPasswordField txtSenha;
+	private JPasswordField passwordField;
 
 	/**
 	 * Launch the application.
 	 */
-//	public static void main(String[] args) {
-//		EventQueue.invokeLater(new Runnable() {
-//			public void run() {
-//				try {
-//					 TelaEsqueceuSenha frame = new TelaEsqueceuSenha(null);
-//					frame.setVisible(true);
-//				} catch (Exception e) {
-//					e.printStackTrace();
-//				}
-//			}
-//		});
-//	}
-	public TelaEsqueceuSenha(Usuario u) {
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					TelaEsqueceuSenha frame = new TelaEsqueceuSenha();
+					frame.setLocationRelativeTo(null);
+					frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+
+	/**
+	 * Create the frame.
+	 */
+	public TelaEsqueceuSenha() {
 		setResizable(false);
 		setLocationByPlatform(true);
 		setMinimumSize(new Dimension(1176, 664));
@@ -56,105 +72,167 @@ public class TelaEsqueceuSenha extends JFrame {
 		getContentPane().setLayout(new BorderLayout(0, 0));
 		getContentPane().setLayout(new BorderLayout(0, 0));
 
-		PicPanel panel = new PicPanel("src//IMG/Background2.0.png");
-		panel.setForeground(SystemColor.desktop);
+		PicPanel panel = new PicPanel("src//IMG/TelaCadastro.png");
+		panel.setOpaque(false);
 		getContentPane().add(panel, BorderLayout.CENTER);
-		panel.setLayout(new MigLayout("", "[grow][grow 10][100px,grow 1]", "[70px][80px][30px][][30px][10px][30px][25][10px][30px][60px][][][]"));
+		panel.setLayout(new GridLayout(1, 0, 0, 0));
 
-		JLabel lblTitulo = new JLabel("Problemas para entrar? ");
+		JPanel panel_1 = new JPanel();
+		panel_1.setOpaque(false);
+		panel.add(panel_1);
+
+		JPanel panelPrincipal = new JPanel();
+		panelPrincipal.setOpaque(false);
+		panel.add(panelPrincipal);
+		panelPrincipal.setLayout(new MigLayout("", "[grow]", "[100px][90px][50px][65px][65px][65px][20px][grow]"));
+
+		JPanel panel_2 = new JPanel();
+		panel_2.setOpaque(false);
+		panelPrincipal.add(panel_2, "cell 0 0,grow");
+
+		JPanel panel_4 = new JPanel();
+		panel_4.setOpaque(false);
+		panelPrincipal.add(panel_4, "cell 0 1,grow");
+		panel_4.setLayout(new GridLayout(1, 0, 0, 0));
+
+		JLabel lblTitulo = new JLabel("Esqueceu sua senha?");
 		lblTitulo.setForeground(new Color(0, 0, 0));
 		lblTitulo.setFont(new Font("Dialog", Font.BOLD, 27));
-		panel.add(lblTitulo, "cell 1 1,alignx center");
+		lblTitulo.setHorizontalAlignment(SwingConstants.CENTER);
+		panel_4.add(lblTitulo);
 
-		JLabel lblMsgEmail = new JLabel("Vamos criar uma nova senha!");
-		panel.add(lblMsgEmail, "cell 1 3,alignx center");
-		lblMsgEmail.setFont(new Font("Dialog", Font.PLAIN, 14));
-		lblMsgEmail.setForeground(new Color(0, 0, 0));
+		JPanel panelTexto = new JPanel();
+		panelTexto.setBorder(new EmptyBorder(0, 40, 0, 40));
+		panelTexto.setOpaque(false);
+		panelPrincipal.add(panelTexto, "cell 0 2,grow");
+		panelTexto.setLayout(new MigLayout("", "[grow]", "[10px][30px]"));
 
-		JLabel lblCriarConta = new JLabel("Criar nova conta");
-		lblCriarConta.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				TelaCadastro cadastro = new TelaCadastro();
-				cadastro.setVisible(true);
-				cadastro.setLocationRelativeTo(null);
-				dispose();
-			}
-		});
+		JLabel lblTexto = new JLabel("Vamos criar uma nova!");
+		lblTexto.setForeground(Color.BLACK); // Define a cor do texto principal
+		lblTexto.setFont(new Font("Dialog", Font.ITALIC, 12)); // Define a fonte
+		panelTexto.add(lblTexto, "cell 0 0,alignx center");
 
-		JLabel lblEmail = new JLabel("Email: ");
-		lblEmail.setForeground(Color.BLACK); // Define a cor do texto principal
-		lblEmail.setFont(new Font("Dialog", Font.BOLD, 12)); // Define a fonte
-		panel.add(lblEmail, "cell 1 5,alignx left");
+		JPanel panelEmail = new JPanel();
+		panelEmail.setBorder(new EmptyBorder(0, 40, 0, 40));
+		panelEmail.setOpaque(false);
+		panelPrincipal.add(panelEmail, "cell 0 3,grow");
+		panelEmail.setLayout(new MigLayout("", "[grow]", "[10px][30px]"));
 
-		JLabel lblNewLabel = new JLabel("Nova Senha:");
-		lblNewLabel.setForeground(Color.BLACK);
-		lblNewLabel.setFont(new Font("Dialog", Font.BOLD, 12));
-		panel.add(lblNewLabel, "cell 1 8");
-
-		txtSenha = new JTextField();
-		txtSenha.setOpaque(false);
-		txtSenha.setBorder(new LineBorder(new Color(0, 0, 0), 2));
-		panel.add(txtSenha, "cell 1 9,grow");
-
-		RoundButton rndbtnConfirma = new RoundButton(" Confirmar ");
-		rndbtnConfirma.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				String senha = String.valueOf(txtSenha.getText());
-				String email = String.valueOf(txtEmail.getText());
-
-				if (senha.isEmpty() || email.isEmpty()) {
-					TelaError erro = new TelaError();
-					erro.setVisible(true);
-					erro.setLocationRelativeTo(null);
-
-				} else {
-					udao.alterarSenha(senha, email);
-					TelaVoltarLogin voltar = new TelaVoltarLogin();
-					voltar.setVisible(true);
-					voltar.setLocationRelativeTo(null);
-
-				}
-			}
-		});
-		rndbtnConfirma.setText(" Confirmar ");
-		rndbtnConfirma.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		rndbtnConfirma.setForeground(Color.WHITE);
-		rndbtnConfirma.setFont(new Font("Dialog", Font.PLAIN, 22));
-		rndbtnConfirma.setBorderPainted(false);
-		rndbtnConfirma.setBorder(new LineBorder(new Color(0, 0, 0), 1, true));
-		rndbtnConfirma.setBackground(new Color(2, 73, 89));
-		panel.add(rndbtnConfirma, "cell 1 10,alignx center");
-
-		lblCriarConta.setForeground(SystemColor.desktop);
-		lblCriarConta.setBackground(new Color(0, 0, 255));
-		panel.add(lblCriarConta, "cell 1 11,alignx center");
-		lblCriarConta.setFont(new Font("Dialog", Font.ITALIC, 14));
-
-		JLabel lblou = new JLabel("ou");
-		lblou.setFont(new Font("Dialog", Font.PLAIN, 11));
-		panel.add(lblou, "cell 1 12,alignx center");
-
-		JLabel lblVoltarLogin = new JLabel("Voltar ao login");
-		lblVoltarLogin.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				TelaLogin login = new TelaLogin();
-
-				login.setVisible(true);
-				login.setLocationRelativeTo(null);
-				dispose();
-			}
-		});
-		lblVoltarLogin.setForeground(SystemColor.desktop);
-		panel.add(lblVoltarLogin, "cell 1 13,alignx center");
-		lblVoltarLogin.setFont(new Font("Dialog", Font.ITALIC, 14));
+		JLabel lblEmail = new JLabel("Email");
+		lblEmail.setForeground(Color.BLACK);
+		lblEmail.setFont(new Font("Tahoma", Font.BOLD, 12));
+		panelEmail.add(lblEmail, "cell 0 0");
 
 		txtEmail = new JTextField();
 		txtEmail.setBorder(new LineBorder(new Color(0, 0, 0), 2));
 		txtEmail.setOpaque(false);
-		panel.add(txtEmail, "cell 1 6,grow");
 		txtEmail.setColumns(10);
+		panelEmail.add(txtEmail, "cell 0 1,grow");
 
+		JPanel panelNovaSenha = new JPanel();
+		panelNovaSenha.setBorder(new EmptyBorder(0, 40, 0, 40));
+		panelNovaSenha.setOpaque(false);
+		panelPrincipal.add(panelNovaSenha, "cell 0 4,grow");
+		panelNovaSenha.setLayout(new MigLayout("", "[grow]", "[10px][30px]"));
+
+		JLabel lblNovaSenha = new JLabel("Nova Senha");
+		lblNovaSenha.setForeground(new Color(0, 0, 0));
+		lblNovaSenha.setFont(new Font("Tahoma", Font.BOLD, 12));
+		panelNovaSenha.add(lblNovaSenha, "cell 0 0");
+
+		passwordField = new JPasswordField();
+		passwordField.setColumns(10);
+		passwordField.setBorder(new LineBorder(Color.BLACK, 2));
+		passwordField.setOpaque(false);
+		panelNovaSenha.add(passwordField, "cell 0 1,grow");
+
+		JPanel panelSenha = new JPanel();
+		panelSenha.setBorder(new EmptyBorder(0, 40, 0, 40));
+		panelSenha.setOpaque(false);
+		panelPrincipal.add(panelSenha, "cell 0 5,grow");
+		panelSenha.setLayout(new MigLayout("", "[grow]", "[10px][30px]"));
+
+		JLabel lblSenha = new JLabel("<html>Repita a senha<span style='color: red;'>*</span></html>");
+		lblSenha.setForeground(new Color(0, 0, 0));
+		lblSenha.setFont(new Font("Tahoma", Font.BOLD, 12));
+		panelSenha.add(lblSenha, "cell 0 0");
+
+		txtSenha = new JPasswordField();
+		txtSenha.setBorder(new LineBorder(new Color(0, 0, 0), 2));
+		txtSenha.setOpaque(false);
+		panelSenha.add(txtSenha, "cell 0 1,grow");
+
+		JPanel panelConfirmacao = new JPanel();
+		panelConfirmacao.setOpaque(false);
+		panelConfirmacao.setBorder(new EmptyBorder(0, 40, 0, 40));
+		panelPrincipal.add(panelConfirmacao, "cell 0 7,grow");
+		panelConfirmacao.setLayout(new GridLayout(0, 1, 0, 0));
+
+		JPanel PainelBTN = new JPanel();
+		PainelBTN.setOpaque(false);
+		panelConfirmacao.add(PainelBTN);
+		SpringLayout sl_PainelBTN = new SpringLayout();
+		PainelBTN.setLayout(sl_PainelBTN);
+
+		JButton btnCadastrar = new RoundButton("Cadastrar");
+		sl_PainelBTN.putConstraint(SpringLayout.WEST, btnCadastrar, 71, SpringLayout.WEST, PainelBTN);
+		sl_PainelBTN.putConstraint(SpringLayout.EAST, btnCadastrar, -76, SpringLayout.EAST, PainelBTN);
+		btnCadastrar.setText("Confirmar");
+		sl_PainelBTN.putConstraint(SpringLayout.NORTH, btnCadastrar, 0, SpringLayout.NORTH, PainelBTN);
+		sl_PainelBTN.putConstraint(SpringLayout.SOUTH, btnCadastrar, 48, SpringLayout.NORTH, PainelBTN);
+		btnCadastrar.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		btnCadastrar.setFont(new Font("Dialog", Font.PLAIN, 22));
+		btnCadastrar.setBackground(new Color(2, 73, 89));
+		btnCadastrar.setForeground(new Color(255, 255, 255));
+		btnCadastrar.setBorderPainted(false);
+		btnCadastrar.setBorder(new LineBorder(new Color(0, 0, 0), 1, true));
+		btnCadastrar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+
+			}
+		});
+		JLabel lblCriarConta = new JLabel("Criar nova conta");
+		sl_PainelBTN.putConstraint(SpringLayout.NORTH, lblCriarConta, 6, SpringLayout.SOUTH, btnCadastrar);
+		sl_PainelBTN.putConstraint(SpringLayout.WEST, lblCriarConta, 112, SpringLayout.WEST, PainelBTN);
+		sl_PainelBTN.putConstraint(SpringLayout.EAST, lblCriarConta, -100, SpringLayout.EAST, PainelBTN);
+		lblCriarConta.setHorizontalAlignment(SwingConstants.LEFT);
+		lblCriarConta.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		lblCriarConta.setFont(new Font("Dialog", Font.PLAIN, 12));
+		lblCriarConta.setForeground(new Color(0, 92, 214));
+		lblCriarConta.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				TelaLogin frame = new TelaLogin();
+
+				frame.setLocationRelativeTo(null);
+				frame.setVisible(true);
+				dispose();
+
+			}
+
+		});
+		PainelBTN.setLayout(sl_PainelBTN);
+		PainelBTN.add(btnCadastrar);
+		PainelBTN.add(lblCriarConta);
+
+		JLabel lblIrLogin = new JLabel("Logar-se");
+		sl_PainelBTN.putConstraint(SpringLayout.NORTH, lblIrLogin, 97, SpringLayout.NORTH, PainelBTN);
+		sl_PainelBTN.putConstraint(SpringLayout.WEST, lblIrLogin, 133, SpringLayout.WEST, PainelBTN);
+		sl_PainelBTN.putConstraint(SpringLayout.EAST, lblIrLogin, -138, SpringLayout.EAST, PainelBTN);
+		lblIrLogin.setForeground(Color.BLUE);
+		lblIrLogin.setFont(new Font("Dialog", Font.ITALIC, 12));
+		lblIrLogin.setForeground(new Color(0, 92, 214));
+		PainelBTN.add(lblIrLogin);
+		
+		JLabel lblOu = new JLabel("ou");
+		sl_PainelBTN.putConstraint(SpringLayout.NORTH, lblOu, 6, SpringLayout.SOUTH, lblCriarConta);
+		sl_PainelBTN.putConstraint(SpringLayout.WEST, lblOu, 149, SpringLayout.WEST, PainelBTN);
+		sl_PainelBTN.putConstraint(SpringLayout.EAST, lblOu, 49, SpringLayout.WEST, lblCriarConta);
+		lblOu.setHorizontalAlignment(SwingConstants.CENTER);
+		PainelBTN.add(lblOu);
+
+		JPanel panel_3 = new JPanel();
+		panel_3.setOpaque(false);
+		panel.add(panel_3);
 	}
 }
