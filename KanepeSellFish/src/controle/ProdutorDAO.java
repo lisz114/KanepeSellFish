@@ -11,97 +11,80 @@ import modelo.Produtor;
 import modelo.Usuario;
 
 public class ProdutorDAO implements IProdutorDAO {
-	
-	private static ProdutorDAO instancia;
-	EnderecoDAO eDAO = EnderecoDAO.getInstancia();
 
-	private ProdutorDAO() {
-	}
+    private static ProdutorDAO instancia;
+    EnderecoDAO eDAO = EnderecoDAO.getInstancia();
 
-	public static ProdutorDAO getInstancia() {
+    private ProdutorDAO() {
+    }
 
-		if (instancia == null) {
-			instancia = new ProdutorDAO();
-		}
+    public static ProdutorDAO getInstancia() {
+        if (instancia == null) {
+            instancia = new ProdutorDAO();
+        }
+        return instancia;
+    }
 
-		return instancia;
-	}
+    @Override
+    public boolean inserirProdutor(Produtor produtor) {
+        String sql = "INSERT INTO produtores (nomeNegocio, Usuarios_idUsuarios, Enderecos_idEnderecos, cnpj) VALUES (?, ?, ?, ?)";
+        try (Connection conn = ConexaoBD.getConexaoMySQL();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
-	@Override
-	public boolean inserirProdutor(Produtor produtor) {
-		String sql = "INSERT INTO produtores (nomeNegocio, Usuarios_idUsuarios, Enderecos_idEnderecos, cnpj) VALUES (?, ?, ?, ?)";
-		try (Connection conn = ConexaoBD.getConexaoMySQL(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setString(1, produtor.getNomeComercio());
+            pstmt.setInt(2, produtor.getIdUsuario());
+            pstmt.setInt(3, produtor.getEnd().getIdEndereco());
+            pstmt.setString(4, produtor.getCnpj());
 
-			pstmt.setString(1, produtor.getNomeComercio());
-			pstmt.setInt(2, produtor.getIdUsuario());
-			pstmt.setInt(3, produtor.getEndereco());
-			pstmt.setString(4, produtor.getCnpj());
-			System.out.println(pstmt);
-			int rowsAffected = pstmt.executeUpdate();
-			return rowsAffected > 0;
+            System.out.println(pstmt);
+            int rowsAffected = pstmt.executeUpdate();
+            return rowsAffected > 0;
 
-		} catch (SQLException e) {
-			e.printStackTrace();
-			return false;
-		}
-	}
-	
-	public Produtor consultaProdutor(Usuario usuario) {
-		PreparedStatement stmt1 = null;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
 
-		Connection conn = ConexaoBD.getConexaoMySQL();
+    public Produtor consultaProdutor(Usuario usuario) {
+        String sql = "SELECT * FROM produtores WHERE Usuarios_idUsuarios = ?";
+        try (Connection conn = ConexaoBD.getConexaoMySQL();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
 
-		try {
-			stmt1 = conn.prepareStatement("SELECT * FROM kanepe.produtores WHERE Usuarios_idUsuarios = ?");
-			ResultSet res1 = null;
-			stmt1.setLong(1, usuario.getIdUsuario());
+            stmt.setLong(1, usuario.getIdUsuario());
+            try (ResultSet res = stmt.executeQuery()) {
+                if (res.next()) {
+                    Produtor p = new Produtor();
+                    Endereco e = eDAO.buscarendereco(res.getInt("Enderecos_idEnderecos"));
 
-			res1 = stmt1.executeQuery();
+                    p.setNomeComercio(res.getString("nomeNegocio"));
+                    p.setCnpj(res.getString("cnpj"));
+                    p.setEnd(e);
 
-			while (res1.next()) {
+                    return p;
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 
-			Produtor p = new Produtor();
-			Endereco e = new Endereco();
-			
-			
-			p.setNomeComercio(res1.getString("nomeNegocio"));
-			p.setCnpj(res1.getString("cnpj"));
-			e = eDAO.buscarendereco(Integer.parseInt(res1.getString("Enderecos_idEnderecos")));
-			p.setEnd(e);
-			
-			return p;
-			}
+    public boolean alterarProdutor(Produtor produtor, Usuario u) {
+        String sql = "UPDATE produtores SET nomeNegocio = ?, cnpj = ? WHERE Usuarios_idUsuarios = ?";
+        try (Connection conn = ConexaoBD.getConexaoMySQL();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
-			res1.close();
-			stmt1.close();
-			conn.close();
+            pstmt.setString(1, produtor.getNomeComercio());
+            pstmt.setString(2, produtor.getCnpj());
+            pstmt.setLong(3, u.getIdUsuario());
 
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return null;
-	}
+            int rowsAffected = pstmt.executeUpdate();
+            return rowsAffected > 0;
 
-	public int alterarProdutor(Produtor produtor) {
-		// TODO Auto-generated method stub
-		String sql = "UPDATE usuarios set nomeNegocio = ?, email_Usuario = ?, cpf_Usuario = ?, cnpj = ?, nome_Usuario = ?, telefone = ? WHERE Usuarios_idUsuario = ?";
-		try (Connection conn = ConexaoBD.getConexaoMySQL(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
-
-			pstmt.setString(1, produtor.getNomeComercio());
-			pstmt.setString(1, produtor.getEmail());
-			pstmt.setString(2, produtor.getCpf());
-			pstmt.setString(1, produtor.getCnpj());
-			pstmt.setString(3, produtor.getNome());
-			pstmt.setString(4, produtor.getTel());
-
-			pstmt.executeUpdate();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		return -1;
-	}
-
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
 }
-

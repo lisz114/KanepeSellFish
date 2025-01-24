@@ -4,6 +4,7 @@ package visao;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.ComponentOrientation;
+import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
@@ -26,6 +27,7 @@ import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.JTextPane;
@@ -67,6 +69,7 @@ public class TelaEditarPerfilVendedor extends JFrame {
 	private JTextField txtCelular;
 	private JTextField txtCEP;
 	private JTextField txtNomeComercio;
+	private JLabel lblImagem;
 
 	/**
 	 * Launch the application.
@@ -158,12 +161,16 @@ public class TelaEditarPerfilVendedor extends JFrame {
 		txtBairro.setColumns(10);
 		txtBairro.setText(pDAO.consultaProdutor(u).getEnd().getBairro());
 		txtCPF = new JTextField();
+		txtCPF.setDisabledTextColor(new Color(0, 0, 0));
+		txtCPF.setCaretColor(new Color(0, 0, 0));
+		txtCPF.setEnabled(false);
+		txtCPF.setEditable(false);
 		panel_1.add(txtCPF, "flowx,cell 1 3");
 		txtCPF.setBorder(new LineBorder(new Color(171, 173, 179)));
 		txtCPF.setOpaque(false);
 		txtCPF.setToolTipText("");
 		txtCPF.setBorder(new TitledBorder(new LineBorder(new Color(0, 0, 0), 2),
-				"<html>CPF<span style='color: red;'>*</span></html>", TitledBorder.LEADING, TitledBorder.TOP, null,
+				"CPF", TitledBorder.LEADING, TitledBorder.TOP, null,
 				new Color(0, 0, 0)));
 		txtCPF.setBackground(SystemColor.menu);
 		txtCPF.setColumns(10);
@@ -181,18 +188,6 @@ public class TelaEditarPerfilVendedor extends JFrame {
 		txtCEP.setText(pDAO.consultaProdutor(u).getEnd().getCep());
 		panel_1.add(txtCEP, "flowx,cell 2 3,growy");
 
-		txtNum = new JTextField();
-		panel_1.add(txtNum, "cell 2 3");
-		txtNum.setBorder(new LineBorder(new Color(171, 173, 179)));
-		txtNum.setOpaque(false);
-		txtNum.setToolTipText("");
-		txtNum.setBorder(new TitledBorder(new LineBorder(new Color(0, 0, 0), 2),
-				"<html>Num<span style='color: red;'>*</span></html>", TitledBorder.LEADING, TitledBorder.TOP, null,
-				new Color(0, 0, 0)));
-		txtNum.setBackground(SystemColor.menu);
-		txtNum.setColumns(10);
-		txtNum.setText(String.valueOf(pDAO.consultaProdutor(u).getEnd().getNumero()));
-
 		txtEmail = new JTextField();
 		panel_1.add(txtEmail, "flowx,cell 1 4,growy");
 		txtEmail.setBorder(new LineBorder(new Color(171, 173, 179)));
@@ -206,7 +201,7 @@ public class TelaEditarPerfilVendedor extends JFrame {
 		txtEmail.setText(u.getEmail());
 
 		txtLogradouro = new JTextField();
-		panel_1.add(txtLogradouro, "cell 2 4");
+		panel_1.add(txtLogradouro, "flowx,cell 2 4");
 		txtLogradouro.setBorder(new LineBorder(new Color(171, 173, 179)));
 		txtLogradouro.setOpaque(false);
 		txtLogradouro.setToolTipText("");
@@ -233,58 +228,137 @@ public class TelaEditarPerfilVendedor extends JFrame {
 		panel_1.add(btnNewButton_1, "cell 2 5,alignx right,aligny bottom");
 		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Produtor produtorNovo = new Produtor();
-				Produtor produtorAntigo = new Produtor();
-				Endereco enderecoNovo = new Endereco();
-				
-				produtorAntigo = pDAO.consultaProdutor(u);
+		        Produtor produtorNovo = new Produtor();
+		        Endereco enderecoNovo = new Endereco();
 
-				if (txtCNPJ.getText().isEmpty() || txtCPF.getText().isEmpty() || txtEmail.getText().isEmpty()
-						|| txtNomeComercio.getText().isEmpty() || txtBairro.getText().isEmpty()
-						|| txtCEP.getText().isEmpty() || txtCidade.getText().isEmpty()
-						|| txtLogradouro.getText().isEmpty() || txtNum.getText().isEmpty()) {
+		        // Consulta do produtor atual
+		        Produtor produtorAntigo = pDAO.consultaProdutor(u);
 
-					
+		        // Validação de campos obrigatórios
+		        if (txtCNPJ.getText().isEmpty() || txtEmail.getText().isEmpty()
+		                || txtNomeComercio.getText().isEmpty() || txtBairro.getText().isEmpty()
+		                || txtCEP.getText().isEmpty() || txtCidade.getText().isEmpty()
+		                || txtLogradouro.getText().isEmpty() || txtNum.getText().isEmpty()) {
 
-					String CNPJ = txtCNPJ.getText();
-					String CPF = txtCPF.getText();
-					String Email = txtEmail.getText();
-					String NomeComercio = txtNomeComercio.getText();
-					String Telefone = txtCelular.getText();
+		            TelaError tela = new TelaError();
+		            tela.setLabelText("Dados preenchidos incorretamente. Preencha todos os campos obrigatórios.");
+		            tela.setLocationRelativeTo(null);
+		            tela.setVisible(true);
+		            return;
+		        }
 
-					String Bairro = txtBairro.getText();
-					String CEP = txtCEP.getText();
-					String Cidade = txtCidade.getText();
-					String Logradouro = txtLogradouro.getText();
-					Integer Numero = Integer.valueOf(txtNum.getText());
+		        // Coleta de dados do formulário
+		        String CNPJ = txtCNPJ.getText();
+		        String Email = txtEmail.getText();
+		        String NomeComercio = txtNomeComercio.getText();
+		        String Telefone = txtCelular.getText();
 
-					enderecoNovo.setBairro(Bairro);
-					enderecoNovo.setCep(CEP);
-					enderecoNovo.setCidade(Cidade);
-					enderecoNovo.setLogradouro(Logradouro);
-					enderecoNovo.setNumero(Numero);
+		        String Bairro = txtBairro.getText();
+		        String CEP = txtCEP.getText();
+		        String Cidade = txtCidade.getText();
+		        String Logradouro = txtLogradouro.getText();
+		        Integer Numero = Integer.valueOf(txtNum.getText());
 
-					produtorNovo.setCnpj(CNPJ);
-					produtorNovo.setCpf(CPF);
-					produtorNovo.setEmail(Email);
-					produtorNovo.setEnd(enderecoNovo);
-					produtorNovo.setNomeComercio(NomeComercio);
-					produtorNovo.setTel(Telefone);
-					
-					if(1==1) {
-						
-						//alterar produtor no banco de dados
-						
-					}
-					else {
-						
-						//menssagem de erro de preenchimento
-						
-					}
+		        // Populando os objetos
+		        enderecoNovo.setBairro(Bairro);
+		        enderecoNovo.setCep(CEP);
+		        enderecoNovo.setCidade(Cidade);
+		        enderecoNovo.setLogradouro(Logradouro);
+		        enderecoNovo.setNumero(Numero);
 
-				}
+		        produtorNovo.setCnpj(CNPJ);
+		        produtorNovo.setEmail(Email);
+		        produtorNovo.setEnd(enderecoNovo);
+		        produtorNovo.setNomeComercio(NomeComercio);
+		        produtorNovo.setTel(Telefone);
 
-			}
+		        // Atualização ou inserção
+		        if (produtorAntigo != null) {
+		            // Atualizar endereço
+		            enderecoNovo.setIdEndereco(produtorAntigo.getEnd().getIdEndereco());
+		            int enderecoAtualizado = eDAO.atualizarEndereco(enderecoNovo);
+
+		            if (enderecoAtualizado > 0) {
+		                produtorNovo.setIdUsuario(u.getIdUsuario());
+		                produtorNovo.setEndereco(enderecoNovo.getIdEndereco());
+		                boolean produtorAtualizado = pDAO.alterarProdutor(produtorNovo, u);
+
+		                if (produtorAtualizado) {
+							TelaPerfilVendedor v = new TelaPerfilVendedor(u, true);
+							v.setLocationRelativeTo(null);
+							v.setVisible(true);
+							dispose();
+		                	TelaError tela = new TelaError();
+				            tela.setLabelText("Dados atualizados com sucesso!");
+				            tela.setLocationRelativeTo(null);
+				            tela.setVisible(true);
+				            
+				            
+		                } else {
+		                	TelaPerfilVendedor v = new TelaPerfilVendedor(u, true);
+		                	v.setLocationRelativeTo(null);
+		                	v.setVisible(true);
+		                	dispose();
+		                	TelaError tela = new TelaError();
+				            tela.setLabelText("Erro ao atualizar os dados do produtor.");
+				            tela.setLocationRelativeTo(null);
+				            tela.setVisible(true);
+				            
+		                }
+		            } else {
+		            	TelaPerfilVendedor v = new TelaPerfilVendedor(u, true);
+		            	v.setLocationRelativeTo(null);
+		            	v.setVisible(true);
+		            	dispose();
+		            	TelaError tela = new TelaError();
+			            tela.setLabelText("Erro ao atualizar o endereço.");
+			            tela.setLocationRelativeTo(null);
+			            tela.setVisible(true);
+			            
+		            }
+		        } else {
+		            // Inserir novo endereço
+		            int enderecoId = eDAO.inserirEnderecoDoComercio(enderecoNovo);
+
+		            if (enderecoId > 0) {
+		                produtorNovo.setIdUsuario(u.getIdUsuario());
+		                produtorNovo.setEndereco(enderecoId);
+		                boolean produtorInserido = pDAO.inserirProdutor(produtorNovo);
+
+		                if (produtorInserido) {
+		                	TelaPerfilVendedor v = new TelaPerfilVendedor(u, true);
+		                	v.setLocationRelativeTo(null);
+		                	v.setVisible(true);
+		                	dispose();
+		                	TelaError tela = new TelaError();
+				            tela.setLabelText("Dados salvos com sucesso!");
+				            tela.setLocationRelativeTo(null);
+				            tela.setVisible(true);
+				            
+		                } else {
+		                	TelaPerfilVendedor v = new TelaPerfilVendedor(u, true);
+		                	v.setLocationRelativeTo(null);
+		                	v.setVisible(true);
+		                	dispose();
+		                	TelaError tela = new TelaError();
+				            tela.setLabelText("Erro ao salvar os dados do produtor.");
+				            tela.setLocationRelativeTo(null);
+				            tela.setVisible(true);
+				            
+		                }
+		            } else {
+		            	TelaPerfilVendedor v = new TelaPerfilVendedor(u, true);
+		            	v.setLocationRelativeTo(null);
+		            	v.setVisible(true);
+		            	dispose();
+		            	TelaError tela = new TelaError();
+			            tela.setLabelText("Erro ao salvar o endereço.");
+			            tela.setLocationRelativeTo(null);
+			            tela.setVisible(true);
+			            
+		            }
+		        }
+		    }
 		});
 		btnNewButton_1.setForeground(new Color(255, 255, 255));
 		btnNewButton_1.setBackground(new Color(96, 154, 168));
@@ -314,6 +388,39 @@ public class TelaEditarPerfilVendedor extends JFrame {
 		txtCNPJ.setBackground(SystemColor.menu);
 		txtCNPJ.setColumns(10);
 		txtCNPJ.setText(pDAO.consultaProdutor(u).getCnpj());
+		
+				txtNum = new JTextField();
+				panel_1.add(txtNum, "cell 2 4");
+				txtNum.setBorder(new LineBorder(new Color(171, 173, 179)));
+				txtNum.setOpaque(false);
+				txtNum.setToolTipText("");
+				txtNum.setBorder(new TitledBorder(new LineBorder(new Color(0, 0, 0), 2),
+						"<html>Num<span style='color: red;'>*</span></html>", TitledBorder.LEADING, TitledBorder.TOP, null,
+						new Color(0, 0, 0)));
+				txtNum.setBackground(SystemColor.menu);
+				txtNum.setColumns(10);
+				txtNum.setText(String.valueOf(pDAO.consultaProdutor(u).getEnd().getNumero()));
+				
+				lblImagem = new JLabel("");
+				panel_1.add(lblImagem, "cell 2 3");
+				
+				lblImagem.setToolTipText("Procurar CEP");
+				lblImagem.setName("");
+				lblImagem.addMouseListener(new MouseAdapter() {
+					@Override
+					public void mouseClicked(MouseEvent e) {
+						Endereco endereco = eDAO.buscaCEP(txtCEP.getText());
+						txtLogradouro.setText(endereco.getLogradouro());
+						txtBairro.setText(endereco.getBairro());
+						txtCidade.setText(endereco.getCidade());
+
+					}
+				});
+				lblImagem.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+				lblImagem.setIcon(new ImageIcon(TelaCadastroComercio.class.getResource("/img/procurar.png")));
+				ImageIcon iconProcurar = new ImageIcon(TelaCadastroComercio.class.getResource("/IMG/procurar.png"));
+				Image iconP = iconProcurar.getImage().getScaledInstance(26, 26, Image.SCALE_SMOOTH);
+				lblImagem.setIcon(new ImageIcon(iconP));
 
 		ImageIcon conta = new ImageIcon(TelaInicio.class.getResource("/IMG/do-utilizador.png"));
 		Image iconConta = conta.getImage().getScaledInstance(30, 30, Image.SCALE_SMOOTH);

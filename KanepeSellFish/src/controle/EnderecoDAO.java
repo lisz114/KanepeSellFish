@@ -14,141 +14,121 @@ import org.dom4j.io.SAXReader;
 
 import modelo.Endereco;
 import modelo.IEnderecoDAO;
-import modelo.Usuario;
 
 public class EnderecoDAO implements IEnderecoDAO {
 
-	private static EnderecoDAO instancia;
+    private static EnderecoDAO instancia;
 
-	private EnderecoDAO() {
-	}
+    private EnderecoDAO() {
+    }
 
-	public static EnderecoDAO getInstancia() {
+    public static EnderecoDAO getInstancia() {
+        if (instancia == null) {
+            instancia = new EnderecoDAO();
+        }
+        return instancia;
+    }
 
-		if (instancia == null) {
-			instancia = new EnderecoDAO();
-		}
+    @Override
+    public int inserirEnderecoDoComercio(Endereco endereco) {
+        String sql = "INSERT INTO enderecos (Cidade, Rua, Bairro, Numero, cep) VALUES (?, ?, ?, ?, ?)";
+        try (Connection conn = ConexaoBD.getConexaoMySQL();
+             PreparedStatement pstmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
 
-		return instancia;
-	}
+            pstmt.setString(1, endereco.getCidade());
+            pstmt.setString(2, endereco.getLogradouro());
+            pstmt.setString(3, endereco.getBairro());
+            pstmt.setInt(4, endereco.getNumero());
+            pstmt.setString(5, endereco.getCep());
 
-	public int inserirEnderecoDoComercio(Endereco endereco) {
+            pstmt.executeUpdate();
 
-	    String sql = "INSERT INTO enderecos (Cidade, Rua, Bairro, Numero, cep) VALUES (?, ?, ?, ?, ?)";
+            try (ResultSet rs = pstmt.getGeneratedKeys()) {
+                if (rs.next()) {
+                    return rs.getInt(1); // Retorna o ID gerado
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return -1; // Retorna -1 em caso de erro
+    }
 
-	    try (Connection conn = ConexaoBD.getConexaoMySQL();
-	            PreparedStatement pstmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+    @Override
+    public int atualizarEndereco(Endereco endereco) {
+        String sql = "UPDATE enderecos SET Cidade = ?, Bairro = ?, Rua = ?, Numero = ?, cep = ? WHERE idEnderecos = ?";
+        try (Connection conn = ConexaoBD.getConexaoMySQL();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
-	        pstmt.setString(1, endereco.getCidade());
-	        pstmt.setString(2, endereco.getLogradouro());
-	        pstmt.setString(3, endereco.getBairro());
-	        pstmt.setInt(4, endereco.getNumero());
-	        pstmt.setString(5, endereco.getCep());
+            pstmt.setString(1, endereco.getCidade());
+            pstmt.setString(2, endereco.getBairro());
+            pstmt.setString(3, endereco.getLogradouro());
+            pstmt.setInt(4, endereco.getNumero());
+            pstmt.setString(5, endereco.getCep());
+            pstmt.setInt(6, endereco.getIdEndereco());
 
-	        pstmt.executeUpdate();
+            int rowsAffected = pstmt.executeUpdate();
+            return rowsAffected;
 
-	        ResultSet rs = pstmt.getGeneratedKeys(); // Recupera o ID gerado automaticamente
-	        if (rs.next()) {
-	            return rs.getInt(1); // Retorna o ID gerado
-	        }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return -1; // Retorna -1 em caso de erro
+    }
 
-	    } catch (SQLException e) {
-	        e.printStackTrace();
-	    }
+    public Endereco buscaCEP(String cep) {
+        Endereco endereco = new Endereco();
+        try {
+            URL url = new URL("http://cep.republicavirtual.com.br/web_cep.php?cep=" + cep + "&formato=xml");
+            SAXReader xml = new SAXReader();
+            Document doc = xml.read(url);
+            Element root = doc.getRootElement();
 
-	    return -1; // Retorna -1 em caso de erro
-	}
-	
-	public int atualizarEndereco(Endereco endereco) {
-		String sql = "UPDATE usuarios set Cidade = ?, Bairro = ?, Rua = ?, numero = ?";
-		try (Connection conn = ConexaoBD.getConexaoMySQL();
-				PreparedStatement pstmt = conn.prepareStatement(sql)){
-			
-			pstmt.setString(1, endereco.getCidade());
-			pstmt.setString(2, endereco.getBairro());
-			pstmt.setString(3, endereco.getLogradouro());
-			pstmt.setInt(4, endereco.getNumero());
-			
-			pstmt.executeUpdate();
-			
-		} catch (SQLException e) {
-			// TODO: handle exception
-			e.printStackTrace();
-		}
-		return -1;
-	}
+            for (Iterator<Element> it = root.elementIterator(); it.hasNext();) {
+                Element element = it.next();
+                switch (element.getQualifiedName()) {
+                    case "cidade":
+                        endereco.setCidade(element.getText());
+                        break;
+                    case "logradouro":
+                        endereco.setLogradouro(element.getText());
+                        break;
+                    case "bairro":
+                        endereco.setBairro(element.getText());
+                        break;
+                }
+            }
+            return endereco;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 
+    @Override
+    public Endereco buscarendereco(int idEndereco) {
+        String sql = "SELECT * FROM enderecos WHERE idEnderecos = ?";
+        try (Connection conn = ConexaoBD.getConexaoMySQL();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
-	@SuppressWarnings("deprecation")
-	public Endereco buscaCEP(String cep) {
-		Endereco endereco = new Endereco();
-		try {
+            pstmt.setInt(1, idEndereco);
 
-			URL url = new URL("http://cep.republicavirtual.com.br/web_cep.php?cep=" + cep + "&formato=xml");
+            try (ResultSet res = pstmt.executeQuery()) {
+                if (res.next()) {
+                    Endereco endereco = new Endereco();
+                    endereco.setIdEndereco(idEndereco);
+                    endereco.setBairro(res.getString("Bairro"));
+                    endereco.setCep(res.getString("cep"));
+                    endereco.setCidade(res.getString("Cidade"));
+                    endereco.setLogradouro(res.getString("Rua"));
+                    endereco.setNumero(res.getInt("Numero"));
 
-			SAXReader xml = new SAXReader();
-			Document doc = xml.read(url);
-			Element root = doc.getRootElement();
-
-			for (Iterator<Element> it = root.elementIterator(); it.hasNext();) {
-				Element element = it.next();
-				if (element.getQualifiedName().equals("cidade")) {
-					String cidade = element.getText();
-					endereco.setCidade(cidade);
-				}
-				if (element.getQualifiedName().equals("logradouro")) {
-					String logradouro = element.getText();
-					endereco.setLogradouro(logradouro);
-				}
-				if (element.getQualifiedName().equals("bairro")) {
-					String bairro = element.getText();
-					endereco.setBairro(bairro);
-				}
-			}
-			if (!endereco.equals(null)) {
-				return endereco;
-			}
-
-		} catch (Exception e) {
-			System.out.println(e);
-		}
-
-		return null;
-	}
-
-	public Endereco buscarendereco(int i) {
-		PreparedStatement stmt1 = null;
-
-		Connection conn = ConexaoBD.getConexaoMySQL();
-
-		try {
-			stmt1 = conn.prepareStatement("SELECT * FROM kanepe.enderecos where idEnderecos = ? ");
-			ResultSet res1 = null;
-			stmt1.setInt(1, i);
-			
-
-			res1 = stmt1.executeQuery();
-
-			while (res1.next()) {
-
-				Endereco e = new Endereco();
-				
-				e.setBairro(res1.getString("Bairro"));
-				e.setCep(res1.getNString("cep"));
-				e.setCidade(res1.getNString("Cidade"));
-				e.setLogradouro(res1.getNString("Rua"));
-				e.setNumero((Integer.parseInt(res1.getString("numero"))));
-
-				return e;
-			}
-
-			res1.close();
-			stmt1.close();
-			conn.close();
-
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return null;
-	}
+                    return endereco;
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 }

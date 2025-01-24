@@ -3,6 +3,7 @@ package modelo;
 import java.util.ArrayList;
 
 public class Produtor extends Usuario {
+	private int idProdutor;
 	private String nomeComercio;
 	private int IdEndereco;
 	private ArrayList<Pedido> pedido;
@@ -58,6 +59,14 @@ public class Produtor extends Usuario {
 
 	public void setCnpj(String cnpj) {
 		this.cnpj = cnpj;
+	}
+
+	public int getIdProdutor() {
+		return idProdutor;
+	}
+
+	public void setIdProdutor(int idProdutor) {
+		this.idProdutor = idProdutor;
 	}
 
 }
