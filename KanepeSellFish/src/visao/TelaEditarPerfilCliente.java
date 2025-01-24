@@ -35,11 +35,10 @@ import javax.swing.JPasswordField;
 public class TelaEditarPerfilCliente extends JFrame {
 
 	private JPanel contentPane;
-	private JTextField txtCPF;
-	private JTextField txtTel;
-	private JTextField txtEmail;
-	private JLabel lblNome;
 	UsuarioDAO udao = UsuarioDAO.getInstancia();
+	private JTextField txtNome;
+	private JTextField txtEmail;
+	private JTextField txtTel;
 	/**
 	 * Launch the application.
 	 */
@@ -188,56 +187,73 @@ public class TelaEditarPerfilCliente extends JFrame {
 
 		JPanel panel_1 = new JPanel();
 		contentPane.add(panel_1, BorderLayout.CENTER);
-		panel_1.setLayout(new MigLayout("", "[][25px,grow][25px,grow][25px,grow]", "[][][][][][grow]"));
+		panel_1.setLayout(new MigLayout("", "[300px][grow]", "[grow][grow]"));
+		JPanel panel_3 = new JPanel();
+		panel_1.add(panel_3, "cell 0 0,grow");
+		panel_3.setLayout(new MigLayout("", "[grow]", "[280px][]"));
 
 		JLabel imgPerfil = new JLabel("");
+		panel_3.add(imgPerfil, "flowy,cell 0 0,alignx center,aligny bottom");
 		imgPerfil.setIcon(new ImageIcon(TelaEditarPerfilCliente.class.getResource("/img/Avatar.png")));
-		panel_1.add(imgPerfil, "cell 0 1");
 
-		lblNome = new JLabel("");
-		lblNome.setFont(new Font("Tahoma", Font.PLAIN, 32));
-		panel_1.add(lblNome, "cell 1 1 3 1,alignx left,aligny top");
-		lblNome.setText(u.getNome());
+		JLabel lblEditarFoto = new JLabel("Alterar foto");
+		lblEditarFoto.setForeground(SystemColor.textHighlight);
+		lblEditarFoto.setFont(new Font("Dialog", Font.ITALIC, 13));
+		panel_3.add(lblEditarFoto, "cell 0 0,alignx center,aligny top");
 
-		txtCPF = new JTextField();
-		panel_1.add(txtCPF, "cell 1 2,growx");
-		txtCPF.setColumns(10);
-		txtCPF.setBorder(new LineBorder(new Color(171, 173, 179)));
-		txtCPF.setOpaque(false);
-		txtCPF.setToolTipText("");
-		txtCPF.setBorder(new TitledBorder(new LineBorder(new Color(0, 0, 0), 2),
-				"<html>CPF<span style='color: red;'>*</span></html>", TitledBorder.LEADING, TitledBorder.TOP, null,
-				new Color(0, 0, 0)));
-		txtCPF.setBackground(SystemColor.menu);
-		txtCPF.setText(u.getCpf());
+		JPanel panel_2 = new JPanel();
+		panel_1.add(panel_2, "cell 1 0,grow");
+		panel_2.setLayout(new MigLayout("", "[30px][10px][10px,grow]", "[50px][][50px][][][][][]"));
+
+		txtNome = new JTextField();
+		txtNome.setBorder(null);
+		txtNome.setFont(new Font("Dialog", Font.PLAIN, 30));
+		txtNome.setOpaque(false);
+		panel_2.add(txtNome, "cell 0 1 3 1,grow");
+		txtNome.setColumns(10);
+		txtNome.setText(u.getNome());
+
+		JLabel lblCPF = new JLabel("CPF:");
+		lblCPF.setFont(new Font("Dialog", Font.PLAIN, 15));
+		panel_2.add(lblCPF, "flowx,cell 1 3,alignx left");
 		
-				txtEmail = new JTextField();
-				panel_1.add(txtEmail, "cell 2 2,growx");
-				txtEmail.setColumns(10);
-				txtEmail.setColumns(10);
-				txtEmail.setOpaque(false);
-				txtEmail.setToolTipText("");
-				txtEmail.setBorder(new TitledBorder(new LineBorder(new Color(0, 0, 0), 2),
-						"<html>Email<span style='color: red;'>*</span></html>", TitledBorder.LEADING, TitledBorder.TOP, null,
-						new Color(0, 0, 0)));
-				txtEmail.setBackground(SystemColor.menu);
-				txtEmail.setText(u.getEmail());
+		JLabel lblCpf = new JLabel("");
+		lblCpf.setToolTipText("");
+		lblCpf.setFont(new Font("Dialog", Font.PLAIN, 14));
+		panel_2.add(lblCpf, "cell 2 3,alignx left,aligny center");
+		lblCpf.setText(u.getCpf());
+		lblCpf.setToolTipText("Insira seu nome");
+		
+		JLabel lblEmail = new JLabel("Email:");
+		lblEmail.setFont(new Font("Dialog", Font.PLAIN, 15));
+		panel_2.add(lblEmail, "flowx,cell 1 5,alignx left,aligny center");
+
+		txtEmail = new JTextField();
+		txtEmail.setOpaque(false);
+		txtEmail.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		txtEmail.setColumns(10);
+		txtEmail.setBorder(null);
+		panel_2.add(txtEmail, "cell 2 5,growx");
+		txtEmail.setText(String.valueOf(u.getEmail()));
+
+		JLabel lblTelefone = new JLabel("Telefone");
+		lblTelefone.setFont(new Font("Dialog", Font.PLAIN, 15));
+		panel_2.add(lblTelefone, "cell 1 7,alignx trailing");
 
 		txtTel = new JTextField();
-		panel_1.add(txtTel, "cell 1 4,growx");
-		txtTel.setColumns(10);
 		txtTel.setOpaque(false);
-		txtTel.setToolTipText("Adicionar Telefone");
-		txtTel.setBorder(new TitledBorder(new LineBorder(new Color(0, 0, 0), 2), "<html>Tel</html>",
-				TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
-		txtTel.setBackground(SystemColor.menu);
-		if (u.getTel() == null) {
-			txtTel.setText("Adicionar Telefone");
-		} else {
-			txtTel.setText(u.getTel());
-		}
+		txtTel.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		txtTel.setColumns(10);
+		txtTel.setBorder(null);
+		panel_2.add(txtTel, "cell 2 7,growx");
+		txtTel.setText(String.valueOf(u.getTel()));
+
+		JPanel panel_buttons = new JPanel();
+		panel_1.add(panel_buttons, "cell 1 1,grow");
+		panel_buttons.setLayout(new MigLayout("", "[grow]", "[grow]"));
 
 		JButton btCancelar = new JButton("Cancelar");
+		panel_buttons.add(btCancelar, "flowx,cell 0 0,alignx right,aligny bottom");
 		btCancelar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				PopupCancelar cancelar = new PopupCancelar(u, isVendedor);
@@ -245,24 +261,21 @@ public class TelaEditarPerfilCliente extends JFrame {
 				cancelar.setLocationRelativeTo(null);
 			}
 		});
-		panel_1.add(btCancelar, "flowx,cell 3 5,alignx right,aligny bottom");
 
 		JButton btSalvar = new JButton("Salvar");
+		panel_buttons.add(btSalvar, "cell 0 0,alignx right,aligny bottom");
 		btSalvar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
-				udao.alterarUsuario(u);
+				Usuario usuarioNovo = new Usuario();
+				usuarioNovo.setNome(txtNome.getText());
+				usuarioNovo.setCpf(lblCpf.getText());
+				usuarioNovo.setEmail(txtEmail.getText());
+				udao.alterarUsuario(usuarioNovo);
 			}
 		});
 		btSalvar.setBackground(new Color(64, 128, 128));
-		panel_1.add(btSalvar, "cell 3 5,alignx right,aligny bottom");
 
 	}
 
-	public void mostrarDados(Usuario usuarioSelecionado) {
-		lblNome.setText(usuarioSelecionado.getNome());
-		txtCPF.setText(String.valueOf(usuarioSelecionado.getCpf()));
-		txtEmail.setText(String.valueOf(usuarioSelecionado.getEmail()));
-		txtTel.setText(String.valueOf(usuarioSelecionado.getTel()));
-	}
 }

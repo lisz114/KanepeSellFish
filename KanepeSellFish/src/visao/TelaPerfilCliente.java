@@ -62,7 +62,7 @@ public class TelaPerfilCliente extends JFrame {
 		setMaximumSize(new Dimension(1920, 1080));
 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 1280, 768);
+		setBounds(100, 100, 1633, 768);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
@@ -86,41 +86,41 @@ public class TelaPerfilCliente extends JFrame {
 		lblImagemCliente.setIcon(new ImageIcon(TelaPerfilCliente.class.getResource("/img/Avatar.png")));
 		panel_3.add(lblImagemCliente, "flowy,cell 0 0,alignx center,aligny bottom");
 
-		JLabel lblNewLabel = new JLabel("Alterar foto");
-		lblNewLabel.setFont(new Font("Dialog", Font.ITALIC, 13));
-		lblNewLabel.setForeground(SystemColor.textHighlight);
-		panel_3.add(lblNewLabel, "cell 0 0,alignx center,aligny center");
-
 		JPanel panel_2 = new JPanel();
 		panel_1.add(panel_2, "cell 1 0,grow");
-		panel_2.setLayout(new MigLayout("", "[][]", "[50px][][20px][][20px][][20px][][][][]"));
+		panel_2.setLayout(new MigLayout("", "[30px][10px][10px]", "[50px][][50px][][20px][][20px][][][][]"));
 
 		JLabel lblNomeCliente = new JLabel(u.getNome());
-		panel_2.add(lblNomeCliente, "cell 0 1 2 1");
+		panel_2.add(lblNomeCliente, "cell 0 1 3 1,growx,aligny center");
 		lblNomeCliente.setFont(new Font("Dialog", Font.PLAIN, 30));
 		
 		JLabel lblCPF = new JLabel("CPF: ");
 		lblCPF.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblCPF.setFont(new Font("Dialog", Font.PLAIN, 15));
-		panel_2.add(lblCPF, "cell 0 3");
-
-		JLabel lblDynamicCPF = new JLabel(u.getCpf());
-		lblDynamicCPF.setFont(new Font("Dialog", Font.PLAIN, 15));
-		panel_2.add(lblDynamicCPF, "cell 1 3,alignx left,aligny center");
+		panel_2.add(lblCPF, "flowx,cell 1 3,alignx left");
 
 		JLabel lblEmail = new JLabel("Email: ");
 		lblEmail.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblEmail.setFont(new Font("Dialog", Font.PLAIN, 15));
-		panel_2.add(lblEmail, "cell 0 5");
-
-		JLabel lblDynamicEmail = new JLabel(u.getEmail());
-		lblDynamicEmail.setFont(new Font("Dialog", Font.PLAIN, 15));
-		panel_2.add(lblDynamicEmail, "cell 1 5,alignx left,aligny center");
+		panel_2.add(lblEmail, "flowx,cell 1 5,alignx left");
 
 		JLabel lblTelefone = new JLabel("Telefone: ");
 		lblTelefone.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblTelefone.setFont(new Font("Dialog", Font.PLAIN, 15));
-		panel_2.add(lblTelefone, "cell 0 7");
+		panel_2.add(lblTelefone, "flowx,cell 1 7,alignx left");
+		
+				JLabel lblDynamicCPF = new JLabel(u.getCpf());
+				lblDynamicCPF.setFont(new Font("Dialog", Font.PLAIN, 14));
+				panel_2.add(lblDynamicCPF, "cell 1 3,alignx left,aligny center");
+				
+				JLabel lblDynamicTel = new JLabel("New label");
+				lblDynamicTel.setFont(new Font("Dialog", Font.PLAIN, 14));
+				panel_2.add(lblDynamicTel, "cell 1 7,alignx left,aligny center");
+				lblDynamicTel.setText(u.getTel());
+				
+						JLabel lblDynamicEmail = new JLabel(u.getEmail());
+						lblDynamicEmail.setFont(new Font("Dialog", Font.PLAIN, 14));
+						panel_2.add(lblDynamicEmail, "cell 1 5,alignx left,aligny center");
 		
 		JPanel panel_4 = new JPanel();
 		panel_4.setLayout(new MigLayout("", "[grow]", "[grow]"));
