@@ -17,7 +17,7 @@ import javax.swing.border.EmptyBorder;
 
 import net.miginfocom.swing.MigLayout;
 
-public class TelaError extends JFrame {
+public class PopupVoltarLogin extends JFrame {
 
 	private JPanel contentPane;
 	JButton btnNewButton;
@@ -32,7 +32,7 @@ public class TelaError extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					TelaError frame = new TelaError();
+					PopupVoltarLogin frame = new PopupVoltarLogin();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -41,10 +41,10 @@ public class TelaError extends JFrame {
 		});
 	}
 	
-	public TelaError() {
+	public PopupVoltarLogin() {
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 381, 154);
+		setBounds(100, 100, 332, 150);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		contentPane.setBackground(new Color(154, 205, 217));
@@ -55,19 +55,9 @@ public class TelaError extends JFrame {
 		JPanel panel = new JPanel();
 		panel.setOpaque(false);
 		contentPane.add(panel);
-		panel.setLayout(new MigLayout("", "[100px,grow][50px,grow][100px,grow]", "[grow][grow]"));
+		panel.setLayout(new MigLayout("", "[100px][50px,grow][100px]", "[grow][]"));
 		
-		panel_1 = new JPanel();
-		panel_1.setOpaque(false);
-		panel.add(panel_1, "flowy,cell 0 0 3 1,growx");
-		panel_1.setLayout(new MigLayout("", "[grow][grow][grow]", "[]"));
-		
-		lblNewLabel = new JLabel("Informações Inválidas");
-		lblNewLabel.setFont(new Font("Dialog", Font.BOLD, 14));
-		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		panel_1.add(lblNewLabel, "cell 1 0,growx,aligny center");
-		
-		btnNewButton = new JButton("Ok");
+		btnNewButton = new JButton("Voltar ao Login");
 		btnNewButton.setForeground(new Color(0, 0, 0));
 		btnNewButton.setBounds(100, 100, 50, 20);
 		btnNewButton.setBackground(new Color(8, 127, 140));
@@ -75,14 +65,25 @@ public class TelaError extends JFrame {
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
+				TelaLogin login = new TelaLogin();
+				login.setLocationRelativeTo(null);
+				login.setVisible(true);
 				dispose();
 				
 			}
 		});
+		
+		panel_1 = new JPanel();
+		panel_1.setOpaque(false);
+		panel.add(panel_1, "cell 0 0 3 1,grow");
+		
+		lblNewLabel = new JLabel("Inserir Texto");
+		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 14));
+		panel_1.add(lblNewLabel);
 		panel.add(btnNewButton, "cell 1 1");
 	}
 	public void setLabelText(String text) {
 		lblNewLabel.setText(text);
     }
-
 }

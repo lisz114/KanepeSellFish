@@ -5,7 +5,6 @@ import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.EventQueue;
-import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
@@ -14,7 +13,6 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 import javax.swing.JButton;
-import javax.swing.JCheckBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -25,10 +23,8 @@ import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 
-import Atxy2k.CustomTextField.RestrictedTextField;
 import controle.UsuarioDAO;
 import modelo.RoundButton;
-import modelo.Usuario;
 import net.miginfocom.swing.MigLayout;
 
 @SuppressWarnings("serial")
@@ -38,8 +34,8 @@ public class TelaEsqueceuSenha extends JFrame {
 	private JPanel contentPane;
 	private JTextField txtEmail;
 	private static UsuarioDAO uDAO = UsuarioDAO.getInstancia();
-	private JPasswordField txtSenha;
-	private JPasswordField passwordField;
+	private JPasswordField txtSenhaRepet;
+	private JPasswordField txtNovaSenha;
 
 	/**
 	 * Launch the application.
@@ -109,7 +105,7 @@ public class TelaEsqueceuSenha extends JFrame {
 
 		JLabel lblTexto = new JLabel("Vamos criar uma nova!");
 		lblTexto.setForeground(Color.BLACK); // Define a cor do texto principal
-		lblTexto.setFont(new Font("Dialog", Font.ITALIC, 12)); // Define a fonte
+		lblTexto.setFont(new Font("Dialog", Font.ITALIC, 14)); // Define a fonte
 		panelTexto.add(lblTexto, "cell 0 0,alignx center");
 
 		JPanel panelEmail = new JPanel();
@@ -140,11 +136,11 @@ public class TelaEsqueceuSenha extends JFrame {
 		lblNovaSenha.setFont(new Font("Tahoma", Font.BOLD, 12));
 		panelNovaSenha.add(lblNovaSenha, "cell 0 0");
 
-		passwordField = new JPasswordField();
-		passwordField.setColumns(10);
-		passwordField.setBorder(new LineBorder(Color.BLACK, 2));
-		passwordField.setOpaque(false);
-		panelNovaSenha.add(passwordField, "cell 0 1,grow");
+		txtNovaSenha = new JPasswordField();
+		txtNovaSenha.setColumns(10);
+		txtNovaSenha.setBorder(new LineBorder(Color.BLACK, 2));
+		txtNovaSenha.setOpaque(false);
+		panelNovaSenha.add(txtNovaSenha, "cell 0 1,grow");
 
 		JPanel panelSenha = new JPanel();
 		panelSenha.setBorder(new EmptyBorder(0, 40, 0, 40));
@@ -157,10 +153,10 @@ public class TelaEsqueceuSenha extends JFrame {
 		lblSenha.setFont(new Font("Tahoma", Font.BOLD, 12));
 		panelSenha.add(lblSenha, "cell 0 0");
 
-		txtSenha = new JPasswordField();
-		txtSenha.setBorder(new LineBorder(new Color(0, 0, 0), 2));
-		txtSenha.setOpaque(false);
-		panelSenha.add(txtSenha, "cell 0 1,grow");
+		txtSenhaRepet = new JPasswordField();
+		txtSenhaRepet.setBorder(new LineBorder(new Color(0, 0, 0), 2));
+		txtSenhaRepet.setOpaque(false);
+		panelSenha.add(txtSenhaRepet, "cell 0 1,grow");
 
 		JPanel panelConfirmacao = new JPanel();
 		panelConfirmacao.setOpaque(false);
@@ -175,11 +171,10 @@ public class TelaEsqueceuSenha extends JFrame {
 		PainelBTN.setLayout(sl_PainelBTN);
 
 		JButton btnCadastrar = new RoundButton("Cadastrar");
-		sl_PainelBTN.putConstraint(SpringLayout.WEST, btnCadastrar, 71, SpringLayout.WEST, PainelBTN);
-		sl_PainelBTN.putConstraint(SpringLayout.EAST, btnCadastrar, -76, SpringLayout.EAST, PainelBTN);
-		btnCadastrar.setText("Confirmar");
 		sl_PainelBTN.putConstraint(SpringLayout.NORTH, btnCadastrar, 0, SpringLayout.NORTH, PainelBTN);
-		sl_PainelBTN.putConstraint(SpringLayout.SOUTH, btnCadastrar, 48, SpringLayout.NORTH, PainelBTN);
+		sl_PainelBTN.putConstraint(SpringLayout.WEST, btnCadastrar, 70, SpringLayout.WEST, PainelBTN);
+		sl_PainelBTN.putConstraint(SpringLayout.EAST, btnCadastrar, -77, SpringLayout.EAST, PainelBTN);
+		btnCadastrar.setText("Confirmar");
 		btnCadastrar.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnCadastrar.setFont(new Font("Dialog", Font.PLAIN, 22));
 		btnCadastrar.setBackground(new Color(2, 73, 89));
@@ -189,21 +184,45 @@ public class TelaEsqueceuSenha extends JFrame {
 		btnCadastrar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
+				String senha = String.valueOf(txtNovaSenha.getPassword());
+				String email = txtEmail.getText();
+				String senhaRepet = String.valueOf(txtSenhaRepet.getPassword());
+
+				if (senha.equals(senhaRepet)) {
+					if (uDAO.consultarUsuarioLoginSenha(email, senha) == null) {
+						uDAO.alterarSenha(senha, email);
+						PopupVoltarLogin aviso = new PopupVoltarLogin();
+						aviso.setLabelText("Senha alterada com sucesso!");
+						aviso.setVisible(true);
+						aviso.setLocationRelativeTo(null);
+						dispose();
+					} else {
+						TelaError erro = new TelaError();
+						erro.setLabelText("Não utilize a mesma senha antes cadastrada!");
+						erro.setVisible(true);
+						erro.setLocationRelativeTo(null);
+					}
+				} else {
+					TelaError erro = new TelaError();
+					erro.setLabelText("As duas senhas não coincidem!");
+					erro.setVisible(true);
+					erro.setLocationRelativeTo(null);
+				}
 			}
 		});
 		JLabel lblCriarConta = new JLabel("Criar nova conta");
-		sl_PainelBTN.putConstraint(SpringLayout.NORTH, lblCriarConta, 6, SpringLayout.SOUTH, btnCadastrar);
+		sl_PainelBTN.putConstraint(SpringLayout.SOUTH, btnCadastrar, -6, SpringLayout.NORTH, lblCriarConta);
+		sl_PainelBTN.putConstraint(SpringLayout.NORTH, lblCriarConta, 54, SpringLayout.NORTH, PainelBTN);
+		sl_PainelBTN.putConstraint(SpringLayout.EAST, lblCriarConta, -112, SpringLayout.EAST, PainelBTN);
 		sl_PainelBTN.putConstraint(SpringLayout.WEST, lblCriarConta, 112, SpringLayout.WEST, PainelBTN);
-		sl_PainelBTN.putConstraint(SpringLayout.EAST, lblCriarConta, -100, SpringLayout.EAST, PainelBTN);
 		lblCriarConta.setHorizontalAlignment(SwingConstants.LEFT);
 		lblCriarConta.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		lblCriarConta.setFont(new Font("Dialog", Font.PLAIN, 12));
+		lblCriarConta.setFont(new Font("Dialog", Font.ITALIC, 12));
 		lblCriarConta.setForeground(new Color(0, 92, 214));
 		lblCriarConta.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				TelaLogin frame = new TelaLogin();
-
+				TelaCadastro frame = new TelaCadastro();
 				frame.setLocationRelativeTo(null);
 				frame.setVisible(true);
 				dispose();
@@ -216,6 +235,16 @@ public class TelaEsqueceuSenha extends JFrame {
 		PainelBTN.add(lblCriarConta);
 
 		JLabel lblIrLogin = new JLabel("Logar-se");
+		lblIrLogin.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		lblIrLogin.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				TelaLogin frame = new TelaLogin();
+				frame.setLocationRelativeTo(null);
+				frame.setVisible(true);
+				dispose();
+			}
+		});
 		sl_PainelBTN.putConstraint(SpringLayout.NORTH, lblIrLogin, 97, SpringLayout.NORTH, PainelBTN);
 		sl_PainelBTN.putConstraint(SpringLayout.WEST, lblIrLogin, 133, SpringLayout.WEST, PainelBTN);
 		sl_PainelBTN.putConstraint(SpringLayout.EAST, lblIrLogin, -138, SpringLayout.EAST, PainelBTN);
@@ -223,11 +252,13 @@ public class TelaEsqueceuSenha extends JFrame {
 		lblIrLogin.setFont(new Font("Dialog", Font.ITALIC, 12));
 		lblIrLogin.setForeground(new Color(0, 92, 214));
 		PainelBTN.add(lblIrLogin);
-		
+
 		JLabel lblOu = new JLabel("ou");
-		sl_PainelBTN.putConstraint(SpringLayout.NORTH, lblOu, 6, SpringLayout.SOUTH, lblCriarConta);
-		sl_PainelBTN.putConstraint(SpringLayout.WEST, lblOu, 149, SpringLayout.WEST, PainelBTN);
-		sl_PainelBTN.putConstraint(SpringLayout.EAST, lblOu, 49, SpringLayout.WEST, lblCriarConta);
+		sl_PainelBTN.putConstraint(SpringLayout.NORTH, lblOu, 5, SpringLayout.SOUTH, lblCriarConta);
+		sl_PainelBTN.putConstraint(SpringLayout.WEST, lblOu, 140, SpringLayout.WEST, PainelBTN);
+		sl_PainelBTN.putConstraint(SpringLayout.SOUTH, lblOu, -6, SpringLayout.NORTH, lblIrLogin);
+		sl_PainelBTN.putConstraint(SpringLayout.EAST, lblOu, -150, SpringLayout.EAST, PainelBTN);
+		lblOu.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		lblOu.setHorizontalAlignment(SwingConstants.CENTER);
 		PainelBTN.add(lblOu);
 

@@ -129,7 +129,7 @@ public class TelaLogin extends JFrame {
 		lblEsqueceu.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				TelaEsqueceuSenha esqueceu = new TelaEsqueceuSenha(null);
+				TelaEsqueceuSenha esqueceu = new TelaEsqueceuSenha();
 				esqueceu.setLocationRelativeTo(null);
 				esqueceu.setVisible(true);
 				dispose();
