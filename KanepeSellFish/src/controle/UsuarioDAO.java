@@ -57,23 +57,25 @@ public class UsuarioDAO implements IUsuarioDAO {
 	}
 
 	@Override
-	public int alterarUsuario(Usuario usuario) {
+	public boolean alterarUsuario(Usuario usuario) {
 		// TODO Auto-generated method stub
-		String sql = "UPDATE usuarios set email_Usuario = ?, cpf_Usuario = ?, nome_Usuario = ?, telefone = ? where idUsuario = ?";
+		String sql = "UPDATE usuarios set email_Usuario = ?, nome_Usuario = ?, telefone = ? where idUsuarios = ?";
 		try (Connection conn = ConexaoBD.getConexaoMySQL(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
 			pstmt.setString(1, usuario.getEmail());
-			pstmt.setString(2, usuario.getCpf());
-			pstmt.setString(3, usuario.getNome());
-			pstmt.setString(4, usuario.getTel());
+			pstmt.setString(2, usuario.getNome());
+			pstmt.setString(3, usuario.getTel());
+			pstmt.setInt(4, usuario.getIdUsuario());
 
 			pstmt.executeUpdate();
+			return true;
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			return false;
 		}
 		
-		return -1;
+		
 	}
 
 	@Override

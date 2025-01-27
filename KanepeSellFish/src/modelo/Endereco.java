@@ -1,6 +1,7 @@
 package modelo;
 
 public class Endereco {
+	private int idEndereco;
 	private String cep;
 	private String cidade;
 	private String bairro;
@@ -57,5 +58,13 @@ public class Endereco {
 
 	public void setLogradouro(String logradouro) {
 		this.logradouro = logradouro;
+	}
+
+	public int getIdEndereco() {
+		return idEndereco;
+	}
+
+	public void setIdEndereco(int idEndereco) {
+		this.idEndereco = idEndereco;
 	}
 }
