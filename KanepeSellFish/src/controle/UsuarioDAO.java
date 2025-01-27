@@ -66,7 +66,8 @@ public class UsuarioDAO implements IUsuarioDAO {
 			pstmt.setString(2, usuario.getCpf());
 			pstmt.setString(3, usuario.getNome());
 			pstmt.setString(4, usuario.getTel());
-
+			pstmt.setInt(5, usuario.getIdUsuario());
+			
 			pstmt.executeUpdate();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
