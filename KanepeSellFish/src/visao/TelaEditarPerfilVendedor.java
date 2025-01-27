@@ -227,137 +227,130 @@ public class TelaEditarPerfilVendedor extends JFrame {
 		JButton btnNewButton_1 = new RoundButton("Salvar");
 		panel_1.add(btnNewButton_1, "cell 2 5,alignx right,aligny bottom");
 		btnNewButton_1.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-		        Produtor produtorNovo = new Produtor();
-		        Endereco enderecoNovo = new Endereco();
+			public void actionPerformed(ActionEvent e) {Produtor produtorNovo = new Produtor();
+			Endereco enderecoNovo = new Endereco();
 
-		        // Consulta do produtor atual
-		        Produtor produtorAntigo = pDAO.consultaProdutor(u);
+			// Consulta do produtor atual
+			Produtor produtorAntigo = pDAO.consultaProdutor(u);
 
-		        // Validação de campos obrigatórios
-		        if (txtCNPJ.getText().isEmpty() || txtEmail.getText().isEmpty()
-		                || txtNomeComercio.getText().isEmpty() || txtBairro.getText().isEmpty()
-		                || txtCEP.getText().isEmpty() || txtCidade.getText().isEmpty()
-		                || txtLogradouro.getText().isEmpty() || txtNum.getText().isEmpty()) {
+			// Validação de campos obrigatórios
+			if (txtCNPJ.getText().isEmpty() || txtEmail.getText().isEmpty()
+			        || txtNomeComercio.getText().isEmpty() || txtBairro.getText().isEmpty()
+			        || txtCEP.getText().isEmpty() || txtCidade.getText().isEmpty()
+			        || txtLogradouro.getText().isEmpty() || txtNum.getText().isEmpty()) {
 
-		            TelaError tela = new TelaError();
-		            tela.setLabelText("Dados preenchidos incorretamente. Preencha todos os campos obrigatórios.");
-		            tela.setLocationRelativeTo(null);
-		            tela.setVisible(true);
-		            return;
-		        }
+			    TelaError tela = new TelaError();
+			    tela.setLabelText("Dados preenchidos incorretamente. Preencha todos os campos obrigatórios.");
+			    tela.setLocationRelativeTo(null);
+			    tela.setVisible(true);
+			}
 
-		        // Coleta de dados do formulário
-		        String CNPJ = txtCNPJ.getText();
-		        String Email = txtEmail.getText();
-		        String NomeComercio = txtNomeComercio.getText();
-		        String Telefone = txtCelular.getText();
+			// Coleta de dados do formulário
+			String CNPJ = txtCNPJ.getText();
+			String Email = txtEmail.getText();
+			String NomeComercio = txtNomeComercio.getText();
+			String Telefone = txtCelular.getText();
+			String Bairro = txtBairro.getText();
+			String CEP = txtCEP.getText();
+			String Cidade = txtCidade.getText();
+			String Logradouro = txtLogradouro.getText();
+			Integer Numero = Integer.valueOf(txtNum.getText());
 
-		        String Bairro = txtBairro.getText();
-		        String CEP = txtCEP.getText();
-		        String Cidade = txtCidade.getText();
-		        String Logradouro = txtLogradouro.getText();
-		        Integer Numero = Integer.valueOf(txtNum.getText());
+			// Confirmar valores coletados
+			System.out.println("CNPJ: " + CNPJ);
+			System.out.println("Email: " + Email);
+			System.out.println("NomeComercio: " + NomeComercio);
+			System.out.println("Telefone: " + Telefone);
+			System.out.println("Bairro: " + Bairro);
+			System.out.println("CEP: " + CEP);
+			System.out.println("Cidade: " + Cidade);
+			System.out.println("Logradouro: " + Logradouro);
+			System.out.println("Numero: " + Numero);
 
-		        // Populando os objetos
-		        enderecoNovo.setBairro(Bairro);
-		        enderecoNovo.setCep(CEP);
-		        enderecoNovo.setCidade(Cidade);
-		        enderecoNovo.setLogradouro(Logradouro);
-		        enderecoNovo.setNumero(Numero);
+			// Populando os objetos
+			enderecoNovo.setBairro(Bairro);
+			enderecoNovo.setCep(CEP);
+			enderecoNovo.setCidade(Cidade);
+			enderecoNovo.setLogradouro(Logradouro);
+			enderecoNovo.setNumero(Numero);
 
-		        produtorNovo.setCnpj(CNPJ);
-		        produtorNovo.setEmail(Email);
-		        produtorNovo.setEnd(enderecoNovo);
-		        produtorNovo.setNomeComercio(NomeComercio);
-		        produtorNovo.setTel(Telefone);
+			produtorNovo.setCnpj(CNPJ);
+			produtorNovo.setEmail(Email);
+			produtorNovo.setEnd(enderecoNovo);
+			produtorNovo.setNomeComercio(NomeComercio);
+			produtorNovo.setTel(Telefone);
 
-		        // Atualização ou inserção
-		        if (produtorAntigo != null) {
-		            // Atualizar endereço
-		            enderecoNovo.setIdEndereco(produtorAntigo.getEnd().getIdEndereco());
-		            int enderecoAtualizado = eDAO.atualizarEndereco(enderecoNovo);
+			// Confirmar dados do objeto produtorNovo
+			System.out.println("ProdutorNovo: " + produtorNovo);
 
-		            if (enderecoAtualizado > 0) {
-		                produtorNovo.setIdUsuario(u.getIdUsuario());
-		                produtorNovo.setEndereco(enderecoNovo.getIdEndereco());
-		                boolean produtorAtualizado = pDAO.alterarProdutor(produtorNovo, u);
+			// Atualização ou inserção
+			if (produtorAntigo != null) {
+			    System.out.println("Atualizando produtor existente.");
+			    enderecoNovo.setIdEndereco(produtorAntigo.getEnd().getIdEndereco());
+			    int enderecoAtualizado = eDAO.atualizarEndereco(enderecoNovo);
+			    System.out.println("Endereço atualizado? " + (enderecoAtualizado > 0));
 
-		                if (produtorAtualizado) {
-							TelaPerfilVendedor v = new TelaPerfilVendedor(u, true);
-							v.setLocationRelativeTo(null);
-							v.setVisible(true);
-							dispose();
-		                	TelaError tela = new TelaError();
-				            tela.setLabelText("Dados atualizados com sucesso!");
-				            tela.setLocationRelativeTo(null);
-				            tela.setVisible(true);
-				            
-				            
-		                } else {
-		                	TelaPerfilVendedor v = new TelaPerfilVendedor(u, true);
-		                	v.setLocationRelativeTo(null);
-		                	v.setVisible(true);
-		                	dispose();
-		                	TelaError tela = new TelaError();
-				            tela.setLabelText("Erro ao atualizar os dados do produtor.");
-				            tela.setLocationRelativeTo(null);
-				            tela.setVisible(true);
-				            
-		                }
-		            } else {
-		            	TelaPerfilVendedor v = new TelaPerfilVendedor(u, true);
-		            	v.setLocationRelativeTo(null);
-		            	v.setVisible(true);
-		            	dispose();
-		            	TelaError tela = new TelaError();
-			            tela.setLabelText("Erro ao atualizar o endereço.");
+			    if (enderecoAtualizado > 0) {
+			        produtorNovo.setIdUsuario(u.getIdUsuario());
+			        produtorNovo.setEndereco(enderecoNovo.getIdEndereco());
+			        boolean produtorAtualizado = pDAO.alterarProdutor(produtorNovo, u);
+			        System.out.println("Produtor atualizado? " + produtorAtualizado);
+
+			        if (produtorAtualizado) {
+			            TelaPerfilVendedor v = new TelaPerfilVendedor(u, true);
+			            v.setLocationRelativeTo(null);
+			            v.setVisible(true);
+			            dispose();
+			            TelaError tela = new TelaError();
+			            tela.setLabelText("Dados atualizados com sucesso!");
 			            tela.setLocationRelativeTo(null);
 			            tela.setVisible(true);
-			            
-		            }
-		        } else {
-		            // Inserir novo endereço
-		            int enderecoId = eDAO.inserirEnderecoDoComercio(enderecoNovo);
-
-		            if (enderecoId > 0) {
-		                produtorNovo.setIdUsuario(u.getIdUsuario());
-		                produtorNovo.setEndereco(enderecoId);
-		                boolean produtorInserido = pDAO.inserirProdutor(produtorNovo);
-
-		                if (produtorInserido) {
-		                	TelaPerfilVendedor v = new TelaPerfilVendedor(u, true);
-		                	v.setLocationRelativeTo(null);
-		                	v.setVisible(true);
-		                	dispose();
-		                	TelaError tela = new TelaError();
-				            tela.setLabelText("Dados salvos com sucesso!");
-				            tela.setLocationRelativeTo(null);
-				            tela.setVisible(true);
-				            
-		                } else {
-		                	TelaPerfilVendedor v = new TelaPerfilVendedor(u, true);
-		                	v.setLocationRelativeTo(null);
-		                	v.setVisible(true);
-		                	dispose();
-		                	TelaError tela = new TelaError();
-				            tela.setLabelText("Erro ao salvar os dados do produtor.");
-				            tela.setLocationRelativeTo(null);
-				            tela.setVisible(true);
-				            
-		                }
-		            } else {
-		            	TelaPerfilVendedor v = new TelaPerfilVendedor(u, true);
-		            	v.setLocationRelativeTo(null);
-		            	v.setVisible(true);
-		            	dispose();
-		            	TelaError tela = new TelaError();
-			            tela.setLabelText("Erro ao salvar o endereço.");
+			        } else {
+			            TelaError tela = new TelaError();
+			            tela.setLabelText("Erro ao atualizar os dados do produtor.");
 			            tela.setLocationRelativeTo(null);
 			            tela.setVisible(true);
-			            
-		            }
-		        }
+			        }
+			    } else {
+			        TelaError tela = new TelaError();
+			        tela.setLabelText("Erro ao atualizar o endereço.");
+			        tela.setLocationRelativeTo(null);
+			        tela.setVisible(true);
+			    }
+			} else {
+			    System.out.println("Inserindo novo produtor.");
+			    int enderecoId = eDAO.inserirEnderecoDoComercio(enderecoNovo);
+			    System.out.println("ID do novo endereço: " + enderecoId);
+
+			    if (enderecoId > 0) {
+			        produtorNovo.setIdUsuario(u.getIdUsuario());
+			        produtorNovo.setEndereco(enderecoId);
+			        boolean produtorInserido = pDAO.inserirProdutor(produtorNovo);
+			        System.out.println("Produtor inserido? " + produtorInserido);
+
+			        if (produtorInserido) {
+			            TelaPerfilVendedor v = new TelaPerfilVendedor(u, true);
+			            v.setLocationRelativeTo(null);
+			            v.setVisible(true);
+			            dispose();
+			            TelaError tela = new TelaError();
+			            tela.setLabelText("Dados salvos com sucesso!");
+			            tela.setLocationRelativeTo(null);
+			            tela.setVisible(true);
+			        } else {
+			            TelaError tela = new TelaError();
+			            tela.setLabelText("Erro ao salvar os dados do produtor.");
+			            tela.setLocationRelativeTo(null);
+			            tela.setVisible(true);
+			        }
+			    } else {
+			        TelaError tela = new TelaError();
+			        tela.setLabelText("Erro ao salvar o endereço.");
+			        tela.setLocationRelativeTo(null);
+			        tela.setVisible(true);
+			    }
+			}
+
 		    }
 		});
 		btnNewButton_1.setForeground(new Color(255, 255, 255));
