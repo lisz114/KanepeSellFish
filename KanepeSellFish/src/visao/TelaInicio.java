@@ -124,16 +124,6 @@ public class TelaInicio extends JFrame {
 		JPanel panel_2 = new JPanel();
 		panel_1.add(panel_2, "cell 0 0 1 2,grow");
 		panel_2.setLayout(new MigLayout("", "[][][]", "[60px][100px][60px][50px][][][][190px,grow][][]"));
-		ImageIcon iconUp = new ImageIcon(TelaInicio.class.getResource("/IMG/imgUp.png"));
-		Image imgU = iconUp.getImage().getScaledInstance(40, 40, Image.SCALE_SMOOTH);
-		ImageIcon iconDown = new ImageIcon(TelaInicio.class.getResource("/IMG/imgDown.png"));
-		Image imgD = iconDown.getImage().getScaledInstance(40, 40, Image.SCALE_SMOOTH);
-		ImageIcon iconAZ = new ImageIcon(TelaInicio.class.getResource("/IMG/imgA.png"));
-		Image ordemAZ = iconAZ.getImage().getScaledInstance(40, 40, Image.SCALE_SMOOTH);
-		ImageIcon iconZA = new ImageIcon(TelaInicio.class.getResource("/IMG/imgZ.png"));
-		Image ordemZA = iconZA.getImage().getScaledInstance(40, 40, Image.SCALE_SMOOTH);
-		ImageIcon iconMore = new ImageIcon(TelaInicio.class.getResource("/IMG/iconMore.png"));
-		Image more = iconMore.getImage().getScaledInstance(40, 40, Image.SCALE_SMOOTH);
 
 		ButtonGroup grupo = new ButtonGroup();
 

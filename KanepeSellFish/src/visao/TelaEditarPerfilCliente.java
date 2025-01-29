@@ -3,6 +3,7 @@ package visao;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Cursor;
+import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
@@ -31,9 +32,10 @@ public class TelaEditarPerfilCliente extends JFrame {
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	UsuarioDAO udao = UsuarioDAO.getInstancia();
+	TelaEditarPerfilCliente estajanela = this;
 	private JTextField txtNome;
 	private JTextField txtEmail;
-	private JTextField txtTelefone;
+	
 	/**
 	 * Launch the application.
 	 */
@@ -54,8 +56,13 @@ public class TelaEditarPerfilCliente extends JFrame {
 	 * Create the frame.
 	 */
 	public TelaEditarPerfilCliente(Usuario u, boolean isVendedor) {
+		setResizable(false);
+		setLocationByPlatform(true);
+		setMinimumSize(new Dimension(1176, 664));
+		setMaximumSize(new Dimension(1920, 1080));
+
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 1019, 698);
+		setBounds(100, 100, 1280, 768);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
@@ -71,7 +78,8 @@ public class TelaEditarPerfilCliente extends JFrame {
 
 		txtNome = new JTextField();
 		panel_1.add(txtNome, "flowx,cell 1 1,growx,aligny center");
-		txtNome.setBorder(new TitledBorder(new LineBorder(new Color(0, 0, 0), 2), "Nome", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		txtNome.setBorder(new TitledBorder(new LineBorder(new Color(0, 0, 0), 2), "Nome", TitledBorder.LEADING,
+				TitledBorder.TOP, null, null));
 		txtNome.setFont(new Font("Dialog", Font.PLAIN, 30));
 		txtNome.setOpaque(false);
 		txtNome.setColumns(10);
@@ -95,20 +103,22 @@ public class TelaEditarPerfilCliente extends JFrame {
 		lblCpf.setText(u.getCpf());
 		lblCpf.setToolTipText("Cpf não pode ser alterado.");
 
-		txtTelefone = new JTextField();
+		JTextField txtTelefone = new JTextField();
 		txtTelefone.setOpaque(false);
 		panel_1.add(txtTelefone, "cell 1 4,growx,aligny center");
 		txtTelefone.setBorder(new TitledBorder(new LineBorder(new Color(0, 0, 0), 2), "Telefone", TitledBorder.LEADING,
 				TitledBorder.TOP, null, null));
 		txtTelefone.setColumns(10);
-		if(!u.getTel().isEmpty()) {
-			txtTelefone.setText(String.valueOf(u.getTel()));
-		}else {
-			System.out.println("errooooo");
-		}
+		
 		RestrictedTextField validarTel = new RestrictedTextField(txtTelefone);
 		validarTel.setOnlyNums(true);
 		validarTel.setLimit(11);
+		
+		if (u.getTel()==null||u.getTel().isEmpty()) {
+			txtTelefone.setText("");
+		} else {
+			txtTelefone.setText(u.getTel());
+		}
 
 		JButton btCancelar = new JButton("Cancelar");
 		panel_1.add(btCancelar, "flowx,cell 2 5,alignx right,aligny bottom");
@@ -130,42 +140,40 @@ public class TelaEditarPerfilCliente extends JFrame {
 					tela.setLabelText("Dados preenchidos incorretamente. Preencha todos os campos obrigatórios.");
 					tela.setLocationRelativeTo(null);
 					tela.setVisible(true);
-				}
+				} else {
 
-				// Coleta de dados do formulário
-				String Email = txtEmail.getText();
-				String nome = txtNome.getText();
-				
-				if(!txtTelefone.getText().isEmpty()) {
+					// Coleta de dados do formulário
+					String Email = txtEmail.getText();
+					String nome = txtNome.getText();
 					String Telefone = txtTelefone.getText();
+
+					// Populando os objetos
+					usuarioNovo.setEmail(Email);
+					usuarioNovo.setNome(nome);
 					usuarioNovo.setTel(Telefone);
-				}
+					usuarioNovo.setIdUsuario(u.getIdUsuario());
 
-				// Populando os objetos
-				usuarioNovo.setEmail(Email);
-				usuarioNovo.setNome(nome);
-				usuarioNovo.setIdUsuario(u.getIdUsuario());
+					boolean clienteAtualizado = udao.alterarUsuario(usuarioNovo);
 
-				// Atualização ou inserção
-				if (u != null) {
+					if (clienteAtualizado) {
+						usuarioNovo = udao.consultarUsuarioLoginSenha(usuarioNovo.getEmail(), u.getSenha());
 
-					boolean produtorAtualizado = udao.alterarUsuario(usuarioNovo);
-
-					if (produtorAtualizado) {
-						TelaPerfilCliente v = new TelaPerfilCliente(u, true);
+						TelaPerfilCliente v = new TelaPerfilCliente(usuarioNovo, isVendedor);
 						v.setLocationRelativeTo(null);
 						v.setVisible(true);
-						dispose();
+
 						TelaError tela = new TelaError();
 						tela.setLabelText("Dados atualizados com sucesso!");
 						tela.setLocationRelativeTo(null);
 						tela.setVisible(true);
+						dispose();
 					} else {
 						TelaError tela = new TelaError();
 						tela.setLabelText("Erro ao atualizar os dados do cliente.");
 						tela.setLocationRelativeTo(null);
 						tela.setVisible(true);
 					}
+
 				}
 			}
 
@@ -173,7 +181,7 @@ public class TelaEditarPerfilCliente extends JFrame {
 		btSalvar.setBackground(new Color(64, 128, 128));
 		btCancelar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				PopupCancelar cancelar = new PopupCancelar(u, isVendedor);
+				PopupCancelar cancelar = new PopupCancelar(estajanela, u, isVendedor);
 				cancelar.setVisible(true);
 				cancelar.setLocationRelativeTo(null);
 			}

@@ -13,15 +13,18 @@ import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
+import controle.ProdutoDAO;
+import modelo.Produto;
 import modelo.Usuario;
 import net.miginfocom.swing.MigLayout;
 
 @SuppressWarnings("serial")
-public class PopupCancelar extends JFrame {
+public class PopupExcluirCarrinho extends JFrame {
 
 	private JPanel contentPane;
+	private static ProdutoDAO pDAO = ProdutoDAO.getInstancia();
 
-	public PopupCancelar (TelaEditarPerfilCliente telaEditar, Usuario u, boolean vendedor) {
+	public PopupExcluirCarrinho(Produto produtoSelecionado, TelaCarrinho tela, Usuario u) {
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 284, 174);
@@ -37,7 +40,7 @@ public class PopupCancelar extends JFrame {
 		contentPane.add(panel_1);
 		panel_1.setLayout(new GridLayout(1, 0, 0, 0));
 
-		JLabel lblExcluirProduto = new JLabel("Tem certeza que deseja cancelar?");
+		JLabel lblExcluirProduto = new JLabel("Tem certeza que deseja excluir?");
 		lblExcluirProduto.setHorizontalAlignment(SwingConstants.CENTER);
 		lblExcluirProduto.setForeground(Color.BLACK);
 		lblExcluirProduto.setFont(new Font("Dialog", Font.BOLD, 15));
@@ -48,32 +51,21 @@ public class PopupCancelar extends JFrame {
 		contentPane.add(panel);
 		panel.setLayout(new MigLayout("", "[100px][50px][50px][100px]", "[20px][30px]"));
 
-		JButton btExcluir = new JButton("Sim");
+		JButton btExcluir = new JButton("Excluir");
 		btExcluir.setBorderPainted(false);
 		btExcluir.setBorder(null);
 		btExcluir.setForeground(new Color(0, 0, 0));
 		btExcluir.setBounds(100, 100, 50, 20);
-		btExcluir.setBackground(new Color(8, 127, 140));
+		btExcluir.setBackground(new Color(205, 92, 92));
 		btExcluir.setFont(new Font("/Fontes/Roboto-Black.ttf", Font.PLAIN, 13));
 		btExcluir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if(vendedor == true) {
-					TelaPerfilVendedor v = new TelaPerfilVendedor(u, vendedor);
-					v.setVisible(true);
-					v.setLocationRelativeTo(null);
-					telaEditar.dispose();
-					dispose();
-				} else {
-					TelaPerfilCliente c = new TelaPerfilCliente(u, vendedor);
-					c.setVisible(true);
-					c.setLocationRelativeTo(null);
-					telaEditar.dispose();
-					dispose();
-				}
+				pDAO.removerProduto(produtoSelecionado);
+				dispose();
 			}
 		});
 
-		JButton btCancelar = new JButton("Não");
+		JButton btCancelar = new JButton("Cancelar");
 		btCancelar.setBorderPainted(false);
 		btCancelar.setBorder(null);
 		btCancelar.addActionListener(new ActionListener() {

@@ -17,17 +17,17 @@ import modelo.Usuario;
 
 public class CarrinhoDAO implements ICarrinhoDAO {
 
-	private static ProdutoDAO instancia;
+	private static CarrinhoDAO instancia;
 	private static ArrayList<Produto> listaProdutos;
 	ProdutoDAO pDAO = new ProdutoDAO();
 
 	public CarrinhoDAO() {
 	}
 
-	public ProdutoDAO instancia() {
+	public static CarrinhoDAO getInstancia() {
 
 		if (instancia == null) {
-			instancia = new ProdutoDAO();
+			instancia = new CarrinhoDAO();
 			listaProdutos = new ArrayList<Produto>();
 		}
 
@@ -127,8 +127,7 @@ public class CarrinhoDAO implements ICarrinhoDAO {
 
 	@Override
 	public boolean removerProduto(long id) {
-		// TODO Auto-generated method stub
-		return false;
+		return true;
 	}
 
 	@Override

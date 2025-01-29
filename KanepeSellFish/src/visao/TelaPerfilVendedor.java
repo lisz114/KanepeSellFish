@@ -213,7 +213,7 @@ public class TelaPerfilVendedor extends JFrame {
 		panel_1.setMaximumSize(new Dimension(63, 23));
 		panel_1.setMinimumSize(new Dimension(63, 23));
 		contentPane.add(panel_1, BorderLayout.CENTER);
-		panel_1.setLayout(new MigLayout("", "[grow][grow][grow][grow][grow]", "[][][][][][][grow][40px]"));
+		panel_1.setLayout(new MigLayout("", "[grow][grow][grow][grow][grow]", "[][][][][][][][grow][40px]"));
 		
 		JLabel imgUsuario = new JLabel("");
 		imgUsuario.setIcon(new ImageIcon(TelaEditarPerfilCliente.class.getResource("/img/Avatar.png")));
@@ -225,18 +225,18 @@ public class TelaPerfilVendedor extends JFrame {
 		panel_1.add(lblNomeUsuario, "flowy,cell 1 2,alignx left,aligny top");
 		lblNomeUsuario.setText(u.getNome());
 		
-		JLabel lblInfoC = new JLabel("Informações sobre  o comércio:");
-		lblInfoC.setFont(new Font("Dialog", Font.PLAIN, 15));
-		panel_1.add(lblInfoC, "cell 2 2,alignx left,aligny bottom");
-		
-		JLabel lblEndereco = new JLabel("Endereço:");
-		lblEndereco.setFont(new Font("Dialog", Font.PLAIN, 15));
-		panel_1.add(lblEndereco, "flowx,cell 3 2,alignx left,aligny bottom");
-		
 		JLabel lblEditarFt = new JLabel("Editar Foto de Perfil");
 		lblEditarFt.setFont(new Font("Dialog", Font.ITALIC, 13));
 		lblEditarFt.setForeground(SystemColor.textHighlight);
 		panel_1.add(lblEditarFt, "cell 0 3,alignx center");
+		
+		JLabel lblInfoComercio = new JLabel("Informações pessoais:");
+		lblInfoComercio.setFont(new Font("Dialog", Font.BOLD | Font.ITALIC, 17));
+		panel_1.add(lblInfoComercio, "cell 1 3,alignx left,aligny bottom");
+		
+		JLabel lblInfoC = new JLabel("Informações sobre  o comércio:");
+		lblInfoC.setFont(new Font("Dialog", Font.BOLD | Font.ITALIC, 17));
+		panel_1.add(lblInfoC, "cell 2 3,alignx left,aligny bottom");
 		
 		JLabel lblNomeComercio = new JLabel("");
 		lblNomeComercio.setFont(new Font("Dialog", Font.PLAIN, 18));
@@ -245,96 +245,55 @@ public class TelaPerfilVendedor extends JFrame {
 		
 		JLabel lblEmail = new JLabel("Email:");
 		lblEmail.setFont(new Font("Dialog", Font.PLAIN, 15));
-		panel_1.add(lblEmail, "flowx,cell 1 3,alignx left,aligny bottom");
+		panel_1.add(lblEmail, "flowx,cell 1 4,alignx left,aligny bottom");
 		
 		JLabel txtEmail = new JLabel("");
 		txtEmail.setFont(new Font("Dialog", Font.PLAIN, 15));
-		panel_1.add(txtEmail, "cell 1 3,alignx center,aligny bottom");
+		panel_1.add(txtEmail, "cell 1 4,alignx center,aligny bottom");
 		txtEmail.setText(u.getEmail());
+		
+		JLabel lblEndereco = new JLabel("Endereço:");
+		lblEndereco.setFont(new Font("Dialog", Font.PLAIN, 15));
+		panel_1.add(lblEndereco, "flowx,cell 3 4,alignx left,aligny bottom");
 		
 		JLabel lblCpf = new JLabel("Cpf:");
 		lblCpf.setFont(new Font("Dialog", Font.PLAIN, 15));
-		panel_1.add(lblCpf, "flowx,cell 1 4");
+		panel_1.add(lblCpf, "flowx,cell 1 5");
 		
 		JLabel txtCpf = new JLabel("");
 		txtCpf.setFont(new Font("Dialog", Font.PLAIN, 15));
-		panel_1.add(txtCpf, "cell 1 4");
+		panel_1.add(txtCpf, "cell 1 5");
 		txtCpf.setText(u.getCpf());
-		
-		JLabel lblInfoComercio = new JLabel("Informações pessoais:");
-		lblInfoComercio.setFont(new Font("Dialog", Font.PLAIN, 15));
-		panel_1.add(lblInfoComercio, "cell 1 2,alignx left,aligny center");
 		
 		JLabel lblTelefone = new JLabel("Telefone:");
 		lblTelefone.setFont(new Font("Dialog", Font.PLAIN, 15));
-		panel_1.add(lblTelefone, "flowx,cell 1 5");
+		panel_1.add(lblTelefone, "flowx,cell 1 6");
 		
 		JLabel txtTelefone = new JLabel("");
 		txtTelefone.setFont(new Font("Dialog", Font.PLAIN, 15));
-		panel_1.add(txtTelefone, "cell 1 5");
+		panel_1.add(txtTelefone, "cell 1 6");
 		txtTelefone.setText(u.getTel());
 		
 		JLabel lblNomeC = new JLabel("Nome do Comércio:");
 		lblNomeC.setFont(new Font("Dialog", Font.PLAIN, 15));
-		panel_1.add(lblNomeC, "flowx,cell 2 3,aligny bottom");
+		panel_1.add(lblNomeC, "flowx,cell 2 4,aligny bottom");
 		
 		JLabel lblCnpj = new JLabel("Cnpj:");
 		lblCnpj.setFont(new Font("Dialog", Font.PLAIN, 15));
-		panel_1.add(lblCnpj, "flowx,cell 2 4,aligny bottom");
+		panel_1.add(lblCnpj, "flowx,cell 2 5,aligny bottom");
 		
 		JLabel txtCnpj = new JLabel("");
 		txtCnpj.setFont(new Font("Dialog", Font.PLAIN, 15));
-		panel_1.add(txtCnpj, "cell 2 4,aligny bottom");
+		panel_1.add(txtCnpj, "cell 2 5,aligny bottom");
 		txtCnpj.setText(pDAO.consultaProdutor(u).getCnpj());
 		
 		JLabel txtNomeC = new JLabel("");
 		txtNomeC.setFont(new Font("Dialog", Font.PLAIN, 15));
-		panel_1.add(txtNomeC, "cell 2 3,aligny bottom");
+		panel_1.add(txtNomeC, "cell 2 4,aligny bottom");
 		txtNomeC.setText(pDAO.consultaProdutor(u).getNomeComercio());
 		
 		JLabel lblnada = new JLabel("    ");
-		panel_1.add(lblnada, "cell 3 2,aligny bottom");
-		
-		JLabel lblNumero = new JLabel("Número: ");
-		lblNumero.setFont(new Font("Dialog", Font.PLAIN, 15));
-		panel_1.add(lblNumero, "flowx,cell 3 3,alignx left");
-		
-		JLabel txtNum = new JLabel("num");
-		txtNum.setFont(new Font("Dialog", Font.PLAIN, 15));
-		panel_1.add(txtNum, "cell 3 3,alignx left");
-		txtNum.setText(String.valueOf(produtor.getEnd().getNumero()));
-		
-		JLabel lblnada2 = new JLabel(",     ");
-		panel_1.add(lblnada2, "cell 3 3");
-
-		JLabel txtBairro = new JLabel("bairro");
-		txtBairro.setFont(new Font("Dialog", Font.PLAIN, 15));
-		panel_1.add(txtBairro, "cell 3 3,alignx left");
-		txtBairro.setText(produtor.getEnd().getBairro());
-		
-		JLabel txtLogradouro = new JLabel("logra");
-		txtLogradouro.setFont(new Font("Dialog", Font.PLAIN, 15));
-		panel_1.add(txtLogradouro, "cell 3 2,alignx right,aligny bottom");
-		txtLogradouro.setText(produtor.getEnd().getLogradouro());
-		
-		JLabel txtCidade = new JLabel("cidade");
-		txtCidade.setFont(new Font("Dialog", Font.PLAIN, 15));
-		panel_1.add(txtCidade, "flowx,cell 3 4");
-		txtCidade.setText(produtor.getEnd().getCidade());
-		
-		JLabel lblnada3 = new JLabel(",     ");
-		panel_1.add(lblnada3, "cell 3 4,alignx left");
-		
-		JLabel txtCep = new JLabel("cep");
-		txtCep.setFont(new Font("Dialog", Font.PLAIN, 15));
-		panel_1.add(txtCep, "cell 3 4,alignx right,aligny bottom");
-		txtCep.setText(produtor.getEnd().getCep());
-		
-		JLabel lblvirgula = new JLabel(",");
-		panel_1.add(lblvirgula, "cell 3 2,aligny bottom");
-		
-		JLabel lblponto = new JLabel(".");
-		panel_1.add(lblponto, "cell 3 4");
+		panel_1.add(lblnada, "flowx,cell 3 2,aligny bottom");
 		
 		JButton rndbtnAlterarInformaes = new JButton("");
 		rndbtnAlterarInformaes.addActionListener(new ActionListener() {
@@ -352,11 +311,52 @@ public class TelaPerfilVendedor extends JFrame {
 				
 			}
 		});
+		
+		JLabel txtCidade = new JLabel("cidade");
+		txtCidade.setFont(new Font("Dialog", Font.PLAIN, 15));
+		panel_1.add(txtCidade, "flowx,cell 3 6");
+		txtCidade.setText(produtor.getEnd().getCidade());
 		rndbtnAlterarInformaes.setText("Alterar Informações");
 		rndbtnAlterarInformaes.setFont(new Font("Dialog", Font.PLAIN, 11));
 		rndbtnAlterarInformaes.setBackground(new Color(154, 205, 217));
 		rndbtnAlterarInformaes.setForeground(new Color(0, 0, 0));
-		panel_1.add(rndbtnAlterarInformaes, "cell 4 7,alignx center,aligny center");
+		panel_1.add(rndbtnAlterarInformaes, "cell 4 8,alignx center,aligny center");
+		
+		JLabel lblnada3 = new JLabel(",     ");
+		panel_1.add(lblnada3, "cell 3 6,alignx left");
+		
+		JLabel txtCep = new JLabel("cep");
+		txtCep.setFont(new Font("Dialog", Font.PLAIN, 15));
+		panel_1.add(txtCep, "cell 3 6,alignx right,aligny bottom");
+		txtCep.setText(produtor.getEnd().getCep());
+		
+		JLabel lblNumero = new JLabel("Número: ");
+		lblNumero.setFont(new Font("Dialog", Font.PLAIN, 15));
+		panel_1.add(lblNumero, "flowx,cell 3 5,alignx left");
+		
+		JLabel txtNum = new JLabel("num");
+		txtNum.setFont(new Font("Dialog", Font.PLAIN, 15));
+		panel_1.add(txtNum, "cell 3 5,alignx left");
+		txtNum.setText(String.valueOf(produtor.getEnd().getNumero()));
+		
+		JLabel lblnada2 = new JLabel(",     ");
+		panel_1.add(lblnada2, "cell 3 5");
+		
+				JLabel txtBairro = new JLabel("bairro");
+				txtBairro.setFont(new Font("Dialog", Font.PLAIN, 15));
+				panel_1.add(txtBairro, "cell 3 5,alignx left");
+				txtBairro.setText(produtor.getEnd().getBairro());
+				
+				JLabel txtLogradouro = new JLabel("logra");
+				txtLogradouro.setFont(new Font("Dialog", Font.PLAIN, 15));
+				panel_1.add(txtLogradouro, "cell 3 4,alignx right,aligny bottom");
+				txtLogradouro.setText(produtor.getEnd().getLogradouro());
+				
+				JLabel lblponto = new JLabel(".");
+				panel_1.add(lblponto, "cell 3 6");
+				
+				JLabel lblvirgula = new JLabel(",");
+				panel_1.add(lblvirgula, "cell 3 4,aligny bottom");
 		
 
 	}
