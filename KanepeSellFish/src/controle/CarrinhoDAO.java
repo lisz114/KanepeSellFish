@@ -156,25 +156,26 @@ public class CarrinhoDAO implements ICarrinhoDAO {
 
 			while (res1.next()) {
 
-				pDAO.pegarIdProduto(null);
+//				pDAO.pegarIdProduto(null);
 
-				ItemCarrinho prod = new ItemCarrinho();
-				
-				
-				prod.setProdutoItemCarrinho(Integer.parseInt(res1.getString("Produtos_idProdutos")));
-				prod.setPrecoTotal(Float.parseFloat(res1.getString("preco")));
-				prod.setQuantidade(Integer.parseInt(res1.getString("quantidade")));
-				listaDeProdutos.add(prod);
+				ItemCarrinho Iprod = new ItemCarrinho();
+
+				Iprod.setProdutoItemCarrinho(Integer.parseInt(res1.getString("Produtos_idProdutos")));
+				Iprod.setPrecoTotal(Float.parseFloat(res1.getString("preco")));
+				Iprod.setQuantidade(Integer.parseInt(res1.getString("quantidade")));
+				Iprod.setProduto(pDAO.pegarProdutoPorId(Iprod.getProdutoItemCarrinho()));
+				listaDeProdutos.add(Iprod);
 			}
 
 			res1.close();
 			stmt1.close();
 			conn.close();
+			return listaDeProdutos;
 		} catch (Exception e) {
 			System.out.println(e);
+			return null;
 		}
 
-		return listaDeProdutos;
 	}
 
 }

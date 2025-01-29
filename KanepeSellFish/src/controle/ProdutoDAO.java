@@ -75,7 +75,7 @@ public class ProdutoDAO implements IProdutoDAO {
 
 	public List<Produto> ordenarPorPreco(boolean crescente, List<Produto> produtos) {
 		Comparator<Produto> comparador = Comparator.comparingDouble(Produto::getPreco);
-		if(!crescente) {
+		if (!crescente) {
 			comparador = comparador.reversed();
 		}
 		produtos.sort(comparador);
@@ -84,7 +84,7 @@ public class ProdutoDAO implements IProdutoDAO {
 
 	public List<Produto> ordenarNome(boolean crescente, List<Produto> produtos) {
 		Comparator<Produto> comparador = Comparator.comparing(Produto::getNome);
-		if(!crescente) {
+		if (!crescente) {
 			comparador = comparador.reversed();
 		}
 		produtos.sort(comparador);
@@ -132,27 +132,27 @@ public class ProdutoDAO implements IProdutoDAO {
 	}
 
 	public String pegarIdProdutor(Usuario u) {
-	
+
 		PreparedStatement stmt1 = null;
-	
+
 		Connection conn = ConexaoBD.getConexaoMySQL();
-	
+
 		try {
 			stmt1 = conn.prepareStatement("SELECT * FROM kanepe.produtores where Usuarios_idUsuarios = ?;");
 			ResultSet res1 = null;
 			stmt1.setString(1, String.valueOf(u.getIdUsuario()));
-	
+
 			res1 = stmt1.executeQuery();
-	
+
 			while (res1.next()) {
-	
+
 				return res1.getString("idProdutores");
 			}
-	
+
 			res1.close();
 			stmt1.close();
 			conn.close();
-	
+
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -209,10 +209,10 @@ public class ProdutoDAO implements IProdutoDAO {
 			return false;
 		}
 	}
-	
+
 	public ArrayList<Produto> addTodosProd() {
 		ArrayList<Produto> listaDeProdutos = new ArrayList<Produto>();
-		
+
 		PreparedStatement stmt1 = null;
 
 		Connection conn = ConexaoBD.getConexaoMySQL();
@@ -220,7 +220,6 @@ public class ProdutoDAO implements IProdutoDAO {
 		try {
 			stmt1 = conn.prepareStatement("SELECT * FROM kanepe.produtos;");
 			ResultSet res1 = null;
-
 
 			res1 = stmt1.executeQuery();
 
@@ -249,4 +248,43 @@ public class ProdutoDAO implements IProdutoDAO {
 
 		return listaDeProdutos;
 	}
+
+	public Produto pegarProdutoPorId(int idProduto) {
+	    PreparedStatement stmt1 = null;
+	    ResultSet res1 = null;
+	    Connection conn = ConexaoBD.getConexaoMySQL();
+	    
+	    try {
+	        stmt1 = conn.prepareStatement("SELECT * FROM kanepe.produtos WHERE idProdutos = ?;");
+	        stmt1.setInt(1, idProduto); // Corrigido para setInt
+	        res1 = stmt1.executeQuery();
+	        
+	        if (res1.next()) { // Adicionado para evitar erro
+	            Produto prod = new Produto();
+	            prod.setNome(res1.getString("nome_Produto"));
+	            prod.setQuantidadeEstoque(res1.getInt("quantidade")); // Melhor prática: usar getInt diretamente
+	            prod.setPreco(res1.getFloat("preco")); // Melhor prática: usar getFloat
+	            prod.setIdProdutor(res1.getInt("Produtores_idProdutores")); // Melhor prática: usar getInt
+	            prod.setValidade(
+	                LocalDate.parse(res1.getString("validade"), DateTimeFormatter.ofPattern("yyyy-MM-dd"))
+	            );
+	            prod.setSalinidade(res1.getBoolean("salinidade"));
+	            return prod;
+	        } else {
+	            return null; // Retorna null se o ID não for encontrado
+	        }
+	    } catch (Exception e) {
+	        System.out.println("Erro ao buscar produto: " + e.getMessage());
+	        return null;
+	    } finally {
+	        try {
+	            if (res1 != null) res1.close();
+	            if (stmt1 != null) stmt1.close();
+	            if (conn != null) conn.close();
+	        } catch (Exception e) {
+	            System.out.println("Erro ao fechar recursos: " + e.getMessage());
+	        }
+	    }
+	}
+
 }

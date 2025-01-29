@@ -4,6 +4,7 @@ public class ItemCarrinho extends Produto{
 	private int produtoItemCarrinho;
 	private Integer quantidade;
 	private Float precoTotal;
+	private Produto produto;
 	
 	public ItemCarrinho(){}
 	
@@ -35,6 +36,14 @@ public class ItemCarrinho extends Produto{
 
 	public void setPrecoTotal(Float precoTotal) {
 		this.precoTotal = precoTotal;
+	}
+
+	public Produto getProduto() {
+		return produto;
+	}
+
+	public void setProduto(Produto produto) {
+		this.produto = produto;
 	}
 
 
