@@ -2,7 +2,7 @@ package visao;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.ComponentOrientation;
+import java.awt.Cursor;
 import java.awt.Font;
 import java.awt.Image;
 import java.awt.SystemColor;
@@ -10,8 +10,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -19,26 +17,26 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-import javax.swing.SwingConstants;
-import javax.swing.border.BevelBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
-import javax.swing.border.SoftBevelBorder;
 import javax.swing.border.TitledBorder;
 
+import Atxy2k.CustomTextField.RestrictedTextField;
 import controle.UsuarioDAO;
-import modelo.Produto;
 import modelo.Usuario;
 import net.miginfocom.swing.MigLayout;
-import javax.swing.JPasswordField;
 
 public class TelaEditarPerfilCliente extends JFrame {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	UsuarioDAO udao = UsuarioDAO.getInstancia();
 	private JTextField txtNome;
 	private JTextField txtEmail;
-	private JTextField txtTel;
+	private JTextField txtTelefone;
 	/**
 	 * Launch the application.
 	 */
@@ -170,8 +168,6 @@ public class TelaEditarPerfilCliente extends JFrame {
 		imgMenu.setIcon(new ImageIcon(iconMenu));
 		ImageIcon carrinho = new ImageIcon(TelaEditarPerfilCliente.class.getResource("/IMG/carrinho-de-compras.png"));
 		Image imgC = carrinho.getImage().getScaledInstance(30, 30, Image.SCALE_SMOOTH);
-		ImageIcon notificacao = new ImageIcon(TelaEditarPerfilCliente.class.getResource("/IMG/sino.png"));
-		Image imgN = notificacao.getImage().getScaledInstance(30, 30, Image.SCALE_SMOOTH);
 
 		JLabel imgCarrinho = new JLabel("");
 		imgCarrinho.setIcon(new ImageIcon(TelaEditarPerfilCliente.class.getResource("/IMG/carrinho-de-compras.png")));
@@ -203,7 +199,7 @@ public class TelaEditarPerfilCliente extends JFrame {
 
 		JPanel panel_2 = new JPanel();
 		panel_1.add(panel_2, "cell 1 0,grow");
-		panel_2.setLayout(new MigLayout("", "[30px][10px][10px,grow]", "[50px][][50px][][][][][]"));
+		panel_2.setLayout(new MigLayout("", "[30px][10px][10px,grow]", "[50px][][50px][][][][][][]"));
 
 		txtNome = new JTextField();
 		txtNome.setBorder(null);
@@ -213,40 +209,31 @@ public class TelaEditarPerfilCliente extends JFrame {
 		txtNome.setColumns(10);
 		txtNome.setText(u.getNome());
 
-		JLabel lblCPF = new JLabel("CPF:");
-		lblCPF.setFont(new Font("Dialog", Font.PLAIN, 15));
-		panel_2.add(lblCPF, "flowx,cell 1 3,alignx left");
-		
 		JLabel lblCpf = new JLabel("");
-		lblCpf.setToolTipText("");
+		lblCpf.setBorder(new TitledBorder(new LineBorder(new Color(0, 0, 0), 2), "CPF", TitledBorder.LEADING,
+				TitledBorder.TOP, null, new Color(0, 0, 0)));
 		lblCpf.setFont(new Font("Dialog", Font.PLAIN, 14));
-		panel_2.add(lblCpf, "cell 2 3,alignx left,aligny center");
+		panel_2.add(lblCpf, "cell 2 3,growx,aligny center");
 		lblCpf.setText(u.getCpf());
-		lblCpf.setToolTipText("Insira seu nome");
-		
-		JLabel lblEmail = new JLabel("Email:");
-		lblEmail.setFont(new Font("Dialog", Font.PLAIN, 15));
-		panel_2.add(lblEmail, "flowx,cell 1 5,alignx left,aligny center");
+		lblCpf.setToolTipText("Cpf não pode ser alterado.");
 
 		txtEmail = new JTextField();
+		txtEmail.setCursor(Cursor.getPredefinedCursor(Cursor.TEXT_CURSOR));
 		txtEmail.setOpaque(false);
 		txtEmail.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		txtEmail.setColumns(10);
-		txtEmail.setBorder(null);
+		txtEmail.setBorder(new TitledBorder(new LineBorder(new Color(0, 0, 0), 2), "Email", TitledBorder.LEADING,
+				TitledBorder.TOP, null, new Color(0, 0, 0)));
 		panel_2.add(txtEmail, "cell 2 5,growx");
 		txtEmail.setText(String.valueOf(u.getEmail()));
 
-		JLabel lblTelefone = new JLabel("Telefone");
-		lblTelefone.setFont(new Font("Dialog", Font.PLAIN, 15));
-		panel_2.add(lblTelefone, "cell 1 7,alignx trailing");
-
-		txtTel = new JTextField();
-		txtTel.setOpaque(false);
-		txtTel.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		txtTel.setColumns(10);
-		txtTel.setBorder(null);
-		panel_2.add(txtTel, "cell 2 7,growx");
-		txtTel.setText(String.valueOf(u.getTel()));
+		txtTelefone = new JTextField();
+		txtTelefone.setBorder(new TitledBorder(new LineBorder(new Color(0, 0, 0), 2), "Telefone", TitledBorder.LEADING,TitledBorder.TOP, null, null));
+		panel_2.add(txtTelefone, "cell 2 7,growx");
+		txtTelefone.setColumns(10);
+		RestrictedTextField validarTel = new RestrictedTextField(txtTelefone);
+		validarTel.setOnlyNums(true);
+		validarTel.setLimit(11);
 
 		JPanel panel_buttons = new JPanel();
 		panel_1.add(panel_buttons, "cell 1 1,grow");

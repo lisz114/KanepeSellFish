@@ -63,10 +63,10 @@ public class UsuarioDAO implements IUsuarioDAO {
 		try (Connection conn = ConexaoBD.getConexaoMySQL(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
 			pstmt.setString(1, usuario.getEmail());
-			pstmt.setString(2, usuario.getNome());
-			pstmt.setString(3, usuario.getTel());
-			pstmt.setInt(4, usuario.getIdUsuario());
-
+			pstmt.setString(2, usuario.getCpf());
+			pstmt.setString(3, usuario.getNome());
+			pstmt.setString(4, usuario.getTel());
+			pstmt.setInt(5, usuario.getIdUsuario());
 			pstmt.executeUpdate();
 			return true;
 		} catch (SQLException e) {

@@ -116,6 +116,11 @@ public class TelaPerfilCliente extends JFrame {
 				JLabel lblDynamicTel = new JLabel("New label");
 				lblDynamicTel.setFont(new Font("Dialog", Font.PLAIN, 14));
 				panel_2.add(lblDynamicTel, "cell 1 7,alignx left,aligny center");
+				if(u.getTel()==null){
+					lblDynamicTel.setText("Nenhum telefone cadastrado.");
+				}else {
+					lblDynamicTel.setText(u.getTel());
+				}
 				lblDynamicTel.setText(u.getTel());
 				
 						JLabel lblDynamicEmail = new JLabel(u.getEmail());
