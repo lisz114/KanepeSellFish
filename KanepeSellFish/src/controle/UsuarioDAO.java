@@ -16,7 +16,6 @@ public class UsuarioDAO implements IUsuarioDAO {
 
 	private static UsuarioDAO instancia;
 
-
 	public UsuarioDAO() {
 
 	}
@@ -54,28 +53,6 @@ public class UsuarioDAO implements IUsuarioDAO {
 		}
 
 		return -1; // Retorna -1 em caso de erro
-	}
-
-	@Override
-	public boolean alterarUsuario(Usuario usuario) {
-		// TODO Auto-generated method stub
-		String sql = "UPDATE usuarios set email_Usuario = ?, nome_Usuario = ?, telefone = ? where idUsuarios = ?";
-		try (Connection conn = ConexaoBD.getConexaoMySQL(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
-
-			pstmt.setString(1, usuario.getEmail());
-			pstmt.setString(2, usuario.getCpf());
-			pstmt.setString(3, usuario.getNome());
-			pstmt.setString(4, usuario.getTel());
-			pstmt.setInt(5, usuario.getIdUsuario());
-			pstmt.executeUpdate();
-			return true;
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			return false;
-		}
-		
-		
 	}
 
 	@Override
@@ -142,7 +119,7 @@ public class UsuarioDAO implements IUsuarioDAO {
 
 			if (res1.next()) {
 				return true;
-			}else {
+			} else {
 				return false;
 			}
 
@@ -150,7 +127,7 @@ public class UsuarioDAO implements IUsuarioDAO {
 			e.printStackTrace();
 		}
 		return false;
-}
+	}
 
 	@Override
 	public Usuario consultaUsuarioCadastrado(String cpf, String email) {
@@ -234,6 +211,24 @@ public class UsuarioDAO implements IUsuarioDAO {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		}
+	}
+
+	@Override
+	public boolean alterarUsuario(Usuario usuario) {
+		String sql = "UPDATE usuarios set email_Usuario = ?, nome_Usuario = ?, telefone = ? where idUsuarios = ?";
+		try (Connection conn = ConexaoBD.getConexaoMySQL(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+			pstmt.setString(1, usuario.getEmail());
+			pstmt.setString(2, usuario.getNome());
+			pstmt.setString(3, usuario.getTel());
+			pstmt.setInt(4, usuario.getIdUsuario());
+			pstmt.executeUpdate();
+			return true;
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return false;
 		}
 	}
 }

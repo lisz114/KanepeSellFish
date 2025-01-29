@@ -105,13 +105,6 @@ public class TelaEditarPerfilVendedor extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(new BorderLayout(0, 0));
 
-		ImageIcon lapis = new ImageIcon(TelaEditarPerfilVendedor.class.getResource("/img/lapis.png"));
-		Image imgL = lapis.getImage().getScaledInstance(20, 20, Image.SCALE_SMOOTH);
-		ImageIcon menu = new ImageIcon(TelaInicio.class.getResource("/IMG/menu-hamburguer.png"));
-		Image iconMenu = menu.getImage().getScaledInstance(30, 30, Image.SCALE_SMOOTH);
-		ImageIcon carrinho = new ImageIcon(TelaInicio.class.getResource("/IMG/carrinho-de-compras.png"));
-		Image imgCarro = carrinho.getImage().getScaledInstance(30, 30, Image.SCALE_SMOOTH);
-
 		JPanel panel_1 = new JPanel();
 		contentPane.add(panel_1, BorderLayout.CENTER);
 		panel_1.setOpaque(false);
@@ -121,7 +114,7 @@ public class TelaEditarPerfilVendedor extends JFrame {
 		panel_1.setLayout(new MigLayout("", "[250][400px,grow][grow]", "[60px][202px][][][][][grow]"));
 
 		JLabel lblNome = new JLabel("");
-		lblNome.setFont(new Font("Tahoma", Font.PLAIN, 24));
+		lblNome.setFont(new Font("Dialog", Font.PLAIN, 30));
 		panel_1.add(lblNome, "cell 1 1,alignx left,aligny center");
 		panel_1.add(imgAvatar, "cell 0 1,alignx center,aligny center");
 		lblNome.setText(u.getNome());
@@ -163,6 +156,7 @@ public class TelaEditarPerfilVendedor extends JFrame {
 		txtBairro.setText(pDAO.consultaProdutor(u).getEnd().getBairro());
 		
 		txtNome = new JTextField();
+		txtNome.setOpaque(false);
 		txtNome.setBorder(new TitledBorder(new LineBorder(new Color(0, 0, 0), 2), "Nome", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		txtNome.setText(u.getNome());
 		panel_1.add(txtNome, "cell 1 3,growx");
@@ -176,9 +170,7 @@ public class TelaEditarPerfilVendedor extends JFrame {
 		txtCPF.setBorder(new LineBorder(new Color(171, 173, 179)));
 		txtCPF.setOpaque(false);
 		txtCPF.setToolTipText("");
-		txtCPF.setBorder(new TitledBorder(new LineBorder(new Color(0, 0, 0), 2),
-				"CPF", TitledBorder.LEADING, TitledBorder.TOP, null,
-				new Color(0, 0, 0)));
+		txtCPF.setBorder(new TitledBorder(new LineBorder(new Color(0, 0, 0), 2),"CPF", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
 		txtCPF.setBackground(SystemColor.menu);
 		txtCPF.setColumns(10);
 		txtCPF.setText(u.getCpf());

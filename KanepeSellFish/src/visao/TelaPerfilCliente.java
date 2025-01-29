@@ -32,7 +32,7 @@ public class TelaPerfilCliente extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
-	TelaPerfilCliente estajanela = this; 
+	TelaPerfilCliente estajanela = this;
 	JPanel panelLeft;
 	List<Produto> produtos;
 
@@ -93,7 +93,7 @@ public class TelaPerfilCliente extends JFrame {
 		JLabel lblNomeCliente = new JLabel(u.getNome());
 		panel_2.add(lblNomeCliente, "cell 0 1 3 1,growx,aligny center");
 		lblNomeCliente.setFont(new Font("Dialog", Font.PLAIN, 30));
-		
+
 		JLabel lblCPF = new JLabel("CPF: ");
 		lblCPF.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblCPF.setFont(new Font("Dialog", Font.PLAIN, 15));
@@ -108,58 +108,44 @@ public class TelaPerfilCliente extends JFrame {
 		lblTelefone.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblTelefone.setFont(new Font("Dialog", Font.PLAIN, 15));
 		panel_2.add(lblTelefone, "flowx,cell 1 7,alignx left");
-		
-				JLabel lblDynamicCPF = new JLabel(u.getCpf());
-				lblDynamicCPF.setFont(new Font("Dialog", Font.PLAIN, 14));
-				panel_2.add(lblDynamicCPF, "cell 1 3,alignx left,aligny center");
-				
-				JLabel lblDynamicTel = new JLabel("New label");
-				lblDynamicTel.setFont(new Font("Dialog", Font.PLAIN, 14));
-				panel_2.add(lblDynamicTel, "cell 1 7,alignx left,aligny center");
-				if(u.getTel()==null){
-					lblDynamicTel.setText("Nenhum telefone cadastrado.");
-				}else {
-					lblDynamicTel.setText(u.getTel());
-				}
-				lblDynamicTel.setText(u.getTel());
-				
-						JLabel lblDynamicEmail = new JLabel(u.getEmail());
-						lblDynamicEmail.setFont(new Font("Dialog", Font.PLAIN, 14));
-						panel_2.add(lblDynamicEmail, "cell 1 5,alignx left,aligny center");
-		
+
+		JLabel lblDynamicCPF = new JLabel(u.getCpf());
+		lblDynamicCPF.setFont(new Font("Dialog", Font.PLAIN, 14));
+		panel_2.add(lblDynamicCPF, "cell 1 3,alignx left,aligny center");
+
+		JLabel lblDynamicTel = new JLabel("New label");
+		lblDynamicTel.setFont(new Font("Dialog", Font.PLAIN, 14));
+		panel_2.add(lblDynamicTel, "cell 1 7,alignx left,aligny center");
+		if (u.getTel().isEmpty()) {
+			lblDynamicTel.setText("Nenhum telefone cadastrado.");
+		} else {
+			lblDynamicTel.setText(u.getTel());
+		}
+
+		JLabel lblDynamicEmail = new JLabel(u.getEmail());
+		lblDynamicEmail.setFont(new Font("Dialog", Font.PLAIN, 14));
+		panel_2.add(lblDynamicEmail, "cell 1 5,alignx left,aligny center");
+
 		JPanel panel_4 = new JPanel();
 		panel_4.setLayout(new MigLayout("", "[grow]", "[grow]"));
 		panel_1.add(panel_4, "cell 1 1,grow");
-		
+
 		JButton btnNewButton_4 = new JButton("Editar Perfil");
 		btnNewButton_4.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
+
 				TelaEditarPerfilCliente editar = new TelaEditarPerfilCliente(u, isVendedor);
 				editar.setLocationRelativeTo(null);
 				editar.setVisible(true);
 				dispose();
-				
+
 			}
 		});
 		panel_4.add(btnNewButton_4, "cell 0 0,alignx right,aligny bottom");
-		
+
 		btnNewButton_4.setFont(new Font("Dialog", Font.PLAIN, 11));
 		btnNewButton_4.setBackground(new Color(154, 205, 217));
 		btnNewButton_4.setForeground(new Color(0, 0, 0));
-		
-		String telefone = u.getTel();
-		JLabel lblDynamicTelefone;
-
-		if (telefone == null) {
-			lblDynamicTelefone = new JLabel("Nenhum telefone cadastrado");
-			lblDynamicTelefone.setFont(new Font("Tahoma", Font.PLAIN, 16));
-			panel_2.add(lblDynamicTelefone, "cell 1 7,alignx left,aligny center");
-		} else {
-			lblDynamicTelefone = new JLabel(telefone);
-			lblDynamicTelefone.setFont(new Font("Tahoma", Font.PLAIN, 16));
-			panel_2.add(lblDynamicTelefone, "cell 1 7,alignx left,aligny center");
-		}
 
 		JLabel imgMenu = new JLabel("");
 		imgMenu.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
@@ -261,23 +247,23 @@ public class TelaPerfilCliente extends JFrame {
 				telaLogOff.setVisible(true);
 			}
 		});
-		
-				JLabel imgCarrinho = new JLabel("");
-				imgCarrinho.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-				imgCarrinho.addMouseListener(new MouseAdapter() {
-					@Override
-					public void mouseClicked(MouseEvent e) {
-						
-						TelaCarrinho carrinho = new TelaCarrinho(u, produtos, isVendedor);
-						carrinho.setLocationRelativeTo(null);
-						carrinho.setVisible(true);
-						dispose();
-						
-					}
-				});
-				imgCarrinho.setIcon(new ImageIcon(TelaInicio.class.getResource("/IMG/carrinho-de-compras.png")));
-				panel.add(imgCarrinho, "cell 3 0");
-				imgCarrinho.setIcon(new ImageIcon(imgC));
+
+		JLabel imgCarrinho = new JLabel("");
+		imgCarrinho.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		imgCarrinho.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+
+				TelaCarrinho carrinho = new TelaCarrinho(u, produtos, isVendedor);
+				carrinho.setLocationRelativeTo(null);
+				carrinho.setVisible(true);
+				dispose();
+
+			}
+		});
+		imgCarrinho.setIcon(new ImageIcon(TelaInicio.class.getResource("/IMG/carrinho-de-compras.png")));
+		panel.add(imgCarrinho, "cell 3 0");
+		imgCarrinho.setIcon(new ImageIcon(imgC));
 		imgSair.setIcon(new ImageIcon(TelaPerfilCliente.class.getResource("/img/saida.png")));
 		panel.add(imgSair, "cell 4 0");
 		ImageIcon conta = new ImageIcon(TelaInicio.class.getResource("/img/saida.png"));
