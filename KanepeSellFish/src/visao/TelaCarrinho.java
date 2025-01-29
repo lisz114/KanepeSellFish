@@ -201,12 +201,12 @@ public class TelaCarrinho extends JFrame {
 				new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)),
 				"Peixes Dispon\u00EDveis", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
 		scrollPane.setViewportView(panelProd);
-		panel_1.add(scrollPane, "cell 1 0 3 2,grow");
+		panel_1.add(scrollPane, "cell 0 0,grow");
 		panelProd.setLayout(new MigLayout("", "[][][][]", "[][][][]"));
 
 		CarrinhoCompras c = cDAO.verificarSeExisteCarrinho(u);
 		ArrayList<ItemCarrinho> lista = cDAO.addProdCarrinho(c);
-		
+//		ArrayList<Produto> lista = pDAO.addTodosProd();
 
 		int linha = 0;
 		int coluna = -1;
@@ -221,8 +221,7 @@ public class TelaCarrinho extends JFrame {
 					coluna = 0;
 					linha++;
 				}
-
-				CardProdCarrinho panel_8 = new CardProdCarrinho(p, u);
+				CardProdutoCarrinho panel_8 = new CardProdutoCarrinho(p);
 				panelProd.add(panel_8, "cell " + coluna + " " + linha + "");
 
 			}

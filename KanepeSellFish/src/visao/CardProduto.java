@@ -85,17 +85,13 @@ public class CardProduto extends JPanel {
 		imgMais.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
 				quantidade = Integer.parseInt(lblQuantidade.getText());
-				if (quantidade > 0) {
+				if (quantidade >= p.getQuantidadeEstoque())
+				{
+					quantidade=p.getQuantidadeEstoque();
+				}else {
 					quantidade++;
-					if (quantidade != 0) {
-
-						lblQuantidade.setText(Integer.toString(quantidade));
-					} else {
-						lblQuantidade.setText("1");
-					}
-				} else if (quantidade == 0) {
-					lblQuantidade.setText("1");
 				}
+				lblQuantidade.setText(String.valueOf(quantidade));
 			}
 		});
 		imgMais.setIcon(new ImageIcon(CardProduto.class.getResource("/img/More.png")));
