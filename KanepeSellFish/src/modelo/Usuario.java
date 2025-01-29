@@ -3,22 +3,54 @@ package modelo;
 public class Usuario {
 
 	private String nome;
+	private String desc;
 	private String senha;
 	private String email;
 	private String cpf;
 	private String tel;
+	private Produtor prod;
+	private Endereco end;
+	private Cartao cartao;
 	protected int idUsuario;
+	private String img;
+	private boolean Cartaoid;
 
+	
 	public Usuario() {}
 
-	public Usuario(String cpf, String nome, String senha, String email) {
+	public Usuario(String cpf, String nome, String senha, String email, String desc) {
 		this.cpf = cpf;
 		this.nome = nome;
 		this.senha = senha;
 		this.email = email;
+		this.setDesc(desc);
+	}
+
+	public String getImg() {
+		return img;
+	}
+
+	public void setImg(String img) {
+		this.img = img;
 	}
 
 	
+	public Produtor getProd() {
+		return prod;
+	}
+
+	public void setProd(Produtor prod) {
+		this.prod = prod;
+	}
+
+	public Endereco getEnd() {
+		return end;
+	}
+
+	public void setEnd(Endereco end) {
+		this.end = end;
+	}
+
 	public String getNome() {
 		return nome;
 	}
@@ -78,5 +110,29 @@ public class Usuario {
 	public boolean isProdutor() {
 		// TODO Auto-generated method stub
 		return false;
+	}
+
+	public String getDesc() {
+		return desc;
+	}
+
+	public void setDesc(String desc) {
+		this.desc = desc;
+	}
+
+	public boolean getCartaoid(String string) {
+		return Cartaoid;
+	}
+
+	public boolean setCartaoid(boolean b) {
+		return Cartaoid = b;
+	}
+
+	public Cartao getCartao() {
+		return cartao;
+	}
+
+	public void setCartao(Cartao cartao) {
+		this.cartao = cartao;
 	}
 }

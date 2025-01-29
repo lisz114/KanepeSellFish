@@ -168,7 +168,7 @@ public class TelaInicio extends JFrame {
 		btCarrinho.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btCarrinho.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				TelaCarrinho carrinho = new TelaCarrinho(u, produtos, isVendedor);
+				TelaCarrinho carrinho = new TelaCarrinho(u, produtos, isVendedor, null);
 				carrinho.setLocationRelativeTo(null);
 				carrinho.setVisible(true);
 				dispose();
@@ -251,7 +251,7 @@ public class TelaInicio extends JFrame {
 		btEstoque.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
-				TelaEstoque frame = new TelaEstoque(u);
+				TelaEstoque frame = new TelaEstoque(u, null);
 				frame.setLocationRelativeTo(null);
 				frame.setVisible(true);
 				dispose();

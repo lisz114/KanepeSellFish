@@ -31,6 +31,7 @@ import javax.swing.table.DefaultTableModel;
 
 import controle.ProdutoDAO;
 import controle.UsuarioDAO;
+import modelo.Cartao;
 import modelo.Produto;
 import modelo.Usuario;
 import net.miginfocom.swing.MigLayout;
@@ -70,7 +71,7 @@ public class TelaEstoque extends JFrame {
 //		});
 //	}
 
-	public TelaEstoque(Usuario u) {
+	public TelaEstoque(Usuario u, Cartao c) {
 		setResizable(false);
 		setLocationByPlatform(true);
 		setMinimumSize(new Dimension(1176, 664));
@@ -296,7 +297,7 @@ public class TelaEstoque extends JFrame {
 		btnNewButton_1.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				TelaCarrinho carrinho = new TelaCarrinho(u, null, true);
+				TelaCarrinho carrinho = new TelaCarrinho(u, null, true, c);
 				carrinho.setLocationRelativeTo(null);
 				carrinho.setVisible(true);
 				dispose();

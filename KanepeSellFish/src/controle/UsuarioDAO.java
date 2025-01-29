@@ -7,7 +7,10 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
+import modelo.Cartao;
+import modelo.Endereco;
 import modelo.IUsuarioDAO;
+import modelo.Produtor;
 import modelo.Usuario;
 
 public class UsuarioDAO implements IUsuarioDAO {
@@ -117,12 +120,41 @@ public class UsuarioDAO implements IUsuarioDAO {
 
 			res1 = stmt1.executeQuery();
 
+//			while (res1.next()) {
+
+//				Usuario u = new Usuario();
+//
+//				u.setNome(res1.getString("nome_Usuario"));
+//				u.setCpf(res1.getString("cpf_Usuario"));
+//				u.setEmail(res1.getString("email_Usuario"));
+//				u.setSenha(res1.getString("senha_Usuario"));
+//				u.setIdUsuario(res1.getInt("idUsuarios"));
+//				u.setDesc(res1.getString("descricao"));
+//				u.setImg(res1.getString("img"));
+//				u.setTel(res1.getString("telefone"));
+//
+//				Endereco e = new Endereco();
+//				e.setBairro(res1.getString("Bairro"));
+//				e.setCidade(res1.getString("Cidade"));
+//				e.setLogradouro(res1.getString("Rua"));
+//				e.setNumero(res1.getInt("Numero"));
+//				e.setId(res1.getInt("idEnderecos"));
+//				u.setEnd(e);
+//
+//				Produtor p = new Produtor();
+//				p.setCnpj(res1.getString("cnpj"));
+//				p.setNomeComercio(res1.getString("nomeNegocio"));
+//				p.setIdP(res1.getInt("idProdutores"));
+//				u.setProd(p);
+//
+//				return u;
+
 			if (res1.next()) {
 				return true;
 			} else {
 				return false;
 			}
-
+//			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -163,6 +195,37 @@ public class UsuarioDAO implements IUsuarioDAO {
 			e.printStackTrace();
 		}
 		return null;
+	}
+
+	public Usuario consultaUserCartao(Usuario u) {
+		
+		String sql = "SELECT * FROM kanepe.usuarios inner join kanepe.cartao as Usuarios_idUsuarios where idUsuarios = ?";
+		
+		try (Connection conn = ConexaoBD.getConexaoMySQL(); PreparedStatement stmt = conn.prepareStatement(sql);) {
+
+			ResultSet res = null;
+			stmt.setInt(1, u.getIdUsuario());
+			res = stmt.executeQuery();
+			while (res.next()) {
+				
+				Usuario user = new Usuario();
+				user.setNome(res.getString("nome_Usuario"));
+				
+				Cartao c = new Cartao();
+				c.setTipodoCartao(res.getString("TipodoCartao"));
+				c.setNumdoCartao(res.getLong("NumerodoCartao"));
+				//c.setValidade(java.sql.Date.valueOf(res.getDate("validade")));
+				c.setApelido(res.getString("apelido"));
+				user.setCartao(c);
+				
+				return user;
+			}
+			
+		} catch (SQLException e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+		return u;
 	}
 
 	// Método para validar CPF

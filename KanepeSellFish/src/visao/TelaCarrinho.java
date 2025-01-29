@@ -23,8 +23,11 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.EtchedBorder;
 import javax.swing.border.TitledBorder;
 
+import controle.CartaoDAO;
 import controle.CarrinhoDAO;
 import controle.ProdutoDAO;
+import controle.UsuarioDAO;
+import modelo.Cartao;
 import modelo.CarrinhoCompras;
 import modelo.ItemCarrinho;
 import modelo.Produto;
@@ -35,10 +38,12 @@ public class TelaCarrinho extends JFrame {
 
 	private JPanel contentPane;
 	ProdutoDAO pDAO = new ProdutoDAO();
+	CartaoDAO cDAO = new CartaoDAO();
 	JPanel panelLeft;
 	JButton btnEstoque;
 	CarrinhoDAO cDAO = new CarrinhoDAO();
 	
+	public static UsuarioDAO uDAO = UsuarioDAO.getInstancia();
 
 //	public static void main(String[] args) {
 //		EventQueue.invokeLater(new Runnable() {
@@ -53,7 +58,7 @@ public class TelaCarrinho extends JFrame {
 //		});
 //	}
 
-	public TelaCarrinho(Usuario u, List<Produto> produtos, boolean isVendedor) {
+	public TelaCarrinho(Usuario u, List<Produto> produtos, boolean isVendedor, Cartao c) {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1280, 768);
 		contentPane = new JPanel();
@@ -105,7 +110,7 @@ public class TelaCarrinho extends JFrame {
 		btnPerfil.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnPerfil.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
+
 				if (isVendedor) {
 					TelaPerfilVendedor v = new TelaPerfilVendedor(u, isVendedor);
 					v.setLocationRelativeTo(null);
@@ -117,7 +122,7 @@ public class TelaCarrinho extends JFrame {
 					telaPerfil.setVisible(true);
 					dispose();
 				}
-				
+
 			}
 		});
 		btnPerfil.setBackground(new Color(154, 205, 217));
@@ -131,7 +136,7 @@ public class TelaCarrinho extends JFrame {
 		btnEstoque.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
-				TelaEstoque frame = new TelaEstoque(u);
+				TelaEstoque frame = new TelaEstoque(u, c);
 				frame.setLocationRelativeTo(null);
 				frame.setVisible(true);
 				dispose();
@@ -226,6 +231,10 @@ public class TelaCarrinho extends JFrame {
 
 			}
 		}
+				TelaListaCartao listaC = new TelaListaCartao(u, produtos, isVendedor, c);
+				listaC.setLocationRelativeTo(null);
+				listaC.setVisible(true);
+				dispose();
 		
 		JPanel panelBotoes = new JPanel();
 		panel_1.add(panelBotoes, "cell 0 1,grow");
@@ -259,11 +268,6 @@ public class TelaCarrinho extends JFrame {
 						btnPagamento.addMouseListener(new MouseAdapter() {
 							@Override
 							public void mouseClicked(MouseEvent e) {
-//								TelaPagamento tela = new TelaPagamento();
-//								tela.setLocationRelativeTo(null);
-//								tela.setVisible(true);
-//				
-//								dispose();
 							}
 						});
 						btnPagamento.setFont(new Font("Dialog", Font.PLAIN, 11));

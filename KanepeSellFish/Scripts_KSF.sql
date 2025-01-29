@@ -22,6 +22,8 @@ CREATE TABLE IF NOT EXISTS Usuarios (
     senha_Usuario VARCHAR(100) NOT NULL,
     email_Usuario VARCHAR(100) NOT NULL UNIQUE,
     telefone BIGINT UNIQUE,
+    img VARCHAR(150),
+    descricao varchar(360),
     PRIMARY KEY (idUsuarios)
 );
 
