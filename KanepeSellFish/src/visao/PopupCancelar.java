@@ -21,7 +21,7 @@ public class PopupCancelar extends JFrame {
 
 	private JPanel contentPane;
 
-	public PopupCancelar (Usuario u, boolean vendedor) {
+	public PopupCancelar (TelaEditarPerfilCliente telaEditar, Usuario u, boolean vendedor) {
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 284, 174);
@@ -61,11 +61,13 @@ public class PopupCancelar extends JFrame {
 					TelaPerfilVendedor v = new TelaPerfilVendedor(u, vendedor);
 					v.setVisible(true);
 					v.setLocationRelativeTo(null);
+					telaEditar.dispose();
 					dispose();
 				} else {
 					TelaPerfilCliente c = new TelaPerfilCliente(u, vendedor);
 					c.setVisible(true);
 					c.setLocationRelativeTo(null);
+					telaEditar.dispose();
 					dispose();
 				}
 			}

@@ -62,7 +62,7 @@ public class TelaPerfilCliente extends JFrame {
 		setMaximumSize(new Dimension(1920, 1080));
 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 1633, 768);
+		setBounds(100, 100, 1280, 768);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
@@ -113,10 +113,10 @@ public class TelaPerfilCliente extends JFrame {
 		lblDynamicCPF.setFont(new Font("Dialog", Font.PLAIN, 14));
 		panel_2.add(lblDynamicCPF, "cell 1 3,alignx left,aligny center");
 
-		JLabel lblDynamicTel = new JLabel("New label");
+		JLabel lblDynamicTel = new JLabel("");
 		lblDynamicTel.setFont(new Font("Dialog", Font.PLAIN, 14));
 		panel_2.add(lblDynamicTel, "cell 1 7,alignx left,aligny center");
-		if (u.getTel().isEmpty()) {
+		if (u.getTel()==null) {
 			lblDynamicTel.setText("Nenhum telefone cadastrado.");
 		} else {
 			lblDynamicTel.setText(u.getTel());
