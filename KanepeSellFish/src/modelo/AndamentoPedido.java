@@ -2,6 +2,6 @@ package modelo;
 
 public enum AndamentoPedido {
  
-	PEDENTE, FINALIZADO, CANCELA
+	PEDENTE, FINALIZADO, CANCELADO;
 	
 }

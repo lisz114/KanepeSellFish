@@ -157,7 +157,8 @@ public class TelaEditarPerfilVendedor extends JFrame {
 
 		txtNome = new JTextField();
 		txtNome.setOpaque(false);
-		txtNome.setBorder(new TitledBorder(new LineBorder(new Color(0, 0, 0), 2), "Nome", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		txtNome.setBorder(new TitledBorder(new LineBorder(new Color(0, 0, 0), 2), "Nome", TitledBorder.LEADING,
+				TitledBorder.TOP, null, null));
 		txtNome.setText(u.getNome());
 		panel_1.add(txtNome, "cell 1 3,growx");
 		txtNome.setColumns(10);
@@ -169,8 +170,9 @@ public class TelaEditarPerfilVendedor extends JFrame {
 		panel_1.add(txtCPF, "flowx,cell 1 4");
 		txtCPF.setBorder(new LineBorder(new Color(171, 173, 179)));
 		txtCPF.setOpaque(false);
-		txtCPF.setToolTipText("");
-		txtCPF.setBorder(new TitledBorder(new LineBorder(new Color(0, 0, 0), 2),"CPF", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
+		txtCPF.setToolTipText("O cpf não pode ser alterado");
+		txtCPF.setBorder(new TitledBorder(new LineBorder(new Color(0, 0, 0), 2), "CPF", TitledBorder.LEADING,
+				TitledBorder.TOP, null, new Color(0, 0, 0)));
 		txtCPF.setBackground(SystemColor.menu);
 		txtCPF.setColumns(10);
 		txtCPF.setText(u.getCpf());
@@ -246,32 +248,40 @@ public class TelaEditarPerfilVendedor extends JFrame {
 				}
 
 				// Coleta de dados do formulário
-				String CNPJ = txtCNPJ.getText();
-				String Email = txtEmail.getText();
-				String NomeComercio = txtNomeComercio.getText();
-				String Telefone = txtCelular.getText();
-				String Bairro = txtBairro.getText();
-				String CEP = txtCEP.getText();
-				String Cidade = txtCidade.getText();
-				String Logradouro = txtLogradouro.getText();
-				Integer Numero = Integer.valueOf(txtNum.getText());
+				String cnpj = txtCNPJ.getText();
+				String email = txtEmail.getText();
+				String nomeComercio = txtNomeComercio.getText();
+				String telefone = txtCelular.getText();
+				String bairro = txtBairro.getText();
+				String cep = txtCEP.getText();
+				String cidade = txtCidade.getText();
+				String logradouro = txtLogradouro.getText();
+				Integer numero = Integer.valueOf(txtNum.getText());
 				String nome = txtNome.getText();
+				
+				if (uDAO.verificarTelefone(telefone, u.getIdUsuario())) {
+				    TelaError erro = new TelaError();
+				    erro.setLabelText("Telefone já cadastrado por outro usuário.");
+				    erro.setVisible(true);
+				    erro.setLocationRelativeTo(null);
+				    return; // Impede a atualização no banco
+				}
 
 				// Populando os objetos
-				enderecoNovo.setBairro(Bairro);
-				enderecoNovo.setCep(CEP);
-				enderecoNovo.setCidade(Cidade);
-				enderecoNovo.setLogradouro(Logradouro);
-				enderecoNovo.setNumero(Numero);
+				enderecoNovo.setBairro(bairro);
+				enderecoNovo.setCep(cep);
+				enderecoNovo.setCidade(cidade);
+				enderecoNovo.setLogradouro(logradouro);
+				enderecoNovo.setNumero(numero);
 
-				produtorNovo.setCnpj(CNPJ);
-				produtorNovo.setEmail(Email);
+				produtorNovo.setCnpj(cnpj);
+				produtorNovo.setEmail(email);
 				produtorNovo.setEnd(enderecoNovo);
-				produtorNovo.setNomeComercio(NomeComercio);
-				produtorNovo.setTel(Telefone);
+				produtorNovo.setNomeComercio(nomeComercio);
+				produtorNovo.setTel(telefone);
 
-				usuarioNovo.setEmail(Email);
-				usuarioNovo.setTel(Telefone);
+				usuarioNovo.setEmail(email);
+				usuarioNovo.setTel(telefone);
 				usuarioNovo.setNome(nome);
 				usuarioNovo.setIdUsuario(u.getIdUsuario());
 

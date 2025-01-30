@@ -126,8 +126,21 @@ public class CarrinhoDAO implements ICarrinhoDAO {
 	}
 
 	@Override
-	public boolean removerProduto(long id) {
-		return true;
+	public boolean removerProduto(CarrinhoCompras carrinho, Produto produto) {
+		String sql = "DELETE FROM itenscarrinho WHERE Carrinho_idCarrinho = ? AND Produtos_idProdutos = ?";
+
+		try (Connection conn = ConexaoBD.getConexaoMySQL(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+			pstmt.setString(1, carrinho.getCodigoCarrinho());
+			pstmt.setInt(2, produto.getIdProduto());
+
+			int rowsAffected = pstmt.executeUpdate();
+			return rowsAffected > 0; // Retorna true se o produto foi removido
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
 	}
 
 	@Override
@@ -177,4 +190,20 @@ public class CarrinhoDAO implements ICarrinhoDAO {
 
 	}
 
+	public boolean verificarProdutoNoCarrinho(CarrinhoCompras carrinho, Produto produto) {
+		String sql = "SELECT * FROM itenscarrinho WHERE Produtos_idProdutos = ? AND Carrinho_idCarrinho = ?";
+
+		try (Connection conn = ConexaoBD.getConexaoMySQL(); PreparedStatement stmt1 = conn.prepareStatement(sql)) {
+
+			stmt1.setInt(1, produto.getIdProduto());
+			stmt1.setString(2, carrinho.getCodigoCarrinho());
+
+			try (ResultSet res1 = stmt1.executeQuery()) {
+				return res1.next(); // Retorna true se encontrou o produto no carrinho
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return false; // Retorna false se o produto não estiver no carrinho ou se ocorrer erro
+	}
 }
