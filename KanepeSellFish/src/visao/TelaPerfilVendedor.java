@@ -83,9 +83,9 @@ public class TelaPerfilVendedor extends JFrame {
 	}
 
 	public TelaPerfilVendedor(Usuario u, boolean isVendedor) {
-		
+
 		produtor = pDAO.consultaProdutor(u);
-		
+
 		setResizable(false);
 		setLocationByPlatform(true);
 		setMinimumSize(new Dimension(1176, 664));
@@ -126,35 +126,34 @@ public class TelaPerfilVendedor extends JFrame {
 		Image iconC = iconCarrinho.getImage().getScaledInstance(26, 26, Image.SCALE_SMOOTH);
 		ImageIcon iconSininho = new ImageIcon(TelaPerfilVendedor.class.getResource("/IMG/sino.png"));
 		Image iconS = iconSininho.getImage().getScaledInstance(26, 26, Image.SCALE_SMOOTH);
-		btnSininho.setIcon(new ImageIcon(iconS));
 
 		JButton btnFlecha = new JButton("");
 		btnFlecha.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				
+
 				TelaDeLogOff telaLogOff = new TelaDeLogOff(estajanela, u, isVendedor);
 				telaLogOff.setLocationRelativeTo(null);
 				telaLogOff.setVisible(true);
 			}
 		});
-		
-				JButton btnCarrinho = new JButton("");
-				btnCarrinho.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-				btnCarrinho.setOpaque(false);
-				btnCarrinho.addActionListener(new ActionListener() {
-					public void actionPerformed(ActionEvent e) {
-						
-						TelaCarrinho carrinho = new TelaCarrinho(u, null,  isVendedor);
-						carrinho.setLocationRelativeTo(null);
-						carrinho.setVisible(true);
-						dispose();
-					}
-				});
-				btnCarrinho.setBorder(null);
-				btnCarrinho.setBackground(SystemColor.control);
-				panel.add(btnCarrinho, "cell 4 0,grow");
-				btnCarrinho.setIcon(new ImageIcon(iconC));
+
+		JButton btnCarrinho = new JButton("");
+		btnCarrinho.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		btnCarrinho.setOpaque(false);
+		btnCarrinho.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+
+				TelaCarrinho carrinho = new TelaCarrinho(u, null, isVendedor);
+				carrinho.setLocationRelativeTo(null);
+				carrinho.setVisible(true);
+				dispose();
+			}
+		});
+		btnCarrinho.setBorder(null);
+		btnCarrinho.setBackground(SystemColor.control);
+		panel.add(btnCarrinho, "cell 4 0,grow");
+		btnCarrinho.setIcon(new ImageIcon(iconC));
 		btnFlecha.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnFlecha.setOpaque(false);
 		btnFlecha.setBorder(null);
@@ -191,7 +190,7 @@ public class TelaPerfilVendedor extends JFrame {
 		btnNewButton_1.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
+
 				TelaCarrinho carrinho = new TelaCarrinho(u, null, isVendedor);
 				carrinho.setLocationRelativeTo(null);
 				carrinho.setVisible(true);
@@ -221,7 +220,7 @@ public class TelaPerfilVendedor extends JFrame {
 		btnNewButton_3.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
-				TelaEstoque frame = new TelaEstoque(u, null);
+				TelaEstoque frame = new TelaEstoque(u);
 				frame.setLocationRelativeTo(null);
 				frame.setVisible(true);
 				dispose();
@@ -231,93 +230,93 @@ public class TelaPerfilVendedor extends JFrame {
 		btnNewButton_3.setBackground(new Color(154, 205, 217));
 		btnNewButton_3.setBorder(null);
 		panelLeft.add(btnNewButton_3, "cell 0 3,grow");
-		
+
 		JPanel panel_1 = new JPanel();
 		panel_1.setMaximumSize(new Dimension(63, 23));
 		panel_1.setMinimumSize(new Dimension(63, 23));
 		contentPane.add(panel_1, BorderLayout.CENTER);
 		panel_1.setLayout(new MigLayout("", "[grow][grow][grow][grow][grow]", "[][][][][][][][grow][40px]"));
-		
+
 		JLabel imgUsuario = new JLabel("");
 		imgUsuario.setIcon(new ImageIcon(TelaEditarPerfilCliente.class.getResource("/img/Avatar.png")));
 		panel_1.add(imgUsuario, "cell 0 2,alignx center,aligny center");
-		
+
 		JLabel lblNomeUsuario = new JLabel();
 		lblNomeUsuario.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNomeUsuario.setFont(new Font("Dialog", Font.PLAIN, 30));
 		panel_1.add(lblNomeUsuario, "flowy,cell 1 2,alignx left,aligny top");
 		lblNomeUsuario.setText(u.getNome());
-		
+
 		JLabel lblEditarFt = new JLabel("Editar Foto de Perfil");
 		lblEditarFt.setFont(new Font("Dialog", Font.ITALIC, 13));
 		lblEditarFt.setForeground(SystemColor.textHighlight);
 		panel_1.add(lblEditarFt, "cell 0 3,alignx center");
-		
+
 		JLabel lblInfoComercio = new JLabel("Informações pessoais:");
 		lblInfoComercio.setFont(new Font("Dialog", Font.BOLD | Font.ITALIC, 17));
 		panel_1.add(lblInfoComercio, "cell 1 3,alignx left,aligny bottom");
-		
+
 		JLabel lblInfoC = new JLabel("Informações sobre  o comércio:");
 		lblInfoC.setFont(new Font("Dialog", Font.BOLD | Font.ITALIC, 17));
 		panel_1.add(lblInfoC, "cell 2 3,alignx left,aligny bottom");
-		
+
 		JLabel lblNomeComercio = new JLabel("");
 		lblNomeComercio.setFont(new Font("Dialog", Font.PLAIN, 18));
 		panel_1.add(lblNomeComercio, "cell 1 2,alignx left,aligny center");
 		lblNomeComercio.setText(pDAO.consultaProdutor(u).getNomeComercio());
-		
+
 		JLabel lblEmail = new JLabel("Email:");
 		lblEmail.setFont(new Font("Dialog", Font.PLAIN, 15));
 		panel_1.add(lblEmail, "flowx,cell 1 4,alignx left,aligny bottom");
-		
+
 		JLabel txtEmail = new JLabel("");
 		txtEmail.setFont(new Font("Dialog", Font.PLAIN, 15));
 		panel_1.add(txtEmail, "cell 1 4,alignx center,aligny bottom");
 		txtEmail.setText(u.getEmail());
-		
+
 		JLabel lblEndereco = new JLabel("Endereço:");
 		lblEndereco.setFont(new Font("Dialog", Font.PLAIN, 15));
 		panel_1.add(lblEndereco, "flowx,cell 3 4,alignx left,aligny bottom");
-		
+
 		JLabel lblCpf = new JLabel("Cpf:");
 		lblCpf.setFont(new Font("Dialog", Font.PLAIN, 15));
 		panel_1.add(lblCpf, "flowx,cell 1 5");
-		
+
 		JLabel txtCpf = new JLabel("");
 		txtCpf.setFont(new Font("Dialog", Font.PLAIN, 15));
 		panel_1.add(txtCpf, "cell 1 5");
 		txtCpf.setText(u.getCpf());
-		
+
 		JLabel lblTelefone = new JLabel("Telefone:");
 		lblTelefone.setFont(new Font("Dialog", Font.PLAIN, 15));
 		panel_1.add(lblTelefone, "flowx,cell 1 6");
-		
+
 		JLabel txtTelefone = new JLabel("");
 		txtTelefone.setFont(new Font("Dialog", Font.PLAIN, 15));
 		panel_1.add(txtTelefone, "cell 1 6");
 		txtTelefone.setText(u.getTel());
-		
+
 		JLabel lblNomeC = new JLabel("Nome do Comércio:");
 		lblNomeC.setFont(new Font("Dialog", Font.PLAIN, 15));
 		panel_1.add(lblNomeC, "flowx,cell 2 4,aligny bottom");
-		
+
 		JLabel lblCnpj = new JLabel("Cnpj:");
 		lblCnpj.setFont(new Font("Dialog", Font.PLAIN, 15));
 		panel_1.add(lblCnpj, "flowx,cell 2 5,aligny bottom");
-		
+
 		JLabel txtCnpj = new JLabel("");
 		txtCnpj.setFont(new Font("Dialog", Font.PLAIN, 15));
 		panel_1.add(txtCnpj, "cell 2 5,aligny bottom");
 		txtCnpj.setText(pDAO.consultaProdutor(u).getCnpj());
-		
+
 		JLabel txtNomeC = new JLabel("");
 		txtNomeC.setFont(new Font("Dialog", Font.PLAIN, 15));
 		panel_1.add(txtNomeC, "cell 2 4,aligny bottom");
 		txtNomeC.setText(pDAO.consultaProdutor(u).getNomeComercio());
-		
+
 		JLabel lblnada = new JLabel("    ");
 		panel_1.add(lblnada, "flowx,cell 3 2,aligny bottom");
-		
+
 		JButton rndbtnAlterarInformaes = new JButton("");
 		rndbtnAlterarInformaes.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -326,15 +325,15 @@ public class TelaPerfilVendedor extends JFrame {
 		rndbtnAlterarInformaes.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				
+
 				TelaEditarPerfilVendedor editar = new TelaEditarPerfilVendedor(u);
 				editar.setLocationRelativeTo(null);
 				editar.setVisible(true);
 				dispose();
-				
+
 			}
 		});
-		
+
 		JLabel txtCidade = new JLabel("cidade");
 		txtCidade.setFont(new Font("Dialog", Font.PLAIN, 15));
 		panel_1.add(txtCidade, "flowx,cell 3 6");
@@ -344,47 +343,46 @@ public class TelaPerfilVendedor extends JFrame {
 		rndbtnAlterarInformaes.setBackground(new Color(154, 205, 217));
 		rndbtnAlterarInformaes.setForeground(new Color(0, 0, 0));
 		panel_1.add(rndbtnAlterarInformaes, "cell 4 8,alignx center,aligny center");
-		
+
 		JLabel lblnada3 = new JLabel(",     ");
 		panel_1.add(lblnada3, "cell 3 6,alignx left");
-		
+
 		JLabel txtCep = new JLabel("cep");
 		txtCep.setFont(new Font("Dialog", Font.PLAIN, 15));
 		panel_1.add(txtCep, "cell 3 6,alignx right,aligny bottom");
 		txtCep.setText(produtor.getEnd().getCep());
-		
+
 		JLabel lblNumero = new JLabel("Número: ");
 		lblNumero.setFont(new Font("Dialog", Font.PLAIN, 15));
 		panel_1.add(lblNumero, "flowx,cell 3 5,alignx left");
-		
+
 		JLabel txtNum = new JLabel("num");
 		txtNum.setFont(new Font("Dialog", Font.PLAIN, 15));
 		panel_1.add(txtNum, "cell 3 5,alignx left");
 		txtNum.setText(String.valueOf(produtor.getEnd().getNumero()));
-		
+
 		JLabel lblnada2 = new JLabel(",     ");
 		panel_1.add(lblnada2, "cell 3 5");
-		
-				JLabel txtBairro = new JLabel("bairro");
-				txtBairro.setFont(new Font("Dialog", Font.PLAIN, 15));
-				panel_1.add(txtBairro, "cell 3 5,alignx left");
-				txtBairro.setText(produtor.getEnd().getBairro());
-				
-				JLabel txtLogradouro = new JLabel("logra");
-				txtLogradouro.setFont(new Font("Dialog", Font.PLAIN, 15));
-				panel_1.add(txtLogradouro, "cell 3 4,alignx right,aligny bottom");
-				txtLogradouro.setText(produtor.getEnd().getLogradouro());
-				
-				JLabel lblponto = new JLabel(".");
-				panel_1.add(lblponto, "cell 3 6");
-				
-				JLabel lblvirgula = new JLabel(",");
-				panel_1.add(lblvirgula, "cell 3 4,aligny bottom");
-		
+
+		JLabel txtBairro = new JLabel("bairro");
+		txtBairro.setFont(new Font("Dialog", Font.PLAIN, 15));
+		panel_1.add(txtBairro, "cell 3 5,alignx left");
+		txtBairro.setText(produtor.getEnd().getBairro());
+
+		JLabel txtLogradouro = new JLabel("logra");
+		txtLogradouro.setFont(new Font("Dialog", Font.PLAIN, 15));
+		panel_1.add(txtLogradouro, "cell 3 4,alignx right,aligny bottom");
+		txtLogradouro.setText(produtor.getEnd().getLogradouro());
+
+		JLabel lblponto = new JLabel(".");
+		panel_1.add(lblponto, "cell 3 6");
+
+		JLabel lblvirgula = new JLabel(",");
+		panel_1.add(lblvirgula, "cell 3 4,aligny bottom");
 
 		JPanel panel_21 = new JPanel();
 		panel_21.setBounds(10, 235, 284, 279);
-		panel_2.add(panel_21);
+		panel_1.add(panel_21);
 		panel_21.setLayout(null);
 		panel_21.setOpaque(false);
 
@@ -403,6 +401,6 @@ public class TelaPerfilVendedor extends JFrame {
 //		Image png = img.getImage
 		lblAvatar.setIcon(img);
 		lblAvatar.setBounds(48, 11, 202, 202);
-		panel_2.add(lblAvatar);
+		panel_21.add(lblAvatar);
 	}
 }

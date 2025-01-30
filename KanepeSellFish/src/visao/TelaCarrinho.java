@@ -38,11 +38,11 @@ public class TelaCarrinho extends JFrame {
 
 	private JPanel contentPane;
 	ProdutoDAO pDAO = new ProdutoDAO();
-	CartaoDAO cDAO = new CartaoDAO();
+//	CartaoDAO cDAO = new CartaoDAO();
 	JPanel panelLeft;
 	JButton btnEstoque;
 	CarrinhoDAO cDAO = new CarrinhoDAO();
-	
+
 	public static UsuarioDAO uDAO = UsuarioDAO.getInstancia();
 
 //	public static void main(String[] args) {
@@ -58,7 +58,7 @@ public class TelaCarrinho extends JFrame {
 //		});
 //	}
 
-	public TelaCarrinho(Usuario u, List<Produto> produtos, boolean isVendedor, Cartao c) {
+	public TelaCarrinho(Usuario u, List<Produto> produtos, boolean isVendedor ) {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1280, 768);
 		contentPane = new JPanel();
@@ -136,7 +136,7 @@ public class TelaCarrinho extends JFrame {
 		btnEstoque.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
-				TelaEstoque frame = new TelaEstoque(u, c);
+				TelaEstoque frame = new TelaEstoque(u);
 				frame.setLocationRelativeTo(null);
 				frame.setVisible(true);
 				dispose();
@@ -152,13 +152,13 @@ public class TelaCarrinho extends JFrame {
 		imgMenu.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				
+
 				if (panelLeft.isVisible()) {
 					panelLeft.setVisible(false);
 				} else {
 					panelLeft.setVisible(true);
 				}
-				
+
 			}
 		});
 		imgMenu.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
@@ -209,8 +209,8 @@ public class TelaCarrinho extends JFrame {
 		panel_1.add(scrollPane, "cell 0 0,grow");
 		panelProd.setLayout(new MigLayout("", "[][][][]", "[][][][]"));
 
-		CarrinhoCompras c = cDAO.verificarSeExisteCarrinho(u);
-		ArrayList<ItemCarrinho> lista = cDAO.addProdCarrinho(c);
+		CarrinhoCompras carrinho = cDAO.verificarSeExisteCarrinho(u);
+		ArrayList<ItemCarrinho> lista = cDAO.addProdCarrinho(carrinho);
 //		ArrayList<Produto> lista = pDAO.addTodosProd();
 
 		int linha = 0;
@@ -231,47 +231,47 @@ public class TelaCarrinho extends JFrame {
 
 			}
 		}
-				TelaListaCartao listaC = new TelaListaCartao(u, produtos, isVendedor, c);
-				listaC.setLocationRelativeTo(null);
-				listaC.setVisible(true);
-				dispose();
-		
+		TelaListaCartao listaC = new TelaListaCartao(u, produtos, isVendedor, null);
+		listaC.setLocationRelativeTo(null);
+		listaC.setVisible(true);
+		dispose();
+
 		JPanel panelBotoes = new JPanel();
 		panel_1.add(panelBotoes, "cell 0 1,grow");
 		panelBotoes.setLayout(new MigLayout("", "[][]", "[]"));
-		
-				JButton btnVoltaTela = new JButton("Continuar comprando");
-				btnVoltaTela.addActionListener(new ActionListener() {
-					public void actionPerformed(ActionEvent e) {
-					}
-				});
-				panelBotoes.add(btnVoltaTela, "cell 0 0");
-				btnVoltaTela.addMouseListener(new MouseAdapter() {
-					@Override
-					public void mouseClicked(MouseEvent e) {
-						TelaInicio tela = new TelaInicio(u, isVendedor);
-						tela.setLocationRelativeTo(null);
-						tela.setVisible(true);
-						dispose();
-					}
-				});
-				btnVoltaTela.setFont(new Font("Dialog", Font.PLAIN, 11));
-				btnVoltaTela.setBackground(new Color(154, 205, 217));
-				btnVoltaTela.setForeground(new Color(0, 0, 0));
-				
-						JButton btnPagamento = new JButton("Concluir compra");
-						panelBotoes.add(btnPagamento, "cell 1 0");
-						btnPagamento.addActionListener(new ActionListener() {
-							public void actionPerformed(ActionEvent e) {
-							}
-						});
-						btnPagamento.addMouseListener(new MouseAdapter() {
-							@Override
-							public void mouseClicked(MouseEvent e) {
-							}
-						});
-						btnPagamento.setFont(new Font("Dialog", Font.PLAIN, 11));
-						btnPagamento.setBackground(new Color(154, 205, 217));
-						btnPagamento.setForeground(new Color(0, 0, 0));
+
+		JButton btnVoltaTela = new JButton("Continuar comprando");
+		btnVoltaTela.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		panelBotoes.add(btnVoltaTela, "cell 0 0");
+		btnVoltaTela.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				TelaInicio tela = new TelaInicio(u, isVendedor);
+				tela.setLocationRelativeTo(null);
+				tela.setVisible(true);
+				dispose();
+			}
+		});
+		btnVoltaTela.setFont(new Font("Dialog", Font.PLAIN, 11));
+		btnVoltaTela.setBackground(new Color(154, 205, 217));
+		btnVoltaTela.setForeground(new Color(0, 0, 0));
+
+		JButton btnPagamento = new JButton("Concluir compra");
+		panelBotoes.add(btnPagamento, "cell 1 0");
+		btnPagamento.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		btnPagamento.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+			}
+		});
+		btnPagamento.setFont(new Font("Dialog", Font.PLAIN, 11));
+		btnPagamento.setBackground(new Color(154, 205, 217));
+		btnPagamento.setForeground(new Color(0, 0, 0));
 	}
 }

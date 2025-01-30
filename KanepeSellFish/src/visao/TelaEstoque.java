@@ -71,7 +71,7 @@ public class TelaEstoque extends JFrame {
 //		});
 //	}
 
-	public TelaEstoque(Usuario u, Cartao c) {
+	public TelaEstoque(Usuario u) {
 		setResizable(false);
 		setLocationByPlatform(true);
 		setMinimumSize(new Dimension(1176, 664));
@@ -297,7 +297,7 @@ public class TelaEstoque extends JFrame {
 		btnNewButton_1.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				TelaCarrinho carrinho = new TelaCarrinho(u, null, true, c);
+				TelaCarrinho carrinho = new TelaCarrinho(u, null, true);
 				carrinho.setLocationRelativeTo(null);
 				carrinho.setVisible(true);
 				dispose();

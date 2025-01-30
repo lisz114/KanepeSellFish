@@ -196,7 +196,7 @@ public class TelaPerfilCliente extends JFrame {
 		btnNewButton_1.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				TelaCarrinho carrinho = new TelaCarrinho(u, null, isVendedor, null);
+				TelaCarrinho carrinho = new TelaCarrinho(u, null, isVendedor);
 				carrinho.setLocationRelativeTo(null);
 				carrinho.setVisible(true);
 				dispose();
@@ -224,7 +224,7 @@ public class TelaPerfilCliente extends JFrame {
 			JButton btnNewButton_3 = new JButton("Estoque");
 			btnNewButton_3.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					TelaEstoque frame = new TelaEstoque(u, null);
+					TelaEstoque frame = new TelaEstoque(u);
 					frame.setLocationRelativeTo(null);
 					frame.setVisible(true);
 					dispose();
