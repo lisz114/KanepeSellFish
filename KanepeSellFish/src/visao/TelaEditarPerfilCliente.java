@@ -35,7 +35,7 @@ public class TelaEditarPerfilCliente extends JFrame {
 	TelaEditarPerfilCliente estajanela = this;
 	private JTextField txtNome;
 	private JTextField txtEmail;
-	
+
 	/**
 	 * Launch the application.
 	 */
@@ -91,7 +91,7 @@ public class TelaEditarPerfilCliente extends JFrame {
 		txtEmail.setOpaque(false);
 		txtEmail.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		txtEmail.setColumns(10);
-		txtEmail.setBorder(new TitledBorder(new LineBorder(new Color(0, 0, 0), 2), "Email", TitledBorder.LEADING,
+		txtEmail.setBorder(new TitledBorder(new LineBorder(new Color(0, 0, 0), 2), "email", TitledBorder.LEADING,
 				TitledBorder.TOP, null, new Color(0, 0, 0)));
 		txtEmail.setText(String.valueOf(u.getEmail()));
 
@@ -106,15 +106,15 @@ public class TelaEditarPerfilCliente extends JFrame {
 		JTextField txtTelefone = new JTextField();
 		txtTelefone.setOpaque(false);
 		panel_1.add(txtTelefone, "cell 1 4,growx,aligny center");
-		txtTelefone.setBorder(new TitledBorder(new LineBorder(new Color(0, 0, 0), 2), "Telefone", TitledBorder.LEADING,
+		txtTelefone.setBorder(new TitledBorder(new LineBorder(new Color(0, 0, 0), 2), "telefone", TitledBorder.LEADING,
 				TitledBorder.TOP, null, null));
 		txtTelefone.setColumns(10);
-		
+
 		RestrictedTextField validarTel = new RestrictedTextField(txtTelefone);
 		validarTel.setOnlyNums(true);
 		validarTel.setLimit(11);
-		
-		if (u.getTel()==null||u.getTel().isEmpty()) {
+
+		if (u.getTel() == null || u.getTel().isEmpty()) {
 			txtTelefone.setText("");
 		} else {
 			txtTelefone.setText(u.getTel());
@@ -135,48 +135,55 @@ public class TelaEditarPerfilCliente extends JFrame {
 
 				// Validação de campos obrigatórios
 				if (txtEmail.getText().isEmpty() || txtNome.getText().isEmpty()) {
+				    TelaError tela = new TelaError();
+				    tela.setLabelText("Preencha todos os campos obrigatórios.");
+				    tela.setLocationRelativeTo(null);
+				    tela.setVisible(true);
+				    return;
+				} 
 
-					TelaError tela = new TelaError();
-					tela.setLabelText("Dados preenchidos incorretamente. Preencha todos os campos obrigatórios.");
-					tela.setLocationRelativeTo(null);
-					tela.setVisible(true);
-				} else {
+				// Coleta de dados do formulário
+				String email = txtEmail.getText();
+				String nome = txtNome.getText();
+				String telefone = txtTelefone.getText();
 
-					// Coleta de dados do formulário
-					String Email = txtEmail.getText();
-					String nome = txtNome.getText();
-					String Telefone = txtTelefone.getText();
-
-					// Populando os objetos
-					usuarioNovo.setEmail(Email);
-					usuarioNovo.setNome(nome);
-					usuarioNovo.setTel(Telefone);
-					usuarioNovo.setIdUsuario(u.getIdUsuario());
-
-					boolean clienteAtualizado = udao.alterarUsuario(usuarioNovo);
-
-					if (clienteAtualizado) {
-						usuarioNovo = udao.consultarUsuarioLoginSenha(usuarioNovo.getEmail(), u.getSenha());
-
-						TelaPerfilCliente v = new TelaPerfilCliente(usuarioNovo, isVendedor);
-						v.setLocationRelativeTo(null);
-						v.setVisible(true);
-
-						TelaError tela = new TelaError();
-						tela.setLabelText("Dados atualizados com sucesso!");
-						tela.setLocationRelativeTo(null);
-						tela.setVisible(true);
-						dispose();
-					} else {
-						TelaError tela = new TelaError();
-						tela.setLabelText("Erro ao atualizar os dados do cliente.");
-						tela.setLocationRelativeTo(null);
-						tela.setVisible(true);
-					}
-
+				// **Verifica diretamente se o telefone pertence a outro usuário**
+				if (udao.verificarTelefone(telefone, u.getIdUsuario())) {
+				    TelaError erro = new TelaError();
+				    erro.setLabelText("Telefone já cadastrado por outro usuário.");
+				    erro.setVisible(true);
+				    erro.setLocationRelativeTo(null);
+				    return; // Impede a atualização no banco
 				}
-			}
 
+				// Populando os objetos
+				usuarioNovo.setEmail(email);
+				usuarioNovo.setNome(nome);
+				usuarioNovo.setTel(telefone);
+				usuarioNovo.setIdUsuario(u.getIdUsuario());
+
+				boolean clienteAtualizado = udao.alterarUsuario(usuarioNovo);
+
+				if (clienteAtualizado) {
+				    usuarioNovo = udao.consultarUsuarioLoginSenha(usuarioNovo.getEmail(), u.getSenha());
+
+				    TelaPerfilCliente v = new TelaPerfilCliente(usuarioNovo, isVendedor);
+				    v.setLocationRelativeTo(null);
+				    v.setVisible(true);
+
+				    TelaError tela = new TelaError();
+				    tela.setLabelText("Dados atualizados com sucesso!");
+				    tela.setLocationRelativeTo(null);
+				    tela.setVisible(true);
+				    dispose();
+				} else {
+				    TelaError tela = new TelaError();
+				    tela.setLabelText("Erro ao atualizar os dados do cliente.");
+				    tela.setLocationRelativeTo(null);
+				    tela.setVisible(true);
+				}
+
+			}
 		});
 		btSalvar.setBackground(new Color(64, 128, 128));
 		btCancelar.addActionListener(new ActionListener() {

@@ -54,7 +54,6 @@ public class CardProduto extends JPanel {
 		JLabel lblPreco = new JLabel("");
 		add(lblPreco, "cell 1 4");
 		lblPreco.setText(String.valueOf(p.getPreco()));
-		
 
 		JLabel imgMenos = new JLabel("");
 		imgMenos.addMouseListener(new MouseAdapter() {
@@ -85,10 +84,9 @@ public class CardProduto extends JPanel {
 		imgMais.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
 				quantidade = Integer.parseInt(lblQuantidade.getText());
-				if (quantidade >= p.getQuantidadeEstoque())
-				{
-					quantidade=p.getQuantidadeEstoque();
-				}else {
+				if (quantidade >= p.getQuantidadeEstoque()) {
+					quantidade = p.getQuantidadeEstoque();
+				} else {
 					quantidade++;
 				}
 				lblQuantidade.setText(String.valueOf(quantidade));
@@ -105,14 +103,22 @@ public class CardProduto extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 				CarrinhoDAO cdao = new CarrinhoDAO();
 				CarrinhoCompras c = cdao.verificarSeExisteCarrinho(u);
-				preco = p.getPreco();
-				preco = preco*quantidade;
-				cdao.inserirProduto(p, quantidade, preco, c);
-				TelaError erro = new TelaError();
-				erro.setLabelText("Produto adicionado ao carrinho");
-				erro.setLocationRelativeTo(null);
-				erro.setVisible(true);
 
+				if (!cdao.verificarProdutoNoCarrinho(c, p)) {
+					TelaError erro = new TelaError();
+					erro.setLabelText("Este produto já está no seu carrinho!");
+					erro.setVisible(true);
+					erro.setLocationRelativeTo(null);
+				} else {
+					preco = p.getPreco();
+					preco = preco * quantidade;
+
+					cdao.inserirProduto(p, quantidade, preco, c);
+					TelaError erro = new TelaError();
+					erro.setLabelText("Produto adicionado ao carrinho");
+					erro.setLocationRelativeTo(null);
+					erro.setVisible(true);
+				}
 			}
 		});
 		btAdicionar.setForeground(Color.WHITE);

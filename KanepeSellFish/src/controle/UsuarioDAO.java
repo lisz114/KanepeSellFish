@@ -294,4 +294,23 @@ public class UsuarioDAO implements IUsuarioDAO {
 			return false;
 		}
 	}
+	
+	public boolean verificarTelefone(String telefone, int idUsuario) {
+	    String sql = "SELECT COUNT(*) FROM usuarios WHERE telefone = ? AND idUsuarios <> ?";
+	    try (Connection conn = ConexaoBD.getConexaoMySQL();
+	         PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+	        pstmt.setString(1, telefone);
+	        pstmt.setInt(2, idUsuario);
+	        ResultSet rs = pstmt.executeQuery();
+
+	        if (rs.next()) {
+	            return rs.getInt(1) > 0; // Se COUNT(*) > 0, já existe e pertence a outro usuário
+	        }
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+	    return false;
+	}
+
 }

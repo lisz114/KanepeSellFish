@@ -294,7 +294,11 @@ public class TelaPerfilVendedor extends JFrame {
 		JLabel txtTelefone = new JLabel("");
 		txtTelefone.setFont(new Font("Dialog", Font.PLAIN, 15));
 		panel_1.add(txtTelefone, "cell 1 6");
-		txtTelefone.setText(u.getTel());
+		if (u.getTel()==null) {
+			txtTelefone.setText("Nenhum telefone cadastrado.");
+		} else {
+			txtTelefone.setText(u.getTel());
+		}
 
 		JLabel lblNomeC = new JLabel("Nome do Comércio:");
 		lblNomeC.setFont(new Font("Dialog", Font.PLAIN, 15));

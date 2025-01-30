@@ -11,6 +11,7 @@ public class Produto {
 	private int quantidadeEstoque;
 	private int idProdutor;
 	private Boolean salinidade;
+	private int idProduto;
 
 	public Produto() {
 	}
@@ -68,6 +69,13 @@ public class Produto {
 
 	public void setSalinidade(Boolean salinidade) {
 		this.salinidade = salinidade;
+	}
+	public int getIdProduto() {
+		return idProduto;
+	}
+	
+	public void setIdProduto(int idProduto) {
+		this.idProduto = idProduto;
 	}
 
 	public boolean equals(Object obj) {

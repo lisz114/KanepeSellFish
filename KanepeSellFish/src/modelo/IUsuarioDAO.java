@@ -14,5 +14,6 @@ public interface IUsuarioDAO {
     public boolean validarCPF(String cpf);
 
 	Usuario consultarUsuarioLoginSenha(String email, String senha);
-    
-}
+	
+	public boolean verificarTelefone(String telefone, int idUsuario);
+	}

@@ -13,18 +13,18 @@ import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
-import controle.ProdutoDAO;
+import controle.CarrinhoDAO;
+import modelo.CarrinhoCompras;
 import modelo.Produto;
-import modelo.Usuario;
 import net.miginfocom.swing.MigLayout;
 
 @SuppressWarnings("serial")
 public class PopupExcluirCarrinho extends JFrame {
 
 	private JPanel contentPane;
-	private static ProdutoDAO pDAO = ProdutoDAO.getInstancia();
+	private static CarrinhoDAO cDAO = CarrinhoDAO.getInstancia();
 
-	public PopupExcluirCarrinho(Produto produtoSelecionado, TelaCarrinho tela, Usuario u) {
+	public PopupExcluirCarrinho(CarrinhoCompras carrinho, Produto produto) {
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 284, 174);
@@ -60,7 +60,7 @@ public class PopupExcluirCarrinho extends JFrame {
 		btExcluir.setFont(new Font("/Fontes/Roboto-Black.ttf", Font.PLAIN, 13));
 		btExcluir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				pDAO.removerProduto(produtoSelecionado);
+				cDAO.removerProduto(carrinho, produto);
 				dispose();
 			}
 		});

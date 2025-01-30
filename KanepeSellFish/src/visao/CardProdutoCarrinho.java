@@ -43,21 +43,22 @@ public class CardProdutoCarrinho extends JPanel {
 		JLabel lblNome = new JLabel(p.getProduto().getNome());
 		lblNome.setFont(new Font("Dialog", Font.BOLD, 14));
 		panel.add(lblNome, "flowx,cell 0 0");
-	
-		
+
 		JLabel btExcluir = new JLabel("");
 		btExcluir.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				
-				
+
+				PopupExcluirCarrinho excluir = new PopupExcluirCarrinho(null, null);
+				excluir.setVisible(true);
+				excluir.setLocationRelativeTo(null);
+
 			}
 		});
 		panel.add(btExcluir, "cell 1 0,alignx center,aligny top");
 		ImageIcon lixo = new ImageIcon(TelaInicio.class.getResource("/img/lixo.png"));
 		Image iconLixo = lixo.getImage().getScaledInstance(20, 20, Image.SCALE_SMOOTH);
 		btExcluir.setIcon(new ImageIcon(iconLixo));
-	
 
 		JLabel lblPreco = new JLabel(String.valueOf(p.getPrecoTotal()));
 		lblPreco.setFont(new Font("Dialog", Font.BOLD, 14));
