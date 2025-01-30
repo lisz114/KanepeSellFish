@@ -92,7 +92,7 @@ public class PopUpPagar extends JFrame {
 		JButton btncancelar = new RoundButton("Cancelar");
 		btncancelar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				TelaCarrinho tc = new TelaCarrinho(u, produto, isVendedor, c);
+				TelaCarrinho tc = new TelaCarrinho(u, produto, isVendedor);
 				tc.setLocationRelativeTo(null);
 				tc.setVisible(true);
 				dispose();
