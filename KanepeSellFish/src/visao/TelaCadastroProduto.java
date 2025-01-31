@@ -228,6 +228,7 @@ public class TelaCadastroProduto extends JFrame {
 
 				if (pDAO.inserirProduto(prod, u)) {
 					janelaPrincipal.atualizarTabela(u);
+					
 					dispose();
 					TelaError erro = new TelaError();
 					erro.setLabelText("Adicionado com sucesso");

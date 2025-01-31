@@ -14,8 +14,8 @@ import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
 import controle.CarrinhoDAO;
-import modelo.CarrinhoCompras;
-import modelo.Produto;
+import modelo.ItemCarrinho;
+import modelo.Usuario;
 import net.miginfocom.swing.MigLayout;
 
 @SuppressWarnings("serial")
@@ -24,7 +24,7 @@ public class PopupExcluirCarrinho extends JFrame {
 	private JPanel contentPane;
 	private static CarrinhoDAO cDAO = CarrinhoDAO.getInstancia();
 
-	public PopupExcluirCarrinho(CarrinhoCompras carrinho, Produto produto) {
+	public PopupExcluirCarrinho(Usuario u, ItemCarrinho item, TelaCarrinho telaCarrinho) {
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 284, 174);
@@ -43,7 +43,7 @@ public class PopupExcluirCarrinho extends JFrame {
 		JLabel lblExcluirProduto = new JLabel("Tem certeza que deseja excluir?");
 		lblExcluirProduto.setHorizontalAlignment(SwingConstants.CENTER);
 		lblExcluirProduto.setForeground(Color.BLACK);
-		lblExcluirProduto.setFont(new Font("Dialog", Font.BOLD, 15));
+		lblExcluirProduto.setFont(new Font("/Fontes/Roboto-Black.ttf", Font.BOLD, 15));
 		panel_1.add(lblExcluirProduto);
 
 		JPanel panel = new JPanel();
@@ -60,7 +60,28 @@ public class PopupExcluirCarrinho extends JFrame {
 		btExcluir.setFont(new Font("/Fontes/Roboto-Black.ttf", Font.PLAIN, 13));
 		btExcluir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				cDAO.removerProduto(carrinho, produto);
+				
+				if (cDAO.removerProduto(item)) {
+					telaCarrinho.atualizarTela(u);
+					telaCarrinho.dispose();
+					TelaCarrinho carrinho = new TelaCarrinho(u, null, true);
+					carrinho.setLocationRelativeTo(null);
+					carrinho.setVisible(true);
+					TelaError erro = new TelaError();
+					erro.setLabelText("Item removido com sucesso");
+					erro.setLocationRelativeTo(null);
+					erro.setVisible(true);
+				}else {
+					telaCarrinho.atualizarTela(u);
+					telaCarrinho.dispose();
+					TelaCarrinho carrinho = new TelaCarrinho(u, null, true);
+					carrinho.setLocationRelativeTo(null);
+					carrinho.setVisible(true);
+					TelaError erro = new TelaError();
+					erro.setLabelText("Não foi possvel remover o item");
+					erro.setLocationRelativeTo(null);
+					erro.setVisible(true);
+				}
 				dispose();
 			}
 		});
@@ -73,7 +94,7 @@ public class PopupExcluirCarrinho extends JFrame {
 				dispose();
 			}
 		});
-		btCancelar.setFont(new Font("Dialog", Font.PLAIN, 13));
+		btCancelar.setFont(new Font("/Fontes/Roboto-Black.ttf", Font.PLAIN, 13));
 		btCancelar.setBackground(new Color(8, 127, 140));
 		panel.add(btCancelar, "cell 0 1,grow");
 		panel.add(btExcluir, "cell 3 1,grow");

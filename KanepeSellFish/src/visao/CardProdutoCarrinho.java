@@ -13,14 +13,16 @@ import javax.swing.border.LineBorder;
 
 import controle.CarrinhoDAO;
 import modelo.ItemCarrinho;
+import modelo.Usuario;
 import net.miginfocom.swing.MigLayout;
 
 @SuppressWarnings("serial")
 public class CardProdutoCarrinho extends JPanel {
 	private static CarrinhoDAO cDAO = CarrinhoDAO.getInstancia();
 	JLabel lblQuantidade = null;
+	
 
-	public CardProdutoCarrinho(ItemCarrinho p) {
+	public CardProdutoCarrinho(Usuario u, ItemCarrinho p, TelaCarrinho telaCarrinho) {
 		setBorder(new LineBorder(new Color(0, 0, 0)));
 
 		ImageIcon imgMe = new ImageIcon(CardProduto.class.getResource("/img/Menos.png"));
@@ -49,7 +51,7 @@ public class CardProdutoCarrinho extends JPanel {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 
-				PopupExcluirCarrinho excluir = new PopupExcluirCarrinho(null, null);
+				PopupExcluirCarrinho excluir = new PopupExcluirCarrinho(u, p, telaCarrinho);
 				excluir.setVisible(true);
 				excluir.setLocationRelativeTo(null);
 

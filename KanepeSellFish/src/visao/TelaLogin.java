@@ -97,7 +97,7 @@ public class TelaLogin extends JFrame {
 		JLabel lblTitulo = new JLabel("Bem vindo de volta!");
 		lblTitulo.setVerticalAlignment(SwingConstants.TOP);
 		lblTitulo.setForeground(new Color(0, 0, 0));
-		lblTitulo.setFont(new Font("Dialog", Font.BOLD, 27));
+		lblTitulo.setFont(new Font("/Fontes/Roboto-Black.ttf", Font.BOLD, 27));
 		lblTitulo.setHorizontalAlignment(SwingConstants.CENTER);
 		panel_4.add(lblTitulo);
 
@@ -109,7 +109,7 @@ public class TelaLogin extends JFrame {
 
 		JLabel lblEmail = new JLabel("<html>Email<span style='color: red;'>*</span></html>");
 		lblEmail.setForeground(Color.BLACK); // Define a cor do texto principal
-		lblEmail.setFont(new Font("Tahoma", Font.BOLD, 12)); // Define a fonte
+		lblEmail.setFont(new Font("/Fontes/Roboto-Black.ttf", Font.BOLD, 12)); // Define a fonte
 		panelNome.add(lblEmail, "cell 0 0");
 
 		txtEmail = new JTextField();
@@ -126,7 +126,7 @@ public class TelaLogin extends JFrame {
 
 		JLabel lblSenha = new JLabel("<html>Senha<span style='color: red;'>*</span></html>");
 		lblSenha.setForeground(Color.BLACK);
-		lblSenha.setFont(new Font("Tahoma", Font.BOLD, 12));
+		lblSenha.setFont(new Font("/Fontes/Roboto-Black.ttf", Font.BOLD, 12));
 		panelCpf.add(lblSenha, "cell 0 0");
 
 		JLabel lblEsqueceu = new JLabel("Esqueceu a senha? ");
@@ -147,7 +147,7 @@ public class TelaLogin extends JFrame {
 		txtSenha.setBorder(new LineBorder(new Color(0, 0, 0), 2));
 		panelCpf.add(txtSenha, "cell 0 1,grow");
 		lblEsqueceu.setForeground(new Color(0, 92, 214));
-		lblEsqueceu.setFont(new Font("Tahoma", Font.ITALIC, 12));
+		lblEsqueceu.setFont(new Font("/Fontes/Roboto-Black.ttf", Font.ITALIC, 12));
 		lblEsqueceu.setHorizontalTextPosition(SwingConstants.RIGHT);
 		lblEsqueceu.setVerticalAlignment(SwingConstants.TOP);
 		lblEsqueceu.setHorizontalAlignment(SwingConstants.RIGHT);
@@ -185,7 +185,7 @@ public class TelaLogin extends JFrame {
 		sl_PainelBTN.putConstraint(SpringLayout.NORTH, btnEntrar, 0, SpringLayout.NORTH, PainelBTN);
 		sl_PainelBTN.putConstraint(SpringLayout.SOUTH, btnEntrar, 48, SpringLayout.NORTH, PainelBTN);
 		btnEntrar.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		btnEntrar.setFont(new Font("Dialog", Font.PLAIN, 22));
+		btnEntrar.setFont(new Font("/Fontes/Roboto-Black.ttf", Font.PLAIN, 22));
 		btnEntrar.setBackground(new Color(2, 73, 89));
 		btnEntrar.setForeground(new Color(255, 255, 255));
 		btnEntrar.setBorderPainted(false);
@@ -199,7 +199,7 @@ public class TelaLogin extends JFrame {
 		sl_PainelBTN.putConstraint(SpringLayout.EAST, btnEntrar, -9, SpringLayout.EAST, lblClique);
 		lblClique.setHorizontalAlignment(SwingConstants.LEFT);
 		lblClique.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		lblClique.setFont(new Font("Dialog", Font.PLAIN, 14));
+		lblClique.setFont(new Font("/Fontes/Roboto-Black.ttf", Font.PLAIN, 14));
 		lblClique.setForeground(new Color(0, 92, 214));
 		lblClique.addMouseListener(new MouseAdapter() {
 			@Override
@@ -225,7 +225,7 @@ public class TelaLogin extends JFrame {
 		sl_PainelBTN.putConstraint(SpringLayout.WEST, lblClique, 1, SpringLayout.EAST, lblNaoTemUmaConta);
 		lblNaoTemUmaConta.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblNaoTemUmaConta.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
-		lblNaoTemUmaConta.setFont(new Font("Dialog", Font.PLAIN, 14));
+		lblNaoTemUmaConta.setFont(new Font("/Fontes/Roboto-Black.ttf", Font.PLAIN, 14));
 		lblNaoTemUmaConta.setForeground(new Color(0, 0, 0));
 		PainelBTN.add(lblNaoTemUmaConta);
 

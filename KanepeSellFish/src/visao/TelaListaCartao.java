@@ -63,7 +63,6 @@ public class TelaListaCartao extends JFrame {
 	 * @throws SQLException 
 	 */
 	public TelaListaCartao(Usuario u, List<Produto>produto ,boolean isVendedor, Cartao c){
-		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();

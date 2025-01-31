@@ -113,6 +113,7 @@ public class ProdutoDAO implements IProdutoDAO {
 				Produto prod = new Produto();
 
 				prod.setNome(res1.getString("nome_Produto"));
+				prod.setIdProduto(res1.getInt("idProdutos"));
 				prod.setQuantidadeEstoque(Integer.parseInt(res1.getString("quantidade")));
 				prod.setPreco(Float.parseFloat(res1.getString("preco")));
 				prod.setIdProdutor(Integer.parseInt(res1.getString("Produtores_idProdutores")));
@@ -230,6 +231,7 @@ public class ProdutoDAO implements IProdutoDAO {
 				Produto prod = new Produto();
 
 				prod.setNome(res1.getString("nome_Produto"));
+				prod.setIdProduto(res1.getInt("idProdutos"));
 				prod.setQuantidadeEstoque(Integer.parseInt(res1.getString("quantidade")));
 				prod.setPreco(Float.parseFloat(res1.getString("preco")));
 				prod.setIdProdutor(Integer.parseInt(res1.getString("Produtores_idProdutores")));
@@ -269,6 +271,7 @@ public class ProdutoDAO implements IProdutoDAO {
 	                LocalDate.parse(res1.getString("validade"), DateTimeFormatter.ofPattern("yyyy-MM-dd"))
 	            );
 	            prod.setSalinidade(res1.getBoolean("salinidade"));
+	            prod.setIdProduto(res1.getInt("idProdutos")); 
 	            return prod;
 	        } else {
 	            return null; // Retorna null se o ID não for encontrado

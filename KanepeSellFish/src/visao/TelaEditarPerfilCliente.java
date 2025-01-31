@@ -80,7 +80,7 @@ public class TelaEditarPerfilCliente extends JFrame {
 		panel_1.add(txtNome, "flowx,cell 1 1,growx,aligny center");
 		txtNome.setBorder(new TitledBorder(new LineBorder(new Color(0, 0, 0), 2), "Nome", TitledBorder.LEADING,
 				TitledBorder.TOP, null, null));
-		txtNome.setFont(new Font("Dialog", Font.PLAIN, 30));
+		txtNome.setFont(new Font("/Fontes/Roboto-Black.ttf", Font.PLAIN, 30));
 		txtNome.setOpaque(false);
 		txtNome.setColumns(10);
 		txtNome.setText(u.getNome());
@@ -89,7 +89,7 @@ public class TelaEditarPerfilCliente extends JFrame {
 		panel_1.add(txtEmail, "cell 1 2,growx,aligny center");
 		txtEmail.setCursor(Cursor.getPredefinedCursor(Cursor.TEXT_CURSOR));
 		txtEmail.setOpaque(false);
-		txtEmail.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		txtEmail.setFont(new Font("/Fontes/Roboto-Black.ttf", Font.PLAIN, 14));
 		txtEmail.setColumns(10);
 		txtEmail.setBorder(new TitledBorder(new LineBorder(new Color(0, 0, 0), 2), "email", TitledBorder.LEADING,
 				TitledBorder.TOP, null, new Color(0, 0, 0)));
@@ -99,7 +99,7 @@ public class TelaEditarPerfilCliente extends JFrame {
 		panel_1.add(lblCpf, "cell 1 3,growx,aligny center");
 		lblCpf.setBorder(new TitledBorder(new LineBorder(new Color(0, 0, 0), 2), "CPF", TitledBorder.LEADING,
 				TitledBorder.TOP, null, new Color(0, 0, 0)));
-		lblCpf.setFont(new Font("Dialog", Font.PLAIN, 14));
+		lblCpf.setFont(new Font("/Fontes/Roboto-Black.ttf", Font.PLAIN, 14));
 		lblCpf.setText(u.getCpf());
 		lblCpf.setToolTipText("Cpf não pode ser alterado.");
 
