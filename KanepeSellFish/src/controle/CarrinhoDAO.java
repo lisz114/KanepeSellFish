@@ -126,21 +126,23 @@ public class CarrinhoDAO implements ICarrinhoDAO {
 	}
 
 	@Override
-	public boolean removerProduto(CarrinhoCompras carrinho, Produto produto) {
-		String sql = "DELETE FROM itenscarrinho WHERE Carrinho_idCarrinho = ? AND Produtos_idProdutos = ?";
+	public boolean removerProduto(ItemCarrinho item) {
+		
+		String sql = "DELETE FROM itenscarrinho WHERE idItensCarrinho = ?";
 
 		try (Connection conn = ConexaoBD.getConexaoMySQL(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
-			pstmt.setString(1, carrinho.getCodigoCarrinho());
-			pstmt.setInt(2, produto.getIdProduto());
+			pstmt.setInt(1, item.getidItemCarrinho());
+//			pstmt.setInt(2, item.getProduto().getIdProduto());
 
 			int rowsAffected = pstmt.executeUpdate();
-			return rowsAffected > 0; // Retorna true se o produto foi removido
-
+			if (rowsAffected > 0) {
+				return true;
+			}
 		} catch (SQLException e) {
 			e.printStackTrace();
-			return false;
 		}
+		return false;
 	}
 
 	@Override
@@ -172,10 +174,11 @@ public class CarrinhoDAO implements ICarrinhoDAO {
 
 				ItemCarrinho Iprod = new ItemCarrinho();
 
-				Iprod.setProdutoItemCarrinho(Integer.parseInt(res1.getString("Produtos_idProdutos")));
+				Iprod.setidItemCarrinho(Integer.parseInt(res1.getString("idItensCarrinho")));
 				Iprod.setPrecoTotal(Float.parseFloat(res1.getString("preco")));
 				Iprod.setQuantidade(Integer.parseInt(res1.getString("quantidade")));
-				Iprod.setProduto(pDAO.pegarProdutoPorId(Iprod.getProdutoItemCarrinho()));
+				Iprod.setProduto(pDAO.pegarProdutoPorId(res1.getInt("Produtos_idProdutos")));
+				Iprod.setCodigoCarrinho(res1.getString("Carrinho_idCarrinho"));
 				listaDeProdutos.add(Iprod);
 			}
 

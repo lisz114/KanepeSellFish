@@ -104,7 +104,7 @@ public class CardProduto extends JPanel {
 				CarrinhoDAO cdao = new CarrinhoDAO();
 				CarrinhoCompras c = cdao.verificarSeExisteCarrinho(u);
 
-				if (!cdao.verificarProdutoNoCarrinho(c, p)) {
+				if (cdao.verificarProdutoNoCarrinho(c, p)) {
 					TelaError erro = new TelaError();
 					erro.setLabelText("Este produto já está no seu carrinho!");
 					erro.setVisible(true);

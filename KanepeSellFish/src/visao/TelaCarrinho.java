@@ -23,11 +23,9 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.EtchedBorder;
 import javax.swing.border.TitledBorder;
 
-import controle.CartaoDAO;
 import controle.CarrinhoDAO;
 import controle.ProdutoDAO;
 import controle.UsuarioDAO;
-import modelo.Cartao;
 import modelo.CarrinhoCompras;
 import modelo.ItemCarrinho;
 import modelo.Produto;
@@ -42,6 +40,8 @@ public class TelaCarrinho extends JFrame {
 	JPanel panelLeft;
 	JButton btnEstoque;
 	CarrinhoDAO cDAO = new CarrinhoDAO();
+	TelaCarrinho estaJanela = this;
+	JPanel panelProd;
 
 	public static UsuarioDAO uDAO = UsuarioDAO.getInstancia();
 
@@ -199,7 +199,7 @@ public class TelaCarrinho extends JFrame {
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBorder(null);
 		scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-		JPanel panelProd = new JPanel();
+		panelProd = new JPanel();
 		panelProd.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		panelProd.setForeground(Color.WHITE);
 		panelProd.setBorder(new TitledBorder(
@@ -209,32 +209,11 @@ public class TelaCarrinho extends JFrame {
 		panel_1.add(scrollPane, "cell 0 0,grow");
 		panelProd.setLayout(new MigLayout("", "[][][][]", "[][][][]"));
 
-		CarrinhoCompras carrinho = cDAO.verificarSeExisteCarrinho(u);
-		ArrayList<ItemCarrinho> lista = cDAO.addProdCarrinho(carrinho);
-//		ArrayList<Produto> lista = pDAO.addTodosProd();
-
-		int linha = 0;
-		int coluna = -1;
-		if (lista == null) {
-			System.out.println("lista ta Vazia");
-		} else {
-
-			for (ItemCarrinho p : lista) {
-
-				coluna++;
-				if (coluna > 3) {
-					coluna = 0;
-					linha++;
-				}
-				CardProdutoCarrinho panel_8 = new CardProdutoCarrinho(p);
-				panelProd.add(panel_8, "cell " + coluna + " " + linha + "");
-
-			}
-		}
-		TelaListaCartao listaC = new TelaListaCartao(u, produtos, isVendedor, null);
-		listaC.setLocationRelativeTo(null);
-		listaC.setVisible(true);
-		dispose();
+		atualizarTela(u);
+//		TelaListaCartao listaC = new TelaListaCartao(u, produtos, isVendedor, null);
+//		listaC.setLocationRelativeTo(null);
+//		listaC.setVisible(true);
+//		dispose();
 
 		JPanel panelBotoes = new JPanel();
 		panel_1.add(panelBotoes, "cell 0 1,grow");
@@ -274,4 +253,30 @@ public class TelaCarrinho extends JFrame {
 		btnPagamento.setBackground(new Color(154, 205, 217));
 		btnPagamento.setForeground(new Color(0, 0, 0));
 	}
+
+public void atualizarTela(Usuario u) {
+	CarrinhoCompras carrinho = cDAO.verificarSeExisteCarrinho(u);
+	ArrayList<ItemCarrinho> lista = cDAO.addProdCarrinho(carrinho);
+//	ArrayList<Produto> lista = pDAO.addTodosProd();
+
+	int linha = 0;
+	int coluna = -1;
+	if (lista == null) {
+		System.out.println("lista ta Vazia");
+	} else {
+
+		for (ItemCarrinho p : lista) {
+
+			coluna++;
+			if (coluna > 3) {
+				coluna = 0;
+				linha++;
+			}
+			CardProdutoCarrinho panel_8 = new CardProdutoCarrinho(u, p, estaJanela);
+			panelProd.add(panel_8, "cell " + coluna + " " + linha + "");
+
+		}
+	}
+	
+}
 }

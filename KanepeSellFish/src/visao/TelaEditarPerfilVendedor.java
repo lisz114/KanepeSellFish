@@ -114,7 +114,7 @@ public class TelaEditarPerfilVendedor extends JFrame {
 		panel_1.setLayout(new MigLayout("", "[250][400px,grow][grow]", "[60px][202px][][][][][grow]"));
 
 		JLabel lblNome = new JLabel("");
-		lblNome.setFont(new Font("Dialog", Font.PLAIN, 30));
+		lblNome.setFont(new Font("/Fontes/Roboto-Black.ttf", Font.PLAIN, 30));
 		panel_1.add(lblNome, "cell 1 1,alignx left,aligny center");
 		panel_1.add(imgAvatar, "cell 0 1,alignx center,aligny center");
 		lblNome.setText(u.getNome());
@@ -296,6 +296,7 @@ public class TelaEditarPerfilVendedor extends JFrame {
 						boolean produtorAtualizado = pDAO.alterarProdutor(produtorNovo, usuarioNovo);
 
 						if (produtorAtualizado) {
+							uDAO.consultarUsuarioLoginSenha(usuarioNovo.getSenha(), usuarioNovo.getEmail());
 							TelaPerfilVendedor v = new TelaPerfilVendedor(u, true);
 							v.setLocationRelativeTo(null);
 							v.setVisible(true);
@@ -325,6 +326,7 @@ public class TelaEditarPerfilVendedor extends JFrame {
 						boolean produtorInserido = pDAO.inserirProdutor(produtorNovo);
 
 						if (produtorInserido) {
+							uDAO.consultarUsuarioLoginSenha(usuarioNovo.getSenha(), usuarioNovo.getEmail());
 							TelaPerfilVendedor v = new TelaPerfilVendedor(u, true);
 							v.setLocationRelativeTo(null);
 							v.setVisible(true);
