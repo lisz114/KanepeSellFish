@@ -6,7 +6,6 @@ import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Image;
-import java.awt.SystemColor;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -20,13 +19,10 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
-import javax.swing.border.LineBorder;
 
 import modelo.Produto;
 import modelo.Usuario;
 import net.miginfocom.swing.MigLayout;
-import java.awt.Cursor;
-import java.awt.Component;
 
 public class TelaPerfilCliente extends JFrame {
 
@@ -141,6 +137,20 @@ public class TelaPerfilCliente extends JFrame {
 
 			}
 		});
+		
+		JButton btEditarSenha = new JButton("Editar Senha");
+		btEditarSenha.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				TelaRedefinicaoSenha redefinir = new TelaRedefinicaoSenha(u);
+				redefinir.setVisible(true);
+				redefinir.setLocationRelativeTo(null);
+			}
+		});
+		
+		btEditarSenha.setForeground(Color.BLACK);
+		btEditarSenha.setFont(new Font("Dialog", Font.PLAIN, 11));
+		btEditarSenha.setBackground(new Color(154, 205, 217));
+		panel_4.add(btEditarSenha, "flowx,cell 0 0,alignx right,aligny bottom");
 		panel_4.add(btnNewButton_4, "cell 0 0,alignx right,aligny bottom");
 
 		btnNewButton_4.setFont(new Font("Dialog", Font.PLAIN, 11));
