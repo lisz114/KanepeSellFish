@@ -188,7 +188,7 @@ public class TelaEditarPerfilCliente extends JFrame {
 		btSalvar.setBackground(new Color(64, 128, 128));
 		btCancelar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				PopupCancelar cancelar = new PopupCancelar(estajanela, u, isVendedor);
+				PopupCancelar cancelar = new PopupCancelar(estajanela, null, u, isVendedor);
 				cancelar.setVisible(true);
 				cancelar.setLocationRelativeTo(null);
 			}

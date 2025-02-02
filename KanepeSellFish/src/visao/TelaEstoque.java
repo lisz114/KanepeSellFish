@@ -241,8 +241,8 @@ public class TelaEstoque extends JFrame {
 		});
 		panel_3.add(btnNewButton, "flowx,cell 0 8,alignx right");
 		btnNewButton.setFont(new Font("Dialog", Font.PLAIN, 11));
-		btnNewButton.setBackground(new Color(154, 205, 217));
-		btnNewButton.setForeground(new Color(0, 0, 0));
+		btnNewButton.setBackground(new Color(205, 92, 92));
+		btnNewButton.setForeground(new Color(255, 255, 255));
 
 		panel_3.add(btnEditar, "cell 0 8,alignx right");
 
