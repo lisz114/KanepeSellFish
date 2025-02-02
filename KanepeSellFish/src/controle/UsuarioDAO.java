@@ -262,21 +262,23 @@ public class UsuarioDAO implements IUsuarioDAO {
 		segundoDigito = segundoDigito >= 10 ? 0 : segundoDigito;
 		return Character.getNumericValue(cpf.charAt(10)) == segundoDigito;
 	}
+	
+	public boolean alterarSenha(String email, String senha) {
+	    String sql = "UPDATE usuarios SET senha_Usuario = ? WHERE email_Usuario = ?";
+	    try (Connection conn = ConexaoBD.getConexaoMySQL(); 
+	         PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
-	public void alterarSenha(String senha, String email) {
-		String sql = "UPDATE usuarios set senha_Usuario = ? where email_Usuario = ?";
-		try (Connection conn = ConexaoBD.getConexaoMySQL(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
+	        pstmt.setString(1, senha);
+	        pstmt.setString(2, email);
 
-			pstmt.setString(1, senha);
-			pstmt.setString(2, email);
+	        int rowsAffected = pstmt.executeUpdate();
+	        return rowsAffected > 0; // Retorna true se a senha foi alterada
 
-			pstmt.executeUpdate();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	        return false;
+	    }
 	}
-
 	@Override
 	public boolean alterarUsuario(Usuario usuario) {
 		String sql = "UPDATE usuarios set email_Usuario = ?, nome_Usuario = ?, telefone = ? where idUsuarios = ?";

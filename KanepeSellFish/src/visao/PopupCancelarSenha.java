@@ -17,11 +17,11 @@ import modelo.Usuario;
 import net.miginfocom.swing.MigLayout;
 
 @SuppressWarnings("serial")
-public class PopupCancelar extends JFrame {
+public class PopupCancelarSenha extends JFrame {
 
 	private JPanel contentPane;
 
-	public PopupCancelar (TelaEditarPerfilCliente telaEditarC, TelaEditarPerfilVendedor telaEditarV, Usuario u, boolean vendedor) {
+	public PopupCancelarSenha (TelaRedefinicaoSenha redefinir, Usuario u) {
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 284, 174);
@@ -57,19 +57,9 @@ public class PopupCancelar extends JFrame {
 		btExcluir.setFont(new Font("/Fontes/Roboto-Black.ttf", Font.PLAIN, 13));
 		btExcluir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if(vendedor == true) {
-					TelaPerfilVendedor v = new TelaPerfilVendedor(u, vendedor);
-					v.setVisible(true);
-					v.setLocationRelativeTo(null);
-					telaEditarV.dispose();
+					redefinir.dispose();
 					dispose();
-				} else {
-					TelaPerfilCliente c = new TelaPerfilCliente(u, vendedor);
-					c.setVisible(true);
-					c.setLocationRelativeTo(null);
-					telaEditarC.dispose();
-					dispose();
-				}
+				
 			}
 		});
 

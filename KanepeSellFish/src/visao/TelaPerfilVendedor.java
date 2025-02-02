@@ -294,7 +294,7 @@ public class TelaPerfilVendedor extends JFrame {
 		JLabel txtTelefone = new JLabel("");
 		txtTelefone.setFont(new Font("/Fontes/Roboto-Black.ttf", Font.PLAIN, 15));
 		panel_1.add(txtTelefone, "cell 1 6");
-		if (u.getTel()==null) {
+		if (u.getTel() == null) {
 			txtTelefone.setText("Nenhum telefone cadastrado.");
 		} else {
 			txtTelefone.setText(u.getTel());
@@ -329,7 +329,6 @@ public class TelaPerfilVendedor extends JFrame {
 		rndbtnAlterarInformaes.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-
 				TelaEditarPerfilVendedor editar = new TelaEditarPerfilVendedor(u);
 				editar.setLocationRelativeTo(null);
 				editar.setVisible(true);
@@ -342,6 +341,19 @@ public class TelaPerfilVendedor extends JFrame {
 		txtCidade.setFont(new Font("/Fontes/Roboto-Black.ttf", Font.PLAIN, 15));
 		panel_1.add(txtCidade, "flowx,cell 3 6");
 		txtCidade.setText(produtor.getEnd().getCidade());
+
+		JButton rbSenha = new JButton("Alterar senha");
+		rbSenha.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				TelaRedefinicaoSenha redefinir = new TelaRedefinicaoSenha(u, isVendedor);
+				redefinir.setVisible(true);
+				redefinir.setLocationRelativeTo(null);
+			}
+		});
+		rbSenha.setForeground(Color.BLACK);
+		rbSenha.setFont(new Font("Dialog", Font.PLAIN, 11));
+		rbSenha.setBackground(new Color(154, 205, 217));
+		panel_1.add(rbSenha, "flowx,cell 4 8");
 		rndbtnAlterarInformaes.setText("Alterar Informações");
 		rndbtnAlterarInformaes.setFont(new Font("/Fontes/Roboto-Black.ttf", Font.PLAIN, 11));
 		rndbtnAlterarInformaes.setBackground(new Color(154, 205, 217));

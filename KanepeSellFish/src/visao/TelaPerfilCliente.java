@@ -126,7 +126,7 @@ public class TelaPerfilCliente extends JFrame {
 		panel_4.setLayout(new MigLayout("", "[grow]", "[grow]"));
 		panel_1.add(panel_4, "cell 1 1,grow");
 
-		JButton btnNewButton_4 = new JButton("Editar Perfil");
+		JButton btnNewButton_4 = new JButton("Alterar informações");
 		btnNewButton_4.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
@@ -138,10 +138,10 @@ public class TelaPerfilCliente extends JFrame {
 			}
 		});
 		
-		JButton btEditarSenha = new JButton("Editar Senha");
+		JButton btEditarSenha = new JButton("Alterar senha");
 		btEditarSenha.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				TelaRedefinicaoSenha redefinir = new TelaRedefinicaoSenha(u);
+				TelaRedefinicaoSenha redefinir = new TelaRedefinicaoSenha(u, isVendedor);
 				redefinir.setVisible(true);
 				redefinir.setLocationRelativeTo(null);
 			}

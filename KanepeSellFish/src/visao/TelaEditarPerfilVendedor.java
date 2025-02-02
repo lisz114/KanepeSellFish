@@ -3,38 +3,25 @@ package visao;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.ComponentOrientation;
 import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.Font;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.GridLayout;
 import java.awt.Image;
-import java.awt.Insets;
 import java.awt.SystemColor;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.io.File;
-import java.time.format.DateTimeParseException;
 
-import javax.swing.GroupLayout;
-import javax.swing.GroupLayout.Alignment;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-import javax.swing.JTextPane;
-import javax.swing.SwingConstants;
-import javax.swing.LayoutStyle.ComponentPlacement;
-import javax.swing.border.BevelBorder;
 import javax.swing.border.EmptyBorder;
+import javax.swing.border.LineBorder;
+import javax.swing.border.TitledBorder;
 
 import controle.EnderecoDAO;
 import controle.ProdutorDAO;
@@ -43,10 +30,8 @@ import modelo.Endereco;
 import modelo.Produtor;
 import modelo.RoundButton;
 import modelo.Usuario;
-import javax.swing.border.LineBorder;
-import javax.swing.border.SoftBevelBorder;
-import javax.swing.border.TitledBorder;
 import net.miginfocom.swing.MigLayout;
+import java.awt.Insets;
 
 public class TelaEditarPerfilVendedor extends JFrame {
 
@@ -62,7 +47,7 @@ public class TelaEditarPerfilVendedor extends JFrame {
 	private JTextField txtBairro;
 	private JTextField txtLogradouro;
 	private JTextField txtNum;
-
+	private TelaEditarPerfilVendedor estajanela = this;
 	private static UsuarioDAO uDAO = UsuarioDAO.getInstancia();
 	private static EnderecoDAO eDAO = EnderecoDAO.getInstancia();
 	private static ProdutorDAO pDAO = ProdutorDAO.getInstancia();
@@ -213,19 +198,22 @@ public class TelaEditarPerfilVendedor extends JFrame {
 		txtLogradouro.setColumns(10);
 		txtLogradouro.setText(pDAO.consultaProdutor(u).getEnd().getLogradouro());
 
-		JButton btnNewButton = new RoundButton("Cancelar");
+		JButton btnNewButton = new JButton("Cancelar");
+		btnNewButton.setMargin(new Insets(4, 14, 4, 14));
 		panel_1.add(btnNewButton, "flowx,cell 2 6,alignx right,aligny bottom");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				TelaPerfilVendedor frame = new TelaPerfilVendedor(u, true);
-				frame.setVisible(true);
-				dispose();
+				PopupCancelar cancela = new PopupCancelar(null, estajanela, u, true);
+				cancela.setVisible(true);
+				cancela.setLocationRelativeTo(null);
 			}
 		});
 		btnNewButton.setForeground(new Color(255, 255, 255));
-		btnNewButton.setBackground(new Color(255, 0, 0));
+		btnNewButton.setBackground(new Color(255, 60, 60));
 
-		JButton btnNewButton_1 = new RoundButton("Salvar");
+		JButton btnNewButton_1 = new JButton("Salvar");
+		btnNewButton_1.setMargin(new Insets(4, 14, 4, 14));
+		btnNewButton_1.setDisplayedMnemonicIndex(0);
 		panel_1.add(btnNewButton_1, "cell 2 6,alignx right,aligny bottom");
 		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
