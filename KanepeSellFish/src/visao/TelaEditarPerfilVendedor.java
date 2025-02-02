@@ -100,6 +100,7 @@ public class TelaEditarPerfilVendedor extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
+		contentPane.setBackground(new Color(154, 208, 217));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
 		setContentPane(contentPane);
@@ -218,6 +219,7 @@ public class TelaEditarPerfilVendedor extends JFrame {
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				TelaPerfilVendedor frame = new TelaPerfilVendedor(u, true);
+				frame.setLocationRelativeTo(null);
 				frame.setVisible(true);
 				dispose();
 			}
@@ -352,7 +354,7 @@ public class TelaEditarPerfilVendedor extends JFrame {
 
 		});
 		btnNewButton_1.setForeground(new Color(255, 255, 255));
-		btnNewButton_1.setBackground(new Color(96, 154, 168));
+		btnNewButton_1.setBackground(new Color(2, 73, 89));
 
 		txtCelular = new JTextField();
 		txtCelular.setToolTipText("");

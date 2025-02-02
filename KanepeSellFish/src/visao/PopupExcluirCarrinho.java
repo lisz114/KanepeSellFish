@@ -24,7 +24,7 @@ public class PopupExcluirCarrinho extends JFrame {
 	private JPanel contentPane;
 	private static CarrinhoDAO cDAO = CarrinhoDAO.getInstancia();
 
-	public PopupExcluirCarrinho(Usuario u, ItemCarrinho item, TelaCarrinho telaCarrinho) {
+	public PopupExcluirCarrinho(Usuario u, ItemCarrinho item, TelaCarrinho telaCarrinho, Boolean isVendedor) {
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 284, 174);
@@ -64,7 +64,7 @@ public class PopupExcluirCarrinho extends JFrame {
 				if (cDAO.removerProduto(item)) {
 					telaCarrinho.atualizarTela(u);
 					telaCarrinho.dispose();
-					TelaCarrinho carrinho = new TelaCarrinho(u, null, true);
+					TelaCarrinho carrinho = new TelaCarrinho(u, null, isVendedor);
 					carrinho.setLocationRelativeTo(null);
 					carrinho.setVisible(true);
 					TelaError erro = new TelaError();
@@ -74,7 +74,7 @@ public class PopupExcluirCarrinho extends JFrame {
 				}else {
 					telaCarrinho.atualizarTela(u);
 					telaCarrinho.dispose();
-					TelaCarrinho carrinho = new TelaCarrinho(u, null, true);
+					TelaCarrinho carrinho = new TelaCarrinho(u, null, isVendedor);
 					carrinho.setLocationRelativeTo(null);
 					carrinho.setVisible(true);
 					TelaError erro = new TelaError();

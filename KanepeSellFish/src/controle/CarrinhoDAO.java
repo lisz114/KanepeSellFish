@@ -127,7 +127,7 @@ public class CarrinhoDAO implements ICarrinhoDAO {
 
 	@Override
 	public boolean removerProduto(ItemCarrinho item) {
-		
+
 		String sql = "DELETE FROM itenscarrinho WHERE idItensCarrinho = ?";
 
 		try (Connection conn = ConexaoBD.getConexaoMySQL(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
@@ -209,4 +209,24 @@ public class CarrinhoDAO implements ICarrinhoDAO {
 		}
 		return false; // Retorna false se o produto não estiver no carrinho ou se ocorrer erro
 	}
+
+	public void atualizarQuantidade(CarrinhoCompras carrinho, Produto produto, int quantidade) {
+		String sql = "UPDATE itenscarrinho SET quantidade = ? WHERE Produtos_idProdutos = ? AND Carrinho_idCarrinho = ?";
+
+		try (Connection conn = ConexaoBD.getConexaoMySQL(); PreparedStatement stmt = conn.prepareStatement(sql)) {
+			stmt.setInt(1, quantidade);
+			stmt.setInt(2, produto.getIdProduto());
+			stmt.setString(3, carrinho.getCodigoCarrinho());
+
+			int rowsUpdated = stmt.executeUpdate();
+			if (rowsUpdated > 0) {
+				System.out.println("Quantidade atualizada com sucesso.");
+			} else {
+				System.out.println("Produto não encontrado no carrinho.");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+
 }

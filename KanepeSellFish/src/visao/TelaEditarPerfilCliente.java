@@ -64,11 +64,13 @@ public class TelaEditarPerfilCliente extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1280, 768);
 		contentPane = new JPanel();
+		contentPane.setBackground(new Color(154, 208, 217));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
 		setContentPane(contentPane);
 		contentPane.setLayout(new BorderLayout(0, 0));
 		JPanel panel_1 = new JPanel();
+		panel_1.setOpaque(false);
 		contentPane.add(panel_1, BorderLayout.CENTER);
 		panel_1.setLayout(new MigLayout("", "[250][450px,grow][grow]", "[60px][202][][][][grow]"));
 
@@ -185,10 +187,11 @@ public class TelaEditarPerfilCliente extends JFrame {
 
 			}
 		});
-		btSalvar.setBackground(new Color(64, 128, 128));
+		btSalvar.setBackground(new Color(2, 73, 89));
 		btCancelar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				PopupCancelar cancelar = new PopupCancelar(estajanela, u, isVendedor);
+				cancelar.setLocationRelativeTo(null);
 				cancelar.setVisible(true);
 				cancelar.setLocationRelativeTo(null);
 			}

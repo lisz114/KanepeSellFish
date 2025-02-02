@@ -42,6 +42,7 @@ public class TelaCarrinho extends JFrame {
 	CarrinhoDAO cDAO = new CarrinhoDAO();
 	TelaCarrinho estaJanela = this;
 	JPanel panelProd;
+	Boolean isVendedor;
 
 	public static UsuarioDAO uDAO = UsuarioDAO.getInstancia();
 
@@ -59,6 +60,7 @@ public class TelaCarrinho extends JFrame {
 //	}
 
 	public TelaCarrinho(Usuario u, List<Produto> produtos, boolean isVendedor ) {
+		this.isVendedor = isVendedor;
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1280, 768);
 		contentPane = new JPanel();
@@ -272,7 +274,7 @@ public void atualizarTela(Usuario u) {
 				coluna = 0;
 				linha++;
 			}
-			CardProdutoCarrinho panel_8 = new CardProdutoCarrinho(u, p, estaJanela);
+			CardProdutoCarrinho panel_8 = new CardProdutoCarrinho(u, p, estaJanela, isVendedor);
 			panelProd.add(panel_8, "cell " + coluna + " " + linha + "");
 
 		}

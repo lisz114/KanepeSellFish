@@ -22,7 +22,7 @@ public class CardProdutoCarrinho extends JPanel {
 	JLabel lblQuantidade = null;
 	
 
-	public CardProdutoCarrinho(Usuario u, ItemCarrinho p, TelaCarrinho telaCarrinho) {
+	public CardProdutoCarrinho(Usuario u, ItemCarrinho p, TelaCarrinho telaCarrinho, Boolean isVendedor) {
 		setBorder(new LineBorder(new Color(0, 0, 0)));
 
 		ImageIcon imgMe = new ImageIcon(CardProduto.class.getResource("/img/Menos.png"));
@@ -51,7 +51,7 @@ public class CardProdutoCarrinho extends JPanel {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 
-				PopupExcluirCarrinho excluir = new PopupExcluirCarrinho(u, p, telaCarrinho);
+				PopupExcluirCarrinho excluir = new PopupExcluirCarrinho(u, p, telaCarrinho, isVendedor);
 				excluir.setVisible(true);
 				excluir.setLocationRelativeTo(null);
 
@@ -75,12 +75,14 @@ public class CardProdutoCarrinho extends JPanel {
 		imgMenos.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
 				int quantidade = Integer.parseInt(lblQuantidade.getText());
-				if (quantidade > 0) {
+				if (quantidade > 1) {
 					quantidade = quantidade - 1;
-					lblQuantidade.setText(Integer.toString(quantidade));
+					
 				} else if (quantidade == 0) {
-					quantidade = 0;
+					quantidade = 1;
 				}
+				lblQuantidade.setText(Integer.toString(quantidade));
+				cDAO.atualizarQuantidade(p, p.getProduto(), quantidade);
 			}
 		});
 		imgMenos.setIcon(new ImageIcon(CardProduto.class.getResource("/img/Menos.png")));
@@ -100,6 +102,7 @@ public class CardProdutoCarrinho extends JPanel {
 					quantidade++;
 				}
 				lblQuantidade.setText(Integer.toString(quantidade));
+				cDAO.atualizarQuantidade(p, p.getProduto(), quantidade);
 			}
 		});
 		imgMais.setIcon(new ImageIcon(CardProduto.class.getResource("/img/More.png")));
