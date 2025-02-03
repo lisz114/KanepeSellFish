@@ -71,6 +71,7 @@ public class TelaEditarPerfilVendedor extends JFrame {
 	private JTextField txtNomeComercio;
 	private JLabel lblImagem;
 	private JTextField txtNome;
+	private JTextField txtChavePix;
 
 	/**
 	 * Launch the application.
@@ -260,6 +261,7 @@ public class TelaEditarPerfilVendedor extends JFrame {
 				String logradouro = txtLogradouro.getText();
 				Integer numero = Integer.valueOf(txtNum.getText());
 				String nome = txtNome.getText();
+				String chavePix = txtChavePix.getText();
 				
 				if (uDAO.verificarTelefone(telefone, u.getIdUsuario())) {
 				    TelaError erro = new TelaError();
@@ -281,6 +283,7 @@ public class TelaEditarPerfilVendedor extends JFrame {
 				produtorNovo.setEnd(enderecoNovo);
 				produtorNovo.setNomeComercio(nomeComercio);
 				produtorNovo.setTel(telefone);
+				produtorNovo.setChavePix(chavePix);
 
 				usuarioNovo.setEmail(email);
 				usuarioNovo.setTel(telefone);
@@ -414,6 +417,15 @@ public class TelaEditarPerfilVendedor extends JFrame {
 		ImageIcon iconProcurar = new ImageIcon(TelaCadastroComercio.class.getResource("/IMG/procurar.png"));
 		Image iconP = iconProcurar.getImage().getScaledInstance(26, 26, Image.SCALE_SMOOTH);
 		lblImagem.setIcon(new ImageIcon(iconP));
+		
+		txtChavePix = new JTextField();
+		txtChavePix.setToolTipText("");
+		txtChavePix.setText((String) null);
+		txtChavePix.setOpaque(false);
+		txtChavePix.setColumns(10);
+		txtChavePix.setBorder(new TitledBorder(new LineBorder(new Color(0, 0, 0), 2), "Chave pix", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
+		txtChavePix.setBackground(SystemColor.menu);
+		panel_1.add(txtChavePix, "cell 1 4");
 
 		ImageIcon conta = new ImageIcon(TelaInicio.class.getResource("/IMG/do-utilizador.png"));
 		Image iconConta = conta.getImage().getScaledInstance(30, 30, Image.SCALE_SMOOTH);

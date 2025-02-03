@@ -7,6 +7,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -16,6 +17,7 @@ import javax.swing.SwingConstants;
 
 import controle.CarrinhoDAO;
 import modelo.CarrinhoCompras;
+import modelo.ItemCarrinho;
 import modelo.Produto;
 import modelo.Usuario;
 import net.miginfocom.swing.MigLayout;
@@ -100,27 +102,65 @@ public class CardProduto extends JPanel {
 
 		JButton btAdicionar = new JButton("Adicionar");
 		btAdicionar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				CarrinhoDAO cdao = new CarrinhoDAO();
-				CarrinhoCompras c = cdao.verificarSeExisteCarrinho(u);
+		    public void actionPerformed(ActionEvent e) {
+		        CarrinhoDAO cdao = new CarrinhoDAO();
+		        CarrinhoCompras c;
 
-				if (cdao.verificarProdutoNoCarrinho(c, p)) {
-					TelaError erro = new TelaError();
-					erro.setLabelText("Este produto já está no seu carrinho!");
-					erro.setVisible(true);
-					erro.setLocationRelativeTo(null);
-				} else {
-					preco = p.getPreco();
-					preco = preco * quantidade;
+		        // Verificar se já existe um carrinho do usuário para o produtor do produto a ser adicionado
+		        c = cdao.verificarSeExisteCarrinho(u, p.getIdProdutor(), false);
+		        
+		        // Se já existe um carrinho para o produtor do produto, então tenta adicionar o produto
+		        if (c != null) {
+		            // Verifica se o produtor do produto a ser adicionado é o mesmo dos itens no carrinho
+		            boolean produtorDiferente = false;
+		            ArrayList<ItemCarrinho> itensCarrinho = cdao.addProdCarrinho(c);
+		            
+		            for (ItemCarrinho item : itensCarrinho) {
+		                if (item.getProduto().getIdProdutor() != p.getIdProdutor()) {
+		                    produtorDiferente = true;
+		                    break;
+		                }
+		            }
 
-					cdao.inserirProduto(p, quantidade, preco, c);
-					TelaError erro = new TelaError();
-					erro.setLabelText("Produto adicionado ao carrinho");
-					erro.setLocationRelativeTo(null);
-					erro.setVisible(true);
-				}
-			}
+		            if (produtorDiferente) {
+		                // Se os produtores são diferentes, exibe a mensagem de erro
+		                TelaError erro = new TelaError();
+		                erro.setLabelText("Não é possível adicionar itens de produtores diferentes ao carrinho!");
+		                erro.setVisible(true);
+		                erro.setLocationRelativeTo(null);
+		            } else {
+		                // Caso contrário, o produto pode ser adicionado ao carrinho
+		                if (cdao.verificarProdutoNoCarrinho(c, p)) {
+		                    TelaError erro = new TelaError();
+		                    erro.setLabelText("Este produto já está no seu carrinho!");
+		                    erro.setVisible(true);
+		                    erro.setLocationRelativeTo(null);
+		                } else {
+		                    preco = p.getPreco();
+		                    preco = preco * quantidade;
+
+		                    cdao.inserirProduto(p, quantidade, preco, c);
+		                    TelaError erro = new TelaError();
+		                    erro.setLabelText("Produto adicionado ao carrinho");
+		                    erro.setLocationRelativeTo(null);
+		                    erro.setVisible(true);
+		                }
+		            }
+		        } else {
+		            // Se não houver carrinho para o produtor, cria um novo carrinho com o produtor
+		            preco = p.getPreco();
+		            preco = preco * quantidade;
+
+		            cdao.inserirProduto(p, quantidade, preco, cdao.criarCarrinho(u, p.getIdProdutor()));
+		            TelaError erro = new TelaError();
+		            erro.setLabelText("Produto adicionado ao carrinho");
+		            erro.setLocationRelativeTo(null);
+		            erro.setVisible(true);
+		        }
+		    }
 		});
+
+
 		btAdicionar.setForeground(Color.WHITE);
 		btAdicionar.setBackground(new Color(2, 73, 89));
 		add(btAdicionar, "cell 1 6");

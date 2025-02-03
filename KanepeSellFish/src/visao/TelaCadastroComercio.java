@@ -47,6 +47,7 @@ public class TelaCadastroComercio extends JFrame {
 	private JTextField txtLogradouro;
 	private JTextField txtCidade;
 	private JTextField txtNumero;
+	private JTextField txtChavePix;
 
 	/**
 	 * Launch the application.
@@ -82,7 +83,8 @@ public class TelaCadastroComercio extends JFrame {
 		JPanel panelPrincipal = new JPanel();
 		panelPrincipal.setOpaque(false);
 		panel.add(panelPrincipal);
-		panelPrincipal.setLayout(new MigLayout("", "[grow]", "[100px][60px][65px][65px][65px][65px][65px][grow]"));
+		panelPrincipal
+				.setLayout(new MigLayout("", "[grow]", "[100px][60px][65px][65px][65px][65px][65px][65px][grow]"));
 
 		JPanel panel_2 = new JPanel();
 		panel_2.setOpaque(false);
@@ -134,10 +136,27 @@ public class TelaCadastroComercio extends JFrame {
 		txtCNPJ.setColumns(10);
 		panelCpf.add(txtCNPJ, "cell 0 1,grow");
 
+		JPanel panelCpf_1 = new JPanel();
+		panelCpf_1.setOpaque(false);
+		panelCpf_1.setBorder(new EmptyBorder(0, 40, 0, 40));
+		panelPrincipal.add(panelCpf_1, "cell 0 4,grow");
+		panelCpf_1.setLayout(new MigLayout("", "[grow]", "[10px][30px]"));
+
+		JLabel lblChavePix = new JLabel("Chave Pix(Opcional)");
+		lblChavePix.setForeground(Color.BLACK);
+		lblChavePix.setFont(new Font("Tahoma", Font.BOLD, 12));
+		panelCpf_1.add(lblChavePix, "cell 0 0");
+
+		txtChavePix = new JTextField();
+		txtChavePix.setOpaque(false);
+		txtChavePix.setColumns(10);
+		txtChavePix.setBorder(new LineBorder(new Color(0, 0, 0), 2));
+		panelCpf_1.add(txtChavePix, "cell 0 1,grow");
+
 		JPanel panelEmail = new JPanel();
 		panelEmail.setBorder(new EmptyBorder(0, 40, 0, 40));
 		panelEmail.setOpaque(false);
-		panelPrincipal.add(panelEmail, "cell 0 4,grow");
+		panelPrincipal.add(panelEmail, "cell 0 5,grow");
 		panelEmail.setLayout(new MigLayout("", "[grow][][190px]", "[10px][30px]"));
 
 		JLabel lblCEP = new JLabel("<html>CEP<span style='color: red;'>*</span></html>");
@@ -185,7 +204,7 @@ public class TelaCadastroComercio extends JFrame {
 		JPanel panelSenha = new JPanel();
 		panelSenha.setBorder(new EmptyBorder(0, 40, 0, 40));
 		panelSenha.setOpaque(false);
-		panelPrincipal.add(panelSenha, "cell 0 5,grow");
+		panelPrincipal.add(panelSenha, "cell 0 6,grow");
 		panelSenha.setLayout(new MigLayout("", "[grow][80px]", "[10px][30px]"));
 
 		JLabel lblBairro = new JLabel("<html>Bairro<span style='color: red;'>*</span></html>");
@@ -213,7 +232,7 @@ public class TelaCadastroComercio extends JFrame {
 		JPanel panelCheck = new JPanel();
 		panelCheck.setOpaque(false);
 		panelCheck.setBorder(new EmptyBorder(0, 40, 0, 40));
-		panelPrincipal.add(panelCheck, "cell 0 6,grow");
+		panelPrincipal.add(panelCheck, "cell 0 7,grow");
 		panelCheck.setLayout(new MigLayout("", "[grow]", "[10px][30px]"));
 
 		JLabel lblLogradouro = new JLabel("<html>Logradouro<span style='color: red;'>*</span></html>");
@@ -230,7 +249,7 @@ public class TelaCadastroComercio extends JFrame {
 		JPanel panelConfirmacao = new JPanel();
 		panelConfirmacao.setOpaque(false);
 		panelConfirmacao.setBorder(new EmptyBorder(0, 40, 0, 40));
-		panelPrincipal.add(panelConfirmacao, "cell 0 7,grow");
+		panelPrincipal.add(panelConfirmacao, "cell 0 8,grow");
 		panelConfirmacao.setLayout(new GridLayout(0, 1, 0, 0));
 
 		JPanel PainelBTN = new JPanel();
@@ -264,6 +283,7 @@ public class TelaCadastroComercio extends JFrame {
 				String bairro = txtBairro.getText();
 				String numero = txtNumero.getText();
 				String logradouro = txtLogradouro.getText();
+				String chavePix = txtChavePix.getText();
 
 				if (nomeComercio.isEmpty() || cnpj.isEmpty() || cep.isEmpty() || logradouro.isEmpty()
 						|| bairro.isEmpty() || cidade.isEmpty() || numero.isEmpty()) {
@@ -287,16 +307,21 @@ public class TelaCadastroComercio extends JFrame {
 						produtor.setCnpj(cnpj);
 						produtor.setEndereco(idEndereco);
 						produtor.setIdUsuario(idUsuario);
-						
+						if (chavePix.isEmpty() || chavePix == null) {
+							
+						} else {
+							produtor.setChavePix(chavePix);
+						}
+
 						System.out.println(idUsuario);
-						
+
 						pDAO.inserirProdutor(produtor);
 						TelaLogin tela = new TelaLogin();
 						tela.setLocationRelativeTo(null);
 						tela.setVisible(true);
 
 						dispose();
-					}else {
+					} else {
 						TelaError erro = new TelaError();
 						erro.setLabelText("Erro ao inserir dados");
 						erro.setLocationRelativeTo(null);
@@ -348,7 +373,7 @@ public class TelaCadastroComercio extends JFrame {
 		RestrictedTextField validarCep = new RestrictedTextField(txtCEP);
 		validarCep.setOnlyNums(true);
 		validarCep.setLimit(8);
-		
+
 		RestrictedTextField validarCnpj = new RestrictedTextField(txtCNPJ);
 		validarCnpj.setOnlyNums(true);
 		validarCnpj.setLimit(14);

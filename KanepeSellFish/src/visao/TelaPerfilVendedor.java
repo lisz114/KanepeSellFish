@@ -235,7 +235,7 @@ public class TelaPerfilVendedor extends JFrame {
 		panel_1.setMaximumSize(new Dimension(63, 23));
 		panel_1.setMinimumSize(new Dimension(63, 23));
 		contentPane.add(panel_1, BorderLayout.CENTER);
-		panel_1.setLayout(new MigLayout("", "[grow][grow][grow][grow][grow]", "[][][][][][][][grow][40px]"));
+		panel_1.setLayout(new MigLayout("", "[grow][grow][grow][grow][grow]", "[][][][][][][][][grow][40px]"));
 
 		JLabel imgUsuario = new JLabel("");
 		imgUsuario.setIcon(new ImageIcon(TelaEditarPerfilCliente.class.getResource("/img/Avatar.png")));
@@ -342,11 +342,15 @@ public class TelaPerfilVendedor extends JFrame {
 		txtCidade.setFont(new Font("/Fontes/Roboto-Black.ttf", Font.PLAIN, 15));
 		panel_1.add(txtCidade, "flowx,cell 3 6");
 		txtCidade.setText(produtor.getEnd().getCidade());
+		
+		JLabel lblChavePix = new JLabel("ChavePix:");
+		lblChavePix.setFont(new Font("Dialog", Font.PLAIN, 15));
+		panel_1.add(lblChavePix, "flowx,cell 1 7");
 		rndbtnAlterarInformaes.setText("Alterar Informações");
 		rndbtnAlterarInformaes.setFont(new Font("/Fontes/Roboto-Black.ttf", Font.PLAIN, 11));
 		rndbtnAlterarInformaes.setBackground(new Color(154, 205, 217));
 		rndbtnAlterarInformaes.setForeground(new Color(0, 0, 0));
-		panel_1.add(rndbtnAlterarInformaes, "cell 4 8,alignx center,aligny center");
+		panel_1.add(rndbtnAlterarInformaes, "cell 4 9,alignx center,aligny center");
 
 		JLabel lblnada3 = new JLabel(",     ");
 		panel_1.add(lblnada3, "cell 3 6,alignx left");
@@ -386,7 +390,7 @@ public class TelaPerfilVendedor extends JFrame {
 
 		JPanel panel_21 = new JPanel();
 		panel_21.setBounds(10, 235, 284, 279);
-		panel_1.add(panel_21);
+		panel_1.add(panel_21, "cell 4 4");
 		panel_21.setLayout(null);
 		panel_21.setOpaque(false);
 
@@ -406,5 +410,14 @@ public class TelaPerfilVendedor extends JFrame {
 		lblAvatar.setIcon(img);
 		lblAvatar.setBounds(48, 11, 202, 202);
 		panel_21.add(lblAvatar);
+		
+		JLabel txtChavePix = new JLabel("");
+		txtChavePix.setFont(new Font("Dialog", Font.PLAIN, 15));
+		panel_1.add(txtChavePix, "cell 1 7");
+		if (produtor.getChavePix()==null) {
+			txtChavePix.setText("Nenhuma chave pix cadastrada.");
+		} else {
+			txtChavePix.setText(produtor.getChavePix());
+		}
 	}
 }
