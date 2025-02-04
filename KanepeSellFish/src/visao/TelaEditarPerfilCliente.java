@@ -215,7 +215,7 @@ public class TelaEditarPerfilCliente extends JFrame {
 			}
 		});
 		btSalvar.setBackground(new Color(154, 208, 217));
-		
+
 		JLabel lblEditarFt = new JLabel("Editar Foto de Perfil");
 		lblEditarFt.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		lblEditarFt.setForeground(SystemColor.textHighlight);

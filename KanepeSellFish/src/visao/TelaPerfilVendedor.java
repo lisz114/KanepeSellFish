@@ -327,8 +327,8 @@ public class TelaPerfilVendedor extends JFrame {
 		panel_1.add(txtCidade, "flowx,cell 3 6");
 		txtCidade.setText(produtor.getEnd().getCidade());
 		
-		JButton rndbtnAlterarInformaes = new JButton("");
-		rndbtnAlterarInformaes.addActionListener(new ActionListener() {
+		JButton rbInfo = new JButton("");
+		rbInfo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
         TelaEditarPerfilVendedor editar = new TelaEditarPerfilVendedor(u);
 				editar.setLocationRelativeTo(null);
@@ -349,20 +349,20 @@ public class TelaPerfilVendedor extends JFrame {
 				rbSenha.setFont(new Font("Dialog", Font.PLAIN, 11));
 				rbSenha.setBackground(new Color(154, 205, 217));
 				panel_1.add(rbSenha, "flowx,cell 4 9,alignx center,aligny center");
-		rndbtnAlterarInformaes.setText("Alterar Informações");
-		rndbtnAlterarInformaes.setFont(new Font("Dialog", Font.PLAIN, 11));
-		rndbtnAlterarInformaes.setBackground(new Color(154, 205, 217));
-		rndbtnAlterarInformaes.setForeground(new Color(0, 0, 0));
-		panel_1.add(rndbtnAlterarInformaes, "cell 3 8,alignx center,aligny center");
+		rbInfo.setText("Alterar Informações");
+		rbInfo.setFont(new Font("Dialog", Font.PLAIN, 11));
+		rbInfo.setBackground(new Color(154, 205, 217));
+		rbInfo.setForeground(new Color(0, 0, 0));
+		panel_1.add(rbInfo, "cell 3 8,alignx center,aligny center");
 
 		JLabel lblChavePix = new JLabel("ChavePix:");
 		lblChavePix.setFont(new Font("Dialog", Font.PLAIN, 15));
 		panel_1.add(lblChavePix, "flowx,cell 1 7");
-		rndbtnAlterarInformaes.setText("Alterar Informações");
-		rndbtnAlterarInformaes.setFont(new Font("/Fontes/Roboto-Black.ttf", Font.PLAIN, 11));
-		rndbtnAlterarInformaes.setBackground(new Color(154, 205, 217));
-		rndbtnAlterarInformaes.setForeground(new Color(0, 0, 0));
-		panel_1.add(rndbtnAlterarInformaes, "cell 4 9,alignx center,aligny center");
+		rbInfo.setText("Alterar Informações");
+		rbInfo.setFont(new Font("/Fontes/Roboto-Black.ttf", Font.PLAIN, 11));
+		rbInfo.setBackground(new Color(154, 205, 217));
+		rbInfo.setForeground(new Color(0, 0, 0));
+		panel_1.add(rbInfo, "cell 4 9,alignx center,aligny center");
 
 		JLabel lblnada3 = new JLabel(",     ");
 		panel_1.add(lblnada3, "cell 3 6,alignx left");
