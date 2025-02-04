@@ -326,20 +326,35 @@ public class TelaPerfilVendedor extends JFrame {
 		txtCidade.setFont(new Font("/Fontes/Roboto-Black.ttf", Font.PLAIN, 15));
 		panel_1.add(txtCidade, "flowx,cell 3 6");
 		txtCidade.setText(produtor.getEnd().getCidade());
-
-		JButton rbSenha = new JButton("Alterar senha");
-		rbSenha.addActionListener(new ActionListener() {
+		
+		JButton rndbtnAlterarInformaes = new JButton("");
+		rndbtnAlterarInformaes.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				TelaRedefinicaoSenha redefinir = new TelaRedefinicaoSenha(u, isVendedor);
-				redefinir.setVisible(true);
-				redefinir.setLocationRelativeTo(null);
+        TelaEditarPerfilVendedor editar = new TelaEditarPerfilVendedor(u);
+				editar.setLocationRelativeTo(null);
+				editar.setVisible(true);
+				dispose();
 			}
 		});
-		rbSenha.setForeground(Color.BLACK);
-		rbSenha.setFont(new Font("Dialog", Font.PLAIN, 11));
-		rbSenha.setBackground(new Color(154, 205, 217));
-		panel_1.add(rbSenha, "flowx,cell 4 8");
 		
+				JButton rbSenha = new JButton("Alterar senha");
+				rbSenha.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						TelaRedefinicaoSenha redefinir = new TelaRedefinicaoSenha(u, isVendedor);
+						redefinir.setVisible(true);
+						redefinir.setLocationRelativeTo(null);
+					}
+				});
+				rbSenha.setForeground(Color.BLACK);
+				rbSenha.setFont(new Font("Dialog", Font.PLAIN, 11));
+				rbSenha.setBackground(new Color(154, 205, 217));
+				panel_1.add(rbSenha, "flowx,cell 4 9,alignx center,aligny center");
+		rndbtnAlterarInformaes.setText("Alterar Informações");
+		rndbtnAlterarInformaes.setFont(new Font("Dialog", Font.PLAIN, 11));
+		rndbtnAlterarInformaes.setBackground(new Color(154, 205, 217));
+		rndbtnAlterarInformaes.setForeground(new Color(0, 0, 0));
+		panel_1.add(rndbtnAlterarInformaes, "cell 3 8,alignx center,aligny center");
+
 		JLabel lblChavePix = new JLabel("ChavePix:");
 		lblChavePix.setFont(new Font("Dialog", Font.PLAIN, 15));
 		panel_1.add(lblChavePix, "flowx,cell 1 7");
@@ -385,21 +400,6 @@ public class TelaPerfilVendedor extends JFrame {
 		JLabel lblvirgula = new JLabel(",");
 		panel_1.add(lblvirgula, "cell 3 4,aligny bottom");
 		ImageIcon img = new ImageIcon(u.getImg());
-
-		JButton rndbtnAlterarInformaes = new JButton("");
-		rndbtnAlterarInformaes.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-        TelaEditarPerfilVendedor editar = new TelaEditarPerfilVendedor(u);
-				editar.setLocationRelativeTo(null);
-				editar.setVisible(true);
-				dispose();
-			}
-		});
-		rndbtnAlterarInformaes.setText("Alterar Informações");
-		rndbtnAlterarInformaes.setFont(new Font("Dialog", Font.PLAIN, 11));
-		rndbtnAlterarInformaes.setBackground(new Color(154, 205, 217));
-		rndbtnAlterarInformaes.setForeground(new Color(0, 0, 0));
-		panel_1.add(rndbtnAlterarInformaes, "cell 3 8,alignx center,aligny center");
-
 	}
+		
 }
