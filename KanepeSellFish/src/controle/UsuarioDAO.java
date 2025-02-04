@@ -7,10 +7,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
-import modelo.Cartao;
-import modelo.Endereco;
 import modelo.IUsuarioDAO;
-import modelo.Produtor;
 import modelo.Usuario;
 
 public class UsuarioDAO implements IUsuarioDAO {
@@ -195,37 +192,6 @@ public class UsuarioDAO implements IUsuarioDAO {
 			e.printStackTrace();
 		}
 		return null;
-	}
-
-	public Usuario consultaUserCartao(Usuario u) {
-		
-		String sql = "SELECT * FROM kanepe.usuarios inner join kanepe.cartao as Usuarios_idUsuarios where idUsuarios = ?";
-		
-		try (Connection conn = ConexaoBD.getConexaoMySQL(); PreparedStatement stmt = conn.prepareStatement(sql);) {
-
-			ResultSet res = null;
-			stmt.setInt(1, u.getIdUsuario());
-			res = stmt.executeQuery();
-			while (res.next()) {
-				
-				Usuario user = new Usuario();
-				user.setNome(res.getString("nome_Usuario"));
-				
-				Cartao c = new Cartao();
-				c.setTipodoCartao(res.getString("TipodoCartao"));
-				c.setNumdoCartao(res.getLong("NumerodoCartao"));
-				//c.setValidade(java.sql.Date.valueOf(res.getDate("validade")));
-				c.setApelido(res.getString("apelido"));
-				user.setCartao(c);
-				
-				return user;
-			}
-			
-		} catch (SQLException e) {
-			// TODO: handle exception
-			e.printStackTrace();
-		}
-		return u;
 	}
 
 	// Método para validar CPF
