@@ -32,6 +32,7 @@ import modelo.Produto;
 import modelo.RoundButton;
 import modelo.Usuario;
 import net.miginfocom.swing.MigLayout;
+import java.awt.Insets;
 
 public class TelaAlterarProduto extends JFrame {
 
@@ -79,17 +80,18 @@ public class TelaAlterarProduto extends JFrame {
 		getContentPane().setLayout(new BorderLayout(0, 0));
 
 		JPanel panelBackground = new JPanel();
-		panelBackground.setBackground(new Color(154, 205, 217));
+		panelBackground.setBackground(new Color(255, 255, 255));
 		getContentPane().add(panelBackground, BorderLayout.CENTER);
 		panelBackground.setLayout(new MigLayout("", "[grow]", "[100px][300px,grow][100px]"));
 
 		JPanel panelTitulo = new JPanel();
-		panelTitulo.setOpaque(false);
+		panelTitulo.setBackground(new Color(154, 205, 217));
 		panelBackground.add(panelTitulo, "cell 0 0,grow");
+		panelTitulo.setLayout(new MigLayout("", "[grow]", "[grow]"));
 
 		JLabel lblTitulo = new JLabel("Alterar Produto");
 		lblTitulo.setFont(new Font("Tahoma", Font.PLAIN, 38));
-		panelTitulo.add(lblTitulo);
+		panelTitulo.add(lblTitulo, "cell 0 0,alignx center,aligny center");
 
 		JPanel panelInformacoes = new JPanel();
 		panelInformacoes.setOpaque(false);
@@ -196,7 +198,31 @@ public class TelaAlterarProduto extends JFrame {
 		panelBotoes.add(panelAdicionar);
 		panelAdicionar.setLayout(new MigLayout("", "[230px][130px]", "[5px][30px,grow][5px]"));
 
-		JButton btnAlterar = new RoundButton("Alterar");
+		JButton btnCancelar = new JButton("Cancelar");
+		btnCancelar.setMargin(new Insets(4, 14, 4, 14));
+		btnCancelar.setFont(new Font("Dialog", Font.PLAIN, 18));
+		panelAdicionar.add(btnCancelar, "flowx,cell 1 1,growx,aligny center");
+		btnCancelar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+
+				dispose();
+
+			}
+		});
+		btnCancelar.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		btnCancelar.setBackground(new Color(205, 92, 92));
+		btnCancelar.setForeground(new Color(255, 255, 255));
+		btnCancelar.setBorderPainted(false);
+
+		JPanel panelCancelar = new JPanel();
+		panelCancelar.setOpaque(false);
+		panelBotoes.add(panelCancelar);
+		panelCancelar.setLayout(new MigLayout("", "[130px][grow]", "[5px][30px,grow][5px]"));
+
+		JButton btnAlterar = new JButton("Alterar");
+		btnAlterar.setMargin(new Insets(4, 14, 4, 14));
+		btnAlterar.setFont(new Font("Dialog", Font.PLAIN, 18));
+		panelCancelar.add(btnAlterar, "cell 0 1,growx,aligny center");
 		btnAlterar.setText("Alterar");
 		btnAlterar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -210,9 +236,9 @@ public class TelaAlterarProduto extends JFrame {
 				String precoStr = txtPreco.getText();
 				String quantidadeStr = txtQuantidade.getText();
 				Boolean salinidade;
-				if (rdbtnDoce.isSelected()){
+				if (rdbtnDoce.isSelected()) {
 					salinidade = true;
-				}else {
+				} else {
 					salinidade = false;
 				}
 
@@ -277,26 +303,6 @@ public class TelaAlterarProduto extends JFrame {
 		btnAlterar.setBackground(new Color(2, 73, 89));
 		btnAlterar.setForeground(new Color(255, 255, 255));
 		btnAlterar.setBorderPainted(false);
-		panelAdicionar.add(btnAlterar, "cell 1 1,grow");
-
-		JPanel panelCancelar = new JPanel();
-		panelCancelar.setOpaque(false);
-		panelBotoes.add(panelCancelar);
-		panelCancelar.setLayout(new MigLayout("", "[130px][grow]", "[5px][30px,grow][5px]"));
-
-		JButton btnCancelar = new RoundButton("Cancelar");
-		btnCancelar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-
-				dispose();
-
-			}
-		});
-		btnCancelar.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		btnCancelar.setBackground(new Color(200, 0, 0));
-		btnCancelar.setForeground(new Color(0, 0, 0));
-		btnCancelar.setBorderPainted(false);
-		panelCancelar.add(btnCancelar, "cell 0 1,grow");
 	}
 
 	public void mostrarDados(Produto produtoSelecionado) {
@@ -304,9 +310,9 @@ public class TelaAlterarProduto extends JFrame {
 		DateTimeFormatter desiredFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 		String formattedDate = validade.format(desiredFormatter);
 
-		if(produtoSelecionado.getSalinidade()!=null && produtoSelecionado.getSalinidade()==true) {
+		if (produtoSelecionado.getSalinidade() != null && produtoSelecionado.getSalinidade() == true) {
 			rdbtnDoce.setSelected(true);
-		}else {
+		} else {
 			rdbtnSalgada.setSelected(true);
 		}
 		txtNome.setText(produtoSelecionado.getNome());

@@ -188,7 +188,7 @@ public class TelaEsqueceuSenha extends JFrame {
 				String email = txtEmail.getText();
 				String senhaRepet = String.valueOf(txtSenhaRepet.getPassword());
 
-				if (senha.equals(senhaRepet)) {
+				if (senha.equals(senhaRepet) && senhaRepet.equals(senha)) {
 					if (uDAO.consultarUsuarioLoginSenha(email, senha) == null) {
 						uDAO.alterarSenha(senha, email);
 						PopupVoltarLogin aviso = new PopupVoltarLogin();
