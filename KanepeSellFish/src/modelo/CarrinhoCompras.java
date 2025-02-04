@@ -5,6 +5,7 @@ import java.util.ArrayList;
 public class CarrinhoCompras {
 
 	private String codigoCarrinho;
+	private int produtorCarrinho;
 	private ArrayList<Double> precoItem;
 	private ArrayList<Produto> produtos;
 	private float valorTotal;
@@ -68,6 +69,14 @@ public class CarrinhoCompras {
 
 	public void setCliente(Cliente cliente) {
 		this.cliente = cliente;
+	}
+
+	public int getProdutorCarrinho() {
+		return produtorCarrinho;
+	}
+
+	public void setProdutorCarrinho(int produtorCarrinho) {
+		this.produtorCarrinho = produtorCarrinho;
 	}
 	
 }

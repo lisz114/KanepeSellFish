@@ -28,14 +28,18 @@ public class ProdutorDAO implements IProdutorDAO {
 
 	@Override
 	public boolean inserirProdutor(Produtor produtor) {
-		String sql = "INSERT INTO produtores (nomeNegocio, Usuarios_idUsuarios, Enderecos_idEnderecos, cnpj) VALUES (?, ?, ?, ?)";
+		String sql = "INSERT INTO produtores (nomeNegocio, Usuarios_idUsuarios, Enderecos_idEnderecos, cnpj, chavePix) VALUES (?, ?, ?, ?, ?)";
 		try (Connection conn = ConexaoBD.getConexaoMySQL(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
 			pstmt.setString(1, produtor.getNomeComercio());
 			pstmt.setInt(2, produtor.getIdUsuario());
-			pstmt.setInt(3, produtor.getEnd().getIdEndereco());
+			pstmt.setInt(3, produtor.getEndereco());
 			pstmt.setString(4, produtor.getCnpj());
-
+			if (produtor.getChavePix() == null) {
+				pstmt.setString(5, null);
+			} else {
+				pstmt.setString(5, produtor.getChavePix());
+			}
 			System.out.println(pstmt);
 			int rowsAffected = pstmt.executeUpdate();
 			return rowsAffected > 0;
@@ -58,6 +62,7 @@ public class ProdutorDAO implements IProdutorDAO {
 
 					p.setNomeComercio(res.getString("nomeNegocio"));
 					p.setCnpj(res.getString("cnpj"));
+					p.setChavePix(res.getString("chavePix"));
 					p.setEnd(e);
 
 					return p;
@@ -70,16 +75,17 @@ public class ProdutorDAO implements IProdutorDAO {
 	}
 
 	public boolean alterarProdutor(Produtor produtor, Usuario u) {
-		String sql = "UPDATE produtores SET nomeNegocio = ?, cnpj = ? WHERE Usuarios_idUsuarios = ?";
+		String sql = "UPDATE produtores SET nomeNegocio = ?, cnpj = ?, chavePix = ? WHERE Usuarios_idUsuarios = ?";
 		try (Connection conn = ConexaoBD.getConexaoMySQL(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
 			pstmt.setString(1, produtor.getNomeComercio());
 			pstmt.setString(2, produtor.getCnpj());
-			pstmt.setLong(3, u.getIdUsuario());
+			pstmt.setString(3, produtor.getChavePix());
+			pstmt.setLong(4, u.getIdUsuario());
 
 			int rowsAffected = pstmt.executeUpdate();
 			if (rowsAffected > 0) {
-				
+
 				return uDAO.alterarUsuario(u);
 			}
 			return false;

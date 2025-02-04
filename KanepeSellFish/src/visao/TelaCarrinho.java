@@ -42,6 +42,8 @@ public class TelaCarrinho extends JFrame {
 	CarrinhoDAO cDAO = new CarrinhoDAO();
 	TelaCarrinho estaJanela = this;
 	JPanel panelProd;
+	Boolean isVendedor;
+	int carrinhoProdutor;
 
 	public static UsuarioDAO uDAO = UsuarioDAO.getInstancia();
 
@@ -59,6 +61,7 @@ public class TelaCarrinho extends JFrame {
 //	}
 
 	public TelaCarrinho(Usuario u, List<Produto> produtos, boolean isVendedor ) {
+		this.isVendedor = isVendedor;
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1280, 768);
 		contentPane = new JPanel();
@@ -255,28 +258,35 @@ public class TelaCarrinho extends JFrame {
 	}
 
 public void atualizarTela(Usuario u) {
-	CarrinhoCompras carrinho = cDAO.verificarSeExisteCarrinho(u);
-	ArrayList<ItemCarrinho> lista = cDAO.addProdCarrinho(carrinho);
-//	ArrayList<Produto> lista = pDAO.addTodosProd();
+	
+	
+	if(cDAO.verificarSeExisteCarrinho(u, carrinhoProdutor, false)==null) {
+		System.out.println("Carrinho nao existe");
+	}else {
+		CarrinhoCompras carrinho = cDAO.verificarSeExisteCarrinho(u, carrinhoProdutor, false);
+		ArrayList<ItemCarrinho> lista = cDAO.addProdCarrinho(carrinho);
+//		ArrayList<Produto> lista = pDAO.addTodosProd();
 
-	int linha = 0;
-	int coluna = -1;
-	if (lista == null) {
-		System.out.println("lista ta Vazia");
-	} else {
+		int linha = 0;
+		int coluna = -1;
+		if (lista == null) {
+			System.out.println("lista ta Vazia");
+		} else {
 
-		for (ItemCarrinho p : lista) {
+			for (ItemCarrinho p : lista) {
 
-			coluna++;
-			if (coluna > 3) {
-				coluna = 0;
-				linha++;
+				coluna++;
+				if (coluna > 3) {
+					coluna = 0;
+					linha++;
+				}
+				CardProdutoCarrinho panel_8 = new CardProdutoCarrinho(u, p, estaJanela, isVendedor);
+				panelProd.add(panel_8, "cell " + coluna + " " + linha + "");
+
 			}
-			CardProdutoCarrinho panel_8 = new CardProdutoCarrinho(u, p, estaJanela);
-			panelProd.add(panel_8, "cell " + coluna + " " + linha + "");
-
 		}
 	}
+	
 	
 }
 }
