@@ -45,6 +45,8 @@ public class CarrinhoDAO implements ICarrinhoDAO {
 			// Converter o preco para double e arredondá-lo para 2 casas decimais
 			pstmt.setDouble(4, preco);
 
+			setProdutorCarrinho(produto.getIdProdutor(), c);
+
 			int rowsAffected = pstmt.executeUpdate();
 			return rowsAffected > 0;
 
@@ -54,44 +56,55 @@ public class CarrinhoDAO implements ICarrinhoDAO {
 		}
 	}
 
-	public CarrinhoCompras verificarSeExisteCarrinho(Usuario u) {
-		// Usar try-with-resources para garantir o fechamento adequado dos recursos
-		String sql = "SELECT * FROM kanepe.carrinho where Usuarios_idUsuarios = ?";
+	public CarrinhoCompras verificarSeExisteCarrinho(Usuario u, Integer carrinhoProdutor, Boolean criar) {
+		String sql;
+		boolean filtrarPorProdutor = (carrinhoProdutor != null && carrinhoProdutor > 0);
+
+		if (filtrarPorProdutor) {
+			sql = "SELECT * FROM kanepe.carrinho WHERE Usuarios_idUsuarios = ? AND Produtores_idProdutores = ?";
+		} else {
+			sql = "SELECT * FROM kanepe.carrinho WHERE Usuarios_idUsuarios = ?";
+		}
+
 		try (Connection conn = ConexaoBD.getConexaoMySQL(); PreparedStatement stmt1 = conn.prepareStatement(sql)) {
 
-			stmt1.setString(1, String.valueOf(u.getIdUsuario()));
+			stmt1.setInt(1, u.getIdUsuario());
+
+			if (filtrarPorProdutor) {
+				stmt1.setInt(2, carrinhoProdutor);
+			}
 
 			try (ResultSet res1 = stmt1.executeQuery()) {
-				// Verifica se a consulta retornou resultados
-				if (!res1.next()) {
-					// Caso não exista carrinho, cria um novo
-					return criarCarrinho(u);
-				} else {
-					// Existe um carrinho, cria um objeto CarrinhoCompras
+				if (res1.next()) { // Se há um carrinho existente
 					CarrinhoCompras c = new CarrinhoCompras();
+					c.setProdutorCarrinho(res1.getInt("Produtores_idProdutores"));
 					c.setCodigoCarrinho(res1.getString("idCarrinho"));
 					return c;
+				} else if (criar) { // Se não há carrinho e criar == true, cria um novo carrinho
+					return criarCarrinho(u, (carrinhoProdutor != null ? carrinhoProdutor : 0));
 				}
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 
-		return null; // Retorna null em caso de erro
+		return null; // Retorna null se não houver carrinho e criar == false
 	}
 
-	public CarrinhoCompras criarCarrinho(Usuario u) {
+	public CarrinhoCompras criarCarrinho(Usuario u, int carrinhoProdutor) {
 		PreparedStatement stmt1 = null;
 		Connection conn = ConexaoBD.getConexaoMySQL();
 
 		try {
 			// Usando o INSERT para criar um novo carrinho
-			stmt1 = conn.prepareStatement("INSERT INTO carrinho (Usuarios_idUsuarios) VALUES (?)",
+			stmt1 = conn.prepareStatement(
+					"INSERT INTO carrinho (Usuarios_idUsuarios, Produtores_idProdutores) VALUES (?, ?)",
 					PreparedStatement.RETURN_GENERATED_KEYS // Habilita a recuperação do ID gerado
 			);
 
 			// Definindo o ID do usuário
 			stmt1.setInt(1, u.getIdUsuario());
+			stmt1.setInt(2, carrinhoProdutor);
 
 			// Executando o INSERT, mas agora usando executeUpdate()
 			int affectedRows = stmt1.executeUpdate(); // Retorna o número de linhas afetadas
@@ -126,21 +139,23 @@ public class CarrinhoDAO implements ICarrinhoDAO {
 	}
 
 	@Override
-	public boolean removerProduto(CarrinhoCompras carrinho, Produto produto) {
-		String sql = "DELETE FROM itenscarrinho WHERE Carrinho_idCarrinho = ? AND Produtos_idProdutos = ?";
+	public boolean removerProduto(ItemCarrinho item) {
+
+		String sql = "DELETE FROM itenscarrinho WHERE idItensCarrinho = ?";
 
 		try (Connection conn = ConexaoBD.getConexaoMySQL(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
-			pstmt.setString(1, carrinho.getCodigoCarrinho());
-			pstmt.setInt(2, produto.getIdProduto());
+			pstmt.setInt(1, item.getidItemCarrinho());
+//			pstmt.setInt(2, item.getProduto().getIdProduto());
 
 			int rowsAffected = pstmt.executeUpdate();
-			return rowsAffected > 0; // Retorna true se o produto foi removido
-
+			if (rowsAffected > 0) {
+				return true;
+			}
 		} catch (SQLException e) {
 			e.printStackTrace();
-			return false;
 		}
+		return false;
 	}
 
 	@Override
@@ -172,10 +187,11 @@ public class CarrinhoDAO implements ICarrinhoDAO {
 
 				ItemCarrinho Iprod = new ItemCarrinho();
 
-				Iprod.setProdutoItemCarrinho(Integer.parseInt(res1.getString("Produtos_idProdutos")));
+				Iprod.setidItemCarrinho(Integer.parseInt(res1.getString("idItensCarrinho")));
 				Iprod.setPrecoTotal(Float.parseFloat(res1.getString("preco")));
 				Iprod.setQuantidade(Integer.parseInt(res1.getString("quantidade")));
-				Iprod.setProduto(pDAO.pegarProdutoPorId(Iprod.getProdutoItemCarrinho()));
+				Iprod.setProduto(pDAO.pegarProdutoPorId(res1.getInt("Produtos_idProdutos")));
+				Iprod.setCodigoCarrinho(res1.getString("Carrinho_idCarrinho"));
 				listaDeProdutos.add(Iprod);
 			}
 
@@ -206,4 +222,63 @@ public class CarrinhoDAO implements ICarrinhoDAO {
 		}
 		return false; // Retorna false se o produto não estiver no carrinho ou se ocorrer erro
 	}
+
+	public void atualizarQuantidade(CarrinhoCompras carrinho, Produto produto, int quantidade) {
+		String sql = "UPDATE itenscarrinho SET quantidade = ? WHERE Produtos_idProdutos = ? AND Carrinho_idCarrinho = ?";
+
+		try (Connection conn = ConexaoBD.getConexaoMySQL(); PreparedStatement stmt = conn.prepareStatement(sql)) {
+			stmt.setInt(1, quantidade);
+			stmt.setInt(2, produto.getIdProduto());
+			stmt.setString(3, carrinho.getCodigoCarrinho());
+
+			int rowsUpdated = stmt.executeUpdate();
+			if (rowsUpdated > 0) {
+				System.out.println("Quantidade atualizada com sucesso.");
+			} else {
+				System.out.println("Produto não encontrado no carrinho.");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void setProdutorCarrinho(int idProdutor, CarrinhoCompras carrinho) {
+
+		String sql = "UPDATE Carrinho SET Produtores_idProdutores = ? WHERE idCarrinho = ?";
+
+		try (Connection conn = ConexaoBD.getConexaoMySQL(); PreparedStatement stmt = conn.prepareStatement(sql)) {
+			stmt.setInt(1, idProdutor);
+			stmt.setString(2, carrinho.getCodigoCarrinho());
+
+			int rowsUpdated = stmt.executeUpdate();
+			if (rowsUpdated > 0) {
+				System.out.println("idProdutor atualizada com sucesso.");
+			} else {
+				System.out.println("Erro ao inserir idProdutor");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+	}
+	
+	public void deletarCarrinhosVazios(Usuario u, int idProdutor) {
+	    String sql = "DELETE FROM carrinho WHERE Usuarios_idUsuarios = ? AND Produtores_idProdutores != ? AND NOT EXISTS (SELECT 1 FROM itenscarrinho WHERE Carrinho_idCarrinho = carrinho.idCarrinho)";
+	    
+	    try (Connection conn = ConexaoBD.getConexaoMySQL(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
+	        pstmt.setInt(1, u.getIdUsuario());
+	        pstmt.setInt(2, idProdutor);
+	        
+	        int rowsAffected = pstmt.executeUpdate();
+	        if (rowsAffected > 0) {
+	            System.out.println("Carrinho vazio de outro produtor excluído.");
+	        } else {
+	            System.out.println("Nenhum carrinho vazio encontrado para exclusão.");
+	        }
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+	}
+
+
 }

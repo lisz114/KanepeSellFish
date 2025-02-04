@@ -21,7 +21,9 @@ CREATE TABLE IF NOT EXISTS Usuarios (
     nome_Usuario VARCHAR(100) NOT NULL,
     senha_Usuario VARCHAR(100) NOT NULL,
     email_Usuario VARCHAR(100) NOT NULL UNIQUE,
-    telefone BIGINT UNIQUE,
+    telefone varchar(11) UNIQUE,
+    img VARCHAR(150),
+    descricao varchar(360),
     PRIMARY KEY (idUsuarios)
 );
 
@@ -47,6 +49,7 @@ CREATE TABLE IF NOT EXISTS Produtores (
     Usuarios_idUsuarios BIGINT NOT NULL,
     Enderecos_idEnderecos BIGINT NOT NULL,
     cnpj VARCHAR(14) NOT NULL UNIQUE,
+    chavePix VARCHAR(100) UNIQUE,
     PRIMARY KEY (idProdutores),
     FOREIGN KEY (Usuarios_idUsuarios) REFERENCES Usuarios (idUsuarios),
     FOREIGN KEY (Enderecos_idEnderecos) REFERENCES Enderecos (idEnderecos)
@@ -96,23 +99,22 @@ CREATE TABLE IF NOT EXISTS Vendas (
 -- Table Carrinho
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS Carrinho (
-    Vendas_idVendas BIGINT NOT NULL,
-    Produtos_idProdutos BIGINT NOT NULL,
-    idCarrinho BIGINT NOT NULL AUTO_INCREMENT,
-    PRIMARY KEY (idCarrinho),
-    FOREIGN KEY (Vendas_idVendas) REFERENCES Vendas (idVendas),
-    FOREIGN KEY (Produtos_idProdutos) REFERENCES Produtos (idProdutos)
+	idCarrinho BIGINT NOT NULL AUTO_INCREMENT,
+    Usuarios_idUsuarios BIGINT NOT NULL,
+    Produtores_idProdutores BIGINT,
+	PRIMARY KEY (idCarrinho),
+    FOREIGN KEY (Usuarios_idUsuarios) REFERENCES Usuarios (idUsuarios),
+    FOREIGN KEY (Produtores_idProdutores) REFERENCES Produtores (idProdutores)
 );
-
-Create Table if not exists Cartao(
-	idCartao bigint not null auto_increment primary key,
-    TipodoCartao varchar(7) not null,
-    NumerodoCartao bigint not null,
-    validade date not null,
-    CVV int(3) not null,
-    apelido varchar(30) not null,
-	Usuarios_idUsuarios bigint not null,
-    Foreign key (Usuarios_idUsuarios) references Usuarios (idUsuarios)
+CREATE TABLE IF NOT EXISTS ItensCarrinho (
+	idItensCarrinho BIGINT NOT NULL AUTO_INCREMENT,
+	Carrinho_idCarrinho BIGINT NOT NULL,
+	Produtos_idProdutos BIGINT NOT NULL,
+	quantidade BIGINT NOT NULL,
+	preco DECIMAL(10,2) NOT NULL,
+    PRIMARY KEY(idItensCarrinho),
+	FOREIGN KEY (Produtos_idProdutos) REFERENCES Produtos (idProdutos),
+	FOREIGN KEY (Carrinho_idCarrinho) REFERENCES Carrinho (idCarrinho)
 );
 
 INSERT INTO `kanepe`.`usuarios` (`cpf_Usuario`, `nome_Usuario`, `senha_Usuario`, `email_Usuario`) VALUES ('85318806961', 'vini', 'vini', 'vini');

@@ -9,6 +9,7 @@ public class Produtor extends Usuario {
 	private ArrayList<Pedido> pedido;
 	private String cnpj;
 	private Endereco end;
+	private String chavePix;
 	
 	public Produtor() {
 	}
@@ -67,6 +68,14 @@ public class Produtor extends Usuario {
 
 	public void setIdProdutor(int idProdutor) {
 		this.idProdutor = idProdutor;
+	}
+
+	public String getChavePix() {
+		return chavePix;
+	}
+
+	public void setChavePix(String chavePix) {
+		this.chavePix = chavePix;
 	}
 
 }

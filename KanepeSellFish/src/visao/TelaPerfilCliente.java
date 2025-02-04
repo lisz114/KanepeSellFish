@@ -93,29 +93,29 @@ public class TelaPerfilCliente extends JFrame {
 
 		JLabel lblNomeCliente = new JLabel(u.getNome());
 		panel_2.add(lblNomeCliente, "cell 0 1 3 1,growx,aligny center");
-		lblNomeCliente.setFont(new Font("Dialog", Font.PLAIN, 30));
+		lblNomeCliente.setFont(new Font("/Fontes/Roboto-Black.ttf", Font.PLAIN, 30));
 
 		JLabel lblCPF = new JLabel("CPF: ");
 		lblCPF.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblCPF.setFont(new Font("Dialog", Font.PLAIN, 15));
+		lblCPF.setFont(new Font("/Fontes/Roboto-Black.ttf", Font.PLAIN, 15));
 		panel_2.add(lblCPF, "flowx,cell 1 3,alignx left");
 
 		JLabel lblEmail = new JLabel("Email: ");
 		lblEmail.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblEmail.setFont(new Font("Dialog", Font.PLAIN, 15));
+		lblEmail.setFont(new Font("/Fontes/Roboto-Black.ttf", Font.PLAIN, 15));
 		panel_2.add(lblEmail, "flowx,cell 1 5,alignx left");
 
 		JLabel lblTelefone = new JLabel("Telefone: ");
 		lblTelefone.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblTelefone.setFont(new Font("Dialog", Font.PLAIN, 15));
+		lblTelefone.setFont(new Font("/Fontes/Roboto-Black.ttf", Font.PLAIN, 15));
 		panel_2.add(lblTelefone, "flowx,cell 1 7,alignx left");
 
 		JLabel lblDynamicCPF = new JLabel(u.getCpf());
-		lblDynamicCPF.setFont(new Font("Dialog", Font.PLAIN, 14));
+		lblDynamicCPF.setFont(new Font("/Fontes/Roboto-Black.ttf", Font.PLAIN, 14));
 		panel_2.add(lblDynamicCPF, "cell 1 3,alignx left,aligny center");
 
 		JLabel lblDynamicTel = new JLabel("");
-		lblDynamicTel.setFont(new Font("Dialog", Font.PLAIN, 14));
+		lblDynamicTel.setFont(new Font("/Fontes/Roboto-Black.ttf", Font.PLAIN, 14));
 		panel_2.add(lblDynamicTel, "cell 1 7,alignx left,aligny center");
 		if (u.getTel()==null) {
 			lblDynamicTel.setText("Nenhum telefone cadastrado.");
@@ -124,7 +124,7 @@ public class TelaPerfilCliente extends JFrame {
 		}
 
 		JLabel lblDynamicEmail = new JLabel(u.getEmail());
-		lblDynamicEmail.setFont(new Font("Dialog", Font.PLAIN, 14));
+		lblDynamicEmail.setFont(new Font("/Fontes/Roboto-Black.ttf", Font.PLAIN, 14));
 		panel_2.add(lblDynamicEmail, "cell 1 5,alignx left,aligny center");
 
 		JPanel panel_4 = new JPanel();
@@ -158,7 +158,7 @@ public class TelaPerfilCliente extends JFrame {
 		panel_4.add(btEditarSenha, "flowx,cell 0 0,alignx right,aligny bottom");
 		panel_4.add(btnNewButton_4, "cell 0 0,alignx right,aligny bottom");
 
-		btnNewButton_4.setFont(new Font("Dialog", Font.PLAIN, 11));
+		btnNewButton_4.setFont(new Font("/Fontes/Roboto-Black.ttf", Font.PLAIN, 11));
 		btnNewButton_4.setBackground(new Color(154, 205, 217));
 		btnNewButton_4.setForeground(new Color(0, 0, 0));
 

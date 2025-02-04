@@ -60,6 +60,7 @@ public class TelaEditarPerfilVendedor extends JFrame {
 	private JLabel lbleditar;
 	private JLabel lblNewLabel;
 	private JLabel lblEditarFt;
+	private JTextField txtChavePix;
 
 	/**
 	 * Launch the application.
@@ -89,6 +90,7 @@ public class TelaEditarPerfilVendedor extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
+		contentPane.setBackground(new Color(154, 208, 217));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
 		ImageIcon iconEditar = new ImageIcon(TelaPerfilVendedor.class.getResource("/img/lapis.png"));
@@ -119,7 +121,7 @@ public class TelaEditarPerfilVendedor extends JFrame {
 		panel.add(lblNewLabel, "cell 1 0");
 
 		JLabel lblNome = new JLabel("");
-		lblNome.setFont(new Font("Dialog", Font.PLAIN, 30));
+		lblNome.setFont(new Font("/Fontes/Roboto-Black.ttf", Font.PLAIN, 30));
 		panel_1.add(lblNome, "cell 1 1,alignx left,aligny center");
 		panel_1.add(imgAvatar, "flowy,cell 0 1 1 5,alignx center,aligny center");
 		lblNome.setText(u.getNome());
@@ -223,9 +225,10 @@ public class TelaEditarPerfilVendedor extends JFrame {
 		panel_1.add(btnNewButton, "flowx,cell 2 6,alignx right,aligny bottom");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				PopupCancelar cancela = new PopupCancelar(null, estajanela, u, true);
-				cancela.setVisible(true);
-				cancela.setLocationRelativeTo(null);
+				TelaPerfilVendedor frame = new TelaPerfilVendedor(u, true);
+				frame.setLocationRelativeTo(null);
+				frame.setVisible(true);
+				dispose();
 			}
 		});
 		btnNewButton.setForeground(new Color(255, 255, 255));
@@ -266,7 +269,8 @@ public class TelaEditarPerfilVendedor extends JFrame {
 				String logradouro = txtLogradouro.getText();
 				Integer numero = Integer.valueOf(txtNum.getText());
 				String nome = txtNome.getText();
-
+				String chavePix = txtChavePix.getText();
+        
 				if (uDAO.verificarTelefone(telefone, u.getIdUsuario())) {
 					TelaError erro = new TelaError();
 					erro.setLabelText("Telefone já cadastrado por outro usuário.");
@@ -287,6 +291,7 @@ public class TelaEditarPerfilVendedor extends JFrame {
 				produtorNovo.setEnd(enderecoNovo);
 				produtorNovo.setNomeComercio(nomeComercio);
 				produtorNovo.setTel(telefone);
+				produtorNovo.setChavePix(chavePix);
 
 				usuarioNovo.setEmail(email);
 				usuarioNovo.setTel(telefone);
@@ -304,6 +309,7 @@ public class TelaEditarPerfilVendedor extends JFrame {
 						boolean produtorAtualizado = pDAO.alterarProdutor(produtorNovo, usuarioNovo);
 
 						if (produtorAtualizado) {
+							uDAO.consultarUsuarioLoginSenha(usuarioNovo.getSenha(), usuarioNovo.getEmail());
 							TelaPerfilVendedor v = new TelaPerfilVendedor(u, true);
 							v.setLocationRelativeTo(null);
 							v.setVisible(true);
@@ -333,6 +339,7 @@ public class TelaEditarPerfilVendedor extends JFrame {
 						boolean produtorInserido = pDAO.inserirProdutor(produtorNovo);
 
 						if (produtorInserido) {
+							uDAO.consultarUsuarioLoginSenha(usuarioNovo.getSenha(), usuarioNovo.getEmail());
 							TelaPerfilVendedor v = new TelaPerfilVendedor(u, true);
 							v.setLocationRelativeTo(null);
 							v.setVisible(true);
@@ -358,7 +365,7 @@ public class TelaEditarPerfilVendedor extends JFrame {
 
 		});
 		btnNewButton_1.setForeground(new Color(255, 255, 255));
-		btnNewButton_1.setBackground(new Color(96, 154, 168));
+		btnNewButton_1.setBackground(new Color(2, 73, 89));
 
 		txtCelular = new JTextField();
 		txtCelular.setToolTipText("");
@@ -418,6 +425,15 @@ public class TelaEditarPerfilVendedor extends JFrame {
 		ImageIcon iconProcurar = new ImageIcon(TelaCadastroComercio.class.getResource("/IMG/procurar.png"));
 		Image iconP = iconProcurar.getImage().getScaledInstance(26, 26, Image.SCALE_SMOOTH);
 		lblImagem.setIcon(new ImageIcon(iconP));
+		
+		txtChavePix = new JTextField();
+		txtChavePix.setToolTipText("");
+		txtChavePix.setText((String) null);
+		txtChavePix.setOpaque(false);
+		txtChavePix.setColumns(10);
+		txtChavePix.setBorder(new TitledBorder(new LineBorder(new Color(0, 0, 0), 2), "Chave pix", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
+		txtChavePix.setBackground(SystemColor.menu);
+		panel_1.add(txtChavePix, "cell 1 4");
 
 		lblEditarFt = new JLabel("Editar Foto de Perfil");
 		lblEditarFt.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));

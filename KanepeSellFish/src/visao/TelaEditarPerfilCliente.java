@@ -65,6 +65,7 @@ public class TelaEditarPerfilCliente extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1280, 768);
 		contentPane = new JPanel();
+		contentPane.setBackground(new Color(154, 208, 217));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
 		ImageIcon iconEditar = new ImageIcon(TelaPerfilVendedor.class.getResource("/img/lapis.png"));
@@ -73,6 +74,7 @@ public class TelaEditarPerfilCliente extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(new BorderLayout(0, 0));
 		JPanel panel_1 = new JPanel();
+		panel_1.setOpaque(false);
 		contentPane.add(panel_1, BorderLayout.CENTER);
 		panel_1.setLayout(new MigLayout("", "[250,grow][450px,grow][grow]", "[60px][202][][][][][grow]"));
 
@@ -103,7 +105,9 @@ public class TelaEditarPerfilCliente extends JFrame {
 		panel_1.add(txtNome, "flowx,cell 1 2,growx,aligny center");
 		txtNome.setBorder(new TitledBorder(new LineBorder(new Color(0, 0, 0), 2), "Nome", TitledBorder.LEADING,
 				TitledBorder.TOP, null, null));
-		txtNome.setFont(new Font("Dialog", Font.PLAIN, 14));
+
+		txtNome.setFont(new Font("/Fontes/Roboto-Black.ttf", Font.PLAIN, 30));
+
 		txtNome.setOpaque(false);
 		txtNome.setColumns(10);
 		txtNome.setText(u.getNome());
@@ -112,7 +116,7 @@ public class TelaEditarPerfilCliente extends JFrame {
 		panel_1.add(txtEmail, "cell 1 3,growx,aligny center");
 		txtEmail.setCursor(Cursor.getPredefinedCursor(Cursor.TEXT_CURSOR));
 		txtEmail.setOpaque(false);
-		txtEmail.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		txtEmail.setFont(new Font("/Fontes/Roboto-Black.ttf", Font.PLAIN, 14));
 		txtEmail.setColumns(10);
 		txtEmail.setBorder(new TitledBorder(new LineBorder(new Color(0, 0, 0), 2), "email", TitledBorder.LEADING,
 				TitledBorder.TOP, null, new Color(0, 0, 0)));
@@ -122,7 +126,7 @@ public class TelaEditarPerfilCliente extends JFrame {
 		panel_1.add(lblCpf, "cell 1 4,growx,aligny center");
 		lblCpf.setBorder(new TitledBorder(new LineBorder(new Color(0, 0, 0), 2), "CPF", TitledBorder.LEADING,
 				TitledBorder.TOP, null, new Color(0, 0, 0)));
-		lblCpf.setFont(new Font("Dialog", Font.PLAIN, 14));
+		lblCpf.setFont(new Font("/Fontes/Roboto-Black.ttf", Font.PLAIN, 14));
 		lblCpf.setText(u.getCpf());
 		lblCpf.setToolTipText("Cpf não pode ser alterado.");
 
@@ -216,9 +220,11 @@ public class TelaEditarPerfilCliente extends JFrame {
 		lblEditarFt.setForeground(SystemColor.textHighlight);
 		lblEditarFt.setFont(new Font("Dialog", Font.ITALIC, 13));
 		panel_1.add(lblEditarFt, "cell 0 4,alignx center,aligny center");
+
 		btCancelar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				PopupCancelar cancelar = new PopupCancelar(estajanela, null, u, isVendedor);
+				PopupCancelar cancelar = new PopupCancelar(estajanela, u, isVendedor);
+				cancelar.setLocationRelativeTo(null);
 				cancelar.setVisible(true);
 				cancelar.setLocationRelativeTo(null);
 			}
