@@ -254,7 +254,7 @@ public class TelaCadastroProduto extends JFrame {
 				prod.setSalinidade(salinidade);
 
 				if (pDAO.inserirProduto(prod, u)) {
-					janelaPrincipal.atualizarTabela(u);
+					janelaPrincipal.atualizarTabela(u, null);
 					
 					dispose();
 					TelaError erro = new TelaError();

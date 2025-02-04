@@ -61,7 +61,7 @@ public class PopupExcluir extends JFrame {
 		btExcluir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				pDAO.removerProduto(produtoSelecionado);
-				tela.atualizarTabela(u);
+				tela.atualizarTabela(u, null);
 				dispose();
 			}
 		});

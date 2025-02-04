@@ -258,7 +258,7 @@ public class TelaAlterarProduto extends JFrame {
 				prod.setSalinidade(salinidade);
 
 				if (pDAO.atualizarProduto(oriProd, prod, u)) {
-					janelaPrincipal.atualizarTabela(u);
+					janelaPrincipal.atualizarTabela(u, null);
 					dispose();
 					TelaError erro = new TelaError();
 					erro.setLabelText("Alterado com sucesso");

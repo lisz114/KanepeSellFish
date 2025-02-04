@@ -32,9 +32,11 @@ import javax.swing.table.DefaultTableModel;
 import controle.ProdutoDAO;
 import controle.UsuarioDAO;
 import modelo.Cartao;
+import modelo.Endereco;
 import modelo.Produto;
 import modelo.Usuario;
 import net.miginfocom.swing.MigLayout;
+import javax.swing.border.LineBorder;
 
 public class TelaEstoque extends JFrame {
 
@@ -56,6 +58,10 @@ public class TelaEstoque extends JFrame {
 	private JPanel panelMenu;
 	private JLabel lblNewLabel;
 	List<Produto> produtos;
+	private JPanel panel;
+	private JLabel lblFiltroNome;
+	private JTextField txtFiltro;
+	private JLabel lblImagem;
 
 //	public static void main(String[] args) {
 //		EventQueue.invokeLater(new Runnable() {
@@ -159,16 +165,54 @@ public class TelaEstoque extends JFrame {
 		panelTabelaProdutos.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		panelTabelaProdutos.setOpaque(false);
 		contentPane.add(panelTabelaProdutos, BorderLayout.CENTER);
-		panelTabelaProdutos.setLayout(new MigLayout("", "[grow]", "[center][grow][]"));
+		panelTabelaProdutos.setLayout(new MigLayout("", "[grow]", "[center][50px][grow][]"));
 
 		lblNewLabel = new JLabel("ESTOQUE");
 		lblNewLabel.setFont(new Font("Dialog", Font.BOLD, 27));
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		panelTabelaProdutos.add(lblNewLabel, "cell 0 0,alignx center,aligny center");
+		
+		panel = new JPanel();
+		panel.setOpaque(false);
+		panelTabelaProdutos.add(panel, "cell 0 1,grow");
+		panel.setLayout(new MigLayout("", "[][400px][]", "[]"));
+		
+		lblFiltroNome = new JLabel("Nome:");
+		lblFiltroNome.setFont(new Font("Dialog", Font.PLAIN, 14));
+		panel.add(lblFiltroNome, "cell 0 0,alignx left,aligny center");
+		
+		txtFiltro = new JTextField();
+		txtFiltro.setBorder(new LineBorder(new Color(0, 0, 0)));
+		panel.add(txtFiltro, "flowx,cell 1 0,grow");
+		txtFiltro.setColumns(100);
+		
+		ImageIcon iconProcurar = new ImageIcon(TelaCadastroComercio.class.getResource("/IMG/procurar.png"));
+		Image iconP = iconProcurar.getImage().getScaledInstance(26, 26, Image.SCALE_SMOOTH);
+		
+		lblImagem = new JLabel("");
+		panel.add(lblImagem, "cell 2 0,alignx left,aligny center");
+		lblImagem.setToolTipText("Filtrar");
+		lblImagem.setName("");
+		lblImagem.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				
+				String filtro = txtFiltro.getText();
+				if(filtro.isEmpty()||filtro==null) {
+					atualizarTabela(u, null);
+				}else {
+					atualizarTabela(u, filtro);
+				}
+					
+			}
+		});
+		lblImagem.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		lblImagem.setIcon(new ImageIcon(TelaCadastroComercio.class.getResource("/img/procurar.png")));
+		lblImagem.setIcon(new ImageIcon(iconP));
 
 		scrollPane_1 = new JScrollPane();
 		scrollPane_1.setOpaque(false);
-		panelTabelaProdutos.add(scrollPane_1, "cell 0 1,grow");
+		panelTabelaProdutos.add(scrollPane_1, "cell 0 2,grow");
 
 		table = new JTable();
 		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -182,7 +226,7 @@ public class TelaEstoque extends JFrame {
 
 		panel_3 = new JPanel();
 		panel_3.setOpaque(false);
-		panelTabelaProdutos.add(panel_3, "cell 0 2,alignx right,growy");
+		panelTabelaProdutos.add(panel_3, "cell 0 3,alignx right,growy");
 
 		btnEditar = new JButton(" Editar Produtos");
 		btnEditar.addActionListener(new ActionListener() {
@@ -228,7 +272,7 @@ public class TelaEstoque extends JFrame {
 					erro.setVisible(true);
 				}
 
-				atualizarTabela(u);
+				atualizarTabela(u, null);
 			}
 		});
 		panel_3.add(btnNewButton, "flowx,cell 0 8,alignx right");
@@ -331,17 +375,30 @@ public class TelaEstoque extends JFrame {
 		btnNewButton_3.setOpaque(true);
 		panelMenu.add(btnNewButton_3, "cell 0 3,grow");
 
+		
+		
 		try {
-			atualizarTabela(u);
+			
+			String filtro = txtFiltro.getText();
+			if(filtro.isEmpty()||filtro==null) {
+				atualizarTabela(u, null);
+			}else {
+				atualizarTabela(u, filtro);
+			}
 
 		} catch (Exception e) {
 			System.out.println(e);
 		}
 	}
 
-	protected void atualizarTabela(Usuario u) {
+	protected void atualizarTabela(Usuario u, String filtro) {
 
-		listaProdutos = pDAO.addListaProd(u);
+		
+		if(filtro==null) {
+			listaProdutos = pDAO.addListaProd(u);
+		}else {
+			listaProdutos = pDAO.addListaProdFiltro(u, filtro);
+		}
 
 		DefaultTableModel tableModel = new DefaultTableModel(new Object[][] {},
 				new String[] { "Nome", "QuantidadeEstoque", "Validade", "Salinidade", "Pre\u00E7o" });
