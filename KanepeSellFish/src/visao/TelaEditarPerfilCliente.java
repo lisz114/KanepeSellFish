@@ -23,6 +23,7 @@ import Atxy2k.CustomTextField.RestrictedTextField;
 import controle.UsuarioDAO;
 import modelo.Usuario;
 import net.miginfocom.swing.MigLayout;
+import java.awt.SystemColor;
 
 public class TelaEditarPerfilCliente extends JFrame {
 
@@ -66,27 +67,49 @@ public class TelaEditarPerfilCliente extends JFrame {
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
+		ImageIcon iconEditar = new ImageIcon(TelaPerfilVendedor.class.getResource("/img/lapis.png"));
+		Image iconE = iconEditar.getImage().getScaledInstance(16, 16, Image.SCALE_SMOOTH);
+
 		setContentPane(contentPane);
 		contentPane.setLayout(new BorderLayout(0, 0));
 		JPanel panel_1 = new JPanel();
 		contentPane.add(panel_1, BorderLayout.CENTER);
-		panel_1.setLayout(new MigLayout("", "[250][450px,grow][grow]", "[60px][202][][][][grow]"));
+		panel_1.setLayout(new MigLayout("", "[250,grow][450px,grow][grow]", "[60px][202][][][][][grow]"));
+
+		JPanel panel = new JPanel();
+		panel.setBackground(new Color(154, 208, 217));
+		panel_1.add(panel, "cell 0 0 3 1,grow");
+		panel.setLayout(new MigLayout("", "[20px][grow]", "[grow]"));
+
+		JLabel lbleditar = new JLabel("");
+		lbleditar.setIcon(new ImageIcon(TelaEditarPerfilCliente.class.getResource("/img/lapis.png")));
+		panel.add(lbleditar, "cell 0 0");
+		lbleditar.setIcon(new ImageIcon(iconE));
+
+		JLabel lblNewLabel = new JLabel("Edição de perfil");
+		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		panel.add(lblNewLabel, "flowx,cell 1 0,alignx left,aligny center");
 
 		JLabel imgPerfil = new JLabel("");
-		panel_1.add(imgPerfil, "flowx,cell 0 1,alignx center,aligny center");
+		panel_1.add(imgPerfil, "flowy,cell 0 1 1 5,alignx center,aligny center");
 		imgPerfil.setIcon(new ImageIcon(TelaEditarPerfilCliente.class.getResource("/img/Avatar.png")));
 
+		JLabel lblNome = new JLabel((String) null);
+		lblNome.setFont(new Font("Dialog", Font.PLAIN, 30));
+		panel_1.add(lblNome, "cell 1 1");
+		lblNome.setText(u.getNome());
+
 		txtNome = new JTextField();
-		panel_1.add(txtNome, "flowx,cell 1 1,growx,aligny center");
+		panel_1.add(txtNome, "flowx,cell 1 2,growx,aligny center");
 		txtNome.setBorder(new TitledBorder(new LineBorder(new Color(0, 0, 0), 2), "Nome", TitledBorder.LEADING,
 				TitledBorder.TOP, null, null));
-		txtNome.setFont(new Font("Dialog", Font.PLAIN, 30));
+		txtNome.setFont(new Font("Dialog", Font.PLAIN, 14));
 		txtNome.setOpaque(false);
 		txtNome.setColumns(10);
 		txtNome.setText(u.getNome());
 
 		txtEmail = new JTextField();
-		panel_1.add(txtEmail, "cell 1 2,growx,aligny center");
+		panel_1.add(txtEmail, "cell 1 3,growx,aligny center");
 		txtEmail.setCursor(Cursor.getPredefinedCursor(Cursor.TEXT_CURSOR));
 		txtEmail.setOpaque(false);
 		txtEmail.setFont(new Font("Tahoma", Font.PLAIN, 14));
@@ -96,7 +119,7 @@ public class TelaEditarPerfilCliente extends JFrame {
 		txtEmail.setText(String.valueOf(u.getEmail()));
 
 		JLabel lblCpf = new JLabel("");
-		panel_1.add(lblCpf, "cell 1 3,growx,aligny center");
+		panel_1.add(lblCpf, "cell 1 4,growx,aligny center");
 		lblCpf.setBorder(new TitledBorder(new LineBorder(new Color(0, 0, 0), 2), "CPF", TitledBorder.LEADING,
 				TitledBorder.TOP, null, new Color(0, 0, 0)));
 		lblCpf.setFont(new Font("Dialog", Font.PLAIN, 14));
@@ -105,7 +128,7 @@ public class TelaEditarPerfilCliente extends JFrame {
 
 		JTextField txtTelefone = new JTextField();
 		txtTelefone.setOpaque(false);
-		panel_1.add(txtTelefone, "cell 1 4,growx,aligny center");
+		panel_1.add(txtTelefone, "cell 1 5,growx,aligny center");
 		txtTelefone.setBorder(new TitledBorder(new LineBorder(new Color(0, 0, 0), 2), "telefone", TitledBorder.LEADING,
 				TitledBorder.TOP, null, null));
 		txtTelefone.setColumns(10);
@@ -121,10 +144,11 @@ public class TelaEditarPerfilCliente extends JFrame {
 		}
 
 		JButton btCancelar = new JButton("Cancelar");
-		panel_1.add(btCancelar, "flowx,cell 2 5,alignx right,aligny bottom");
+		btCancelar.setBackground(new Color(205, 92, 92));
+		panel_1.add(btCancelar, "flowx,cell 2 6,alignx right,aligny bottom");
 
 		JButton btSalvar = new JButton("Salvar");
-		panel_1.add(btSalvar, "cell 2 5,alignx right,aligny bottom");
+		panel_1.add(btSalvar, "cell 2 6,alignx right,aligny bottom");
 		btSalvar.addActionListener(new ActionListener() {
 
 			public void actionPerformed(ActionEvent e) {
@@ -135,12 +159,12 @@ public class TelaEditarPerfilCliente extends JFrame {
 
 				// Validação de campos obrigatórios
 				if (txtEmail.getText().isEmpty() || txtNome.getText().isEmpty()) {
-				    TelaError tela = new TelaError();
-				    tela.setLabelText("Preencha todos os campos obrigatórios.");
-				    tela.setLocationRelativeTo(null);
-				    tela.setVisible(true);
-				    return;
-				} 
+					TelaError tela = new TelaError();
+					tela.setLabelText("Preencha todos os campos obrigatórios.");
+					tela.setLocationRelativeTo(null);
+					tela.setVisible(true);
+					return;
+				}
 
 				// Coleta de dados do formulário
 				String email = txtEmail.getText();
@@ -149,11 +173,11 @@ public class TelaEditarPerfilCliente extends JFrame {
 
 				// **Verifica diretamente se o telefone pertence a outro usuário**
 				if (udao.verificarTelefone(telefone, u.getIdUsuario())) {
-				    TelaError erro = new TelaError();
-				    erro.setLabelText("Telefone já cadastrado por outro usuário.");
-				    erro.setVisible(true);
-				    erro.setLocationRelativeTo(null);
-				    return; // Impede a atualização no banco
+					TelaError erro = new TelaError();
+					erro.setLabelText("Telefone já cadastrado por outro usuário.");
+					erro.setVisible(true);
+					erro.setLocationRelativeTo(null);
+					return; // Impede a atualização no banco
 				}
 
 				// Populando os objetos
@@ -165,27 +189,33 @@ public class TelaEditarPerfilCliente extends JFrame {
 				boolean clienteAtualizado = udao.alterarUsuario(usuarioNovo);
 
 				if (clienteAtualizado) {
-				    usuarioNovo = udao.consultarUsuarioLoginSenha(usuarioNovo.getEmail(), u.getSenha());
+					usuarioNovo = udao.consultarUsuarioLoginSenha(usuarioNovo.getEmail(), u.getSenha());
 
-				    TelaPerfilCliente v = new TelaPerfilCliente(usuarioNovo, isVendedor);
-				    v.setLocationRelativeTo(null);
-				    v.setVisible(true);
+					TelaPerfilCliente v = new TelaPerfilCliente(usuarioNovo, isVendedor);
+					v.setLocationRelativeTo(null);
+					v.setVisible(true);
 
-				    TelaError tela = new TelaError();
-				    tela.setLabelText("Dados atualizados com sucesso!");
-				    tela.setLocationRelativeTo(null);
-				    tela.setVisible(true);
-				    dispose();
+					TelaError tela = new TelaError();
+					tela.setLabelText("Dados atualizados com sucesso!");
+					tela.setLocationRelativeTo(null);
+					tela.setVisible(true);
+					dispose();
 				} else {
-				    TelaError tela = new TelaError();
-				    tela.setLabelText("Erro ao atualizar os dados do cliente.");
-				    tela.setLocationRelativeTo(null);
-				    tela.setVisible(true);
+					TelaError tela = new TelaError();
+					tela.setLabelText("Erro ao atualizar os dados do cliente.");
+					tela.setLocationRelativeTo(null);
+					tela.setVisible(true);
 				}
 
 			}
 		});
-		btSalvar.setBackground(new Color(64, 128, 128));
+		btSalvar.setBackground(new Color(154, 208, 217));
+		
+		JLabel lblEditarFt = new JLabel("Editar Foto de Perfil");
+		lblEditarFt.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		lblEditarFt.setForeground(SystemColor.textHighlight);
+		lblEditarFt.setFont(new Font("Dialog", Font.ITALIC, 13));
+		panel_1.add(lblEditarFt, "cell 0 4,alignx center,aligny center");
 		btCancelar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				PopupCancelar cancelar = new PopupCancelar(estajanela, null, u, isVendedor);

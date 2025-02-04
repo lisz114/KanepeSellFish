@@ -81,6 +81,11 @@ public class TelaPerfilCliente extends JFrame {
 		JLabel lblImagemCliente = new JLabel("");
 		lblImagemCliente.setIcon(new ImageIcon(TelaPerfilCliente.class.getResource("/img/Avatar.png")));
 		panel_3.add(lblImagemCliente, "flowy,cell 0 0,alignx center,aligny bottom");
+		
+		JLabel lblFoto = new JLabel("Foto de Perfil");
+		lblFoto.setForeground(Color.BLACK);
+		lblFoto.setFont(new Font("Dialog", Font.ITALIC, 13));
+		panel_3.add(lblFoto, "cell 0 0 1 2,alignx center,aligny bottom");
 
 		JPanel panel_2 = new JPanel();
 		panel_1.add(panel_2, "cell 1 0,grow");
