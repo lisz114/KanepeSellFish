@@ -289,5 +289,46 @@ public class ProdutoDAO implements IProdutoDAO {
 	        }
 	    }
 	}
+	
+	public ArrayList<Produto> addListaProdFiltro(Usuario u, String filtro) {
+	    listaProdutos.clear();
+
+	    PreparedStatement stmt1 = null;
+	    Connection conn = ConexaoBD.getConexaoMySQL();
+
+	    try {
+	        stmt1 = conn.prepareStatement("SELECT * FROM produtos WHERE Produtores_idProdutores = ? AND nome_Produto LIKE ?");
+	        ResultSet res1 = null;
+
+	        stmt1.setString(1, pegarIdProdutor(u));
+	        stmt1.setString(2, filtro + "%"); // Modificado para adicionar '%' ao filtro
+
+	        res1 = stmt1.executeQuery();
+
+	        while (res1.next()) {
+	            Produto prod = new Produto();
+
+	            prod.setNome(res1.getString("nome_Produto"));
+	            prod.setIdProduto(res1.getInt("idProdutos"));
+	            prod.setQuantidadeEstoque(Integer.parseInt(res1.getString("quantidade")));
+	            prod.setPreco(Float.parseFloat(res1.getString("preco")));
+	            prod.setIdProdutor(Integer.parseInt(res1.getString("Produtores_idProdutores")));
+	            prod.setValidade(
+	                    LocalDate.parse(res1.getString("validade"), DateTimeFormatter.ofPattern("yyyy-MM-dd")));
+	            listaProdutos.add(prod);
+	            prod.setSalinidade(res1.getBoolean("salinidade"));
+	        }
+
+	        res1.close();
+	        stmt1.close();
+	        conn.close();
+	    } catch (Exception e) {
+	        System.out.println(e);
+	    }
+
+	    return listaProdutos;
+	}
+
+	
 
 }
