@@ -141,7 +141,7 @@ public class TelaRedefinicaoSenha extends JFrame {
 					return;
 				}
 				
-				if(senhaAntiga.equals(senhaNova)) {
+				if(senhaAntiga.equals(senhaNova) && senhaAntiga.equals(senhaNova)) {
 					exibirErro("Não utilize a mesma senha cadastrada!");
 					return;
 				}

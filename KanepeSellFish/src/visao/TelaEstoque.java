@@ -22,7 +22,6 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
-import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
@@ -31,8 +30,6 @@ import javax.swing.table.DefaultTableModel;
 
 import controle.ProdutoDAO;
 import controle.UsuarioDAO;
-import modelo.Cartao;
-import modelo.Endereco;
 import modelo.Produto;
 import modelo.Usuario;
 import net.miginfocom.swing.MigLayout;
