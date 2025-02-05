@@ -6,45 +6,56 @@ import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridLayout;
+import java.awt.Image;
+import java.awt.Insets;
 import java.awt.SystemColor;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.image.BufferedImage;
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 
+import javax.imageio.ImageIO;
 import javax.swing.ButtonGroup;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
+import javax.swing.SwingUtilities;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 
+import controle.Imagem;
 import controle.ProdutoDAO;
 import modelo.Produto;
-import modelo.RoundButton;
 import modelo.Usuario;
 import net.miginfocom.swing.MigLayout;
-import java.awt.Insets;
+import java.awt.FlowLayout;
 
 public class TelaAlterarProduto extends JFrame {
 
-	private JPanel contentPane;
 	private JTextField txtNome;
 	private JTextField txtValidade;
 	private JTextField txtPreco;
 	private JTextField txtQuantidade;
+	private JLabel lblImagem;
 	private ProdutoDAO pDAO = ProdutoDAO.getInstancia();
 	private JRadioButton rdbtnDoce;
 	private JRadioButton rdbtnSalgada;
-
+	private FileInputStream fis;	
+	private static Imagem img = Imagem.getInstancia();
+	Produto prod = new Produto();
+	
 	/**
 	 * Launch the application.
 	 */
@@ -155,14 +166,67 @@ public class TelaAlterarProduto extends JFrame {
 		panelImage.setBorder(new LineBorder(new Color(0, 0, 0)));
 		panelImage.setOpaque(false);
 		panelDireita.add(panelImage, "cell 0 0,grow");
+		panelImage.setLayout(new FlowLayout(FlowLayout.CENTER, 0, 0));
+		
+		lblImagem = new JLabel();
+		lblImagem.setMinimumSize(new Dimension(100, 100)); // Garantindo tamanho mínimo para o JLabel
+		lblImagem.setPreferredSize(new Dimension(200, 200));
+		panelImage.add(lblImagem);
 
 		JLabel lblAdcImagem = new JLabel("Adicionar Imagem");
 		lblAdcImagem.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
+				try {
+					// Obtém o InputStream da imagem
+					fis = img.Imagem();
 
-				// Adicionar imagem
+					// Verifica se nenhuma imagem foi selecionada
+					if (fis == null) {
+						throw new IOException("Nenhuma imagem foi selecionada.");
+					}
 
+					BufferedImage bufferedImage = ImageIO.read(fis);
+					prod.setFotoC(fis);
+
+					// Redimensiona a imagem dentro de invokeLater
+					SwingUtilities.invokeLater(new Runnable() {
+						@Override
+						public void run() {
+							// Força o layout a ser recalculado
+							panelImage.revalidate();
+							panelImage.repaint();
+
+							int labelWidth = lblImagem.getWidth();
+							int labelHeight = lblImagem.getHeight();
+
+							// Verifica se o tamanho do JLabel é válido
+							if (labelWidth > 0 && labelHeight > 0) {
+								// Redimensiona a imagem para o tamanho do JLabel, mantendo a proporção
+								Image scaledImage = bufferedImage.getScaledInstance(labelWidth, labelHeight,
+										Image.SCALE_SMOOTH);
+
+								// Converte a imagem redimensionada para ImageIcon
+								ImageIcon icon = new ImageIcon(scaledImage);
+
+								// Define o ícone do JLabel
+								lblImagem.setIcon(icon);
+							} else {
+								// Caso o tamanho ainda seja inválido, talvez um tamanho mínimo seja necessário
+								System.out.println("Tamanho inválido do JLabel.");
+							}
+						}
+					});
+
+				} catch (IOException ex) {
+					ex.printStackTrace();
+
+					// Exibir erro ao usuário
+					TelaError erro = new TelaError();
+					erro.setLabelText("Erro ao carregar imagem. Nenhuma imagem foi selecionada.");
+					erro.setLocationRelativeTo(null);
+					erro.setVisible(true);
+				}
 			}
 		});
 		lblAdcImagem.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
@@ -226,7 +290,7 @@ public class TelaAlterarProduto extends JFrame {
 		btnAlterar.setText("Alterar");
 		btnAlterar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Produto prod = new Produto();
+				
 				Produto oriProd = new Produto();
 
 				oriProd = oprod;
@@ -306,19 +370,30 @@ public class TelaAlterarProduto extends JFrame {
 	}
 
 	public void mostrarDados(Produto produtoSelecionado) {
-		LocalDate validade = produtoSelecionado.getValidade();
-		DateTimeFormatter desiredFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-		String formattedDate = validade.format(desiredFormatter);
+        LocalDate validade = produtoSelecionado.getValidade();
+        DateTimeFormatter desiredFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        String formattedDate = validade.format(desiredFormatter);
 
-		if (produtoSelecionado.getSalinidade() != null && produtoSelecionado.getSalinidade() == true) {
-			rdbtnDoce.setSelected(true);
-		} else {
-			rdbtnSalgada.setSelected(true);
-		}
-		txtNome.setText(produtoSelecionado.getNome());
-		txtQuantidade.setText(String.valueOf(produtoSelecionado.getQuantidadeEstoque()));
-		txtValidade.setText(formattedDate);
-		txtPreco.setText(String.valueOf(produtoSelecionado.getPreco()));
-	}
+        if (produtoSelecionado.getSalinidade() != null && produtoSelecionado.getSalinidade() == true) {
+            rdbtnDoce.setSelected(true);
+        } else {
+            rdbtnSalgada.setSelected(true);
+        }
+        txtNome.setText(produtoSelecionado.getNome());
+        txtQuantidade.setText(String.valueOf(produtoSelecionado.getQuantidadeEstoque()));
+        txtValidade.setText(formattedDate);
+        txtPreco.setText(String.valueOf(produtoSelecionado.getPreco()));
 
-}
+        // Load and display the product image from the database
+        byte[] imagemBytes = pDAO.getImagemProduto(produtoSelecionado.getIdProduto());  // Assuming Produto has a getId() method
+        if (imagemBytes != null) {
+            ImageIcon imageIcon = new ImageIcon(imagemBytes);
+            Image image = imageIcon.getImage().getScaledInstance(200, 200, Image.SCALE_SMOOTH);  // Scale the image
+            lblImagem.setIcon(new ImageIcon(image));  // Set the image on the label
+            System.out.println("Foto encontrada");
+        } else {
+        	lblImagem.setIcon(null);  // Clear image if none is found
+            System.out.println("Foto nao encontrada");
+        }
+
+	}}

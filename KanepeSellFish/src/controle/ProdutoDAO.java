@@ -1,6 +1,7 @@
 package controle;
 
 import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -9,6 +10,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+
 import modelo.IProdutoDAO;
 import modelo.Produto;
 import modelo.Usuario;
@@ -32,7 +34,7 @@ public class ProdutoDAO implements IProdutoDAO {
 	}
 
 	public boolean inserirProduto(Produto produto, Usuario u) {
-		String sql = "INSERT INTO produtos (nome_Produto, quantidade, preco, Produtores_idProdutores, validade, salinidade) VALUES (?, ?, ?, ?, ?, ?)";
+		String sql = "INSERT INTO produtos (nome_Produto, quantidade, preco, Produtores_idProdutores, validade, salinidade, foto) VALUES (?, ?, ?, ?, ?, ?, ?)";
 		try (Connection conn = ConexaoBD.getConexaoMySQL(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
 			pstmt.setString(1, produto.getNome());
@@ -41,6 +43,13 @@ public class ProdutoDAO implements IProdutoDAO {
 			pstmt.setInt(4, u.getIdUsuario());
 			pstmt.setDate(5, (java.sql.Date.valueOf(produto.getValidade())));
 			pstmt.setBoolean(6, produto.getSalinidade());
+			if (produto.getFotoC() != null) {
+	            pstmt.setBinaryStream(7, produto.getFotoC());
+	            System.out.println("nao null"+produto.getFotoC().toString());
+	        } else {
+	            pstmt.setNull(7, java.sql.Types.BLOB);
+	            System.out.println("null"+produto.getFotoC());
+	        }
 
 			int rowsAffected = pstmt.executeUpdate();
 			return rowsAffected > 0;
@@ -329,6 +338,24 @@ public class ProdutoDAO implements IProdutoDAO {
 	    return listaProdutos;
 	}
 
-	
+	public byte[] getImagemProduto(int produtoId) {
+	    byte[] imagemBytes = null;
+	    String sql = "SELECT foto FROM produtos WHERE idProdutos = ?";
+	    
+	    try (Connection conn = ConexaoBD.getConexaoMySQL(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
+	        
+	    	pstmt.setInt(1, produtoId);
+	        
+	        try (ResultSet rs = pstmt.executeQuery()) {
+	            if (rs.next()) {
+	                imagemBytes = rs.getBytes("foto");
+	            }
+	        }
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+	    return imagemBytes;
+	}
+
 
 }

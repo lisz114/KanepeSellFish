@@ -66,6 +66,7 @@ CREATE TABLE IF NOT EXISTS Produtos (
     preco DOUBLE NOT NULL,
     Produtores_idProdutores BIGINT NOT NULL,
     salinidade BOOLEAN NOT NULL,
+    foto LONGBLOB not null,
     PRIMARY KEY (idProdutos),
     FOREIGN KEY (Produtores_idProdutores) REFERENCES Produtores (idProdutores)
 );

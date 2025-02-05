@@ -1,5 +1,7 @@
 package modelo;
 
+import java.awt.Image;
+import java.io.FileInputStream;
 import java.time.LocalDate;
 import java.util.Objects;
 
@@ -12,6 +14,8 @@ public class Produto {
 	private int idProdutor;
 	private Boolean salinidade;
 	private int idProduto;
+	private Image foto;
+	private FileInputStream fotoC;
 
 	public Produto() {
 	}
@@ -89,6 +93,22 @@ public class Produto {
 
 	public int hashCode() {
 		return Objects.hash(nome, preco);
+	}
+
+	public Image getFoto() {
+		return foto;
+	}
+
+	public void setFoto(Image foto) {
+		this.foto = foto;
+	}
+
+	public FileInputStream getFotoC() {
+		return fotoC;
+	}
+
+	public void setFotoC(FileInputStream fotoC) {
+		this.fotoC = fotoC;
 	}
 
 }
