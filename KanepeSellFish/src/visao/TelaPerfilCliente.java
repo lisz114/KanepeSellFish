@@ -10,14 +10,19 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.image.BufferedImage;
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.util.List;
 
+import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
+import javax.swing.SwingUtilities;
 import javax.swing.border.EmptyBorder;
 
 import modelo.Produto;
@@ -31,6 +36,7 @@ public class TelaPerfilCliente extends JFrame {
 	TelaPerfilCliente estajanela = this;
 	JPanel panelLeft;
 	List<Produto> produtos;
+	Usuario usuarioNovo = new Usuario();
 
 	/**
 	 * Launch the application.
@@ -51,7 +57,8 @@ public class TelaPerfilCliente extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public TelaPerfilCliente(Usuario u, boolean isVendedor) {
+	public TelaPerfilCliente(Usuario u, boolean isVendedor, Image foto) {
+		usuarioNovo = u;
 		setResizable(false);
 		setLocationByPlatform(true);
 		setMinimumSize(new Dimension(1176, 664));
@@ -72,52 +79,90 @@ public class TelaPerfilCliente extends JFrame {
 
 		JPanel panel_1 = new JPanel();
 		contentPane.add(panel_1, BorderLayout.CENTER);
-		panel_1.setLayout(new MigLayout("", "[300px][grow]", "[grow][grow]"));
+		panel_1.setLayout(new MigLayout("", "[grow]", "[grow][grow]"));
+
+		JPanel panel_2 = new JPanel();
+		panel_1.add(panel_2, "cell 0 0,grow");
+		panel_2.setLayout(new MigLayout("", "[][30px][10px][10px]", "[50px][][50px][][20px][][20px][][][][]"));
 
 		JPanel panel_3 = new JPanel();
-		panel_1.add(panel_3, "cell 0 0,grow");
+		panel_3.setOpaque(false);
+		panel_3.setBackground(new Color(192, 192, 192));
+		panel_2.add(panel_3, "cell 0 0 1 8");
 		panel_3.setLayout(new MigLayout("", "[grow]", "[280px][grow]"));
 
 		JLabel lblImagemCliente = new JLabel("");
-		lblImagemCliente.setIcon(new ImageIcon(TelaPerfilCliente.class.getResource("/img/Avatar.png")));
-		panel_3.add(lblImagemCliente, "flowy,cell 0 0,alignx center,aligny bottom");
+		lblImagemCliente.setOpaque(true);
 		
+		panel_3.add(lblImagemCliente, "flowy,cell 0 0");
+
+		lblImagemCliente.setMinimumSize(new Dimension(100, 100)); // Garantindo tamanho mínimo para o JLabel
+		lblImagemCliente.setPreferredSize(new Dimension(200, 200)); // Tamanho preferido
+
 		JLabel lblFoto = new JLabel("Foto de Perfil");
 		lblFoto.setForeground(Color.BLACK);
 		lblFoto.setFont(new Font("Dialog", Font.ITALIC, 13));
-		panel_3.add(lblFoto, "cell 0 0 1 2,alignx center,aligny bottom");
+		panel_3.add(lblFoto, "cell 0 1,alignx center,aligny bottom");
 
-		JPanel panel_2 = new JPanel();
-		panel_1.add(panel_2, "cell 1 0,grow");
-		panel_2.setLayout(new MigLayout("", "[30px][10px][10px]", "[50px][][50px][][20px][][20px][][][][]"));
+		try {
+			if (foto != null) {
+				
+				panel_3.revalidate();
+				panel_3.repaint();
 
+				// Verifica se o tamanho do JLabel é válido
+				SwingUtilities.invokeLater(() -> {
+				    int labelWidth = lblImagemCliente.getWidth();
+				    int labelHeight = lblImagemCliente.getHeight();
+
+				    if (labelWidth > 0 && labelHeight > 0) {
+				        Image scaledImage = foto.getScaledInstance(labelWidth, labelHeight, Image.SCALE_SMOOTH);
+				        lblImagemCliente.setIcon(new ImageIcon(scaledImage));
+				    } else {
+				        System.out.println("Tamanho inválido do JLabel. Definindo tamanho padrão.");
+				        Image scaledImage = foto.getScaledInstance(200, 200, Image.SCALE_SMOOTH);
+				        lblImagemCliente.setIcon(new ImageIcon(scaledImage));
+				    }
+				});
+
+
+				
+				System.out.println("Deu bom!");
+			}else {
+				lblImagemCliente.setIcon(new ImageIcon(TelaPerfilCliente.class.getResource("/img/Avatar.png")));
+				System.out.println("Deu ruim!");
+			}
+		} catch (Exception e) {
+			System.out.println(e);
+
+		}
 		JLabel lblNomeCliente = new JLabel(u.getNome());
-		panel_2.add(lblNomeCliente, "cell 0 1 3 1,growx,aligny center");
+		panel_2.add(lblNomeCliente, "cell 1 1 3 1,growx,aligny center");
 		lblNomeCliente.setFont(new Font("/Fontes/Roboto-Black.ttf", Font.PLAIN, 30));
 
 		JLabel lblCPF = new JLabel("CPF: ");
 		lblCPF.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblCPF.setFont(new Font("/Fontes/Roboto-Black.ttf", Font.PLAIN, 15));
-		panel_2.add(lblCPF, "flowx,cell 1 3,alignx left");
+		panel_2.add(lblCPF, "flowx,cell 2 3,alignx left");
 
 		JLabel lblEmail = new JLabel("Email: ");
 		lblEmail.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblEmail.setFont(new Font("/Fontes/Roboto-Black.ttf", Font.PLAIN, 15));
-		panel_2.add(lblEmail, "flowx,cell 1 5,alignx left");
+		panel_2.add(lblEmail, "flowx,cell 2 5,alignx left");
 
 		JLabel lblTelefone = new JLabel("Telefone: ");
 		lblTelefone.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblTelefone.setFont(new Font("/Fontes/Roboto-Black.ttf", Font.PLAIN, 15));
-		panel_2.add(lblTelefone, "flowx,cell 1 7,alignx left");
+		panel_2.add(lblTelefone, "flowx,cell 2 7,alignx left");
 
 		JLabel lblDynamicCPF = new JLabel(u.getCpf());
 		lblDynamicCPF.setFont(new Font("/Fontes/Roboto-Black.ttf", Font.PLAIN, 14));
-		panel_2.add(lblDynamicCPF, "cell 1 3,alignx left,aligny center");
+		panel_2.add(lblDynamicCPF, "cell 2 3,alignx left,aligny center");
 
 		JLabel lblDynamicTel = new JLabel("");
 		lblDynamicTel.setFont(new Font("/Fontes/Roboto-Black.ttf", Font.PLAIN, 14));
-		panel_2.add(lblDynamicTel, "cell 1 7,alignx left,aligny center");
-		if (u.getTel()==null) {
+		panel_2.add(lblDynamicTel, "cell 2 7,alignx left,aligny center");
+		if (u.getTel() == null) {
 			lblDynamicTel.setText("Nenhum telefone cadastrado.");
 		} else {
 			lblDynamicTel.setText(u.getTel());
@@ -125,11 +170,11 @@ public class TelaPerfilCliente extends JFrame {
 
 		JLabel lblDynamicEmail = new JLabel(u.getEmail());
 		lblDynamicEmail.setFont(new Font("/Fontes/Roboto-Black.ttf", Font.PLAIN, 14));
-		panel_2.add(lblDynamicEmail, "cell 1 5,alignx left,aligny center");
+		panel_2.add(lblDynamicEmail, "cell 2 5,alignx left,aligny center");
 
 		JPanel panel_4 = new JPanel();
 		panel_4.setLayout(new MigLayout("", "[grow]", "[grow]"));
-		panel_1.add(panel_4, "cell 1 1,grow");
+		panel_1.add(panel_4, "cell 0 1,grow");
 
 		JButton btnNewButton_4 = new JButton("Alterar informações");
 		btnNewButton_4.addActionListener(new ActionListener() {
@@ -142,7 +187,7 @@ public class TelaPerfilCliente extends JFrame {
 
 			}
 		});
-		
+
 		JButton btEditarSenha = new JButton("Alterar senha");
 		btEditarSenha.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -151,7 +196,7 @@ public class TelaPerfilCliente extends JFrame {
 				redefinir.setLocationRelativeTo(null);
 			}
 		});
-		
+
 		btEditarSenha.setForeground(Color.BLACK);
 		btEditarSenha.setFont(new Font("Dialog", Font.PLAIN, 11));
 		btEditarSenha.setBackground(new Color(154, 205, 217));
@@ -181,8 +226,6 @@ public class TelaPerfilCliente extends JFrame {
 		imgMenu.setIcon(new ImageIcon(iconMenu));
 		ImageIcon carrinho = new ImageIcon(TelaInicio.class.getResource("/IMG/carrinho-de-compras.png"));
 		Image imgC = carrinho.getImage().getScaledInstance(30, 30, Image.SCALE_SMOOTH);
-		ImageIcon notificacao = new ImageIcon(TelaInicio.class.getResource("/IMG/sino.png"));
-		Image imgN = notificacao.getImage().getScaledInstance(30, 30, Image.SCALE_SMOOTH);
 
 		panelLeft = new JPanel();
 		panelLeft.setBackground(new Color(154, 208, 217));

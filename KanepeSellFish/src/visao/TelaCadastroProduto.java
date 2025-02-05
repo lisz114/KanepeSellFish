@@ -4,8 +4,10 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
+import java.awt.Image;
 import java.awt.Insets;
 import java.awt.SystemColor;
 import java.awt.Toolkit;
@@ -13,21 +15,28 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.image.BufferedImage;
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 
+import javax.imageio.ImageIO;
 import javax.swing.ButtonGroup;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
+import javax.swing.SwingUtilities;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 
+import controle.Imagem;
 import controle.ProdutoDAO;
 import modelo.Produto;
 import modelo.Usuario;
@@ -44,7 +53,10 @@ public class TelaCadastroProduto extends JFrame {
 	private JTextField txtValidade;
 	private JTextField txtPreco;
 	private JTextField txtQuantidade;
+	private FileInputStream fis;
+	private static Imagem img = Imagem.getInstancia();
 	private static ProdutoDAO pDAO = ProdutoDAO.getInstancia();
+	Produto prod = new Produto();
 
 	public TelaCadastroProduto(TelaEstoque janelaPrincipal, Usuario u) {
 		setTitle("Cadastro de produto");
@@ -56,7 +68,6 @@ public class TelaCadastroProduto extends JFrame {
 
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 800, 500);
-		getContentPane().setLayout(new BorderLayout(0, 0));
 		getContentPane().setLayout(new BorderLayout(0, 0));
 
 		JPanel panelBackground = new JPanel();
@@ -87,7 +98,6 @@ public class TelaCadastroProduto extends JFrame {
 
 		txtNome = new JTextField();
 		txtNome.setOpaque(false);
-		txtNome.setToolTipText("");
 		txtNome.setColumns(10);
 		txtNome.setBorder(new TitledBorder(new LineBorder(new Color(0, 0, 0), 2),
 				"<html>Nome<span style='color: red;'>*</span></html>", TitledBorder.LEADING, TitledBorder.TOP, null,
@@ -97,7 +107,6 @@ public class TelaCadastroProduto extends JFrame {
 
 		txtValidade = new JTextField();
 		txtValidade.setOpaque(false);
-		txtValidade.setToolTipText("");
 		txtValidade.setColumns(10);
 		txtValidade.setBorder(new TitledBorder(new LineBorder(new Color(0, 0, 0), 2),
 				"<html>Validade<span style='color: red;'>*</span></html>", TitledBorder.LEADING, TitledBorder.TOP, null,
@@ -106,7 +115,6 @@ public class TelaCadastroProduto extends JFrame {
 		panelEsquerda.add(txtValidade, "cell 0 2,grow");
 
 		txtQuantidade = new JTextField();
-		txtQuantidade.setToolTipText("");
 		txtQuantidade.setOpaque(false);
 		txtQuantidade.setColumns(10);
 		txtQuantidade.setBorder(new TitledBorder(new LineBorder(new Color(0, 0, 0), 2),
@@ -116,7 +124,6 @@ public class TelaCadastroProduto extends JFrame {
 		panelEsquerda.add(txtQuantidade, "cell 0 4,grow");
 
 		txtPreco = new JTextField();
-		txtPreco.setToolTipText("");
 		txtPreco.setOpaque(false);
 		txtPreco.setColumns(10);
 		txtPreco.setBorder(new TitledBorder(new LineBorder(new Color(0, 0, 0), 2),
@@ -129,22 +136,79 @@ public class TelaCadastroProduto extends JFrame {
 		panelDireita.setOpaque(false);
 		panelDireita.setBorder(new EmptyBorder(5, 40, 0, 60));
 		panelInformacoes.add(panelDireita);
-		panelDireita.setLayout(new MigLayout("", "[grow]", "[200px][25px][40px]"));
+		panelDireita.setLayout(new MigLayout("", "[grow]", "[200px,grow][25px][40px]"));
 
-		JPanel panelImage = new JPanel();
-		panelImage.setBorder(new LineBorder(new Color(0, 0, 0)));
-		panelImage.setOpaque(false);
-		panelDireita.add(panelImage, "cell 0 0,grow");
+		JPanel painelImagemProd = new JPanel();
+		painelImagemProd.setOpaque(false);
+
+		JLabel lblImagem = new JLabel();
+		lblImagem.setMinimumSize(new Dimension(100, 100)); // Garantindo tamanho mínimo para o JLabel
+		lblImagem.setPreferredSize(new Dimension(200, 200)); // Tamanho preferido
 
 		JLabel lblAdcImagem = new JLabel("Adicionar Imagem");
 		lblAdcImagem.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
+				try {
+					// Obtém o InputStream da imagem
+					fis = img.Imagem();
 
-				// Adicionar imagem
+					// Verifica se nenhuma imagem foi selecionada
+					if (fis == null) {
+						throw new IOException("Nenhuma imagem foi selecionada.");
+					}
 
+					BufferedImage bufferedImage = ImageIO.read(fis);
+					prod.setFoto(bufferedImage);
+					prod.setFotoC(fis);
+
+					// Redimensiona a imagem dentro de invokeLater
+					SwingUtilities.invokeLater(new Runnable() {
+						@Override
+						public void run() {
+							// Força o layout a ser recalculado
+							painelImagemProd.revalidate();
+							painelImagemProd.repaint();
+
+							int labelWidth = lblImagem.getWidth();
+							int labelHeight = lblImagem.getHeight();
+
+							// Verifica se o tamanho do JLabel é válido
+							if (labelWidth > 0 && labelHeight > 0) {
+								// Redimensiona a imagem para o tamanho do JLabel, mantendo a proporção
+								Image scaledImage = bufferedImage.getScaledInstance(labelWidth, labelHeight,
+										Image.SCALE_SMOOTH);
+
+								// Converte a imagem redimensionada para ImageIcon
+								ImageIcon icon = new ImageIcon(scaledImage);
+
+								// Define o ícone do JLabel
+								lblImagem.setIcon(icon);
+							} else {
+								// Caso o tamanho ainda seja inválido, talvez um tamanho mínimo seja necessário
+								System.out.println("Tamanho inválido do JLabel.");
+							}
+						}
+					});
+
+				} catch (IOException ex) {
+					ex.printStackTrace();
+
+					// Exibir erro ao usuário
+					TelaError erro = new TelaError();
+					erro.setLabelText("Erro ao carregar imagem. Nenhuma imagem foi selecionada.");
+					erro.setLocationRelativeTo(null);
+					erro.setVisible(true);
+				}
 			}
 		});
+
+		painelImagemProd.setMaximumSize(new Dimension(500, 500));
+		painelImagemProd.setMinimumSize(new Dimension(50, 50));
+		panelDireita.add(painelImagemProd, "cell 0 0,grow");
+		painelImagemProd.setLayout(new FlowLayout(FlowLayout.CENTER, 0, 0));
+
+		painelImagemProd.add(lblImagem, "cell 0 0");
 		lblAdcImagem.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		lblAdcImagem.setBorder(null);
 		lblAdcImagem.setFont(new Font("Tahoma", Font.PLAIN, 12));
@@ -164,9 +228,9 @@ public class TelaCadastroProduto extends JFrame {
 		rdbtnSalgada.setOpaque(false);
 		panelDireita.add(rdbtnSalgada, "cell 0 2");
 
-		ButtonGroup g = new ButtonGroup();
-		g.add(rdbtnSalgada);
-		g.add(rdbtnDoce);
+		ButtonGroup grupoRadio = new ButtonGroup();
+		grupoRadio.add(rdbtnDoce);
+		grupoRadio.add(rdbtnSalgada);
 
 		JPanel panelBotoes = new JPanel();
 		panelBotoes.setOpaque(false);
@@ -207,7 +271,7 @@ public class TelaCadastroProduto extends JFrame {
 		panelCancelar.add(btnAdicionar, "cell 0 1,growx");
 		btnAdicionar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Produto prod = new Produto();
+				
 
 				String nome = txtNome.getText();
 				String validadeStr = txtValidade.getText();

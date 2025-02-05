@@ -1,5 +1,8 @@
 package modelo;
 
+import java.awt.Image;
+import java.io.FileInputStream;
+
 public class Usuario {
 
 	private String nome;
@@ -11,6 +14,8 @@ public class Usuario {
 	private Endereco end;
 	protected int idUsuario;
 	private String img;
+	private FileInputStream fotoC;
+	private Image foto;
 	
 	public Usuario() {}
 
@@ -105,5 +110,21 @@ public class Usuario {
 	public boolean isProdutor() {
 		// TODO Auto-generated method stub
 		return false;
+	}
+
+	public FileInputStream getFotoC() {
+		return fotoC;
+	}
+
+	public void setFotoC(FileInputStream fotoC) {
+		this.fotoC = fotoC;
+	}
+
+	public Image getFoto() {
+		return foto;
+	}
+
+	public void setFoto(Image foto) {
+		this.foto = foto;
 	}
 }

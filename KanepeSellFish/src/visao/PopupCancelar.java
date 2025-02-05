@@ -64,7 +64,7 @@ public class PopupCancelar extends JFrame {
 					telaEditarV.dispose();
 					dispose();
 				} else {
-					TelaPerfilCliente c = new TelaPerfilCliente(u, vendedor);
+					TelaPerfilCliente c = new TelaPerfilCliente(u, vendedor, null);
 					c.setVisible(true);
 					c.setLocationRelativeTo(null);
 					telaEditarC.dispose();
