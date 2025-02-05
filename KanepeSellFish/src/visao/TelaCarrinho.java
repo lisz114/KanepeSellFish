@@ -44,6 +44,7 @@ public class TelaCarrinho extends JFrame {
 	JPanel panelProd;
 	Boolean isVendedor;
 	int carrinhoProdutor;
+	CarrinhoCompras carrinho = new CarrinhoCompras();
 
 	public static UsuarioDAO uDAO = UsuarioDAO.getInstancia();
 
@@ -245,11 +246,10 @@ public class TelaCarrinho extends JFrame {
 		panelBotoes.add(btnPagamento, "cell 1 0");
 		btnPagamento.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-			}
-		});
-		btnPagamento.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
+				
+				TelaPagamento pagamento = new TelaPagamento(u, isVendedor, carrinho);
+				pagamento.setVisible(true);
+				pagamento.setLocationRelativeTo(null);
 			}
 		});
 		btnPagamento.setFont(new Font("Dialog", Font.PLAIN, 11));
