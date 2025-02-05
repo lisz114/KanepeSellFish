@@ -86,40 +86,39 @@ public class TelaPagamento extends JFrame {
 		btCancelar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				TelaError aviso = new TelaError();
-				aviso.setLabelText("Pagamento cancelado com sucesso!");
+				aviso.setLabelText("Pagamento cancelado.");
 				aviso.setLocationRelativeTo(null);
 				aviso.setVisible(true);
 				dispose();
-				
+
 			}
 		});
-				
-				panel_2 = new JPanel();
-				panel_2.setBorder(null);
-				panel_1.add(panel_2, "cell 0 0 2 1,grow");
-				panel_2.setLayout(new MigLayout("", "[grow][grow]", "[grow][grow]"));
-				
-				lblChave = new JLabel("Chave pix:");
-				lblChave.setFont(new Font("Dialog", Font.PLAIN, 14));
-				panel_2.add(lblChave, "flowx,cell 0 0 1 2,alignx left,aligny center");
-				
-				imgPix = new JLabel("");
-				imgPix.setIcon(new ImageIcon(TelaPagamento.class.getResource("/img/qrcode.png")));
-				panel_2.add(imgPix, "cell 1 0 1 2,alignx center");
-				
-				ImageIcon pix = new ImageIcon(TelaInicio.class.getResource("/img/qrcode.png"));
-				Image iconpix = pix.getImage().getScaledInstance(250, 250, Image.SCALE_SMOOTH);
-				imgPix.setIcon(new ImageIcon(iconpix));
-				
-				lblpix = new JLabel("0");
-				lblpix.setFont(new Font("Dialog", Font.PLAIN, 14));
-				panel_2.add(lblpix, "cell 0 0,growx,aligny center");
-		
-				
-						lblSubtitulo = new JLabel("Total de itens:");
-						lblSubtitulo.setFont(new Font("Dialog", Font.PLAIN, 14));
-						panel_1.add(lblSubtitulo, "flowx,cell 0 1,alignx left,aligny center");
-		
+
+		panel_2 = new JPanel();
+		panel_2.setBorder(null);
+		panel_1.add(panel_2, "cell 0 0 2 1,grow");
+		panel_2.setLayout(new MigLayout("", "[grow][grow]", "[grow][grow]"));
+
+		lblChave = new JLabel("Chave pix:");
+		lblChave.setFont(new Font("Dialog", Font.PLAIN, 14));
+		panel_2.add(lblChave, "flowx,cell 0 0 1 2,alignx left,aligny center");
+
+		imgPix = new JLabel("");
+		imgPix.setIcon(new ImageIcon(TelaPagamento.class.getResource("/img/qrcode.png")));
+		panel_2.add(imgPix, "cell 1 0 1 2,alignx center");
+
+		ImageIcon pix = new ImageIcon(TelaInicio.class.getResource("/img/qrcode.png"));
+		Image iconpix = pix.getImage().getScaledInstance(250, 250, Image.SCALE_SMOOTH);
+		imgPix.setIcon(new ImageIcon(iconpix));
+
+		lblpix = new JLabel("0");
+		lblpix.setFont(new Font("Dialog", Font.PLAIN, 14));
+		panel_2.add(lblpix, "cell 0 0,growx,aligny center");
+
+		lblSubtitulo = new JLabel("Total de itens:");
+		lblSubtitulo.setFont(new Font("Dialog", Font.PLAIN, 14));
+		panel_1.add(lblSubtitulo, "flowx,cell 0 1,alignx left,aligny center");
+
 		lblValorTotal = new JLabel("Valor total:");
 		lblValorTotal.setFont(new Font("Dialog", Font.PLAIN, 14));
 		panel_1.add(lblValorTotal, "flowx,cell 1 1,alignx left,aligny center");
@@ -141,14 +140,16 @@ public class TelaPagamento extends JFrame {
 			}
 		});
 		panel_1.add(btSalvar, "cell 1 2,alignx right,aligny bottom");
-		
+
 		lblquantidade = new JLabel("0");
 		lblquantidade.setFont(new Font("Dialog", Font.PLAIN, 14));
 		panel_1.add(lblquantidade, "cell 0 1,alignx left");
-		
+		lblquantidade.setText(String.valueOf(carrinho.getQuantidadeProdutos()));
+
 		lblpreco = new JLabel("0");
 		lblpreco.setFont(new Font("Dialog", Font.PLAIN, 14));
 		panel_1.add(lblpreco, "cell 1 1,alignx left,aligny center");
+		lblpreco.setText(String.valueOf(carrinho.getValorTotal()));
 
 	}
 }
