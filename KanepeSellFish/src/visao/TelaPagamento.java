@@ -6,6 +6,7 @@ import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.Font;
+import java.awt.Image;
 import java.awt.SystemColor;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -20,6 +21,7 @@ import controle.UsuarioDAO;
 import modelo.CarrinhoCompras;
 import modelo.Usuario;
 import net.miginfocom.swing.MigLayout;
+import javax.swing.ImageIcon;
 
 public class TelaPagamento extends JFrame {
 
@@ -31,6 +33,12 @@ public class TelaPagamento extends JFrame {
 	private JLabel lblSubtitulo;
 	private TelaPagamento estajanela = this;
 	private JLabel lblquantidade;
+	private JLabel lblValorTotal;
+	private JLabel lblpreco;
+	private JPanel panel_2;
+	private JLabel lblChave;
+	private JLabel lblpix;
+	private JLabel imgPix;
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -71,12 +79,8 @@ public class TelaPagamento extends JFrame {
 		panel.add(lblTitulo, "cell 0 0,alignx center,aligny center");
 
 		JPanel panel_1 = new JPanel();
-		contentPane.add(panel_1, BorderLayout.CENTER);
-		panel_1.setLayout(new MigLayout("", "[grow]", "[50px][][20px][][][][grow]"));
-
-		lblSubtitulo = new JLabel("Total de itens:");
-		lblSubtitulo.setFont(new Font("Dialog", Font.PLAIN, 14));
-		panel_1.add(lblSubtitulo, "flowx,cell 0 0,alignx left,aligny center");
+		contentPane.add(panel_1, BorderLayout.SOUTH);
+		panel_1.setLayout(new MigLayout("", "[grow][grow]", "[grow][20px][grow]"));
 
 		btCancelar = new JButton("Cancelar");
 		btCancelar.addActionListener(new ActionListener() {
@@ -89,10 +93,40 @@ public class TelaPagamento extends JFrame {
 				
 			}
 		});
+				
+				panel_2 = new JPanel();
+				panel_2.setBorder(null);
+				panel_1.add(panel_2, "cell 0 0 2 1,grow");
+				panel_2.setLayout(new MigLayout("", "[grow][grow]", "[grow][grow]"));
+				
+				lblChave = new JLabel("Chave pix:");
+				lblChave.setFont(new Font("Dialog", Font.PLAIN, 14));
+				panel_2.add(lblChave, "flowx,cell 0 0 1 2,alignx left,aligny center");
+				
+				imgPix = new JLabel("");
+				imgPix.setIcon(new ImageIcon(TelaPagamento.class.getResource("/img/qrcode.png")));
+				panel_2.add(imgPix, "cell 1 0 1 2,alignx center");
+				
+				ImageIcon pix = new ImageIcon(TelaInicio.class.getResource("/img/qrcode.png"));
+				Image iconpix = pix.getImage().getScaledInstance(250, 250, Image.SCALE_SMOOTH);
+				imgPix.setIcon(new ImageIcon(iconpix));
+				
+				lblpix = new JLabel("0");
+				lblpix.setFont(new Font("Dialog", Font.PLAIN, 14));
+				panel_2.add(lblpix, "cell 0 0,growx,aligny center");
+		
+				
+						lblSubtitulo = new JLabel("Total de itens:");
+						lblSubtitulo.setFont(new Font("Dialog", Font.PLAIN, 14));
+						panel_1.add(lblSubtitulo, "flowx,cell 0 1,alignx left,aligny center");
+		
+		lblValorTotal = new JLabel("Valor total:");
+		lblValorTotal.setFont(new Font("Dialog", Font.PLAIN, 14));
+		panel_1.add(lblValorTotal, "flowx,cell 1 1,alignx left,aligny center");
 		btCancelar.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btCancelar.setBackground(new Color(205, 92, 92));
 
-		panel_1.add(btCancelar, "flowx,cell 0 6,alignx right,aligny bottom");
+		panel_1.add(btCancelar, "flowx,cell 1 2,alignx right,aligny bottom");
 
 		btSalvar = new JButton("Pagar");
 		btSalvar.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
@@ -106,11 +140,15 @@ public class TelaPagamento extends JFrame {
 				dispose();
 			}
 		});
-		panel_1.add(btSalvar, "cell 0 6,alignx right,aligny bottom");
+		panel_1.add(btSalvar, "cell 1 2,alignx right,aligny bottom");
 		
 		lblquantidade = new JLabel("0");
 		lblquantidade.setFont(new Font("Dialog", Font.PLAIN, 14));
-		panel_1.add(lblquantidade, "cell 0 0");
+		panel_1.add(lblquantidade, "cell 0 1,alignx left");
+		
+		lblpreco = new JLabel("0");
+		lblpreco.setFont(new Font("Dialog", Font.PLAIN, 14));
+		panel_1.add(lblpreco, "cell 1 1,alignx left,aligny center");
 
 	}
 }
