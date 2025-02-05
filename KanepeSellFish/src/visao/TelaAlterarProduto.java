@@ -52,10 +52,10 @@ public class TelaAlterarProduto extends JFrame {
 	private ProdutoDAO pDAO = ProdutoDAO.getInstancia();
 	private JRadioButton rdbtnDoce;
 	private JRadioButton rdbtnSalgada;
-	private FileInputStream fis;	
+	private FileInputStream fis;
 	private static Imagem img = Imagem.getInstancia();
 	Produto prod = new Produto();
-	
+
 	/**
 	 * Launch the application.
 	 */
@@ -167,7 +167,7 @@ public class TelaAlterarProduto extends JFrame {
 		panelImage.setOpaque(false);
 		panelDireita.add(panelImage, "cell 0 0,grow");
 		panelImage.setLayout(new FlowLayout(FlowLayout.CENTER, 0, 0));
-		
+
 		lblImagem = new JLabel();
 		lblImagem.setMinimumSize(new Dimension(100, 100)); // Garantindo tamanho mínimo para o JLabel
 		lblImagem.setPreferredSize(new Dimension(200, 200));
@@ -290,7 +290,7 @@ public class TelaAlterarProduto extends JFrame {
 		btnAlterar.setText("Alterar");
 		btnAlterar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
+
 				Produto oriProd = new Produto();
 
 				oriProd = oprod;
@@ -370,30 +370,33 @@ public class TelaAlterarProduto extends JFrame {
 	}
 
 	public void mostrarDados(Produto produtoSelecionado) {
-        LocalDate validade = produtoSelecionado.getValidade();
-        DateTimeFormatter desiredFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-        String formattedDate = validade.format(desiredFormatter);
+	    LocalDate validade = produtoSelecionado.getValidade();
+	    DateTimeFormatter desiredFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+	    String formattedDate = validade.format(desiredFormatter);
 
-        if (produtoSelecionado.getSalinidade() != null && produtoSelecionado.getSalinidade() == true) {
-            rdbtnDoce.setSelected(true);
-        } else {
-            rdbtnSalgada.setSelected(true);
-        }
-        txtNome.setText(produtoSelecionado.getNome());
-        txtQuantidade.setText(String.valueOf(produtoSelecionado.getQuantidadeEstoque()));
-        txtValidade.setText(formattedDate);
-        txtPreco.setText(String.valueOf(produtoSelecionado.getPreco()));
+	    if (produtoSelecionado.getSalinidade() != null && produtoSelecionado.getSalinidade()) {
+	        rdbtnDoce.setSelected(true);
+	    } else {
+	        rdbtnSalgada.setSelected(true);
+	    }
 
-        // Load and display the product image from the database
-        byte[] imagemBytes = pDAO.getImagemProduto(produtoSelecionado.getIdProduto());  // Assuming Produto has a getId() method
-        if (imagemBytes != null) {
-            ImageIcon imageIcon = new ImageIcon(imagemBytes);
-            Image image = imageIcon.getImage().getScaledInstance(200, 200, Image.SCALE_SMOOTH);  // Scale the image
-            lblImagem.setIcon(new ImageIcon(image));  // Set the image on the label
-            System.out.println("Foto encontrada");
-        } else {
-        	lblImagem.setIcon(null);  // Clear image if none is found
-            System.out.println("Foto nao encontrada");
-        }
+	    txtNome.setText(produtoSelecionado.getNome());
+	    txtQuantidade.setText(String.valueOf(produtoSelecionado.getQuantidadeEstoque()));
+	    txtValidade.setText(formattedDate);
+	    txtPreco.setText(String.valueOf(produtoSelecionado.getPreco()));
 
-	}}
+	    // Obtendo a foto diretamente do Produto
+	    Image foto = produtoSelecionado.getFoto(); 
+
+	    if (foto != null) {
+	        // Redimensiona a imagem para o tamanho do JLabel
+	        Image scaledImage = foto.getScaledInstance(200, 200, Image.SCALE_SMOOTH);
+	        lblImagem.setIcon(new ImageIcon(scaledImage)); // Define a imagem no JLabel
+	        System.out.println("Foto encontrada e carregada.");
+	    } else {
+	        lblImagem.setIcon(null); // Limpa a imagem se não existir
+	        System.out.println("Foto não encontrada.");
+	    }
+	}
+
+}

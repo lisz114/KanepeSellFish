@@ -155,6 +155,7 @@ public class TelaCadastroProduto extends JFrame {
 					}
 
 					BufferedImage bufferedImage = ImageIO.read(fis);
+					prod.setFoto(bufferedImage);
 					prod.setFotoC(fis);
 
 					// Redimensiona a imagem dentro de invokeLater
@@ -314,7 +315,6 @@ public class TelaCadastroProduto extends JFrame {
 				prod.setPreco(preco);
 				prod.setValidade(validade); // Descomente se necessário
 				prod.setSalinidade(salinidade);
-				prod.setFotoC(fis);
 
 				if (pDAO.inserirProduto(prod, u)) {
 					janelaPrincipal.atualizarTabela(u, null);

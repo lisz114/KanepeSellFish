@@ -57,7 +57,7 @@ public class TelaPerfilCliente extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public TelaPerfilCliente(Usuario u, boolean isVendedor, FileInputStream fis) {
+	public TelaPerfilCliente(Usuario u, boolean isVendedor, Image foto) {
 		usuarioNovo = u;
 		setResizable(false);
 		setLocationByPlatform(true);
@@ -86,13 +86,15 @@ public class TelaPerfilCliente extends JFrame {
 		panel_2.setLayout(new MigLayout("", "[][30px][10px][10px]", "[50px][][50px][][20px][][20px][][][][]"));
 
 		JPanel panel_3 = new JPanel();
-		panel_2.add(panel_3, "cell 0 0 1 8");
 		panel_3.setOpaque(false);
+		panel_3.setBackground(new Color(192, 192, 192));
+		panel_2.add(panel_3, "cell 0 0 1 8");
 		panel_3.setLayout(new MigLayout("", "[grow]", "[280px][grow]"));
 
 		JLabel lblImagemCliente = new JLabel("");
-		lblImagemCliente.setIcon(new ImageIcon(TelaPerfilCliente.class.getResource("/img/Avatar.png")));
-		panel_3.add(lblImagemCliente, "flowy,cell 0 0,alignx center,aligny bottom");
+		lblImagemCliente.setOpaque(true);
+		
+		panel_3.add(lblImagemCliente, "flowy,cell 0 0");
 
 		lblImagemCliente.setMinimumSize(new Dimension(100, 100)); // Garantindo tamanho mínimo para o JLabel
 		lblImagemCliente.setPreferredSize(new Dimension(200, 200)); // Tamanho preferido
@@ -102,53 +104,37 @@ public class TelaPerfilCliente extends JFrame {
 		lblFoto.setFont(new Font("Dialog", Font.ITALIC, 13));
 		panel_3.add(lblFoto, "cell 0 1,alignx center,aligny bottom");
 
-		if (fis != null) {
+		try {
+			if (foto != null) {
+				
+				panel_3.revalidate();
+				panel_3.repaint();
 
-			try {
-				// Verifica se a variável fis não é nula
-				if (fis != null) {
+				// Verifica se o tamanho do JLabel é válido
+				SwingUtilities.invokeLater(() -> {
+				    int labelWidth = lblImagemCliente.getWidth();
+				    int labelHeight = lblImagemCliente.getHeight();
 
-					// Tenta carregar a imagem
-					BufferedImage bufferedImage = ImageIO.read(fis);
+				    if (labelWidth > 0 && labelHeight > 0) {
+				        Image scaledImage = foto.getScaledInstance(labelWidth, labelHeight, Image.SCALE_SMOOTH);
+				        lblImagemCliente.setIcon(new ImageIcon(scaledImage));
+				    } else {
+				        System.out.println("Tamanho inválido do JLabel. Definindo tamanho padrão.");
+				        Image scaledImage = foto.getScaledInstance(200, 200, Image.SCALE_SMOOTH);
+				        lblImagemCliente.setIcon(new ImageIcon(scaledImage));
+				    }
+				});
 
-					if (bufferedImage == null) {
-						throw new IOException("Erro ao carregar a imagem.");
-					}
 
-					// Armazena a imagem no usuário
-					usuarioNovo.setFotoC(fis);
-
-					// A manipulação da imagem deve ser feita no Event Dispatch Thread (EDT)
-					SwingUtilities.invokeLater(new Runnable() {
-						@Override
-						public void run() {
-							panel_3.revalidate();
-							panel_3.repaint();
-
-							int labelWidth = lblImagemCliente.getWidth();
-							int labelHeight = lblImagemCliente.getHeight();
-
-							if (labelWidth > 0 && labelHeight > 0) {
-								// Redimensiona a imagem para o tamanho do JLabel
-								Image scaledImage = bufferedImage.getScaledInstance(labelWidth, labelHeight,
-										Image.SCALE_SMOOTH);
-								ImageIcon icon = new ImageIcon(scaledImage);
-								lblImagemCliente.setIcon(icon);
-							} else {
-								System.out.println("Tamanho inválido do JLabel.");
-							}
-						}
-					});
-				}
-
-			} catch (IOException ex) {
-				ex.printStackTrace();
-				// Exibe erro ao usuário
-				TelaError erro = new TelaError();
-				erro.setLabelText("Erro ao carregar imagem. Nenhuma imagem foi selecionada.");
-				erro.setLocationRelativeTo(null);
-				erro.setVisible(true);
+				
+				System.out.println("Deu bom!");
+			}else {
+				lblImagemCliente.setIcon(new ImageIcon(TelaPerfilCliente.class.getResource("/img/Avatar.png")));
+				System.out.println("Deu ruim!");
 			}
+		} catch (Exception e) {
+			System.out.println(e);
+
 		}
 		JLabel lblNomeCliente = new JLabel(u.getNome());
 		panel_2.add(lblNomeCliente, "cell 1 1 3 1,growx,aligny center");

@@ -46,6 +46,7 @@ public class TelaEditarPerfilCliente extends JFrame {
 	private JTextField txtNome;
 	private JTextField txtEmail;
 	private FileInputStream fiss;
+	BufferedImage bufferedImage;
 	private static Imagem img = Imagem.getInstancia();
 	Usuario usuarioNovo = new Usuario();
 
@@ -104,12 +105,12 @@ public class TelaEditarPerfilCliente extends JFrame {
 		JLabel lblNewLabel = new JLabel("Edição de perfil");
 		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		panel.add(lblNewLabel, "flowx,cell 1 0,alignx left,aligny center");
-		
+
 		JPanel painelImagemProd = new JPanel();
 		painelImagemProd.setAlignmentY(Component.BOTTOM_ALIGNMENT);
 		painelImagemProd.setOpaque(false);
 		panel_1.add(painelImagemProd, "flowx,cell 0 2 1 3,grow");
-		
+
 		JLabel imgPerfil = new JLabel("");
 		painelImagemProd.add(imgPerfil);
 		imgPerfil.setMinimumSize(new Dimension(100, 100)); // Garantindo tamanho mínimo para o JLabel
@@ -140,75 +141,75 @@ public class TelaEditarPerfilCliente extends JFrame {
 		txtEmail.setBorder(new TitledBorder(new LineBorder(new Color(0, 0, 0), 2), "email", TitledBorder.LEADING,
 				TitledBorder.TOP, null, new Color(0, 0, 0)));
 		txtEmail.setText(String.valueOf(u.getEmail()));
-		
-				JLabel lblEditarFt = new JLabel("Editar Foto de Perfil");
-				lblEditarFt.addMouseListener(new MouseAdapter() {
-					@Override
-					public void mouseClicked(MouseEvent e) {
-						
 
-						try {
-							// Obtém o InputStream da imagem
-							FileInputStream fis = img.Imagem();
-							 fiss = fis;
+		JLabel lblEditarFt = new JLabel("Editar Foto de Perfil");
+		lblEditarFt.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
 
-							// Verifica se nenhuma imagem foi selecionada
-							if (fis == null) {
-								throw new IOException("Nenhuma imagem foi selecionada.");
-							}
+				try {
+					// Obtém o InputStream da imagem
+					FileInputStream fis = img.Imagem();
+					fiss = fis;
 
-							BufferedImage bufferedImage = ImageIO.read(fis);
-							if (bufferedImage == null) {
-							    throw new IOException("Falha ao carregar a imagem.");
-							}
-
-							usuarioNovo.setFotoC(fis);
-
-							// Redimensiona a imagem dentro de invokeLater
-							SwingUtilities.invokeLater(new Runnable() {
-								@Override
-								public void run() {
-									// Força o layout a ser recalculado
-									painelImagemProd.revalidate();
-									painelImagemProd.repaint();
-
-									int labelWidth = imgPerfil.getWidth();
-									int labelHeight = imgPerfil.getHeight();
-
-									// Verifica se o tamanho do JLabel é válido
-									if (labelWidth > 0 && labelHeight > 0) {
-										// Redimensiona a imagem para o tamanho do JLabel, mantendo a proporção
-										Image scaledImage = bufferedImage.getScaledInstance(labelWidth, labelHeight,
-												Image.SCALE_SMOOTH);
-
-										// Converte a imagem redimensionada para ImageIcon
-										ImageIcon icon = new ImageIcon(scaledImage);
-
-										// Define o ícone do JLabel
-										imgPerfil.setIcon(icon);
-									} else {
-										// Caso o tamanho ainda seja inválido, talvez um tamanho mínimo seja necessário
-										System.out.println("Tamanho inválido do JLabel.");
-									}
-								}
-							});
-
-						} catch (IOException ex) {
-							ex.printStackTrace();
-
-							// Exibir erro ao usuário
-							TelaError erro = new TelaError();
-							erro.setLabelText("Erro ao carregar imagem. Nenhuma imagem foi selecionada.");
-							erro.setLocationRelativeTo(null);
-							erro.setVisible(true);
-						}
-						
+					// Verifica se nenhuma imagem foi selecionada
+					if (fis == null) {
+						throw new IOException("Nenhuma imagem foi selecionada.");
 					}
-				});
-				lblEditarFt.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-				lblEditarFt.setForeground(SystemColor.textHighlight);
-				lblEditarFt.setFont(new Font("Dialog", Font.ITALIC, 13));
-				panel_1.add(lblEditarFt, "cell 0 5,alignx center,aligny center");
+
+					bufferedImage = ImageIO.read(fis);
+					usuarioNovo.setFoto(bufferedImage);
+					if (bufferedImage == null) {
+						throw new IOException("Falha ao carregar a imagem.");
+					}
+
+					usuarioNovo.setFotoC(fis);
+
+					// Redimensiona a imagem dentro de invokeLater
+					SwingUtilities.invokeLater(new Runnable() {
+						@Override
+						public void run() {
+							// Força o layout a ser recalculado
+							painelImagemProd.revalidate();
+							painelImagemProd.repaint();
+
+							int labelWidth = imgPerfil.getWidth();
+							int labelHeight = imgPerfil.getHeight();
+
+							// Verifica se o tamanho do JLabel é válido
+							if (labelWidth > 0 && labelHeight > 0) {
+								// Redimensiona a imagem para o tamanho do JLabel, mantendo a proporção
+								Image scaledImage = bufferedImage.getScaledInstance(labelWidth, labelHeight,
+										Image.SCALE_SMOOTH);
+
+								// Converte a imagem redimensionada para ImageIcon
+								ImageIcon icon = new ImageIcon(scaledImage);
+
+								// Define o ícone do JLabel
+								imgPerfil.setIcon(icon);
+							} else {
+								// Caso o tamanho ainda seja inválido, talvez um tamanho mínimo seja necessário
+								System.out.println("Tamanho inválido do JLabel.");
+							}
+						}
+					});
+
+				} catch (IOException ex) {
+					ex.printStackTrace();
+
+					// Exibir erro ao usuário
+					TelaError erro = new TelaError();
+					erro.setLabelText("Erro ao carregar imagem. Nenhuma imagem foi selecionada.");
+					erro.setLocationRelativeTo(null);
+					erro.setVisible(true);
+				}
+
+			}
+		});
+		lblEditarFt.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		lblEditarFt.setForeground(SystemColor.textHighlight);
+		lblEditarFt.setFont(new Font("Dialog", Font.ITALIC, 13));
+		panel_1.add(lblEditarFt, "cell 0 5,alignx center,aligny center");
 
 		JLabel lblCpf = new JLabel("");
 		panel_1.add(lblCpf, "cell 1 5,growx,aligny center");
@@ -244,7 +245,7 @@ public class TelaEditarPerfilCliente extends JFrame {
 		btSalvar.addActionListener(new ActionListener() {
 
 			public void actionPerformed(ActionEvent e) {
-				
+
 //
 //				// Consulta do produtor atual
 //				Usuario clienteAntigo = udao.consultaUsuarioCadastrado(u.getCpf(), u.getEmail());
@@ -283,7 +284,7 @@ public class TelaEditarPerfilCliente extends JFrame {
 				if (clienteAtualizado) {
 					usuarioNovo = udao.consultarUsuarioLoginSenha(usuarioNovo.getEmail(), u.getSenha());
 
-					TelaPerfilCliente v = new TelaPerfilCliente(usuarioNovo, isVendedor, fiss);
+					TelaPerfilCliente v = new TelaPerfilCliente(usuarioNovo, isVendedor, bufferedImage);
 					v.setLocationRelativeTo(null);
 					v.setVisible(true);
 

@@ -31,12 +31,30 @@ public class CardProduto extends JPanel {
 	public CardProduto(Produto p, Usuario u) {
 		setLayout(new MigLayout("", "[20px][100px][20px]", "[][200px][][][][][]"));
 
+		JPanel panel = new JPanel();
+		add(panel, "flowy,cell 1 1,grow");
+
 		JLabel imgPeixe = new JLabel("");
-		imgPeixe.setIcon(new ImageIcon(CardProduto.class.getResource("/img/ttilapia.jpg")));
-		add(imgPeixe, "cell 1 1");
-		ImageIcon iconFoto = new ImageIcon(CardProduto.class.getResource("/img/ttilapia.jpg"));
-		Image foto = iconFoto.getImage().getScaledInstance(160, 160, Image.SCALE_SMOOTH);
-		imgPeixe.setIcon(new ImageIcon(foto));
+		panel.add(imgPeixe);
+		// Verifica se a imagem do produto não é nula
+		if (p.getFoto() != null) {
+		    // Cria um ImageIcon a partir da imagem
+		    ImageIcon iconFoto = new ImageIcon(p.getFoto());
+		    
+		    // Usa o JLabel para pegar o tamanho da área disponível
+		    imgPeixe.setSize(160, 160); // Definindo um tamanho fixo para o exemplo
+		    
+		    // Redimensiona a imagem de acordo com o tamanho do JLabel
+		    Image foto = iconFoto.getImage().getScaledInstance(imgPeixe.getWidth(), imgPeixe.getHeight(), Image.SCALE_SMOOTH);
+		    
+		    // Define a imagem redimensionada no JLabel
+		    imgPeixe.setIcon(new ImageIcon(foto));
+		} else {
+		    // Se não houver foto, define uma imagem padrão
+		    imgPeixe.setIcon(new ImageIcon(getClass().getResource("/img/DefaultImage.png")));
+		}
+
+		
 
 		JLabel lblNome = new JLabel("Nome");
 		add(lblNome, "flowx,cell 1 2,alignx left");
@@ -102,64 +120,66 @@ public class CardProduto extends JPanel {
 
 		JButton btAdicionar = new JButton("Adicionar");
 		btAdicionar.addActionListener(new ActionListener() {
-		    public void actionPerformed(ActionEvent e) {
-		        CarrinhoDAO cdao = new CarrinhoDAO();
-		        CarrinhoCompras c;
+			public void actionPerformed(ActionEvent e) {
+				CarrinhoDAO cdao = new CarrinhoDAO();
+				CarrinhoCompras c;
 
-		        // Verificar se já existe um carrinho do usuário para o produtor do produto a ser adicionado
-		        c = cdao.verificarSeExisteCarrinho(u, p.getIdProdutor(), false);
-		        
-		        // Se já existe um carrinho para o produtor do produto, então tenta adicionar o produto
-		        if (c != null) {
-		            // Verifica se o produtor do produto a ser adicionado é o mesmo dos itens no carrinho
-		            boolean produtorDiferente = false;
-		            ArrayList<ItemCarrinho> itensCarrinho = cdao.addProdCarrinho(c);
-		            
-		            for (ItemCarrinho item : itensCarrinho) {
-		                if (item.getProduto().getIdProdutor() != p.getIdProdutor()) {
-		                    produtorDiferente = true;
-		                    break;
-		                }
-		            }
+				// Verificar se já existe um carrinho do usuário para o produtor do produto a
+				// ser adicionado
+				c = cdao.verificarSeExisteCarrinho(u, p.getIdProdutor(), false);
 
-		            if (produtorDiferente) {
-		                // Se os produtores são diferentes, exibe a mensagem de erro
-		                TelaError erro = new TelaError();
-		                erro.setLabelText("Não é possível adicionar itens de produtores diferentes ao carrinho!");
-		                erro.setVisible(true);
-		                erro.setLocationRelativeTo(null);
-		            } else {
-		                // Caso contrário, o produto pode ser adicionado ao carrinho
-		                if (cdao.verificarProdutoNoCarrinho(c, p)) {
-		                    TelaError erro = new TelaError();
-		                    erro.setLabelText("Este produto já está no seu carrinho!");
-		                    erro.setVisible(true);
-		                    erro.setLocationRelativeTo(null);
-		                } else {
-		                    preco = p.getPreco();
-		                    preco = preco * quantidade;
+				// Se já existe um carrinho para o produtor do produto, então tenta adicionar o
+				// produto
+				if (c != null) {
+					// Verifica se o produtor do produto a ser adicionado é o mesmo dos itens no
+					// carrinho
+					boolean produtorDiferente = false;
+					ArrayList<ItemCarrinho> itensCarrinho = cdao.addProdCarrinho(c);
 
-		                    cdao.inserirProduto(p, quantidade, preco, c);
-		                    TelaError erro = new TelaError();
-		                    erro.setLabelText("Produto adicionado ao carrinho");
-		                    erro.setLocationRelativeTo(null);
-		                    erro.setVisible(true);
-		                }
-		            }
-		        } else {
-		            // Se não houver carrinho para o produtor, cria um novo carrinho com o produtor
-		            preco = p.getPreco();
-		            preco = preco * quantidade;
+					for (ItemCarrinho item : itensCarrinho) {
+						if (item.getProduto().getIdProdutor() != p.getIdProdutor()) {
+							produtorDiferente = true;
+							break;
+						}
+					}
 
-		            cdao.inserirProduto(p, quantidade, preco, cdao.criarCarrinho(u, p.getIdProdutor()));
-		            TelaError erro = new TelaError();
-		            erro.setLabelText("Produto adicionado ao carrinho");
-		            erro.setLocationRelativeTo(null);
-		            erro.setVisible(true);
-		        }
-		    }
+					if (produtorDiferente) {
+						// Se os produtores são diferentes, exibe a mensagem de erro
+						TelaError erro = new TelaError();
+						erro.setLabelText("Não é possível adicionar itens de produtores diferentes ao carrinho!");
+						erro.setVisible(true);
+						erro.setLocationRelativeTo(null);
+					} else {
+						// Caso contrário, o produto pode ser adicionado ao carrinho
+						if (cdao.verificarProdutoNoCarrinho(c, p)) {
+							TelaError erro = new TelaError();
+							erro.setLabelText("Este produto já está no seu carrinho!");
+							erro.setVisible(true);
+							erro.setLocationRelativeTo(null);
+						} else {
+							preco = p.getPreco();
+							preco = preco * quantidade;
+
+							cdao.inserirProduto(p, quantidade, preco, c);
+							TelaError erro = new TelaError();
+							erro.setLabelText("Produto adicionado ao carrinho");
+							erro.setLocationRelativeTo(null);
+							erro.setVisible(true);
+						}
+					}
+				} else {
+					// Se não houver carrinho para o produtor, cria um novo carrinho com o produtor
+					preco = p.getPreco();
+					preco = preco * quantidade;
+
+					cdao.inserirProduto(p, quantidade, preco, cdao.criarCarrinho(u, p.getIdProdutor()));
+					TelaError erro = new TelaError();
+					erro.setLabelText("Produto adicionado ao carrinho");
+					erro.setLocationRelativeTo(null);
+					erro.setVisible(true);
+				}
+			}
 		});
-
 
 		btAdicionar.setForeground(Color.WHITE);
 		btAdicionar.setBackground(new Color(2, 73, 89));

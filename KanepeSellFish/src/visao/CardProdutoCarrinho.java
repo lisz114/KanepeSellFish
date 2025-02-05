@@ -9,6 +9,7 @@ import java.awt.event.MouseEvent;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.SwingUtilities;
 import javax.swing.border.LineBorder;
 
 import controle.CarrinhoDAO;
@@ -30,14 +31,56 @@ public class CardProdutoCarrinho extends JPanel {
 		ImageIcon imgM = new ImageIcon(CardProduto.class.getResource("/img/More.png"));
 		Image m = imgM.getImage().getScaledInstance(20, 20, Image.SCALE_SMOOTH);
 
-		setLayout(new MigLayout("", "[100px][20px,grow]", "[160px]"));
-
+		setLayout(new MigLayout("", "[180px][20px,grow]", "[160px]"));
+		
+		JPanel panel_2 = new JPanel();
+		add(panel_2, "flowx,cell 0 0,grow");
+		
 		JLabel imgPeixe = new JLabel("");
-		imgPeixe.setIcon(new ImageIcon(CardProduto.class.getResource("/img/ttilapia.jpg")));
-		add(imgPeixe, "flowy,cell 0 0,grow");
-		ImageIcon iconFoto = new ImageIcon(CardProduto.class.getResource("/img/ttilapia.jpg"));
-		Image foto = iconFoto.getImage().getScaledInstance(160, 160, Image.SCALE_SMOOTH);
-		imgPeixe.setIcon(new ImageIcon(foto));
+		panel_2.add(imgPeixe);
+
+		imgPeixe.setPreferredSize(new java.awt.Dimension(160, 160));
+
+		System.out.println("Ajustando tamanho do JLabel para 160x160");
+
+		// Verifica se o produto tem uma foto associada
+		if (p.getProduto().getFoto() != null) {
+		    System.out.println("Produto tem foto. Carregando imagem...");
+
+		    // Usamos invokeLater para garantir que o layout seja calculado antes de redimensionar a imagem
+		    SwingUtilities.invokeLater(() -> {
+		        // Cria um ImageIcon a partir da foto do produto
+		        ImageIcon iconFoto = new ImageIcon(p.getProduto().getFoto());
+		        System.out.println("Imagem do produto carregada com sucesso.");
+
+		        // Redimensiona a imagem para caber nas dimensões do JLabel
+		        Image foto = iconFoto.getImage().getScaledInstance(imgPeixe.getWidth(), imgPeixe.getHeight(), Image.SCALE_SMOOTH);
+		        System.out.println("Imagem redimensionada para " + imgPeixe.getWidth() + "x" + imgPeixe.getHeight());
+
+		        // Define a imagem redimensionada como ícone do JLabel
+		        imgPeixe.setIcon(new ImageIcon(foto));
+		        System.out.println("Imagem definida no JLabel.");
+		    });
+		} 
+		// Caso o produto não tenha uma foto associada
+		else {
+		    System.out.println("Produto não tem foto. Usando imagem padrão.");
+
+		    // Usamos invokeLater para garantir que o layout seja calculado antes de redimensionar a imagem
+		    SwingUtilities.invokeLater(() -> {
+		        // Caso não haja foto, carregamos uma imagem padrão
+		        ImageIcon iconFoto = new ImageIcon(CardProduto.class.getResource("/img/ttilapia.jpg"));
+		        System.out.println("Imagem padrão carregada.");
+
+		        // Redimensiona a imagem padrão para o tamanho do JLabel
+		        Image foto = iconFoto.getImage().getScaledInstance(imgPeixe.getWidth(), imgPeixe.getHeight(), Image.SCALE_SMOOTH);
+		        System.out.println("Imagem padrão redimensionada para " + imgPeixe.getWidth() + "x" + imgPeixe.getHeight());
+
+		        // Define a imagem redimensionada como ícone do JLabel
+		        imgPeixe.setIcon(new ImageIcon(foto));
+		        System.out.println("Imagem padrão definida no JLabel.");
+		    });
+		}
 
 		JPanel panel = new JPanel();
 		add(panel, "cell 1 0,grow");
