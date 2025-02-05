@@ -61,7 +61,7 @@ public class TelaCarrinho extends JFrame {
 //		});
 //	}
 
-	public TelaCarrinho(Usuario u, List<Produto> produtos, boolean isVendedor ) {
+	public TelaCarrinho(Usuario u, List<Produto> produtos, boolean isVendedor) {
 		this.isVendedor = isVendedor;
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1280, 768);
@@ -246,7 +246,7 @@ public class TelaCarrinho extends JFrame {
 		panelBotoes.add(btnPagamento, "cell 1 0");
 		btnPagamento.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
+
 				TelaPagamento pagamento = new TelaPagamento(u, isVendedor, carrinho);
 				pagamento.setVisible(true);
 				pagamento.setLocationRelativeTo(null);
@@ -257,36 +257,34 @@ public class TelaCarrinho extends JFrame {
 		btnPagamento.setForeground(new Color(0, 0, 0));
 	}
 
-public void atualizarTela(Usuario u) {
-	
-	
-	if(cDAO.verificarSeExisteCarrinho(u, carrinhoProdutor, false)==null) {
-		System.out.println("Carrinho nao existe");
-	}else {
-		CarrinhoCompras carrinho = cDAO.verificarSeExisteCarrinho(u, carrinhoProdutor, false);
-		ArrayList<ItemCarrinho> lista = cDAO.addProdCarrinho(carrinho);
+	public void atualizarTela(Usuario u) {
+
+		if (cDAO.verificarSeExisteCarrinho(u, carrinhoProdutor, false) == null) {
+			System.out.println("Carrinho nao existe");
+		} else {
+			CarrinhoCompras carrinho = cDAO.verificarSeExisteCarrinho(u, carrinhoProdutor, false);
+			ArrayList<ItemCarrinho> lista = cDAO.addProdCarrinho(carrinho);
 //		ArrayList<Produto> lista = pDAO.addTodosProd();
 
-		int linha = 0;
-		int coluna = -1;
-		if (lista == null) {
-			System.out.println("lista ta Vazia");
-		} else {
+			int linha = 0;
+			int coluna = -1;
+			if (lista == null) {
+				System.out.println("lista ta Vazia");
+			} else {
 
-			for (ItemCarrinho p : lista) {
+				for (ItemCarrinho p : lista) {
 
-				coluna++;
-				if (coluna > 3) {
-					coluna = 0;
-					linha++;
+					coluna++;
+					if (coluna > 3) {
+						coluna = 0;
+						linha++;
+					}
+					CardProdutoCarrinho panel_8 = new CardProdutoCarrinho(u, p, estaJanela, isVendedor);
+					panelProd.add(panel_8, "cell " + coluna + " " + linha + "");
+
 				}
-				CardProdutoCarrinho panel_8 = new CardProdutoCarrinho(u, p, estaJanela, isVendedor);
-				panelProd.add(panel_8, "cell " + coluna + " " + linha + "");
-
 			}
 		}
+
 	}
-	
-	
-}
 }
