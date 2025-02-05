@@ -50,8 +50,8 @@ public class TelaCadastroProduto extends JFrame {
 	private JTextField txtPreco;
 	private JTextField txtQuantidade;
 	private FileInputStream fis;
-	private static ProdutoDAO pDAO = ProdutoDAO.getInstancia();
 	private static Imagem img = Imagem.getInstancia();
+	private static ProdutoDAO pDAO = ProdutoDAO.getInstancia();
 	Produto prod = new Produto();
 
 	public TelaCadastroProduto(TelaEstoque janelaPrincipal, Usuario u) {
@@ -135,6 +135,7 @@ public class TelaCadastroProduto extends JFrame {
 		panelDireita.setLayout(new MigLayout("", "[grow]", "[200px,grow][25px][40px]"));
 
 		JPanel painelImagemProd = new JPanel();
+		painelImagemProd.setOpaque(false);
 
 		JLabel lblImagem = new JLabel();
 		lblImagem.setMinimumSize(new Dimension(100, 100)); // Garantindo tamanho mínimo para o JLabel
