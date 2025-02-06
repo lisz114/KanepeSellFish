@@ -246,8 +246,11 @@ public class TelaCarrinho extends JFrame {
 		panelBotoes.add(btnPagamento, "cell 1 0");
 		btnPagamento.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-
-				TelaPagamento pagamento = new TelaPagamento(u, isVendedor, carrinho);
+				
+				CarrinhoCompras carrinho = cDAO.verificarSeExisteCarrinho(u, carrinhoProdutor, false);
+				ArrayList<ItemCarrinho> lista = cDAO.addProdCarrinho(carrinho);
+				
+				TelaPagamento pagamento = new TelaPagamento(u, isVendedor, lista, carrinho);
 				pagamento.setVisible(true);
 				pagamento.setLocationRelativeTo(null);
 			}
