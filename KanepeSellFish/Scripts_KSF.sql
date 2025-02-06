@@ -21,7 +21,7 @@ CREATE TABLE IF NOT EXISTS Usuarios (
     nome_Usuario VARCHAR(100) NOT NULL,
     senha_Usuario VARCHAR(100) NOT NULL,
     email_Usuario VARCHAR(100) NOT NULL UNIQUE,
-    telefone BIGINT UNIQUE,
+    telefone varchar(11) UNIQUE,
     img VARCHAR(150),
     descricao varchar(360),
     PRIMARY KEY (idUsuarios)
@@ -49,6 +49,7 @@ CREATE TABLE IF NOT EXISTS Produtores (
     Usuarios_idUsuarios BIGINT NOT NULL,
     Enderecos_idEnderecos BIGINT NOT NULL,
     cnpj VARCHAR(14) NOT NULL UNIQUE,
+    chavePix VARCHAR(100) UNIQUE,
     PRIMARY KEY (idProdutores),
     FOREIGN KEY (Usuarios_idUsuarios) REFERENCES Usuarios (idUsuarios),
     FOREIGN KEY (Enderecos_idEnderecos) REFERENCES Enderecos (idEnderecos)
@@ -65,6 +66,7 @@ CREATE TABLE IF NOT EXISTS Produtos (
     preco DOUBLE NOT NULL,
     Produtores_idProdutores BIGINT NOT NULL,
     salinidade BOOLEAN NOT NULL,
+    foto LONGBLOB,
     PRIMARY KEY (idProdutos),
     FOREIGN KEY (Produtores_idProdutores) REFERENCES Produtores (idProdutores)
 );
@@ -100,8 +102,10 @@ CREATE TABLE IF NOT EXISTS Vendas (
 CREATE TABLE IF NOT EXISTS Carrinho (
 	idCarrinho BIGINT NOT NULL AUTO_INCREMENT,
     Usuarios_idUsuarios BIGINT NOT NULL,
+    Produtores_idProdutores BIGINT,
 	PRIMARY KEY (idCarrinho),
-    FOREIGN KEY (Usuarios_idUsuarios) REFERENCES Usuarios (idUsuarios)
+    FOREIGN KEY (Usuarios_idUsuarios) REFERENCES Usuarios (idUsuarios),
+    FOREIGN KEY (Produtores_idProdutores) REFERENCES Produtores (idProdutores)
 );
 CREATE TABLE IF NOT EXISTS ItensCarrinho (
 	idItensCarrinho BIGINT NOT NULL AUTO_INCREMENT,
