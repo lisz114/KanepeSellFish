@@ -27,6 +27,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
+import javax.swing.SwingUtilities;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 
@@ -82,7 +83,7 @@ public class TelaPerfilVendedor extends JFrame {
 		return imagemRedonda;
 	}
 
-	public TelaPerfilVendedor(Usuario u, boolean isVendedor) {
+	public TelaPerfilVendedor(Usuario u, boolean isVendedor, Image foto) {
 
 		produtor = pDAO.consultaProdutor(u);
 
@@ -127,13 +128,13 @@ public class TelaPerfilVendedor extends JFrame {
 		JButton btnFlecha = new JButton("");
 		btnFlecha.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
+
 				TelaDeLogOff telaLogOff = new TelaDeLogOff(estajanela, u, isVendedor);
 				telaLogOff.setLocationRelativeTo(null);
 				telaLogOff.setVisible(true);
 			}
 		});
-		
+
 		JButton btnCarrinho = new JButton("");
 		btnCarrinho.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnCarrinho.setOpaque(false);
@@ -233,19 +234,52 @@ public class TelaPerfilVendedor extends JFrame {
 		contentPane.add(panel_1, BorderLayout.CENTER);
 
 		panel_1.setLayout(new MigLayout("", "[grow][grow][grow][grow]", "[][][grow][][][][][250px][40px]"));
-		
+
 		JPanel panel_2 = new JPanel();
 		panel_1.add(panel_2, "cell 0 2 1 5,grow");
 		panel_2.setLayout(new MigLayout("", "[grow]", "[grow]"));
+
+		JLabel imgUsuario = new JLabel("");
+		panel_2.add(imgUsuario, "flowy,cell 0 0,alignx center,aligny center");
+		imgUsuario.setIcon(new ImageIcon(TelaEditarPerfilCliente.class.getResource("/img/Avatar.png")));
+
+		JLabel lblFoto = new JLabel("Foto de Perfil");
+		panel_2.add(lblFoto, "cell 0 0,alignx center,aligny center");
+		lblFoto.setFont(new Font("Dialog", Font.ITALIC, 13));
+		lblFoto.setForeground(new Color(0, 0, 0));
 		
-				JLabel imgUsuario = new JLabel("");
-				panel_2.add(imgUsuario, "flowy,cell 0 0,alignx center,aligny center");
-				imgUsuario.setIcon(new ImageIcon(TelaEditarPerfilCliente.class.getResource("/img/Avatar.png")));
+		try {
+			if (foto != null) {
 				
-						JLabel lblFoto = new JLabel("Foto de Perfil");
-						panel_2.add(lblFoto, "cell 0 0,alignx center,aligny center");
-						lblFoto.setFont(new Font("Dialog", Font.ITALIC, 13));
-						lblFoto.setForeground(new Color(0, 0, 0));
+				panel_2.revalidate();
+				panel_2.repaint();
+
+				// Verifica se o tamanho do JLabel é válido
+				SwingUtilities.invokeLater(() -> {
+				    int labelWidth = imgUsuario.getWidth();
+				    int labelHeight = imgUsuario.getHeight();
+
+				    if (labelWidth > 0 && labelHeight > 0) {
+				        Image scaledImage = foto.getScaledInstance(labelWidth, labelHeight, Image.SCALE_SMOOTH);
+				        imgUsuario.setIcon(new ImageIcon(scaledImage));
+				    } else {
+				        System.out.println("Tamanho inválido do JLabel. Definindo tamanho padrão.");
+				        Image scaledImage = foto.getScaledInstance(200, 200, Image.SCALE_SMOOTH);
+				        imgUsuario.setIcon(new ImageIcon(scaledImage));
+				    }
+				});
+
+
+				
+				System.out.println("Deu bom!");
+			}else {
+				imgUsuario.setIcon(new ImageIcon(TelaPerfilCliente.class.getResource("/img/Avatar.png")));
+				System.out.println("Deu ruim!");
+			}
+		} catch (Exception e) {
+			System.out.println(e);
+
+		}
 
 		JLabel lblNomeUsuario = new JLabel();
 		lblNomeUsuario.setHorizontalAlignment(SwingConstants.CENTER);
@@ -326,29 +360,29 @@ public class TelaPerfilVendedor extends JFrame {
 		txtCidade.setFont(new Font("/Fontes/Roboto-Black.ttf", Font.PLAIN, 15));
 		panel_1.add(txtCidade, "flowx,cell 3 6");
 		txtCidade.setText(produtor.getEnd().getCidade());
-		
+
 		JButton rbInfo = new JButton("");
 		rbInfo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-        TelaEditarPerfilVendedor editar = new TelaEditarPerfilVendedor(u);
+				TelaEditarPerfilVendedor editar = new TelaEditarPerfilVendedor(u);
 				editar.setLocationRelativeTo(null);
 				editar.setVisible(true);
 				dispose();
 			}
 		});
-		
-				JButton rbSenha = new JButton("Alterar senha");
-				rbSenha.addActionListener(new ActionListener() {
-					public void actionPerformed(ActionEvent e) {
-						TelaRedefinicaoSenha redefinir = new TelaRedefinicaoSenha(u, isVendedor);
-						redefinir.setVisible(true);
-						redefinir.setLocationRelativeTo(null);
-					}
-				});
-				rbSenha.setForeground(Color.BLACK);
-				rbSenha.setFont(new Font("Dialog", Font.PLAIN, 11));
-				rbSenha.setBackground(new Color(154, 205, 217));
-				panel_1.add(rbSenha, "flowx,cell 4 9,alignx center,aligny center");
+
+		JButton rbSenha = new JButton("Alterar senha");
+		rbSenha.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				TelaRedefinicaoSenha redefinir = new TelaRedefinicaoSenha(u, isVendedor);
+				redefinir.setVisible(true);
+				redefinir.setLocationRelativeTo(null);
+			}
+		});
+		rbSenha.setForeground(Color.BLACK);
+		rbSenha.setFont(new Font("Dialog", Font.PLAIN, 11));
+		rbSenha.setBackground(new Color(154, 205, 217));
+		panel_1.add(rbSenha, "flowx,cell 4 9,alignx center,aligny center");
 		rbInfo.setText("Alterar Informações");
 		rbInfo.setFont(new Font("Dialog", Font.PLAIN, 11));
 		rbInfo.setBackground(new Color(154, 205, 217));
@@ -401,5 +435,5 @@ public class TelaPerfilVendedor extends JFrame {
 		panel_1.add(lblvirgula, "cell 3 4,aligny bottom");
 		ImageIcon img = new ImageIcon(u.getImg());
 	}
-		
+
 }

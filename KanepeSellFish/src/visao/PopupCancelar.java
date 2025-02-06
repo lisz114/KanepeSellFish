@@ -58,7 +58,7 @@ public class PopupCancelar extends JFrame {
 		btExcluir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if(vendedor == true) {
-					TelaPerfilVendedor v = new TelaPerfilVendedor(u, vendedor);
+					TelaPerfilVendedor v = new TelaPerfilVendedor(u, vendedor, null);
 					v.setVisible(true);
 					v.setLocationRelativeTo(null);
 					telaEditarV.dispose();
