@@ -186,7 +186,7 @@ public class TelaInicio extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 
 				if (isVendedor) {
-					TelaPerfilVendedor v = new TelaPerfilVendedor(u, isVendedor);
+					TelaPerfilVendedor v = new TelaPerfilVendedor(u, isVendedor, null);
 					v.setLocationRelativeTo(null);
 					v.setVisible(true);
 					dispose();
@@ -210,7 +210,7 @@ public class TelaInicio extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				if (isVendedor) {
-					TelaPerfilVendedor v = new TelaPerfilVendedor(u, isVendedor);
+					TelaPerfilVendedor v = new TelaPerfilVendedor(u, isVendedor, null);
 					v.setLocationRelativeTo(null);
 					v.setVisible(true);
 					dispose();

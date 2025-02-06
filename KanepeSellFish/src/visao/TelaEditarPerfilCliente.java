@@ -45,7 +45,6 @@ public class TelaEditarPerfilCliente extends JFrame {
 	TelaEditarPerfilCliente estajanela = this;
 	private JTextField txtNome;
 	private JTextField txtEmail;
-	private FileInputStream fiss;
 	BufferedImage bufferedImage;
 	private static Imagem img = Imagem.getInstancia();
 	Usuario usuarioNovo = new Usuario();
@@ -150,7 +149,6 @@ public class TelaEditarPerfilCliente extends JFrame {
 				try {
 					// Obtém o InputStream da imagem
 					FileInputStream fis = img.Imagem();
-					fiss = fis;
 
 					// Verifica se nenhuma imagem foi selecionada
 					if (fis == null) {

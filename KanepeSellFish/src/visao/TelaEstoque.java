@@ -129,7 +129,7 @@ public class TelaEstoque extends JFrame {
 		imgConta.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				TelaPerfilVendedor v = new TelaPerfilVendedor(u, true);
+				TelaPerfilVendedor v = new TelaPerfilVendedor(u, true, null);
 				v.setLocationRelativeTo(null);
 				v.setVisible(true);
 				dispose();
@@ -348,7 +348,7 @@ public class TelaEstoque extends JFrame {
 		btnNewButton_2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
-				TelaPerfilVendedor frame = new TelaPerfilVendedor(u, true);
+				TelaPerfilVendedor frame = new TelaPerfilVendedor(u, true, null);
 				frame.setLocationRelativeTo(null);
 				frame.setVisible(true);
 				dispose();

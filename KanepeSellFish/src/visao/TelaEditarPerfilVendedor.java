@@ -12,18 +12,24 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.image.BufferedImage;
+import java.io.FileInputStream;
+import java.io.IOException;
 
+import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.SwingUtilities;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 
 import controle.EnderecoDAO;
+import controle.Imagem;
 import controle.ProdutorDAO;
 import controle.UsuarioDAO;
 import modelo.Endereco;
@@ -61,6 +67,13 @@ public class TelaEditarPerfilVendedor extends JFrame {
 	private JLabel lblNewLabel;
 	private JLabel lblEditarFt;
 	private JTextField txtChavePix;
+	private JPanel panel_2;
+	private JLabel imgAvatar;
+	BufferedImage bufferedImage;
+	private static Imagem img = Imagem.getInstancia();
+	Produtor produtorNovo = new Produtor();
+	Endereco enderecoNovo = new Endereco();
+	Usuario usuarioNovo = new Usuario();
 
 	/**
 	 * Launch the application.
@@ -102,10 +115,7 @@ public class TelaEditarPerfilVendedor extends JFrame {
 		JPanel panel_1 = new JPanel();
 		contentPane.add(panel_1, BorderLayout.CENTER);
 		panel_1.setOpaque(false);
-
-		JLabel imgAvatar = new JLabel("");
-		imgAvatar.setIcon(new ImageIcon(TelaEditarPerfilVendedor.class.getResource("/img/Avatar.png")));
-		panel_1.setLayout(new MigLayout("", "[250,grow][400px,grow][grow]", "[60px][202px][][][][][grow]"));
+		panel_1.setLayout(new MigLayout("", "[250,grow][400px,grow][grow]", "[60px][100px][][][][][][][grow]"));
 
 		panel = new JPanel();
 		panel.setBackground(new Color(154, 208, 217));
@@ -119,12 +129,20 @@ public class TelaEditarPerfilVendedor extends JFrame {
 		lblNewLabel = new JLabel("Edição de perfil");
 		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		panel.add(lblNewLabel, "cell 1 0");
-
-		JLabel lblNome = new JLabel("");
-		lblNome.setFont(new Font("/Fontes/Roboto-Black.ttf", Font.PLAIN, 30));
-		panel_1.add(lblNome, "cell 1 1,alignx left,aligny center");
-		panel_1.add(imgAvatar, "flowy,cell 0 1 1 5,alignx center,aligny center");
-		lblNome.setText(u.getNome());
+		
+				JLabel lblNome = new JLabel("");
+				lblNome.setFont(new Font("/Fontes/Roboto-Black.ttf", Font.PLAIN, 30));
+				panel_1.add(lblNome, "cell 1 1,alignx left,aligny bottom");
+				lblNome.setText(u.getNome());
+		
+		panel_2 = new JPanel();
+		panel_2.setOpaque(false);
+		panel_1.add(panel_2, "flowy,cell 0 2 1 5,grow");
+		
+		imgAvatar = new JLabel("");
+		panel_2.add(imgAvatar);
+		imgAvatar.setMinimumSize(new Dimension(100, 100)); // Garantindo tamanho mínimo para o JLabel
+		imgAvatar.setPreferredSize(new Dimension(200, 200));
 
 		txtNomeComercio = new JTextField();
 		txtNomeComercio.setToolTipText("");
@@ -194,7 +212,7 @@ public class TelaEditarPerfilVendedor extends JFrame {
 				new Color(0, 0, 0)));
 		txtCEP.setBackground(SystemColor.menu);
 		txtCEP.setText(pDAO.consultaProdutor(u).getEnd().getCep());
-		panel_1.add(txtCEP, "flowx,cell 2 4,growy");
+		panel_1.add(txtCEP, "flowx,cell 2 4");
 
 		txtEmail = new JTextField();
 		panel_1.add(txtEmail, "flowx,cell 1 5,growy");
@@ -219,13 +237,81 @@ public class TelaEditarPerfilVendedor extends JFrame {
 		txtLogradouro.setBackground(SystemColor.menu);
 		txtLogradouro.setColumns(10);
 		txtLogradouro.setText(pDAO.consultaProdutor(u).getEnd().getLogradouro());
+		
+				lblEditarFt = new JLabel("Editar Foto de Perfil");
+				lblEditarFt.addMouseListener(new MouseAdapter() {
+					@Override
+					public void mouseClicked(MouseEvent e) {
+
+						try {
+							// Obtém o InputStream da imagem
+							FileInputStream fis = img.Imagem();
+
+							// Verifica se nenhuma imagem foi selecionada
+							if (fis == null) {
+								throw new IOException("Nenhuma imagem foi selecionada.");
+							}
+
+							bufferedImage = ImageIO.read(fis);
+							usuarioNovo.setFoto(bufferedImage);
+							if (bufferedImage == null) {
+								throw new IOException("Falha ao carregar a imagem.");
+							}
+
+							usuarioNovo.setFotoC(fis);
+
+							// Redimensiona a imagem dentro de invokeLater
+							SwingUtilities.invokeLater(new Runnable() {
+								@Override
+								public void run() {
+									// Força o layout a ser recalculado
+									panel_2.revalidate();
+									panel_2.repaint();
+
+									int labelWidth = imgAvatar.getWidth();
+									int labelHeight = imgAvatar.getHeight();
+
+									// Verifica se o tamanho do JLabel é válido
+									if (labelWidth > 0 && labelHeight > 0) {
+										// Redimensiona a imagem para o tamanho do JLabel, mantendo a proporção
+										Image scaledImage = bufferedImage.getScaledInstance(labelWidth, labelHeight,
+												Image.SCALE_SMOOTH);
+
+										// Converte a imagem redimensionada para ImageIcon
+										ImageIcon icon = new ImageIcon(scaledImage);
+
+										// Define o ícone do JLabel
+										imgAvatar.setIcon(icon);
+									} else {
+										// Caso o tamanho ainda seja inválido, talvez um tamanho mínimo seja necessário
+										System.out.println("Tamanho inválido do JLabel.");
+									}
+								}
+							});
+
+						} catch (IOException ex) {
+							ex.printStackTrace();
+
+							// Exibir erro ao usuário
+							TelaError erro = new TelaError();
+							erro.setLabelText("Erro ao carregar imagem. Nenhuma imagem foi selecionada.");
+							erro.setLocationRelativeTo(null);
+							erro.setVisible(true);
+						}
+
+					}
+				});
+				lblEditarFt.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+				lblEditarFt.setForeground(SystemColor.textHighlight);
+				lblEditarFt.setFont(new Font("Dialog", Font.ITALIC, 13));
+				panel_1.add(lblEditarFt, "cell 0 7,alignx center,aligny center");
 
 		JButton btnNewButton = new JButton("Cancelar");
 		btnNewButton.setMargin(new Insets(4, 14, 4, 14));
-		panel_1.add(btnNewButton, "flowx,cell 2 6,alignx right,aligny bottom");
+		panel_1.add(btnNewButton, "flowx,cell 2 8,alignx right,aligny bottom");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				TelaPerfilVendedor frame = new TelaPerfilVendedor(u, true);
+				TelaPerfilVendedor frame = new TelaPerfilVendedor(u, true, null);
 				frame.setLocationRelativeTo(null);
 				frame.setVisible(true);
 				dispose();
@@ -237,12 +323,10 @@ public class TelaEditarPerfilVendedor extends JFrame {
 		JButton btnNewButton_1 = new JButton("Salvar");
 		btnNewButton_1.setMargin(new Insets(4, 14, 4, 14));
 		btnNewButton_1.setDisplayedMnemonicIndex(0);
-		panel_1.add(btnNewButton_1, "cell 2 6,alignx right,aligny bottom");
+		panel_1.add(btnNewButton_1, "cell 2 8,alignx right,aligny bottom");
 		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Produtor produtorNovo = new Produtor();
-				Endereco enderecoNovo = new Endereco();
-				Usuario usuarioNovo = new Usuario();
+				
 
 				// Consulta do produtor atual
 				Produtor produtorAntigo = pDAO.consultaProdutor(u);
@@ -270,7 +354,7 @@ public class TelaEditarPerfilVendedor extends JFrame {
 				Integer numero = Integer.valueOf(txtNum.getText());
 				String nome = txtNome.getText();
 				String chavePix = txtChavePix.getText();
-        
+
 				if (uDAO.verificarTelefone(telefone, u.getIdUsuario())) {
 					TelaError erro = new TelaError();
 					erro.setLabelText("Telefone já cadastrado por outro usuário.");
@@ -310,7 +394,7 @@ public class TelaEditarPerfilVendedor extends JFrame {
 
 						if (produtorAtualizado) {
 							uDAO.consultarUsuarioLoginSenha(usuarioNovo.getSenha(), usuarioNovo.getEmail());
-							TelaPerfilVendedor v = new TelaPerfilVendedor(u, true);
+							TelaPerfilVendedor v = new TelaPerfilVendedor(u, true, bufferedImage);
 							v.setLocationRelativeTo(null);
 							v.setVisible(true);
 							dispose();
@@ -340,7 +424,7 @@ public class TelaEditarPerfilVendedor extends JFrame {
 
 						if (produtorInserido) {
 							uDAO.consultarUsuarioLoginSenha(usuarioNovo.getSenha(), usuarioNovo.getEmail());
-							TelaPerfilVendedor v = new TelaPerfilVendedor(u, true);
+							TelaPerfilVendedor v = new TelaPerfilVendedor(u, true, bufferedImage);
 							v.setLocationRelativeTo(null);
 							v.setVisible(true);
 							dispose();
@@ -425,21 +509,16 @@ public class TelaEditarPerfilVendedor extends JFrame {
 		ImageIcon iconProcurar = new ImageIcon(TelaCadastroComercio.class.getResource("/IMG/procurar.png"));
 		Image iconP = iconProcurar.getImage().getScaledInstance(26, 26, Image.SCALE_SMOOTH);
 		lblImagem.setIcon(new ImageIcon(iconP));
-		
+
 		txtChavePix = new JTextField();
 		txtChavePix.setToolTipText("");
 		txtChavePix.setText((String) null);
 		txtChavePix.setOpaque(false);
 		txtChavePix.setColumns(10);
-		txtChavePix.setBorder(new TitledBorder(new LineBorder(new Color(0, 0, 0), 2), "Chave pix", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
+		txtChavePix.setBorder(new TitledBorder(new LineBorder(new Color(0, 0, 0), 2), "Chave pix", TitledBorder.LEADING,
+				TitledBorder.TOP, null, new Color(0, 0, 0)));
 		txtChavePix.setBackground(SystemColor.menu);
 		panel_1.add(txtChavePix, "cell 1 4");
-
-		lblEditarFt = new JLabel("Editar Foto de Perfil");
-		lblEditarFt.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		lblEditarFt.setForeground(SystemColor.textHighlight);
-		lblEditarFt.setFont(new Font("Dialog", Font.ITALIC, 13));
-		panel_1.add(lblEditarFt, "cell 0 4,alignx center,aligny center");
 
 		ImageIcon conta = new ImageIcon(TelaInicio.class.getResource("/IMG/do-utilizador.png"));
 		Image iconConta = conta.getImage().getScaledInstance(30, 30, Image.SCALE_SMOOTH);
