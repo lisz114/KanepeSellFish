@@ -391,7 +391,7 @@ public class TelaPerfilVendedor extends JFrame {
 
 		JLabel lblChavePix = new JLabel("ChavePix:");
 		lblChavePix.setFont(new Font("Dialog", Font.PLAIN, 15));
-		panel_1.add(lblChavePix, "flowx,cell 1 7");
+		panel_1.add(lblChavePix, "flowx,cell 1 7,aligny top");
 		rbInfo.setText("Alterar Informações");
 		rbInfo.setFont(new Font("/Fontes/Roboto-Black.ttf", Font.PLAIN, 11));
 		rbInfo.setBackground(new Color(154, 205, 217));
@@ -433,7 +433,13 @@ public class TelaPerfilVendedor extends JFrame {
 
 		JLabel lblvirgula = new JLabel(",");
 		panel_1.add(lblvirgula, "cell 3 4,aligny bottom");
+		
+		JLabel lblPixValor = new JLabel("");
+		panel_1.add(lblPixValor, "cell 1 7,aligny top");
+		lblPixValor.setFont(new Font("/Fontes/Roboto-Black.ttf", Font.PLAIN, 15));
 		ImageIcon img = new ImageIcon(u.getImg());
+		Produtor p = pDAO.consultaProdutor(u);
+		lblPixValor.setText(p.getChavePix());
 	}
 
 }

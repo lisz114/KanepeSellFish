@@ -16,7 +16,7 @@ public class ProdutorDAO implements IProdutorDAO {
 	EnderecoDAO eDAO = EnderecoDAO.getInstancia();
 	UsuarioDAO uDAO = UsuarioDAO.getInstancia();
 
-	private ProdutorDAO() {
+	public ProdutorDAO() {
 	}
 
 	public static ProdutorDAO getInstancia() {

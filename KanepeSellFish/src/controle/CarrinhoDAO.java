@@ -279,6 +279,29 @@ public class CarrinhoDAO implements ICarrinhoDAO {
 	        e.printStackTrace();
 	    }
 	}
+	
+	public CarrinhoCompras calcularCarrinho(ArrayList<ItemCarrinho> lista, CarrinhoCompras carrinho) {
+	    // Recupera todos os itens do carrinho
+
+	    // Variáveis para armazenar o valor total e a quantidade de itens
+	    float valorTotal = 0;
+	    int quantidadeTotal = 0;
+
+	    // Soma o valor total e a quantidade dos itens
+	    for (ItemCarrinho item : lista) {
+	        valorTotal += item.getPrecoTotal();  // Soma o preço total de cada item
+	        quantidadeTotal += item.getQuantidade();  // Soma a quantidade de cada item
+	    }
+
+	    // Atualiza os valores no objeto CarrinhoCompras
+	    carrinho.setValorTotal(valorTotal);
+	    carrinho.setQuantidadeProdutos(quantidadeTotal);
+
+	    return carrinho;  // Retorna o carrinho atualizado
+	}
+
+	
+	
 
 
 }

@@ -12,6 +12,7 @@ public interface ICarrinhoDAO {
 	public CarrinhoCompras verificarSeExisteCarrinho(Usuario u, Integer carrinhoProdutor, Boolean criar);
 	public void setProdutorCarrinho(int idProdutor, CarrinhoCompras carrinho);
 	public void deletarCarrinhosVazios(Usuario u, int idProdutor);
+	public CarrinhoCompras calcularCarrinho(ArrayList<ItemCarrinho> lista, CarrinhoCompras carrinho);
 
 
 }
