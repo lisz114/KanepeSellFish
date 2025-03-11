@@ -233,20 +233,31 @@ public class TelaPerfilVendedor extends JFrame {
 		panel_1.setMinimumSize(new Dimension(63, 23));
 		contentPane.add(panel_1, BorderLayout.CENTER);
 
-		panel_1.setLayout(new MigLayout("", "[grow][grow][grow][grow]", "[][][grow][][][][][250px][40px]"));
+		panel_1.setLayout(new MigLayout("", "[grow][grow][grow][grow][]", "[][][][][][][][][250px][40px][]"));
+		
+				JLabel lblNomeUsuario = new JLabel();
+				lblNomeUsuario.setHorizontalAlignment(SwingConstants.CENTER);
+				lblNomeUsuario.setFont(new Font("Dialog", Font.PLAIN, 30));
+				panel_1.add(lblNomeUsuario, "cell 1 1,alignx left,aligny center");
+				lblNomeUsuario.setText(u.getNome());
+		
+				JLabel lblNomeComercio = new JLabel("");
+				lblNomeComercio.setFont(new Font("/Fontes/Roboto-Black.ttf", Font.PLAIN, 18));
+				panel_1.add(lblNomeComercio, "cell 1 2,alignx left,aligny center");
+				lblNomeComercio.setText(pDAO.consultaProdutor(u).getNomeComercio());
 
 		JPanel panel_2 = new JPanel();
-		panel_1.add(panel_2, "cell 0 2 1 5,grow");
-		panel_2.setLayout(new MigLayout("", "[grow]", "[grow]"));
-
-		JLabel imgUsuario = new JLabel("");
-		panel_2.add(imgUsuario, "flowy,cell 0 0,alignx center,aligny center");
-		imgUsuario.setIcon(new ImageIcon(TelaEditarPerfilCliente.class.getResource("/img/Avatar.png")));
+		panel_1.add(panel_2, "cell 0 1 1 7,grow");
+		panel_2.setLayout(new MigLayout("", "[grow]", "[grow][]"));
 
 		JLabel lblFoto = new JLabel("Foto de Perfil");
 		panel_2.add(lblFoto, "cell 0 0,alignx center,aligny center");
 		lblFoto.setFont(new Font("Dialog", Font.ITALIC, 13));
 		lblFoto.setForeground(new Color(0, 0, 0));
+		
+				JLabel imgUsuario = new JLabel("");
+				panel_2.add(imgUsuario, "cell 0 1,alignx center,aligny center");
+				imgUsuario.setIcon(new ImageIcon(TelaEditarPerfilCliente.class.getResource("/img/Avatar.png")));
 		
 		try {
 			if (foto != null) {
@@ -281,54 +292,43 @@ public class TelaPerfilVendedor extends JFrame {
 
 		}
 
-		JLabel lblNomeUsuario = new JLabel();
-		lblNomeUsuario.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNomeUsuario.setFont(new Font("Dialog", Font.PLAIN, 30));
-		panel_1.add(lblNomeUsuario, "flowy,cell 1 2,alignx left,aligny center");
-		lblNomeUsuario.setText(u.getNome());
-
 		JLabel lblInfoComercio = new JLabel("Informações pessoais:");
 		lblInfoComercio.setFont(new Font("/Fontes/Roboto-Black.ttf", Font.BOLD | Font.ITALIC, 17));
-		panel_1.add(lblInfoComercio, "cell 1 3,alignx left,aligny bottom");
+		panel_1.add(lblInfoComercio, "cell 1 4,alignx left,aligny bottom");
 
 		JLabel lblInfoC = new JLabel("Informações sobre  o comércio:");
 		lblInfoC.setFont(new Font("/Fontes/Roboto-Black.ttf", Font.BOLD | Font.ITALIC, 17));
-		panel_1.add(lblInfoC, "cell 2 3,alignx left,aligny bottom");
-
-		JLabel lblNomeComercio = new JLabel("");
-		lblNomeComercio.setFont(new Font("/Fontes/Roboto-Black.ttf", Font.PLAIN, 18));
-		panel_1.add(lblNomeComercio, "cell 1 2,alignx left,aligny center");
-		lblNomeComercio.setText(pDAO.consultaProdutor(u).getNomeComercio());
+		panel_1.add(lblInfoC, "cell 2 4,alignx left,aligny bottom");
 
 		JLabel lblEmail = new JLabel("Email:");
 		lblEmail.setFont(new Font("/Fontes/Roboto-Black.ttf", Font.PLAIN, 15));
-		panel_1.add(lblEmail, "flowx,cell 1 4,alignx left,aligny bottom");
+		panel_1.add(lblEmail, "flowx,cell 1 5,alignx left,aligny bottom");
 
 		JLabel txtEmail = new JLabel("");
 		txtEmail.setFont(new Font("/Fontes/Roboto-Black.ttf", Font.PLAIN, 15));
-		panel_1.add(txtEmail, "cell 1 4,alignx center,aligny bottom");
+		panel_1.add(txtEmail, "cell 1 5,alignx center,aligny bottom");
 		txtEmail.setText(u.getEmail());
 
 		JLabel lblEndereco = new JLabel("Endereço:");
 		lblEndereco.setFont(new Font("/Fontes/Roboto-Black.ttf", Font.PLAIN, 15));
-		panel_1.add(lblEndereco, "flowx,cell 3 4,alignx left,aligny bottom");
+		panel_1.add(lblEndereco, "flowx,cell 3 5,alignx left,aligny bottom");
 
 		JLabel lblCpf = new JLabel("Cpf:");
 		lblCpf.setFont(new Font("/Fontes/Roboto-Black.ttf", Font.PLAIN, 15));
-		panel_1.add(lblCpf, "flowx,cell 1 5");
+		panel_1.add(lblCpf, "flowx,cell 1 6");
 
 		JLabel txtCpf = new JLabel("");
 		txtCpf.setFont(new Font("/Fontes/Roboto-Black.ttf", Font.PLAIN, 15));
-		panel_1.add(txtCpf, "cell 1 5");
+		panel_1.add(txtCpf, "cell 1 6");
 		txtCpf.setText(u.getCpf());
 
 		JLabel lblTelefone = new JLabel("Telefone:");
 		lblTelefone.setFont(new Font("/Fontes/Roboto-Black.ttf", Font.PLAIN, 15));
-		panel_1.add(lblTelefone, "flowx,cell 1 6");
+		panel_1.add(lblTelefone, "flowx,cell 1 7");
 
 		JLabel txtTelefone = new JLabel("");
 		txtTelefone.setFont(new Font("/Fontes/Roboto-Black.ttf", Font.PLAIN, 15));
-		panel_1.add(txtTelefone, "cell 1 6");
+		panel_1.add(txtTelefone, "cell 1 7");
 		if (u.getTel() == null) {
 			txtTelefone.setText("Nenhum telefone cadastrado.");
 		} else {
@@ -337,28 +337,28 @@ public class TelaPerfilVendedor extends JFrame {
 
 		JLabel lblNomeC = new JLabel("Nome do Comércio:");
 		lblNomeC.setFont(new Font("/Fontes/Roboto-Black.ttf", Font.PLAIN, 15));
-		panel_1.add(lblNomeC, "flowx,cell 2 4,aligny bottom");
+		panel_1.add(lblNomeC, "flowx,cell 2 5,aligny bottom");
 
 		JLabel lblCnpj = new JLabel("Cnpj:");
 		lblCnpj.setFont(new Font("/Fontes/Roboto-Black.ttf", Font.PLAIN, 15));
-		panel_1.add(lblCnpj, "flowx,cell 2 5,aligny bottom");
+		panel_1.add(lblCnpj, "flowx,cell 2 6,aligny bottom");
 
 		JLabel txtCnpj = new JLabel("");
 		txtCnpj.setFont(new Font("/Fontes/Roboto-Black.ttf", Font.PLAIN, 15));
-		panel_1.add(txtCnpj, "cell 2 5,aligny bottom");
+		panel_1.add(txtCnpj, "cell 2 6,aligny bottom");
 		txtCnpj.setText(pDAO.consultaProdutor(u).getCnpj());
 
 		JLabel txtNomeC = new JLabel("");
 		txtNomeC.setFont(new Font("/Fontes/Roboto-Black.ttf", Font.PLAIN, 15));
-		panel_1.add(txtNomeC, "cell 2 4,aligny bottom");
+		panel_1.add(txtNomeC, "cell 2 5,aligny bottom");
 		txtNomeC.setText(pDAO.consultaProdutor(u).getNomeComercio());
 
 		JLabel lblnada = new JLabel("    ");
-		panel_1.add(lblnada, "flowx,cell 3 2,aligny bottom");
+		panel_1.add(lblnada, "flowx,cell 3 3,aligny bottom");
 
 		JLabel txtCidade = new JLabel("cidade");
 		txtCidade.setFont(new Font("/Fontes/Roboto-Black.ttf", Font.PLAIN, 15));
-		panel_1.add(txtCidade, "flowx,cell 3 6");
+		panel_1.add(txtCidade, "flowx,cell 3 7");
 		txtCidade.setText(produtor.getEnd().getCidade());
 
 		JButton rbInfo = new JButton("");
@@ -382,7 +382,7 @@ public class TelaPerfilVendedor extends JFrame {
 		rbSenha.setForeground(Color.BLACK);
 		rbSenha.setFont(new Font("Dialog", Font.PLAIN, 11));
 		rbSenha.setBackground(new Color(154, 205, 217));
-		panel_1.add(rbSenha, "flowx,cell 4 9,alignx center,aligny center");
+		panel_1.add(rbSenha, "flowx,cell 4 10,alignx center,aligny center");
 		rbInfo.setText("Alterar Informações");
 		rbInfo.setFont(new Font("Dialog", Font.PLAIN, 11));
 		rbInfo.setBackground(new Color(154, 205, 217));
@@ -391,7 +391,7 @@ public class TelaPerfilVendedor extends JFrame {
 
 		JLabel lblChavePix = new JLabel("ChavePix:");
 		lblChavePix.setFont(new Font("Dialog", Font.PLAIN, 15));
-		panel_1.add(lblChavePix, "flowx,cell 1 7,aligny top");
+		panel_1.add(lblChavePix, "flowx,cell 1 8,aligny top");
 		rbInfo.setText("Alterar Informações");
 		rbInfo.setFont(new Font("/Fontes/Roboto-Black.ttf", Font.PLAIN, 11));
 		rbInfo.setBackground(new Color(154, 205, 217));
@@ -399,43 +399,43 @@ public class TelaPerfilVendedor extends JFrame {
 		panel_1.add(rbInfo, "cell 4 9,alignx center,aligny center");
 
 		JLabel lblnada3 = new JLabel(",     ");
-		panel_1.add(lblnada3, "cell 3 6,alignx left");
+		panel_1.add(lblnada3, "cell 3 7,alignx left");
 
 		JLabel txtCep = new JLabel("cep");
 		txtCep.setFont(new Font("/Fontes/Roboto-Black.ttf", Font.PLAIN, 15));
-		panel_1.add(txtCep, "cell 3 6,alignx right,aligny bottom");
+		panel_1.add(txtCep, "cell 3 7,alignx right,aligny bottom");
 		txtCep.setText(produtor.getEnd().getCep());
 
 		JLabel lblNumero = new JLabel("Número: ");
 		lblNumero.setFont(new Font("/Fontes/Roboto-Black.ttf", Font.PLAIN, 15));
-		panel_1.add(lblNumero, "flowx,cell 3 5,alignx left");
+		panel_1.add(lblNumero, "flowx,cell 3 6,alignx left");
 
 		JLabel txtNum = new JLabel("num");
 		txtNum.setFont(new Font("/Fontes/Roboto-Black.ttf", Font.PLAIN, 15));
-		panel_1.add(txtNum, "cell 3 5,alignx left");
+		panel_1.add(txtNum, "cell 3 6,alignx left");
 		txtNum.setText(String.valueOf(produtor.getEnd().getNumero()));
 
 		JLabel lblnada2 = new JLabel(",     ");
-		panel_1.add(lblnada2, "cell 3 5");
+		panel_1.add(lblnada2, "cell 3 6");
 
 		JLabel txtBairro = new JLabel("bairro");
 		txtBairro.setFont(new Font("/Fontes/Roboto-Black.ttf", Font.PLAIN, 15));
-		panel_1.add(txtBairro, "cell 3 5,alignx left");
+		panel_1.add(txtBairro, "cell 3 6,alignx left");
 		txtBairro.setText(produtor.getEnd().getBairro());
 
 		JLabel txtLogradouro = new JLabel("logra");
 		txtLogradouro.setFont(new Font("/Fontes/Roboto-Black.ttf", Font.PLAIN, 15));
-		panel_1.add(txtLogradouro, "cell 3 4,alignx right,aligny bottom");
+		panel_1.add(txtLogradouro, "cell 3 5,alignx right,aligny bottom");
 		txtLogradouro.setText(produtor.getEnd().getLogradouro());
 
 		JLabel lblponto = new JLabel(".");
-		panel_1.add(lblponto, "cell 3 6");
+		panel_1.add(lblponto, "cell 3 7");
 
 		JLabel lblvirgula = new JLabel(",");
-		panel_1.add(lblvirgula, "cell 3 4,aligny bottom");
+		panel_1.add(lblvirgula, "cell 3 5,aligny bottom");
 		
 		JLabel lblPixValor = new JLabel("");
-		panel_1.add(lblPixValor, "cell 1 7,aligny top");
+		panel_1.add(lblPixValor, "cell 1 8,aligny top");
 		lblPixValor.setFont(new Font("/Fontes/Roboto-Black.ttf", Font.PLAIN, 15));
 		ImageIcon img = new ImageIcon(u.getImg());
 		Produtor p = pDAO.consultaProdutor(u);
